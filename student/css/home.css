@@ -1,0 +1,293 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26/05/2016, 8:22:48 PM
+    Author     : Shivangi
+*/
+
+
+body
+{
+    margin: 0px !important;
+    font-family: 'Lato', sans-serif;
+}
+
+
+.start
+{ 
+    height: 100vh;
+    width: 100%;
+    overflow: hidden; 
+    position: relative;
+    overflow-y: hidden;
+    max-height: 100vh; /* approximate max height */
+
+    transition-property: all;
+    transition-duration: .5s;
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+
+}
+
+.start-closed
+{
+    max-height: 0px;
+}
+
+.start::before
+{
+    content: ' ';
+    position: fixed;   
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: url('../img/landing_page_background.png') no-repeat center center;
+    background-size: cover;
+    will-change: transform; 
+    z-index: -1;
+
+
+}
+.p1
+{
+    font-family: 'Maitree', sans-serif;
+    font-size: 18px;
+    font-weight: lighter;
+    color: white;
+}
+
+.fact
+{
+    font-family: 'Maitree', sans-serif;
+    font-size: 24px;
+    font-weight: lighter;
+    color: white;
+}
+
+
+.header3
+{
+    font-family: 'Lato', sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    color: #FCEE2D;
+}
+
+.header4
+{
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    color: #FCEE2D;
+}
+
+.header5
+{
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+
+.pg2
+{ 
+    min-height: calc(100vh - 42px);
+    
+    width: 100%;
+    overflow: hidden; 
+    position: relative;
+    background-color: black;
+    background-size: cover;
+    will-change: transform;  
+    /* z-index: -1;  */
+}
+
+.pg3
+{ 
+    min-height: calc(100vh - 42px);
+    width: 100%;
+    overflow: hidden; 
+    position: relative;
+    background-color: black;
+    background-size: cover;
+    will-change: transform;  
+    /* z-index: -1; */
+}
+
+.pg4
+{ 
+    min-height: calc(100vh - 48px);
+    width: 100%;
+    overflow: auto; 
+    position: relative;
+    background: url('../img/crossing_background.png') no-repeat center center; 
+    background-size: cover;
+    will-change: transform;   
+    /* z-index: -1; */
+}
+
+.fb_iframe_widget iframe
+{
+	height: 78vh !important;
+}
+
+
+.fb_iframe_widget span
+{
+	height: auto !important;
+}
+
+iframe
+{
+	height: 78vh !important;
+}
+.pg5
+{ 
+    min-height: calc(100vh - 48px);
+    width: 100%;
+    overflow: hidden; 
+    position: relative;
+    background-color: black;
+    background-size: cover;
+    will-change: transform; 
+    /* z-index: -1 */
+}
+
+.pg6
+{ 
+    min-height: calc(100vh - 74px);
+    height: auto;
+    width: 100%;
+    overflow: hidden; 
+    position: relative;
+    background-color: black;
+    background-size: cover;
+    will-change: transform; 
+    /* z-index: -1;  */
+}
+
+.modal-content
+{
+    background: url('../img/miss_pacman.png') no-repeat center center;
+    background-size: cover;
+}
+
+input::-webkit-input-placeholder {
+color: yellow !important;
+}
+ 
+input:-moz-placeholder { /* Firefox 18- */
+color: yellow !important;  
+}
+ 
+input::-moz-placeholder {  /* Firefox 19+ */
+color: yellow !important;  
+}
+ 
+input:-ms-input-placeholder {  
+color: yellow !important;  
+}
+
+
+/*
+#nav.affix {
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index:10;
+}
+*/
+
+.box
+{
+    display: none;
+}
+
+.navbar
+{
+    margin-bottom: 0px !important;
+}
+
+.navbar-inverse
+{
+    border-radius: 0px !important;
+}
+
+.navbar-btn
+{
+    background-color: rgba(0,0,0,0) !important;
+    color: yellow !important;
+    border-color: yellow !important;
+    border-radius: 0 !important;
+    margin-right: 15px;
+}
+
+.carousel-indicators li
+{
+    border: 1px solid yellow !important;
+}
+
+.carousel-indicators
+.active
+{
+    background-color: yellow !important;
+}
+
+.scroll-top {
+    position:fixed;
+    bottom:0;
+    right:6%;
+    z-index:100;
+    background: #f2f3f2;
+    font-size:24px;
+    border-top-left-radius:3px;
+    border-top-right-radius:3px;
+}
+.scroll-top a:link,.scroll-top a:visited {
+    color:#222;
+} 
+
+#nav.affix-top {
+    position: absolute;
+    top:0;
+    left:0;
+    z-index:10;
+    height:54px;
+    background-color:transparent;
+    border:0;
+    visibility: hidden;
+}
+
+#nav {
+    width: 100%;
+}
+
+#nav.affix {
+    position: fixed;
+    top: 0;
+    z-index:10;
+    -webkit-transition: all .6s ease-in-out;
+}
+
+.table>tbody>tr>td
+{
+    padding: 5px !important;
+    vertical-align: middle !important;
+    border-top: 2px solid yellow !important;
+}
+.footer {
+    margin-top: 3%;
+    position: relative;
+    height: 50px;
+    color: white;
+    bottom: 0;
+    width: 100%;
+    background-color: #222;
+    display: block;
+    border-color: #080808;
+    border: #080808 0.8px solid;
+}

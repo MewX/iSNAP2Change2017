@@ -1,0 +1,11 @@
+vendor/
+text-to-speech/*.wav
+text-to-speech/*.ogg
+text-to-speech/*.flac
+.idea/
+researcher/TODO.log
+researcher/playground.*
+pwd/
+tmp_poster_img/
+.DS_Store
+Thumbs.db
