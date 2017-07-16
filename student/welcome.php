@@ -1,4 +1,9 @@
 <?php
+/**
+ * Main entry
+ *
+ *
+ */
     require_once('../mysql-lib.php');
     require_once('../debug.php');
     $pageName = "welcome";
@@ -14,7 +19,7 @@
         //get fact topics
         $topicRes = getFactTopics($conn);
 
-        //randomly select three topics
+        //randomly select three topics to show
         $topicArr = array();
 
         foreach($topicRes as $singleTopic) {

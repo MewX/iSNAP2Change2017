@@ -62,7 +62,7 @@
         }
 
         if($action == "VALIDUSERNAME"){
-            if(validUsername($conn, $username)) {
+            if(checkStudentUsernameExisting($conn, $username)) {
                 $feedback["result"] = "valid";
             } else {
                 $feedback["result"] = "invalid";

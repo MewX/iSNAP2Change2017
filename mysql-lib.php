@@ -1,5 +1,5 @@
 <?php
-/*
+/**
 ```Naming Convention```
 
 create: INSERT
@@ -19,6 +19,8 @@ delete
 get...
 get...s
 misc
+
+TODO: data validation!!! (another part for preventing sql injection)
 
 */
 
@@ -40,7 +42,7 @@ function db_connect($logger = null)
 
     $serverName = "localhost";
     $username = "root";
-    $password = ".kHdGCD2Un%P";
+    $password = "root";
     if ($logger == null) {
         $conn = new PDO("mysql:host=$serverName; dbname=isnap2changedb; charset=utf8", $username, $password);
     } else {
@@ -218,16 +220,33 @@ function validToken(PDO $conn, $token)
 /* Token */
 
 /* Student */
+function checkStudentUsernameExisting(PDO $conn, $username)
+{
+    // init inputs
+    $username = strtolower($username);
+    // do query
+    $query = "SELECT EXISTS(SELECT 1 FROM student WHERE lower(username) = ?) as ret";
+    $query = $conn->prepare($query);
+    $query->execute(array($username));
+    $ret = $query->fetchAll();
+    echo intval($ret[0]['ret']);
+    return intval($ret[0]['ret']) === 1; // false: not existing; true: existing
+}
+
 function createStudent(PDO $conn, $username, $password, $firstName, $lastName, $email, $gender, $dob, $identity, $classID)
 {
+    // username should be checked first, if existing, fail!
+    if (checkStudentUsernameExisting($conn, $username)) return false;
+
+    // insert into the database
     $insertStudentSql = "INSERT INTO Student(Username, `Password`, FirstName, LastName, Email, Gender, DOB, Identity, Score, ClassID)
 						 VALUES (?,?,?,?,?,?,?,?,?,?)";
-
     $insertStudentSql = $conn->prepare($insertStudentSql);
 
     if (!$insertStudentSql->execute(array($username, md5($password), $firstName, $lastName, $email, $gender, $dob, $identity, 0, $classID))) {
-        throw new Exception("Fail to insert a student");
+        return false;
     }
+    return true; // successfully
 }
 
 function deleteStudent(PDO $conn, $studentID)
@@ -347,41 +366,23 @@ function resetPassword(PDO $conn, $studentID)
 
 function validStudent(PDO $conn, $username, $password)
 {
-    $validStudentSql = "SELECT COUNT(*) FROM Student WHERE `Username` = BINARY ? AND `Password` = BINARY ?";
+    // init input
+    $username = strtolower($username);
+    $password = md5($password);
+    // do query
+    $validStudentSql = "SELECT StudentID, Username FROM Student WHERE lower(username) = ? AND password = ?";
     $validStudentQuery = $conn->prepare($validStudentSql);
-    $validStudentQuery->execute(array($username, md5($password)));
-    $validStudentRes = $validStudentQuery->fetchColumn();
-
-    if ($validStudentRes == 0) {
+    $validStudentQuery->execute(array($username, $password));
+    $ret = $validStudentQuery->fetchAll();
+    
+    if (count($ret) == 1) {
+        return $ret[0];
+    } else if (count($ret) == 0) {
         return null;
-    } else if ($validStudentRes == 1) {
-
-        $validStudentSql = "SELECT StudentID, Username FROM Student WHERE `Username` = BINARY ? AND `Password` = BINARY ?";
-        $validStudentQuery = $conn->prepare($validStudentSql);
-        $validStudentQuery->execute(array($username, md5($password)));
-        $validStudentRes = $validStudentQuery->fetch(PDO::FETCH_OBJ);
-
-        return $validStudentRes;
-    } else throw new Exception("Duplicate students in Database");
+    } else {
+        throw new Exception("Duplicate students in Database");
+    }
 }
-
-function validUsername(PDO $conn, $username)
-{
-    $userSql = "SELECT COUNT(*)
-				FROM Student
-				WHERE Username = BINARY ?";
-
-    $userQuery = $conn->prepare($userSql);
-    $userQuery->execute(array($username));
-    $userRes = $userQuery->fetchColumn();
-
-    if ($userRes == 0) {
-        return true;
-    } else if ($userRes == 1) {
-        return false;
-    } else throw new Exception("Two or more than two users have the same username");
-}
-
 /* Student */
 
 /* Week */
