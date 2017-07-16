@@ -6,19 +6,14 @@
 	require_once('../debug.php');
 	$pageName = "login";
 
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		if(isset($_POST["username"]) && isset($_POST["password"])){
-			$username = $_POST["username"];
-			$password = $_POST["password"];
-		} else {
-
-		}
-	} else {
-
-	}
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["username"]) && isset($_POST["password"])) {
+    	$username = $_POST["username"];
+    	$password = $_POST["password"];
+    } else {
+    	$feedback["result"] = "invalid";
+    }
 
 	$conn = null;
-
 	try {
 		$conn = db_connect();
 
@@ -27,8 +22,8 @@
 
 		if($validRes != null) {
 			$feedback["result"] = "valid";
-			$_SESSION["studentID"] = $validRes->StudentID;
-			$_SESSION["studentUsername"] = $validRes->Username;
+			$_SESSION["studentID"] = $validRes['StudentID'];
+			$_SESSION["studentUsername"] = $validRes['Username'];
 		} else {
 			$feedback["result"] = "invalid";
 		}
