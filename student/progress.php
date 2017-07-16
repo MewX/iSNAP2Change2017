@@ -500,7 +500,7 @@
 
     <div class="content-wrapper">
         <div id="fullpage">
-            <div class="section">
+            <div class="section active">
                 <div class="progress-container">
                     <div class="progress-header">
                         <div class="progress-icon"></div>
@@ -644,7 +644,7 @@
 
                 </div>
             </div>
-            <div class="section active">
+            <div class="section">
                 <div class="activities-detail">
                     <div class="activities-header">
                         <div class="activities-title">Weekly Tasks</div>
