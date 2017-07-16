@@ -9,5 +9,5 @@
     } else {
         debug_log("You have not logged in.");
         header("location:welcome.php");
+        exit;
     }
-?>
