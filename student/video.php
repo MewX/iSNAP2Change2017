@@ -121,7 +121,7 @@
             <div class="settings">
                 <div class="setting-icon dropdown">
                     <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="#">Logout</a></li>
+                        <li class="dropdown-item"><a href="logout.php">Log out</a></li>
                     </ul>
                 </div>
                 <a href="#" class="setting-text">NoButSrsly</a>

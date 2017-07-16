@@ -237,7 +237,7 @@
                 <div class="setting-icon dropdown">
                     <ul class="dropdown-menu">
                         <li class="dropdown-item"><a href="settings.php">Settings</a></li>
-                        <li class="dropdown-item"><a href="#">Log out</a></li>
+                        <li class="dropdown-item"><a href="logout.php">Log out</a></li>
                     </ul>
                 </div>
                 <a class="setting-text"><?php echo $_SESSION["studentUsername"]?></a>

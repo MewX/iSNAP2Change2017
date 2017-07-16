@@ -488,7 +488,7 @@
                 <div class="setting-icon dropdown">
                     <ul class="dropdown-menu">
                         <li class="dropdown-item"><a href="settings.php">Settings</a></li>
-                        <li class="dropdown-item"><a href="#">Log out</a></li>
+                        <li class="dropdown-item"><a href="logout.php">Log out</a></li>
                     </ul>
                 </div>
                 <a class="setting-text"><?php echo $_SESSION["studentUsername"]?></a>
@@ -651,6 +651,7 @@
                     </div>
                     <div class="activities-tab">
                         <h2 class="activities-tab-title">Select Your week</h2>
+                        <h3 class="activities-tab-title">(Unfinished tasks cannot be started from here, please go to <a target="_self" href="game-home.php"><u>home</u></a>)</h3>
                         <div class="activities-tab-list">
                         <?php
                             for($i = 0; $i < $studentWeek; $i++) { ?>
