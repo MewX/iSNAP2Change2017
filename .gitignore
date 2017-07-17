@@ -8,3 +8,7 @@ pwd/
 tmp_poster_img/
 .DS_Store
 Thumbs.db
+
+pma/
+bower_components/
+
