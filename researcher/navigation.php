@@ -236,19 +236,25 @@
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
+                <li><a href="../student/welcome.php"><i class="fa fa-home fa-fw"></i> Home</a>
+                </li>
                 <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                 </li>
                 <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                </li>
+                <?php if (isset($_SESSION['researcherID']) && isset($_SESSION['researcherUsername'])): ?>
+                    <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+                <?php else: ?>
+                    <li><a data-toggle="modal" href="#myModal"><i class="fa fa-sign-out fa-fw"></i> Login</a></li>
+                <? endif; ?>
             </ul>
             <!-- /.dropdown-user -->
         </li>
         <!-- /.dropdown -->
     </ul>
     <!-- /.navbar-top-links -->
+    <?php if (isset($_SESSION['researcherID']) && isset($_SESSION['researcherUsername'])): ?>
 
     <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
@@ -310,4 +316,83 @@
         <!-- /.sidebar-collapse -->
     </div>
     <!-- /.navbar-static-side -->
+    <? endif; ?>
+
 </nav>
+
+<script>
+    function login(theForm) {
+        console.log($('#username').val());
+        var username = $('#username').val();
+        var password = $('#password').val();
+
+        $.ajax({
+            url: "login.php",
+            data: {
+                username: username,
+                password: password
+            },
+            type: "POST",
+            dataType : "json"
+        })
+
+            .done(function(feedback) {
+                parseFeedback(feedback);
+            })
+
+            .fail(function( xhr, status, errorThrown ) {
+                alert( "Sorry, there was a problem!" );
+                console.log( "Error: " + errorThrown );
+                console.log( "Status: " + status );
+                console.dir( xhr );
+            });
+    }
+
+    function parseFeedback(feedback) {
+        if(feedback.message != "success"){
+            alert(feedback.message + ". Please try again!");
+            return;
+        }
+
+        if(feedback.result == "valid"){
+            location.href = 'index.php';
+        } else {
+            $('#login-fail-text').text("Invalid username and/or password!");
+            $('#password').val("");
+        }
+    }
+</script>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <span id="login-fail-text" style="color:red"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                    <label><b>Username</b></label>
+                    <input class="form-control"type="text" placeholder="Enter Username" id="username" required>
+                        <br>
+                    <label><b>Password</b></label>
+                    <input class="form-control" type="password" placeholder="Enter Password" id="password" required>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary" onclick="login()">Login</button>
+                <input type="checkbox" checked="checked"> Remember me
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

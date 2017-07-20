@@ -40,9 +40,9 @@ function db_connect($logger = null)
 {
     $conn = null;
 
-    $serverName = "localhost";
+    $serverName = "127.0.0.1";
     $username = "root";
-    $password = "root";
+    $password = "";
     if ($logger == null) {
         $conn = new PDO("mysql:host=$serverName; dbname=isnap2changedb; charset=utf8", $username, $password);
     } else {
@@ -384,6 +384,28 @@ function validStudent(PDO $conn, $username, $password)
     }
 }
 /* Student */
+
+/* Researcher */
+function validResearcher(PDO $conn, $username, $password)
+{
+    // init input
+    $username = strtolower($username);
+    $password = md5($password);
+    // do query
+    $validResearcherSql = "SELECT ResearcherID, Username FROM Researcher WHERE lower(username) = ? AND password = ?";
+    $validResearcherQuery = $conn->prepare($validResearcherSql);
+    $validResearcherQuery->execute(array($username, $password));
+    $ret = $validResearcherQuery->fetchAll();
+
+    if (count($ret) == 1) {
+        return $ret[0];
+    } else if (count($ret) == 0) {
+        return null;
+    } else {
+        throw new Exception("Duplicate researchers in Database");
+    }
+}
+/* Researcher */
 
 /* Week */
 function removeWeek(PDO $conn, $week)
