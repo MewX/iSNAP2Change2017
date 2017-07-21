@@ -262,6 +262,12 @@
                 <li>
                     <a href="index.php"><i class="fa fa-desktop fa-fw"></i> Dashboard<span class="fa arrow"></span></a>
                 </li>
+                <!-- Only visible to super account-->
+                <?php if ($_SESSION['researcherID']==1): ?>
+                    <li>
+                        <a href="accountManagement.php"><i class="fa fa-archive" aria-hidden="true"></i> Account Administration<span class="fa arrow"></span></a>
+                    </li>
+                <? endif; ?>
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#userAdmin" class=""
                        aria-expanded="true"><i class="fa fa-fw fa-wrench"></i> User Administration <i

@@ -405,6 +405,35 @@ function validResearcher(PDO $conn, $username, $password)
         throw new Exception("Duplicate researchers in Database");
     }
 }
+
+function getResearchers(PDO $conn)
+{
+    return getRecords($conn, "Researcher");
+}
+
+function createResearcher(PDO $conn, $username, $password)
+{
+    $updateSql = "INSERT INTO researcher(Username, Password)
+         VALUES (?,?)";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($username,md5($password)));
+    //return $conn->lastInsertId();
+}
+
+function updateResearcher(PDO $conn, $username, $researcherID)
+{
+    $updateSql = "UPDATE researcher 
+            SET Username = ?
+            WHERE ResearcherID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    echo "<script>console.log( 'SQL: " . $username ." ".$researcherID."' );</script>";
+    $updateSql->execute(array($username, $researcherID));
+}
+
+function deleteResearcher(PDO $conn, $researcherID)
+{
+    deleteRecord($conn, $researcherID, "Researcher");
+}
 /* Researcher */
 
 /* Week */
