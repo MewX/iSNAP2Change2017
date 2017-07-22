@@ -5,6 +5,7 @@
  * Date: 7/17/2017
  * Time: 01:12 AM
  */
+require_once('../debug.php');
 
 session_start();
 

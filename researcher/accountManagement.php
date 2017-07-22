@@ -8,30 +8,38 @@ require_once("researcher-lib.php");
 try {
     $conn = db_connect();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        echo "<script>console.log( 'request' );</script>";
 
         if (isset($_POST['update'])) {
-            echo "<script>console.log( 'update is set' );</script>";
-
             $update = $_POST['update'];
             // insert
             if ($update == 1) {
                 $userName = $_POST['Username'];
                 $passWord = $_POST['Password'];
                 createResearcher($conn, $userName, $passWord);
+                header("Location: accountManagement.php"); // ==> ../index.php
+
             } // update
             else if ($update == 0) {
                 $userName = $_POST['Username'];
                 $researcherID = $_POST['ResearcherID'];
                 updateResearcher($conn, $userName, $researcherID);
-                echo "<script>console.log( 'Debug Objects: " . $userName ." ".$researcherID."' );</script>";
+                header("Location: accountManagement.php"); // ==> ../index.php
 
 
             } // remove school (with help of DELETE CASCADE) 
             else if ($update == -1) {
                 $researcherID = $_POST['ResearcherID'];
-                deleteResearcher($conn, $researcherID);
+                //super account (id=1) cannot be deleted
+                if($researcherID==1){
+                    echo '<script language="javascript">';
+                    echo 'alert("This is a super account which cannot be deleted")';
+                    echo '</script>';
+                }else{
+                    deleteResearcher($conn, $researcherID);
+                    header("Location: accountManagement.php"); // ==> ../index.php
+                }
             }
+
         }
     }
 
@@ -158,7 +166,12 @@ db_close($conn);
                     <input type="text" class="form-control dialoginput" id="Username" name="Username">
                     <br>
                     <label for="Password">Password</label>
-                    <input type="text" class="form-control dialoginput" id="Password" name="Password">
+                    <input type="password" class="form-control dialoginput" id="Password" name="Password">
+                    <br>
+                    <label for="cPassword">Confirmed Password</label>
+                    <br>
+                    <span id='message'></span>
+                    <input type="password" class="form-control dialoginput" id="cPassword" name="cPassword">
                     <br>
                     <div class="alert alert-danger">
                         <p><strong>Reminder</strong> : Username of researcher should be unique and no duplicate names are allowed.
@@ -227,6 +240,28 @@ db_close($conn);
         //enable SchoolID
         dialogInputArr.eq(0).prop('disabled', false);
         $('#submission').submit();
+    });
+
+    $('#Username').on('keyup', function () {
+        console.log("pressed");
+        <?php
+        $conn = db_connect();
+        echo $_POST['Username'];
+        if(checkResearcherUsernameExisting($conn,$_POST['Username'])){
+            echo '$(\'#message\').html(\'existing\').css(\'color\', \'red\')';
+        }else{
+            echo '$(\'#message\').html(\'valid unsername\').css(\'color\', \'green\')';
+        };
+        ?>
+
+    });
+
+
+    $('#Password, #cPassword').on('keyup', function () {
+        if (($('#Password').val() == $('#cPassword').val()) && $('#Password').val()!="") {
+            $('#message').html('Matching').css('color', 'green');
+        } else
+            $('#message').html('Not Matching').css('color', 'red');
     });
 </script>
 </body>

