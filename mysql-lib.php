@@ -392,7 +392,7 @@ function validResearcher(PDO $conn, $username, $oripassword)
     $username = strtolower($username);
     $password = md5($oripassword);
     // do query
-    $validResearcherSql = "SELECT ResearcherID, Password FROM Researcher WHERE lower(username) = ?";
+    $validResearcherSql = "SELECT ResearcherID, Username, Password FROM Researcher WHERE lower(username) = ?";
     $validResearcherQuery = $conn->prepare($validResearcherSql);
     $validResearcherQuery->execute(array($username));
     $ret = $validResearcherQuery->fetchAll();
