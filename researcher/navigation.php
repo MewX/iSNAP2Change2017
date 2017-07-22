@@ -1,5 +1,6 @@
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"
+     xmlns="http://www.w3.org/1999/html">
     <div class="navbar-header">
         <a class="navbar-brand" href="index.php">iSNAP2Change Administration System</a>
     </div>
@@ -303,7 +304,7 @@
                     <!--/.nav-second-level -->
                 </li>
                 <li>
-                    <a href="javascript:;" data-toggle="collapse" data-target="#gradingPage" class=""
+                    <a href="javascript:" data-toggle="collapse" data-target="#gradingPage" class=""
                        aria-expanded="true"><i class="fa fa-fw fa-comment"></i> Grading & Feedback <i
                             class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="gradingPage" class="collapse in nav nav-second-level" aria-expanded="true">
@@ -327,8 +328,7 @@
 </nav>
 
 <script>
-    function login(theForm) {
-        console.log($('#username').val());
+    function login() {
         var username = $('#username').val();
         var password = $('#password').val();
 
@@ -375,14 +375,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title">Login</h4>
             </div>
             <span id="login-fail-text" style="color:red"></span>
             <div class="container">
                 <div class="row">
                     <div class="col-xs-6">
                     <label><b>Username</b></label>
-                    <input class="form-control"type="text" placeholder="Enter Username" id="username" required>
+                    <input class="form-control" type="text" placeholder="Enter Username" id="username" required>
                         <br>
                     <label><b>Password</b></label>
                     <input class="form-control" type="password" placeholder="Enter Password" id="password" required>
@@ -390,7 +390,10 @@
                 </div>
                 <br>
                 <button type="submit" class="btn btn-primary" onclick="login()">Login</button>
-                <input type="checkbox" checked="checked"> Remember me
+                <label>
+                    <input type="checkbox" checked="checked">
+                    Remember me
+                </label>
             </div>
 
             <div class="modal-footer">

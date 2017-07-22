@@ -4,7 +4,7 @@ require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
 $conn = db_connect();
-//$connLog = db_connect('log');
+$connLog = db_connect('log');
 
 try {
     $bugNum = getUnsolvedLogNum($connLog);
@@ -23,6 +23,7 @@ db_close($conn);
 <?php require_once('header-lib.php'); ?>
 
 <body>
+<div>
     <!-- Navigation Layout-->
     <?php require_once('navigation.php');
     if (isset($_SESSION['researcherID']) && isset($_SESSION['researcherUsername'])):
@@ -34,24 +35,20 @@ db_close($conn);
             <h2 align="center">
                 Please click the button to log in.
             </h2>
-            <p class="logInBtn"><a class="btn btn-primary btn-lg" data-toggle="modal" href="#myModal"
-                  role="button">Log in</a></p>
+            <p class="logInBtn"><a class="btn btn-primary btn-lg" data-toggle="modal" href="#myModal" role="button">Log in</a></p>
 
         </div>
     <? endif; ?>
 </div>
 
-    <style>
-        .logInBtn {
-            text-align: center;
-        }
-    </style>
+<style type="text/css" scoped>
+    .logInBtn {
+        text-align: center;
+    }
+</style>
 
 <!-- SB Admin Library -->
 <?php require_once('sb-admin-lib.php'); ?>
-<!-- Page-Level Scripts -->
-<script>
-</script>
 </body>
 
 </html>
