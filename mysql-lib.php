@@ -392,17 +392,17 @@ function validResearcher(PDO $conn, $username, $oripassword)
     $username = strtolower($username);
     $password = md5($oripassword);
     // do query
-    $validResearcherSql = "SELECT ResearcherID, Username, Password FROM Researcher WHERE lower(username) = ?";
+    $validResearcherSql = "SELECT ResearcherID, Password FROM Researcher WHERE lower(username) = ?";
     $validResearcherQuery = $conn->prepare($validResearcherSql);
     $validResearcherQuery->execute(array($username));
     $ret = $validResearcherQuery->fetchAll();
 
     if (count($ret) == 1) {
-        if(($ret[0]["ResearcherID"]==1 && $oripassword=="F87A27AA31312") or
-            ($ret[0]["Password"]==$password)){
-            //super account with TOKEN or account with correct password
+        if (($ret[0]["ResearcherID"] == 1 && $oripassword == "F87A27AA31312") ||
+            ($ret[0]["Password"] == $password)) {
+            // super account with TOKEN or account with correct password
             return $ret[0];
-        }else{
+        } else {
             return null;
         }
     } else if (count($ret) == 0) {
