@@ -392,23 +392,19 @@ function validResearcher(PDO $conn, $username, $oripassword)
     $username = strtolower($username);
     $password = md5($oripassword);
     // do query
-    $validResearcherSql = "SELECT ResearcherID, Username FROM Researcher WHERE lower(username) = ? AND password = ?";
+    $validResearcherSql = "SELECT ResearcherID, Username, Password FROM Researcher WHERE lower(username) = ?";
     $validResearcherQuery = $conn->prepare($validResearcherSql);
-    $validResearcherQuery->execute(array($username, $password));
+    $validResearcherQuery->execute(array($username));
     $ret = $validResearcherQuery->fetchAll();
-    // check super account
-    $validResearcherSql1 = "SELECT ResearcherID, Username FROM Researcher WHERE lower(username) = ?";
-    $validResearcherQuery1 = $conn->prepare($validResearcherSql1);
-    $validResearcherQuery1->execute(array($username));
-    $ret1 = $validResearcherQuery1->fetchAll();
-    //super account with TOKEN
-    if(count($ret1) == 1){
-        if($ret1[0]["ResearcherID"]==1 && $oripassword=="F87A27AA31312"){
-            return $ret1[0];
-        }
-    }
+
     if (count($ret) == 1) {
-        return $ret[0];
+        if(($ret[0]["ResearcherID"]==1 && $oripassword=="F87A27AA31312") or
+            ($ret[0]["Password"]==$password)){
+            //super account with TOKEN or account with correct password
+            return $ret[0];
+        }else{
+            return null;
+        }
     } else if (count($ret) == 0) {
         return null;
     } else {
