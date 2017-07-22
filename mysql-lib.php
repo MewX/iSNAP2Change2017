@@ -397,9 +397,8 @@ function validResearcher(PDO $conn, $username, $oripassword)
     $validResearcherQuery->execute(array($username, $password));
     $ret = $validResearcherQuery->fetchAll();
     // check super account
-    $conn1 = db_connect();
     $validResearcherSql1 = "SELECT ResearcherID, Username FROM Researcher WHERE lower(username) = ?";
-    $validResearcherQuery1 = $conn1->prepare($validResearcherSql1);
+    $validResearcherQuery1 = $conn->prepare($validResearcherSql1);
     $validResearcherQuery1->execute(array($username));
     $ret1 = $validResearcherQuery1->fetchAll();
     //super account with TOKEN
