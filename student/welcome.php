@@ -146,7 +146,7 @@
                         <div class="panel-body" style="padding: 0px; height: 100%; width: 100%;">
                             <div class="col-xs-8 col-xs-offset-2" style="text-align: center; height: 55%;">
 
-                                <img src="./img/achievment_icon.png" style="height: 60%; width: 20%;">
+                                <img src="./img/achievement_logo.png" style="height: 60%; width: 20%;">
                                 <br>
                                 <span style="color: white; font-size: 3.2vh;"> Achievement of the week </span>
 
@@ -583,7 +583,7 @@
 
                 $('#nav').affix({
                     offset: {
-                        top: $('header').height() - $('#nav').height()
+                        top: 0.1*$('header').height() - $('#nav').height()
                     }
                 });
 

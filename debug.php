@@ -3,7 +3,7 @@
  * Bitnami Server PHP version: 5.6.21
  */
 //if true, echo debug output in dev mode, else production mode
-$DEBUG_MODE = true;
+$DEBUG_MODE = false;
 
 function debug_log($message)
 {

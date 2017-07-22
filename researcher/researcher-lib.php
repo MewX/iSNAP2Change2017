@@ -11,7 +11,7 @@ if (isset($_SESSION['researcherID'])) {
         debug_log("This is DEBUG_MODE with hard-code ResearcherID = 1.");
         $researcherID = 1;
     } else {
-        header("location: ../welcome.php");
+        //header("location: index.php");
     }
 }
 /* Session */
