@@ -24,10 +24,10 @@ db_close($conn);
 
 <body>
     <!-- Navigation Layout-->
-    <?php require_once('navigation.php'); ?>
-    <?php if (isset($_SESSION['researcherID']) && isset($_SESSION['researcherUsername'])): ?>
-        <?php require_once ('dashboard.php'); ?>
-    <?php else: ?>
+    <?php require_once('navigation.php');
+    if (isset($_SESSION['researcherID']) && isset($_SESSION['researcherUsername'])):
+        require_once ('dashboard.php');
+    else: ?>
         <div class="jumbotron">
             <h1 align="center">Welcome to SNAP for Researcher</h1>
 

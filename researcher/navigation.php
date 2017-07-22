@@ -341,17 +341,15 @@
             type: "POST",
             dataType : "json"
         })
-
-            .done(function(feedback) {
-                parseFeedback(feedback);
-            })
-
-            .fail(function( xhr, status, errorThrown ) {
-                alert( "Sorry, there was a problem!" );
-                console.log( "Error: " + errorThrown );
-                console.log( "Status: " + status );
-                console.dir( xhr );
-            });
+        .done(function(feedback) {
+            parseFeedback(feedback);
+        })
+        .fail(function( xhr, status, errorThrown ) {
+            alert( "Please try again later" );
+            console.log( "Error: " + errorThrown );
+            console.log( "Status: " + status );
+            console.dir( xhr );
+        });
     }
 
     function parseFeedback(feedback) {

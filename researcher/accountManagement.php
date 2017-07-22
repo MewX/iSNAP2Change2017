@@ -8,26 +8,24 @@ require_once("researcher-lib.php");
 try {
     $conn = db_connect();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
         if (isset($_POST['update'])) {
             $update = $_POST['update'];
-            // insert
             if ($update == 1) {
+                // insert
                 $userName = $_POST['Username'];
                 $passWord = $_POST['Password'];
                 createResearcher($conn, $userName, $passWord);
                 header("Location: accountManagement.php"); // ==> ../index.php
-
-            } // update
+            }
             else if ($update == 0) {
+                // update
                 $userName = $_POST['Username'];
                 $researcherID = $_POST['ResearcherID'];
                 updateResearcher($conn, $userName, $researcherID);
                 header("Location: accountManagement.php"); // ==> ../index.php
-
-
-            } // remove school (with help of DELETE CASCADE) 
+            }
             else if ($update == -1) {
+                // remove school (with help of DELETE CASCADE)
                 $researcherID = $_POST['ResearcherID'];
                 //super account (id=1) cannot be deleted
                 if($researcherID==1){
