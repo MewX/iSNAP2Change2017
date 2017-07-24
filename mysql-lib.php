@@ -225,7 +225,7 @@ function checkStudentUsernameExisting(PDO $conn, $username)
     // init inputs
     $username = strtolower($username);
     // do query
-    $query = "SELECT EXISTS(SELECT 1 FROM student WHERE lower(username) = ?) as ret";
+    $query = "SELECT EXISTS(SELECT 1 FROM Student WHERE lower(username) = ?) as ret";
     $query = $conn->prepare($query);
     $query->execute(array($username));
     $ret = $query->fetchAll();
@@ -422,7 +422,7 @@ function checkResearcherUsernameExisting(PDO $conn, $username)
     // init inputs
     $username = strtolower($username);
     // do query
-    $query = "SELECT EXISTS(SELECT 1 FROM researcher WHERE lower(username) = ?) as ret";
+    $query = "SELECT EXISTS(SELECT 1 FROM Researcher WHERE lower(username) = ?) as ret";
     $query = $conn->prepare($query);
     $query->execute(array($username));
     $ret = $query->fetchAll();
@@ -435,7 +435,7 @@ function createResearcher(PDO $conn, $username, $password)
     //check researcher first
     if (checkResearcherUsernameExisting($conn, $username)) return false;
 
-    $updateSql = "INSERT INTO researcher(Username, Password)
+    $updateSql = "INSERT INTO Researcher(Username, Password)
          VALUES (?,?)";
     $updateSql = $conn->prepare($updateSql);
     $updateSql->execute(array($username,md5($password)));
@@ -444,7 +444,7 @@ function createResearcher(PDO $conn, $username, $password)
 
 function updateResearcher(PDO $conn, $username, $researcherID)
 {
-    $updateSql = "UPDATE researcher 
+    $updateSql = "UPDATE Researcher 
             SET Username = ?
             WHERE ResearcherID = ?";
     $updateSql = $conn->prepare($updateSql);
