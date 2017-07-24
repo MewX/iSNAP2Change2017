@@ -15,14 +15,14 @@ try {
                 $userName = $_POST['Username'];
                 $passWord = $_POST['Password'];
                 createResearcher($conn, $userName, $passWord);
-                header("Location: accountManagement.php"); // ==> ../index.php
+                header("Location: account.php"); // ==> ../index.php
             }
             else if ($update == 0) {
                 // update
                 $userName = $_POST['Username'];
                 $researcherID = $_POST['ResearcherID'];
                 updateResearcher($conn, $userName, $researcherID);
-                header("Location: accountManagement.php"); // ==> ../index.php
+                header("Location: account.php"); // ==> ../index.php
             }
             else if ($update == -1) {
                 // remove school (with help of DELETE CASCADE)
@@ -34,7 +34,7 @@ try {
                     echo '</script>';
                 }else{
                     deleteResearcher($conn, $researcherID);
-                    header("Location: accountManagement.php"); // ==> ../index.php
+                    header("Location: account.php"); // ==> ../index.php
                 }
             }
 
@@ -203,7 +203,8 @@ db_close($conn);
 		$("label").remove(".error");
         $('#dialogTitle').text("Edit <?php echo $pageNameForView ?>");
         $('#update').val(0);
-        for (i = 0; i < dialogInputArr.length; i++) {
+
+        for (i = 0; i < dialogInputArr.length-2; i++) {
             dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());
         }
 

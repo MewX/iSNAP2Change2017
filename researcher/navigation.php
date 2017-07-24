@@ -266,7 +266,7 @@
                 <!-- Only visible to super account-->
                 <?php if ($_SESSION['researcherID']==1): ?>
                     <li>
-                        <a href="accountManagement.php"><i class="fa fa-archive" aria-hidden="true"></i> Account Administration<span class="fa arrow"></span></a>
+                        <a href="account.php"><i class="fa fa-archive" aria-hidden="true"></i> Account Administration<span class="fa arrow"></span></a>
                     </li>
                 <? endif; ?>
                 <li>
