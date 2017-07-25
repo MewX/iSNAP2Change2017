@@ -583,7 +583,7 @@
 
                 $('#nav').affix({
                     offset: {
-                        top: 0.1*$('header').height() - $('#nav').height()
+                        top: 0*$('header').height() - $('#nav').height()
                     }
                 });
 
