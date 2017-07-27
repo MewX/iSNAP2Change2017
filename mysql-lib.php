@@ -269,6 +269,14 @@ function getStudents(PDO $conn)
     return $studentResult;
 }
 
+//get the progress details and quiz marks for each student
+function getStudentsStatistic(PDO $conn){
+    $studentSql = "SELECT ClassID, CS.StudentID, FirstName, LastName, QuizID, Status 
+                   FROM (SELECT * FROM Student NATURAL JOIN Class) AS CS left join Quiz_Record
+                   on CS.StudentID = Quiz_Record.StudentID";
+}
+
+
 function getStudentsNum(PDO $conn)
 {
     $studentSql = "SELECT COUNT(*) AS StudentNum FROM Student";
