@@ -331,16 +331,26 @@
     function login() {
         var username = $('#username').val();
         var password = $('#password').val();
+        var remember = $('#remember').val();
 
-        $.ajax({
-            url: "login.php",
-            data: {
+        var params = {
+            type: "POST",
+            dataType: "json",
+            url: "login.php"
+        }
+        if($('#remember').is(':checked')){
+            params.data = {
+                username: username,
+                password: password,
+                remember: remember
+            }
+        }else{
+            params.data = {
                 username: username,
                 password: password
-            },
-            type: "POST",
-            dataType : "json"
-        })
+            }
+        }
+        $.ajax(params)
         .done(function(feedback) {
             parseFeedback(feedback);
         })
@@ -391,7 +401,7 @@
                 <br>
                 <button type="submit" class="btn btn-primary" onclick="login()">Login</button>
                 <label>
-                    <input type="checkbox" checked="checked">
+                    <input type="checkbox" checked="checked" name="remember" id="remember">
                     Remember me
                 </label>
             </div>
@@ -399,7 +409,19 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
+
+            <?php
+            if(isset($_COOKIE['username']) and isset($_COOKIE['password'])){
+                $username = $_COOKIE['username'];
+                $pass = $_COOKIE['password'];
+                echo "<script>
+                    document.getElementById('username').value = '$username';
+                    document.getElementById('password').valur = '$password';
+                </script>";
+            }
+            ?>
         </div>
 
     </div>
 </div>
+
