@@ -142,7 +142,6 @@ db_close($conn);
         var table = $('#datatables').DataTable({
             responsive: true,
             //rows group for Question and edit box
-            rowsGroup: [1, 4],
             "pageLength": 100,
             "aoColumnDefs": [
                 {"bSearchable": false, "aTargets": [0]}
