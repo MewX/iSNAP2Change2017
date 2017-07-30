@@ -3,28 +3,23 @@ require_once('../mysql-lib.php');
 require_once('../debug.php');
 $pageName = "signup";
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-    if(isset($_POST["tokenString"])){
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["tokenString"])){
         $token = $_POST["tokenString"];
-    }
+} else {
+    // invalid request to register
+    header("location:welcome.php");
+    exit;
 }
 
 $conn = null;
-
 try {
     $conn = db_connect();
-
     $tokenRes = getToken($conn, $token);
-
-
 } catch(Exception $e){
     if($conn != null) {
         db_close($conn);
     }
-
     debug_err($e);
-    //to do: handle sql error
-    //...
     exit;
 }
 
