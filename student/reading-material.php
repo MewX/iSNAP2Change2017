@@ -491,11 +491,11 @@
     </div>
 
     <ul class="sitenav">
-        <li class="sitenav-item sitenav-healthy-recipes"><a href="#"></a></li>
-        <li class="sitenav-item sitenav-game-home"><a href="#"></a></li>
-        <li class="sitenav-item sitenav-extra-activities"><a href="extra-activities.php"></a></li>
-        <li class="sitenav-item sitenav-progress"><a href="progress.php"></a></li>
-        <li class="sitenav-item sitenav-reading-material"><a href="reading-material.php"></a></li>
+        <li class="sitenav-item sitenav-healthy-recipes"><a href="#" data-toggle="tooltip" title="Healthy Recipes"></a></li>
+        <li class="sitenav-item sitenav-game-home"><a href="#" data-toggle="tooltip" title="Game Home"></a></li>
+        <li class="sitenav-item sitenav-extra-activities"><a href="extra-activities.php" data-toggle="tooltip" title="Extra Activities"></a></li>
+        <li class="sitenav-item sitenav-progress"><a href="progress.php" data-toggle="tooltip" title="Progress"></a></li>
+        <li class="sitenav-item sitenav-reading-material"><a href="reading-material.php" data-toggle="tooltip" title="Reading Materials"></a></li>
     </ul>
     <div class="footer-wrapper">
         <div class="footer">
