@@ -187,42 +187,42 @@ db_close($conn);
             </span>
             <form >
                 <div class="input-group">
-                    <label class="input-label">Username</label>
+                    <label class="input-label">Username(*)</label>
                     <input id="username-text" type="text" class="form-control input-text-box" aria-describedby="sizing-addon1" onblur="validInfo('VALIDUSERNAME')">
                     <span id="username-validation-text"></span>
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Nickname</label>
+                    <label class="input-label">Nickname(*)</label>
                     <input id="lastname-text" name="lastname"  type="text" class="form-control input-text-box" aria-describedby="sizing-addon1">
 
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Password</label>
+                    <label class="input-label">Password(*)</label>
                     <input id="password-text" name="password" type="password" class="form-control input-text-box" aria-describedby="sizing-addon1">
 
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Confirm Password</label>
+                    <label class="input-label">Confirm Password(*)</label>
                     <input id="password-text2" name="password2" type="password" class="form-control input-text-box" aria-describedby="sizing-addon1">
 
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Last Name</label>
+                    <label class="input-label">Last Name(*)</label>
                     <input id="lastname-text" name="lastname"  type="text" class="form-control input-text-box" aria-describedby="sizing-addon1">
 
                 </div>
                 <div class="input-group">
-                    <label class="input-label">First Name</label>
+                    <label class="input-label">First Name(*)</label>
                     <input id="firstname-text" name="firstname" type="text" class="form-control input-text-box" aria-describedby="sizing-addon1">
 
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Email</label>
+                    <label class="input-label">Email(*)</label>
                     <input id="email-text" name="email" type="email" class="form-control input-text-box" aria-describedby="sizing-addon1">
 
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Date Of Birth</label>
+                    <label class="input-label">Date Of Birth(*)</label>
                     <select id="dob-dd-selection" class="form-control" style="opacity: 0.7; font-family: 'Lato', sans-serif; font-size: 20px; font-weight: normal; margin: 0.8%; width: 22%; background-color: black; color:white; border-radius: 10px; border: none; text-align: center;">
                         <option value="" selected disabled>DD</option>
                         <option>01</option>
@@ -274,6 +274,46 @@ db_close($conn);
                     </select>
                     <select id="dob-yyyy-selection" class="form-control" style="opacity: 0.7; font-family: 'Lato', sans-serif; font-size: 20px; font-weight: normal; margin: 0.8%; width: 22%; background-color: black; color:white; border-radius: 10px; border: none; text-align: center;">
                         <option value="" selected disabled>YYYY</option>
+                        <option>1960</option>
+                        <option>1961</option>
+                        <option>1962</option>
+                        <option>1963</option>
+                        <option>1964</option>
+                        <option>1965</option>
+                        <option>1966</option>
+                        <option>1967</option>
+                        <option>1968</option>
+                        <option>1969</option>
+                        <option>1970</option>
+                        <option>1971</option>
+                        <option>1972</option>
+                        <option>1973</option>
+                        <option>1974</option>
+                        <option>1975</option>
+                        <option>1976</option>
+                        <option>1977</option>
+                        <option>1978</option>
+                        <option>1979</option>
+                        <option>1980</option>
+                        <option>1981</option>
+                        <option>1982</option>
+                        <option>1983</option>
+                        <option>1984</option>
+                        <option>1985</option>
+                        <option>1986</option>
+                        <option>1987</option>
+                        <option>1988</option>
+                        <option>1989</option>
+                        <option>1990</option>
+                        <option>1991</option>
+                        <option>1992</option>
+                        <option>1993</option>
+                        <option>1994</option>
+                        <option>1995</option>
+                        <option>1996</option>
+                        <option>1997</option>
+                        <option>1998</option>
+                        <option>1999</option>
                         <option>2000</option>
                         <option>2001</option>
                         <option>2002</option>
@@ -287,10 +327,14 @@ db_close($conn);
                         <option>2010</option>
                         <option>2011</option>
                         <option>2012</option>
+                        <option>2013</option>
+                        <option>2014</option>
+                        <option>2015</option>
+                        <option>2016</option>
                     </select>
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Gender</label>
+                    <label class="input-label">Gender(*)</label>
 
                     <label class="radio-inline" style="background-color: black; border-radius: 8px; opacity: 0.7; width: 33%; margin-left: -28%;">
                         <input type="radio" name="gender-radio" id="inlineRadio1" value="Male"><span class="header4" style="color: white !important;">Male</span>
@@ -301,10 +345,10 @@ db_close($conn);
 
                 </div>
                 <div class="input-group">
-                    <span class="input-label">Do you identify as:</span>
+                    <span class="input-label">Identified as:</span>
                     <select id="identity-selection" class="form-control header4" style="opacity: 0.7; width: 69%; background-color: black; color:white; border-radius: 10px; border: none; text-align: center;">
-                        <option><span class="header4" style="color: white !important;text-align: center;">Aboriginal</span></option>
                         <option><span class="header4" style="color: white !important;text-align: center;">Resident</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">Aboriginal</span></option>
                     </select>
                 </div>
                 <div class="input-group">
