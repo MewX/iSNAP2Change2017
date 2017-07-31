@@ -4,20 +4,25 @@ require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
 $columnName = array('ClassName', 'FirstName', 'LastName');
-
+$colspanName = array('');
+$quizList = array('ClassName', 'FirstName', 'LastName');
 try {
     $conn = db_connect();
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['update'])) {
             $update = $_POST['update'];
             //reset student password
             if ($update == 0) {
                 $studentID = $_POST['studentID'];
-                resetPassword($conn, $studentID);
-            } //delete student (with help of DELETE CASCADE)            
+                //resetPassword($conn, $studentID);
+            } //delete student (with help of DELETE CASCADE)
             else if ($update == -1) {
-                $studentID = $_POST['studentID'];
-                deleteStudent($conn, $studentID);
+                $studentID = $_POST['StudentID'];
+                $quizID = $_POST['QuizID'];
+                echo "<script>console.log( 'StuID: " . $studentID . "' );</script>";
+                echo "<script>console.log( 'QuizID: " . $quizID . "' );</script>";
+                resetStuDueTime($conn,$studentID,$quizID);
             }
         }
     }
@@ -27,14 +32,21 @@ try {
 
 try {
     refreshAllStudentsScore($conn);
-    $studentResult = getStudents($conn);
-    $weekResult = getMaxWeek($conn);
-    for ($i = 1; $i <= $weekResult->WeekNum; $i++){
-        array_push($columnName,"Week-$i");
-        echo "<script>console.log( 'Debug Objects: " .$i. "' );</script>";
+    $getQuizWithWeek = getQuizWithWeek($conn);
+    $getQuizInfo = getQuizInfo($conn);
+    $studentStatistic = getStudentsStatistic($conn);
+    for ($i = 0; $i < count($getQuizWithWeek); $i++){
+        $j = $i+1;
+        array_push($colspanName, "Week$j");
     }
-
-
+    for ($i = 1; $i <= count($getQuizInfo); $i++){
+        array_push($columnName,"Quiz$i");
+    }
+    for ($i = 0; $i < count($getQuizInfo); $i++){
+        $j = $getQuizInfo[$i]->QuizID;
+        echo "<script>console.log( 'QuizID: " . $j . "' );</script>";
+        array_push($quizList,"Quiz$j");
+    }
 } catch (Exception $e) {
     debug_err($e);
 }
@@ -44,6 +56,13 @@ db_close($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
+<style>
+    .fa-clock-o:hover {
+        color: grey;
+    }
+</style>
+
 
 <!-- Header Library -->
 <?php require_once('header-lib.php'); ?>
@@ -74,30 +93,71 @@ db_close($conn);
                             Toggle column:
                             <?php for ($i = 0; $i < count($columnName); $i++) {?>
                                     <i class="fa fa-check-square-o fa-fw"></i><a class="toggle-vis"
-                                                                                 data-column="<?php echo $i; ?>"><?php echo $columnName[$i]; ?></a>&nbsp;
+                                                                                 start = "2" data-column="<?php echo $i; ?>"><?php echo $columnName[$i]; ?></a>&nbsp;
                             <?php } ?>
                             <br>
                             <br>
+                                <span class="fa fa fa-certificate pull-left" aria-hidden="true" style="font-size: 16px"> Graded</span>
+                                <span class="fa fa-star pull-left" aria-hidden="true" style="font-size: 16px"> Not Graded</span>
+                                <span class="fa fa-star-o pull-left" aria-hidden="true" style="font-size: 16px"> Not Submitted</span>
+                                <span class="fa fa-clock-o pull-left" aria-hidden="true" style="font-size: 16px"> Reset Timer </span>
+                            <br>
+                            <br>
                         </div>
+
                         <div class="dataTable_wrapper">
+
                             <table class="table table-striped table-bordered table-hover" id="datatables">
+
                                 <thead>
                                     <tr>
+                                        <?php for ($i = 0; $i< count($colspanName); $i++){?>
+                                            <th colspan= <?php if( $i!=0 ) echo $getQuizWithWeek[$i-1]->QuizNum; else echo 3?> >
+                                                Week<?php if( $i!=0 ) echo $getQuizWithWeek[$i-1]->Week?>
+                                            </th>
+                                        <?php } ?>
+                                    </tr>
+                                    <tr>
                                         <?php for ($i = 0; $i < count($columnName); $i++) { ?>
-                                            <th><?php echo $columnName[$i]; ?></th>
+                                            <?php if($i>2):?>
+                                                <th QuizID= <?php echo $getQuizInfo[$i-3]->QuizID;?> ><?php echo $columnName[$i]?>
+                                            <?php else: ?>
+                                                <th><?php echo $columnName[$i]?>
+                                            <?php endif ?>
+                                            <?php
+                                                if ($i > 2) {
+                                                    echo '<span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>';
+                                                }
+                                            ?>
+                                                </th>
                                         <?php } ?>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php for ($i = 0; $i < count($studentResult); $i++) { ?>
+                                <?php for ($i = 0; $i < count($studentStatistic); $i++) { ?>
                                     <tr class="<?php if ($i % 2 == 0) {
                                         echo "odd";
                                     } else {
                                         echo "even";
                                     } ?>">
-                                        <?php for ($j = 0; $j < count($columnName); $j++) { ?>
-                                            <td><?php echo $studentResult[$i]->$columnName[$j]; ?>
-                                                <?php if ($j == 2) echo '<span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;</span><span class="glyphicon glyphicon-edit pull-right" data-toggle="modal" data-target="#dialog" aria-hidden="true"></span>'; ?>
+                                        <?php for ($j = 0; $j < count($quizList); $j++) { ?>
+
+                                            <td>
+                                                <?php
+                                                    if($studentStatistic[$i]->$quizList[$j] == "GRADED")
+                                                        echo '<span class="fa fa fa-certificate pull-left" aria-hidden="true"></span>';
+                                                    else if($studentStatistic[$i]->$quizList[$j] == "UNGRADED")
+                                                        echo '<span class="fa fa-star pull-left" aria-hidden="true"></span>';
+                                                    else if($studentStatistic[$i]->$quizList[$j] == "UNSUBMITTED" || $studentStatistic[$i]->$quizList[$j]=="")
+                                                        echo '<span class="fa fa-star-o pull-left" aria-hidden="true"></span>';
+                                                    else
+                                                        echo $studentStatistic[$i]->$quizList[$j];
+                                                    if ($j > 2) {
+                                                        echo '<span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>';
+                                                    }
+                                                ?>
+                                                <span id = "StudentID" class="invisible"> <?php echo $studentStatistic[$i]->StudentID; ?> </span>
+                                                <span id = "QuizID" class = "invisible"> <?php if($j >2) echo substr($quizList[$j],4); ?> </span>
                                             </td>
                                         <?php } ?>
                                     </tr>
@@ -138,36 +198,16 @@ db_close($conn);
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="dialogTitle">Reset Password</h4>
             </div>
             <div class="modal-body">
                 <form id="submission" method="post"
-                      action="<?php if (isset($_GET['classID'])) echo $_SERVER['PHP_SELF'] . '?classID=' . $_GET['classID']; else echo $_SERVER['PHP_SELF']; ?>">
+                      action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <!--if 0 update; else if -1 delete;-->
                     <input type=hidden name="update" id="update" value="1">
-                    <?php for ($i = 0; $i < count($columnName); $i++) {
-                        if ($columnName[$i] == 'StudentID' || $columnName[$i] == 'Username') {
-                            ?>
-                            <label for="<?php echo $columnName[$i]; ?>" <?php if ($i == 0) {
-                                echo 'style="display:none"';
-                            } ?>><?php echo $columnName[$i]; ?></label>
-                            <input type="text" class="form-control dialoginput" id="<?php echo $columnName[$i]; ?>"
-                                   name="<?php echo lcfirst($columnName[$i]); ?>"
-                                <?php if ($i == 0) {
-                                    echo 'style="display:none"';
-                                } ?> >
-                        <?php }
-                    } ?>
+                    <input type=hidden name="StudentID" class="form-control dialoginput" id="Student" value="2">
+                    <input type=hidden name="QuizID" class="form-control dialoginput" id="Quiz" value="3">
                     <br>
-                    <div class="alert alert-info">
-                        <p>You can <strong>reset student password</strong> to <code>WelcomeToiSNAP2</code>.</p>
-                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="btmResetPwd" class="btn btn-default">Reset Password</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -196,45 +236,29 @@ if (isset($_GET['classID'])) {
     }
     //DO NOT put them in $(document).ready() since the table has multi pages
     var dialogInputArr = $('.dialoginput');
-    $('.glyphicon-edit').on('click', function () {
-		$("label").remove(".error");
-        $('#update').val(0);
-        //studentID, username
-        dialogInputArr.eq(0).val($(this).parent().parent().children('td').eq(0).text());
-        dialogInputArr.eq(1).val($(this).parent().text());
-        dialogInputArr.each(function () {
-            $(this).attr('disabled', 'disabled');
-        });
-    });
-    $('.glyphicon-remove').on('click', function () {
-        if (confirm('[WARNING] Are you sure to remove this student? All the data of this student will also get deleted (not recoverable). It includes student submissions of every task and your grading/feedback, not only the student itself.')) {
-            $('#update').val(-1);
-            //studentID, username
-            dialogInputArr.eq(0).val($(this).parent().parent().children('td').eq(0).text());
-            dialogInputArr.eq(1).val($(this).parent().text());
-            //enable all the input
-            dialogInputArr.each(function () {
-                $(this).prop('disabled', false);
-            });
-            $('#submission').submit();
-        }
-    });
-    $('#btmResetPwd').on('click', function () {
-        $('#submission').validate();
+    $('.glyphicon-time').on('click', function () {
+        $('#update').val(-1);
+        var StudentID = $(this).parent().children('#StudentID').text();
+        var QuizID = $(this).parent().children('#QuizID').text();
+        console.log("stu: " + StudentID + " Quiz: " + QuizID);
+        dialogInputArr.eq(0).val(StudentID);
+        dialogInputArr.eq(1).val(QuizID);
         //enable all the input
         dialogInputArr.each(function () {
             $(this).prop('disabled', false);
         });
-        if (confirm('[WARNING] Are you sure to reset this student password to `WelcomeToiSNAP2`? (not recoverable).')) {
-            $('#submission').submit();
-        }
+        $('#submission').submit();
+
     });
 
+
     $(document).ready(function () {
+        $('#datatables').css('width', '100%');
         var table = $('#datatables').DataTable({
             responsive: true,
             "initComplete": function (settings, json) {
                 $('.input-sm').eq(1).val($("#keyword").val().trim());
+                //this.style.width = 100% ;
             },
             "pageLength": 50
         });
@@ -242,6 +266,7 @@ if (isset($_GET['classID'])) {
         table.search(
             $("#keyword").val().trim(), true, false, true
         ).draw();
+
 
         //Toggle column visibility
         $('a.toggle-vis').on('click', function (e) {
@@ -259,9 +284,13 @@ if (isset($_GET['classID'])) {
         $('.fa-square-o, .fa-check-square-o').on('click', function (e) {
             $(this).parent().children().eq($(this).index() + 1).click();
         });
-
+        var hiddenColArray = [];
         //hide week results by default
-        var hiddenColArray = ['Week-1', 'Week-2']
+        var numOfQuiz = <?php echo count($quizResult);?>;
+        for (i = 1; i<=numOfQuiz; i++){
+            hiddenColArray.push("Quiz"+i);
+        }
+
         $('a.toggle-vis').each(function () {
             if (jQuery.inArray($(this).text(), hiddenColArray) != -1)
                 $(this).click();
