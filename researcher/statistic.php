@@ -20,8 +20,7 @@ try {
             else if ($update == -1) {
                 $studentID = $_POST['StudentID'];
                 $quizID = $_POST['QuizID'];
-                echo "<script>console.log( 'StuID: " . $studentID . "' );</script>";
-                echo "<script>console.log( 'QuizID: " . $quizID . "' );</script>";
+
                 resetStuDueTime($conn,$studentID,$quizID);
             }
         }
@@ -44,7 +43,6 @@ try {
     }
     for ($i = 0; $i < count($getQuizInfo); $i++){
         $j = $getQuizInfo[$i]->QuizID;
-        echo "<script>console.log( 'QuizID: " . $j . "' );</script>";
         array_push($quizList,"Quiz$j");
     }
 } catch (Exception $e) {
@@ -91,29 +89,35 @@ db_close($conn);
                     <div class="panel-body">
                         <div>
                             Toggle column:
+                            <i class="fa fa-check-square-o fa-fw"></i><a class="toggle-vis" data-column="-1">tick All</a>
                             <?php for ($i = 0; $i < count($columnName); $i++) {?>
-                                    <i class="fa fa-check-square-o fa-fw"></i><a class="toggle-vis"
-                                                                                 start = "2" data-column="<?php echo $i; ?>"><?php echo $columnName[$i]; ?></a>&nbsp;
+                                <i class="fa fa-check-square-o fa-fw"></i>
+                                <a class="toggle-vis" start = "2" data-column="<?php echo $i; ?>"><?php echo $columnName[$i]; ?></a>&nbsp;
                             <?php } ?>
+                        </div>
+
+                        <div>
                             <br>
-                            <br>
-                                <span class="fa fa fa-certificate pull-left" aria-hidden="true" style="font-size: 16px"> Graded</span>
-                                <span class="fa fa-star pull-left" aria-hidden="true" style="font-size: 16px"> Not Graded</span>
-                                <span class="fa fa-star-o pull-left" aria-hidden="true" style="font-size: 16px"> Not Submitted</span>
-                                <span class="fa fa-clock-o pull-left" aria-hidden="true" style="font-size: 16px"> Reset Timer </span>
+                            <span class="fa fa fa-certificate pull-left" aria-hidden="true" style="font-size: 16px"> Graded</span>
+                            <span class="fa fa-star pull-left" aria-hidden="true" style="font-size: 16px"> Not Graded</span>
+                            <span class="fa fa-star-o pull-left" aria-hidden="true" style="font-size: 16px"> Not Submitted</span>
+                            <span class="fa fa-clock-o pull-left" aria-hidden="true" style="font-size: 16px"> Reset Timer </span>
                             <br>
                             <br>
                         </div>
 
-                        <div class="dataTable_wrapper">
+                        <div class="dataTable_wrapper" style="width: 100%; overflow:scroll">
 
                             <table class="table table-striped table-bordered table-hover" id="datatables">
 
                                 <thead>
                                     <tr>
-                                        <?php for ($i = 0; $i< count($colspanName); $i++){?>
-                                            <th colspan= <?php if( $i!=0 ) echo $getQuizWithWeek[$i-1]->QuizNum; else echo 3?> >
-                                                Week<?php if( $i!=0 ) echo $getQuizWithWeek[$i-1]->Week?>
+                                        <th colspan=3>
+
+                                        </th>
+                                        <?php for ($i = 1; $i< count($colspanName); $i++){?>
+                                            <th colspan= <?php echo $getQuizWithWeek[$i-1]->QuizNum?> >
+                                                Week<?php echo $getQuizWithWeek[$i-1]->Week?>
                                             </th>
                                         <?php } ?>
                                     </tr>
@@ -121,12 +125,16 @@ db_close($conn);
                                         <?php for ($i = 0; $i < count($columnName); $i++) { ?>
                                             <?php if($i>2):?>
                                                 <th QuizID= <?php echo $getQuizInfo[$i-3]->QuizID;?> ><?php echo $columnName[$i]?>
+                                                <span> - <?php echo $getQuizInfo[$i-3]->QuizType ?> </span>
+                                                <?php if($getQuizInfo[$i-3]->ExtraQuiz==1):?>
+                                                    <span class="fa fa-check-circle" aria-hidden="true"></span>
+                                                <?php endif ?>
                                             <?php else: ?>
                                                 <th><?php echo $columnName[$i]?>
                                             <?php endif ?>
                                             <?php
                                                 if ($i > 2) {
-                                                    echo '<span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>';
+                                                    //echo '<span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>';
                                                 }
                                             ?>
                                                 </th>
@@ -143,9 +151,11 @@ db_close($conn);
                                         <?php for ($j = 0; $j < count($quizList); $j++) { ?>
 
                                             <td>
-                                                <?php
-                                                    if($studentStatistic[$i]->$quizList[$j] == "GRADED")
-                                                        echo '<span class="fa fa fa-certificate pull-left" aria-hidden="true"></span>';
+                                                <?php if($studentStatistic[$i]->$quizList[$j] == "GRADED") ?>
+                                                    <span class="fa fa fa-certificate pull-left" aria-hidden="true"></span>
+                                                    <a href="saq-grading.php?StudentID=1">
+                                                            <i class="fa fa fa-certificate pull-left" aria-hidden="true"></i>
+                                                              </a>';
                                                     else if($studentStatistic[$i]->$quizList[$j] == "UNGRADED")
                                                         echo '<span class="fa fa-star pull-left" aria-hidden="true"></span>';
                                                     else if($studentStatistic[$i]->$quizList[$j] == "UNSUBMITTED" || $studentStatistic[$i]->$quizList[$j]=="")
@@ -240,7 +250,6 @@ if (isset($_GET['classID'])) {
         $('#update').val(-1);
         var StudentID = $(this).parent().children('#StudentID').text();
         var QuizID = $(this).parent().children('#QuizID').text();
-        console.log("stu: " + StudentID + " Quiz: " + QuizID);
         dialogInputArr.eq(0).val(StudentID);
         dialogInputArr.eq(1).val(QuizID);
         //enable all the input
@@ -253,6 +262,7 @@ if (isset($_GET['classID'])) {
 
 
     $(document).ready(function () {
+        var allVisible = true;
         $('#datatables').css('width', '100%');
         var table = $('#datatables').DataTable({
             responsive: true,
@@ -272,13 +282,40 @@ if (isset($_GET['classID'])) {
         $('a.toggle-vis').on('click', function (e) {
             e.preventDefault();
             // Get the column API object
-            var column = table.column($(this).attr('data-column'));
-            column.visible(!column.visible());
-            var checkbox = $(this).parent().children().eq($(this).index() - 1);
-            if (checkbox.hasClass('fa-check-square-o'))
-                checkbox.removeClass('fa-check-square-o').addClass('fa-square-o');
-            else if (checkbox.hasClass('fa-square-o'))
-                checkbox.removeClass('fa-square-o').addClass('fa-check-square-o');
+            if($(this).attr('data-column')==-1){
+                allVisible = !allVisible;
+                for(var i=3;i< <?php echo count($columnName)?>; i++){
+                    var column = table.column(i);
+                    column.visible(allVisible);
+                    var checkbox = $(this).parent().children().eq($(this).index() - 1);
+                    if (checkbox.hasClass('fa-check-square-o'))
+                        checkbox.removeClass('fa-check-square-o').addClass('fa-square-o');
+                    else if (checkbox.hasClass('fa-square-o'))
+                        checkbox.removeClass('fa-square-o').addClass('fa-check-square-o');
+                    if(allVisible){
+                        for(var j=7; j<$(this).parent().children().length; j++){
+                            var checkbox = $(this).parent().children().eq(j);
+                            if (checkbox.hasClass('fa-square-o'))
+                                checkbox.removeClass('fa-square-o').addClass('fa-check-square-o');
+                        }
+                    }else{
+                        for(var j=7; j<$(this).parent().children().length; j++){
+                            var checkbox = $(this).parent().children().eq(j);
+                            if (checkbox.hasClass('fa-check-square-o'))
+                                checkbox.removeClass('fa-check-square-o').addClass('fa-square-o');
+                        }
+                    }
+                }
+            }else{
+                var column = table.column($(this).attr('data-column'));
+                column.visible(!column.visible());
+                var checkbox = $(this).parent().children().eq($(this).index() - 1);
+                if (checkbox.hasClass('fa-check-square-o'))
+                    checkbox.removeClass('fa-check-square-o').addClass('fa-square-o');
+                else if (checkbox.hasClass('fa-square-o'))
+                    checkbox.removeClass('fa-square-o').addClass('fa-check-square-o');
+            }
+
         });
 
         $('.fa-square-o, .fa-check-square-o').on('click', function (e) {

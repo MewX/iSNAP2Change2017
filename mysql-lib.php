@@ -259,6 +259,14 @@ function getStudent(PDO $conn, $studentID)
     return getRecord($conn, $studentID, "Student", array("Class"));
 }
 
+function getStudentUsername(PDO $conn, $studentID)
+{
+    $studentSql = "SELECT Username FROM Student WHERE StudentID = $studentID";
+    $studentQuery = $conn->prepare($studentSql);
+    $studentQuery->execute();
+    $studentResult = $studentQuery->fetchAll(PDO::FETCH_OBJ);
+    return $studentResult;}
+
 function getStudents(PDO $conn)
 {
     $studentSql = "SELECT * , DATE(SubmissionTime) AS SubmissionDate FROM Student NATURAL JOIN Class
