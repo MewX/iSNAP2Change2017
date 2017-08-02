@@ -34,6 +34,7 @@ try {
     $getQuizWithWeek = getQuizWithWeek($conn);
     $getQuizInfo = getQuizInfo($conn);
     $studentStatistic = getStudentsStatistic($conn);
+    $startColumn = 3;
     for ($i = 0; $i < count($getQuizWithWeek); $i++){
         $j = $i+1;
         array_push($colspanName, "Week$j");
@@ -90,9 +91,15 @@ db_close($conn);
                         <div>
                             Toggle column:
                             <i class="fa fa-check-square-o fa-fw"></i><a class="toggle-vis" data-column="-1">tick All</a>
-                            <?php for ($i = 0; $i < count($columnName); $i++) {?>
+<!--                            --><?php //for ($i = 0; $i < count($columnName); $i++) {?>
+<!--                                <i class="fa fa-check-square-o fa-fw"></i>-->
+<!--                                <a class="toggle-vis" start = "2" data-column="--><?php //echo $i; ?><!--">--><?php //echo $columnName[$i]; ?><!--</a>&nbsp;-->
+<!--                            --><?php //} ?>
+                            <?php for ($i = 0; $i < count($getQuizWithWeek); $i++) {?>
                                 <i class="fa fa-check-square-o fa-fw"></i>
-                                <a class="toggle-vis" start = "2" data-column="<?php echo $i; ?>"><?php echo $columnName[$i]; ?></a>&nbsp;
+                                <a class="toggle-vis" start = "<?php echo $startColumn ?>" data-column="<?php $startColumn+=$getQuizWithWeek[$i]->QuizNum; echo $startColumn-1; ?>">
+                                    Week<?php echo $getQuizWithWeek[$i]->Week?>
+                                </a>&nbsp;
                             <?php } ?>
                         </div>
 
@@ -300,13 +307,13 @@ if (isset($_GET['classID'])) {
                     else if (checkbox.hasClass('fa-square-o'))
                         checkbox.removeClass('fa-square-o').addClass('fa-check-square-o');
                     if(allVisible){
-                        for(var j=7; j<$(this).parent().children().length; j++){
+                        for(var j=1; j<$(this).parent().children().length; j++){
                             var checkbox = $(this).parent().children().eq(j);
                             if (checkbox.hasClass('fa-square-o'))
                                 checkbox.removeClass('fa-square-o').addClass('fa-check-square-o');
                         }
                     }else{
-                        for(var j=7; j<$(this).parent().children().length; j++){
+                        for(var j=1; j<$(this).parent().children().length; j++){
                             var checkbox = $(this).parent().children().eq(j);
                             if (checkbox.hasClass('fa-check-square-o'))
                                 checkbox.removeClass('fa-check-square-o').addClass('fa-square-o');
@@ -314,13 +321,17 @@ if (isset($_GET['classID'])) {
                     }
                 }
             }else{
-                var column = table.column($(this).attr('data-column'));
-                column.visible(!column.visible());
+                for(var i=parseInt($(this).attr('start'));i<=parseInt($(this).attr('data-column'));i++){
+                    var column = table.column(i);
+                    column.visible(!column.visible());
+                }
                 var checkbox = $(this).parent().children().eq($(this).index() - 1);
                 if (checkbox.hasClass('fa-check-square-o'))
                     checkbox.removeClass('fa-check-square-o').addClass('fa-square-o');
                 else if (checkbox.hasClass('fa-square-o'))
                     checkbox.removeClass('fa-square-o').addClass('fa-check-square-o');
+
+
             }
 
         });
