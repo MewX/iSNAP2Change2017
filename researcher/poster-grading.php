@@ -151,6 +151,21 @@ db_close($conn);
         </div>
     </div>
 </div>
+
+<input type=hidden name="keyword" id="keyword" value="
+      <?php
+if (isset($_GET['studentID'])) {
+    try {
+        $studentID = $_GET['studentID'];
+        $studentResult = getStudentUsername($conn, $studentID);
+        echo $studentResult[0]->Username;
+    } catch (Exception $e) {
+        debug_err($e);
+        echo '';
+    }
+} else
+    echo '';
+?>">
 <!-- SB Admin Library -->
 <?php require_once('sb-admin-lib.php'); ?>
 <!-- Page-Level Scripts -->
@@ -194,6 +209,10 @@ db_close($conn);
                 {"bSearchable": false, "aTargets": [0]}
             ]
         })
+
+        table.search(
+            $("#keyword").val().trim(), true, false, true
+        ).draw();
     });
 </script>
 </body>

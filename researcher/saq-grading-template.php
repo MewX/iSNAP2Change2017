@@ -28,6 +28,8 @@ try {
         $submissionResult = getVideoSubmissions($conn);
     } else if (SAQ_LIKE_SUBMISSION_TYPE == 'image') {
         $submissionResult = getImageSubmissions($conn);
+    } else if (SAQ_LIKE_SUBMISSION_TYPE == 'poster') {
+        $submissionResult = getPosterSubmissions($conn);
     }
 } catch (Exception $e) {
     debug_err($e);
@@ -182,7 +184,6 @@ if (isset($_GET['studentID'])) {
                 {"bSearchable": false, "aTargets": [0]}
             ]
         })
-    console.log("keyword: " + $("#keyword").val());
         //search keyword, exact match
         table.search(
             $("#keyword").val().trim(), true, false, true

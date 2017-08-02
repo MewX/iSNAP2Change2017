@@ -151,21 +151,28 @@ db_close($conn);
                                         <?php for ($j = 0; $j < count($quizList); $j++) { ?>
 
                                             <td>
-                                                <?php if($studentStatistic[$i]->$quizList[$j] == "GRADED") ?>
-                                                    <span class="fa fa fa-certificate pull-left" aria-hidden="true"></span>
-                                                    <a href="saq-grading.php?StudentID=1">
-                                                            <i class="fa fa fa-certificate pull-left" aria-hidden="true"></i>
-                                                              </a>';
-                                                    else if($studentStatistic[$i]->$quizList[$j] == "UNGRADED")
-                                                        echo '<span class="fa fa-star pull-left" aria-hidden="true"></span>';
-                                                    else if($studentStatistic[$i]->$quizList[$j] == "UNSUBMITTED" || $studentStatistic[$i]->$quizList[$j]=="")
-                                                        echo '<span class="fa fa-star-o pull-left" aria-hidden="true"></span>';
-                                                    else
-                                                        echo $studentStatistic[$i]->$quizList[$j];
-                                                    if ($j > 2) {
-                                                        echo '<span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>';
-                                                    }
-                                                ?>
+                                                <?php if($studentStatistic[$i]->$quizList[$j] == "GRADED"): ?>
+                                                    <span class="fa fa-certificate pull-left" aria-hidden="true"></span>
+                                                    <span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>
+                                                <?php elseif($studentStatistic[$i]->$quizList[$j] == "UNGRADED"): ?>
+                                                    <?php if($getQuizInfo[$j-3]->QuizType=="SAQ"): ?>
+                                                        <a href=<?php $id = $studentStatistic[$i]->StudentID; echo "saq-grading.php?studentID=$id"?> >
+                                                            <i class="fa fa fa-star pull-left" aria-hidden="true"></i>
+                                                        </a>
+                                                    <?php elseif($getQuizInfo[$j-3]->QuizType=="Poster"):?>
+                                                        <a href=<?php $id = $studentStatistic[$i]->StudentID; echo "poster-grading.php?studentID=$id"?> >
+                                                            <i class="fa fa fa-star pull-left" aria-hidden="true"></i>
+                                                        </a>
+                                                    <?php else: ?>
+                                                        <i class="fa fa fa-star pull-left" aria-hidden="true"></i>
+                                                    <?php endif ?>
+                                                    <span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>
+                                                <?php elseif($studentStatistic[$i]->$quizList[$j] == "UNSUBMITTED" || $studentStatistic[$i]->$quizList[$j]==""): ?>
+                                                    <span class="fa fa-star-o pull-left" aria-hidden="true"></span>
+                                                    <span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>
+                                                <?php else:?>
+                                                    <?php echo $studentStatistic[$i]->$quizList[$j]; ?>
+                                                <?php endif; ?>
                                                 <span id = "StudentID" class="invisible"> <?php echo $studentStatistic[$i]->StudentID; ?> </span>
                                                 <span id = "QuizID" class = "invisible"> <?php if($j >2) echo substr($quizList[$j],4); ?> </span>
                                             </td>
