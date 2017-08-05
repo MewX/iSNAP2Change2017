@@ -96,7 +96,7 @@ db_close($conn);
                                                 </td>
                                             <?php elseif ($j == 2):?>
                                                 <td>
-                                                    <a href="statistic.php?studentID=<?php echo $studentResult[$i]->StudentID ?>">
+                                                    <a href="statistics.php?studentID=<?php echo $studentResult[$i]->StudentID ?>">
                                                         <?php echo $studentResult[$i]->$columnName[$j]; ?>
                                                     </a>
                                                     <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>

@@ -19,7 +19,7 @@ if (isset($_SESSION['researcherID'])) {
 /* Array Definition */
 
 // sidebar
-$userAdminPageArr = array('School', 'Class', 'Student', 'Statistic');
+$userAdminPageArr = array('School', 'Class', 'Student', 'Statistics');
 $userAdminIconArr = array('mortar-board', 'users', 'child', 'bar-chart');
 $contentAdminPageArr = array('Week', 'Quiz', 'Snap Fact', 'Verbose Fact', 'Recipe', 'MCQ', 'SAQ', 'Matching', 'Poster', 'Video', 'Image', 'Misc');
 $quizTypeArr = array('Matching', 'Poster', 'Video', 'Image', 'Misc');

@@ -267,11 +267,12 @@ function getStudent(PDO $conn, $studentID)
 
 function getStudentUsername(PDO $conn, $studentID)
 {
-    $studentSql = "SELECT Username FROM Student WHERE StudentID = $studentID";
+    $studentSql = "SELECT Username FROM Student WHERE StudentID = ?";
     $studentQuery = $conn->prepare($studentSql);
-    $studentQuery->execute();
+    $studentQuery->execute(array($studentID));
     $studentResult = $studentQuery->fetchAll(PDO::FETCH_OBJ);
-    return $studentResult;}
+    return $studentResult;
+}
 
 function getStudents(PDO $conn)
 {
