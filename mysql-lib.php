@@ -174,6 +174,12 @@ function getStudentNum(PDO $conn)
     return $studentNumResult;
 }
 
+function changeStudentClass(PDO $conn, $classID, $studentID){
+    $updateSql = "UPDATE Student SET ClassID = ? WHERE StudentID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($classID, $studentID));
+}
+
 /* Class */
 
 /* Token */
@@ -259,6 +265,15 @@ function getStudent(PDO $conn, $studentID)
     return getRecord($conn, $studentID, "Student", array("Class"));
 }
 
+function getStudentUsername(PDO $conn, $studentID)
+{
+    $studentSql = "SELECT Username FROM Student WHERE StudentID = ?";
+    $studentQuery = $conn->prepare($studentSql);
+    $studentQuery->execute(array($studentID));
+    $studentResult = $studentQuery->fetchAll(PDO::FETCH_OBJ);
+    return $studentResult;
+}
+
 function getStudents(PDO $conn)
 {
     $studentSql = "SELECT * , DATE(SubmissionTime) AS SubmissionDate FROM Student NATURAL JOIN Class
@@ -268,6 +283,30 @@ function getStudents(PDO $conn)
     $studentResult = $studentQuery->fetchAll(PDO::FETCH_OBJ);
     return $studentResult;
 }
+
+//get the progress details and quiz marks for each student
+/**
+ * TO DO: get student result for each quiz
+ */
+function getStudentsStatistic(PDO $conn){
+    $quizSql = "SELECT DISTINCT quizID AS NumOfQuiz FROM Quiz Order by Week";
+    $quizQuery = $conn->prepare($quizSql);
+    $quizQuery->execute();
+    $result = $quizQuery->fetchAll(PDO::FETCH_OBJ);
+    $studentSql="Select ClassID, ClassName, StudentID, FirstName, LastName ";
+    for($i = 0; $i < count($result); $i++){
+        $studentSql .= ",MAX(IF(QuizID=" .$result[$i]->NumOfQuiz.", Status,null)) as Quiz" .$result[$i]->NumOfQuiz."";
+    }
+    $studentSql .= " From (SELECT ClassID,ClassName, CS.StudentID, FirstName, LastName, QuizID, Status
+                   FROM (SELECT * FROM Student NATURAL JOIN Class) AS CS left join Quiz_Record
+                   on CS.StudentID = Quiz_Record.StudentID) temp group by StudentID";
+
+    $studentQuery = $conn->prepare($studentSql);
+    $studentQuery->execute();
+    $studentResult = $studentQuery->fetchAll(PDO::FETCH_OBJ);
+    return $studentResult;
+}
+
 
 function getStudentsNum(PDO $conn)
 {
@@ -485,6 +524,20 @@ function getMaxWeek(PDO $conn)
 /* Week */
 
 /* Student Week Record*/
+
+function resetStuDueTime(PDO $conn, $studentID, $quizID)
+{
+    $weekSql = "SELECT Week AS week FROM Quiz WHERE QuizID = ?";
+    $weekSql = $conn->prepare($weekSql);
+    $weekSql->execute(array($quizID));
+    $weekResult = $weekSql->fetch(PDO::FETCH_OBJ);
+
+    $updateSql = "DELETE FROM Student_Week_Record WHERE StudentID = ? AND Week = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($studentID, $weekResult->week));
+}
+
+
 function createStuWeekRecord(PDO $conn, $studentID, $week, $dueTime)
 {
     $updateSql = "INSERT IGNORE INTO Student_Week_Record(StudentID, Week, DueTime)
@@ -588,6 +641,24 @@ function getQuizNum(PDO $conn)
     $weekQuery->execute();
     $weekResult = $weekQuery->fetchAll(PDO::FETCH_OBJ);
     return $weekResult;
+}
+
+function getQuizWithWeek(PDO $conn)
+{
+    $quizSql = "SELECT count(QuizID) AS QuizNum ,Week FROM `Quiz` Group by Week";
+    $quizQuery = $conn->prepare($quizSql);
+    $quizQuery->execute();
+    $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);
+    return $quizResult;
+}
+
+function getQuizInfo(PDO $conn)
+{
+    $quizSql = "SELECT QuizID, Week, QuizType, ExtraQuiz FROM `Quiz` ORDER by Week";
+    $quizQuery = $conn->prepare($quizSql);
+    $quizQuery->execute();
+    $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);
+    return $quizResult;
 }
 
 function getQuizType(PDO $conn, $quizID)
