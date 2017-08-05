@@ -139,25 +139,27 @@ db_close($conn);
                                             <?php else: ?>
                                                 <th><?php echo $columnName[$i]?>
                                             <?php endif ?>
-                                            <?php
-                                                if ($i > 2) {
-                                                    //echo '<span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>';
-                                                }
-                                            ?>
-                                                </th>
+                                            </th>
                                         <?php } ?>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php for ($i = 0; $i < count($studentStatistic); $i++) { ?>
                                     <tr class="<?php if ($i % 2 == 0) {
-                                        echo "odd";
-                                    } else {
-                                        echo "even";
-                                    } ?>">
-                                        <?php for ($j = 0; $j < count($quizList); $j++) { ?>
+                                            echo "odd";
+                                        } else {
+                                            echo "even";
+                                        } ?>"
+                                        StudentID = "<?php echo $studentStatistic[$i]->StudentID; ?>"
+                                        FirstName = "<?php echo $studentStatistic[$i]->FirstName; ?>"
+                                        LastName = "<?php echo $studentStatistic[$i]->LastName; ?>"
+                                    >
 
-                                            <td>
+                                    <?php for ($j = 0; $j < count($quizList); $j++) { ?>
+
+                                            <td Week = "<?php if($j>=3) echo $getQuizInfo[$j-3]->Week;?>"
+                                                QuizID = "<?php if($j >2) echo substr($quizList[$j],4); ?>"
+                                            >
                                                 <?php if($studentStatistic[$i]->$quizList[$j] == "GRADED"): ?>
                                                     <span class="fa fa-certificate pull-left" aria-hidden="true"></span>
                                                     <span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>
@@ -180,8 +182,6 @@ db_close($conn);
                                                 <?php else:?>
                                                     <?php echo $studentStatistic[$i]->$quizList[$j]; ?>
                                                 <?php endif; ?>
-                                                <span id = "StudentID" class="invisible"> <?php echo $studentStatistic[$i]->StudentID; ?> </span>
-                                                <span id = "QuizID" class = "invisible"> <?php if($j >2) echo substr($quizList[$j],4); ?> </span>
                                             </td>
                                         <?php } ?>
                                     </tr>
@@ -238,12 +238,11 @@ db_close($conn);
 </div>
 <input type=hidden name="keyword" id="keyword" value="
       <?php
-if (isset($_GET['classID'])) {
-    // get ClassName
+if (isset($_GET['studentID'])) {
     try {
-        $classID = $_GET['classID'];
-        $classResult = getClass($conn, $classID);
-        echo $classResult->ClassName;
+        $studentID = $_GET['studentID'];
+        $studentResult = getStudentUsername($conn, $studentID);
+        echo $studentResult[0]->Username;
     } catch (Exception $e) {
         debug_err($e);
         echo '';
@@ -261,16 +260,22 @@ if (isset($_GET['classID'])) {
     //DO NOT put them in $(document).ready() since the table has multi pages
     var dialogInputArr = $('.dialoginput');
     $('.glyphicon-time').on('click', function () {
-        $('#update').val(-1);
-        var StudentID = $(this).parent().children('#StudentID').text();
-        var QuizID = $(this).parent().children('#QuizID').text();
-        dialogInputArr.eq(0).val(StudentID);
-        dialogInputArr.eq(1).val(QuizID);
-        //enable all the input
-        dialogInputArr.each(function () {
-            $(this).prop('disabled', false);
-        });
-        $('#submission').submit();
+        var firstName = $(this).parent().parent().attr('FirstName');
+        var lastName = $(this).parent().parent().attr('LastName');
+        var week = $(this).parent().attr('Week');
+        var warning = "[WARNING] Are you sure to reset timer for Student " + firstName + " " + lastName + " in week-" + week + "?"
+        if (confirm(warning)) {
+            $('#update').val(-1);
+            var StudentID = $(this).parent().parent().attr('StudentID');
+            var QuizID = $(this).parent().attr('QuizID');
+            dialogInputArr.eq(0).val(StudentID);
+            dialogInputArr.eq(1).val(QuizID);
+            //enable all the input
+            dialogInputArr.each(function () {
+                $(this).prop('disabled', false);
+            });
+            $('#submission').submit();
+        }
 
     });
 

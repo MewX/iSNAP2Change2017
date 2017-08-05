@@ -174,6 +174,12 @@ function getStudentNum(PDO $conn)
     return $studentNumResult;
 }
 
+function changeStudentClass(PDO $conn, $classID, $studentID){
+    $updateSql = "UPDATE Student SET ClassID = ? WHERE StudentID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($classID, $studentID));
+}
+
 /* Class */
 
 /* Token */

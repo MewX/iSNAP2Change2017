@@ -10,14 +10,17 @@ try {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['update'])) {
             $update = $_POST['update'];
-            //reset student password
             if ($update == 0) {
                 $studentID = $_POST['studentID'];
-                resetPassword($conn, $studentID);
+                $classID = $_POST['newClassID'];
+                changeStudentClass($conn, $classID, $studentID);
             } //delete student (with help of DELETE CASCADE)            
             else if ($update == -1) {
                 $studentID = $_POST['studentID'];
                 deleteStudent($conn, $studentID);
+            }else if ($update == 2){            //reset student password
+                $studentID = $_POST['studentID'];
+                resetPassword($conn, $studentID);
             }
         }
     }
@@ -28,6 +31,8 @@ try {
 try {
     refreshAllStudentsScore($conn);
     $studentResult = getStudents($conn);
+    $classResult = getClasses($conn);
+
 } catch (Exception $e) {
     debug_err($e);
 }
@@ -85,9 +90,26 @@ db_close($conn);
                                         echo "even";
                                     } ?>">
                                         <?php for ($j = 0; $j < count($columnName); $j++) { ?>
-                                            <td <?php if ($j == 0) echo 'style="display:none"'; ?>><?php echo $studentResult[$i]->$columnName[$j]; ?>
-                                                <?php if ($j == 2) echo '<span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;</span><span class="glyphicon glyphicon-edit pull-right" data-toggle="modal" data-target="#dialog" aria-hidden="true"></span>'; ?>
-                                            </td>
+                                            <?php if($j==0):?>
+                                                <td style="display:none">
+                                                    <?php echo $studentResult[$i]->$columnName[$j]; ?>
+                                                </td>
+                                            <?php elseif ($j == 2):?>
+                                                <td>
+                                                    <a href="statistic.php?studentID=<?php echo $studentResult[$i]->StudentID ?>">
+                                                        <?php echo $studentResult[$i]->$columnName[$j]; ?>
+                                                    </a>
+                                                    <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span>
+                                                    <span class="pull-right" aria-hidden="true">&nbsp;</span>
+                                                    <span class="glyphicon glyphicon-edit pull-right" data-toggle="modal" data-target="#dialog" aria-hidden="true"></span>
+
+                                                </td>
+
+                                            <?php else: ?>
+                                                <td>
+                                                    <?php echo $studentResult[$i]->$columnName[$j]; ?>
+                                                </td>
+                                            <?php endif ?>
                                         <?php } ?>
                                     </tr>
                                 <?php } ?>
@@ -133,7 +155,7 @@ db_close($conn);
             <div class="modal-body">
                 <form id="submission" method="post"
                       action="<?php if (isset($_GET['classID'])) echo $_SERVER['PHP_SELF'] . '?classID=' . $_GET['classID']; else echo $_SERVER['PHP_SELF']; ?>">
-                    <!--if 0 update; else if -1 delete;-->
+                    <!--if 0 update; else if -1 delete; else if -2 reset password-->
                     <input type=hidden name="update" id="update" value="1">
                     <?php for ($i = 0; $i < count($columnName); $i++) {
                         if ($columnName[$i] == 'StudentID' || $columnName[$i] == 'Username') {
@@ -148,14 +170,39 @@ db_close($conn);
                                 } ?> >
                         <?php }
                     } ?>
+                    <label for="newClassID"  style="display:none">Class ID</label>
+                    <input type="text" class="form-control dialoginput" id="newClassID"
+                           name="newClassID" style="display:none">
                     <br>
-                    <div class="alert alert-info">
-                        <p>You can <strong>reset student password</strong> to <code>WelcomeToiSNAP2</code>.</p>
+
+                    <div>
+                        <h4>Change student's class
+                            <select name="newClassID">
+                                <option value="">Select...</option>
+                                <?php for ($i = 0; $i < count($classResult); $i++) { ?>
+                                    <option value= <?php echo $classResult[$i]->ClassID ?>>
+                                        <?php echo $classResult[$i]->ClassName ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <button type="button" id="changeClass" class="btn btn-default pull-right">Change Class</button>
+                        </h4>
                     </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="alert alert-info">
+                                <p>You can <strong>reset student password</strong> to <code>WelcomeToiSNAP2</code>.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <button type="button" id="btmResetPwd" class="btn btn-default btn-md">Reset Password</button>
+                        </div>
+                    </div>
+
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btmResetPwd" class="btn btn-default">Reset Password</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -189,8 +236,8 @@ if (isset($_GET['classID'])) {
 		$("label").remove(".error");
         $('#update').val(0);
         //studentID, username
-        dialogInputArr.eq(0).val($(this).parent().parent().children('td').eq(0).text());
-        dialogInputArr.eq(1).val($(this).parent().text());
+        dialogInputArr.eq(0).val($(this).parent().parent().children('td').eq(0).text().trim());
+        dialogInputArr.eq(1).val($(this).parent().text().trim());
         dialogInputArr.each(function () {
             $(this).attr('disabled', 'disabled');
         });
@@ -209,6 +256,7 @@ if (isset($_GET['classID'])) {
         }
     });
     $('#btmResetPwd').on('click', function () {
+        $('#update').val(2);
         $('#submission').validate();
         //enable all the input
         dialogInputArr.each(function () {
@@ -217,6 +265,16 @@ if (isset($_GET['classID'])) {
         if (confirm('[WARNING] Are you sure to reset this student password to `WelcomeToiSNAP2`? (not recoverable).')) {
             $('#submission').submit();
         }
+    });
+    $('#changeClass').on('click', function () {
+        $('#update').val(0);
+        $('#submission').validate();
+        //enable all the input
+        dialogInputArr.each(function () {
+            $(this).prop('disabled', false);
+        });
+        dialogInputArr.eq(2).val($('select[name=newClassID]').val());
+        $('#submission').submit();
     });
 
     $(document).ready(function () {
