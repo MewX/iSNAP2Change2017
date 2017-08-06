@@ -61,10 +61,10 @@
 
         //get material topics
         $activities = array();
-
         for($i = 0; $i < $studentWeek; $i++) {
-            array_push($activities, getQuizzesStatusByWeek($conn, $studentID, ($i+1), 0));
-            array_push($activities, getQuizzesStatusByWeek($conn, $studentID, ($i+1), 1));
+            $tempMainActivities = getQuizzesStatusByWeek($conn, $studentID, ($i+1), 0);
+            $tempExtraActivities = getQuizzesStatusByWeek($conn, $studentID, ($i+1), 1);
+            array_push($activities, array_merge($tempMainActivities , $tempExtraActivities));
         }
 
     }catch(Exception $e) {
@@ -664,17 +664,19 @@
                     </div>
                     <div class="activities-tab-content">
                         <?php
+                        // $studentWeek is the total week that a student can access
                         for ($i = 0; $i < $studentWeek; $i++) {
-                        if($i == ($studentWeek-1)) { ?>
+                        if ($i == ($studentWeek - 1)) { ?>
                         <div class="activities-week-detail activities-week-detail-active mini-row">
-                            <?php       } else { ?>
+                            <?php } else { ?>
                             <div class="activities-week-detail mini-row">
-                                <?php       }
+                                <?php }
 
+                                // $activities[$i] is the number of activities in week $j
                                 for ($j = 0; $j < count($activities[$i]); $j++) { ?>
                                     <div class="col-6">
                                         <?php
-                                        //list of question type
+                                        // list of question type, $activities[$i][$j] is the questions
                                         switch ($activities[$i][$j]['QuizType']) {
                                             case "MCQ":
                                                 if (isset($activities[$i][$j]['Status'])) { ?>
