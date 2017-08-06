@@ -923,8 +923,7 @@
 <script>
     $('#fullpage').fullpage({
         navigation: true
-    })
-
+    });
 
     var TabCtrl = {
         cls: {
@@ -935,47 +934,47 @@
         init: function (opt) {
             opt = opt || {
                     onTabChange: $.noop
-                }
-            this.onTabChange = opt.onTabChange
-            this.cacheElements()
-            this.addListeners()
+                };
+            this.onTabChange = opt.onTabChange;
+            this.cacheElements();
+            this.addListeners();
         },
         cacheElements: function () {
-            var $main = $('.activities-tab')
-            this.$main = $main
-            this.$tabItems = $main.find('.activities-tab-item')
-            this.$tabContent = $('.activities-tab-content')
-            this.$tabContentItems = this.$tabContent.find('.activities-week-detail')
+            var $main = $('.activities-tab');
+            this.$main = $main;
+            this.$tabItems = $main.find('.activities-tab-item');
+            this.$tabContent = $('.activities-tab-content');
+            this.$tabContentItems = this.$tabContent.find('.activities-week-detail');
         },
         addListeners: function () {
-            var that = this
+            var that = this;
 
             this.$main.on('click', '.activities-tab-item', function (e) {
-                var $target = $(e.currentTarget)
-                var cls = that.cls
+                var $target = $(e.currentTarget);
+                var cls = that.cls;
 
                 if (!$target.hasClass(cls.tabActive) && !$target.hasClass(cls.tabDisabled)) {
-                    var index = that.$tabItems.index(e.currentTarget)
-                    that.activeItem(index)
-                    that.onTabChange(index)
+                    var index = that.$tabItems.index(e.currentTarget);
+                    that.activeItem(index);
+                    that.onTabChange(index);
                 }
             })
         },
         activeItem: function (index) {
             this.$tabItems.removeClass(this.cls.tabActive)
                 .eq(index)
-                .addClass(this.cls.tabActive)
+                .addClass(this.cls.tabActive);
             this.$tabContentItems.removeClass(this.cls.tabContentActive)
                 .eq(index)
-                .addClass(this.cls.tabContentActive)
+                .addClass(this.cls.tabContentActive);
         }
-    }
+    };
 
     TabCtrl.init({
         onTabChange: function (index) {
-            MaterialCtrl.showNavPanel(index)
+            MaterialCtrl.showNavPanel(index);
         }
-    })
+    });
 
     TabCtrl.activeItem(<?php echo $activeWeek-1 ?>);
 
