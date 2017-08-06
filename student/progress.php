@@ -651,7 +651,8 @@
                     </div>
                     <div class="activities-tab">
                         <h2 class="activities-tab-title">Select Your week</h2>
-                        <h3 class="activities-tab-title">(Unfinished tasks cannot be started from here, please go to <a target="_self" href="game-home.php"><u>home</u></a>)</h3>
+                        <h3 class="activities-tab-title">(Note: it's a good practice to start a new activity from <a target="_self" href="game-home.php" style="text-decoration: underline;">home</a>,
+                            some timing issues might triggered if you click on an time-limited activity here.)</h3>
                         <div class="activities-tab-list">
                         <?php
                             for($i = 0; $i < $studentWeek; $i++) { ?>
