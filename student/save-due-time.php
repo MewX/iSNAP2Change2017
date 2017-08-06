@@ -4,16 +4,14 @@
     $pageName = "save-due-time";
 
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if(isset($_POST["student_id"]) && isset($_POST["week"]) && isset($_POST["due_time"])){
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["student_id"]) && isset($_POST["week"]) && isset($_POST["due_time"])){
             $studentID = $_POST["student_id"];
             $week = $_POST["week"];
             $dueTime = $_POST["due_time"];
-        } else {
-
-        }
     } else {
-
+        debug_log("Illegal state!");
+        header("location:welcome.php");
+        exit;
     }
 
     $feedback = array();

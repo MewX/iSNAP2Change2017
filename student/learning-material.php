@@ -9,15 +9,14 @@
 	$pageName = "learning-material";
 
 	//check whether a request is GET or POST 
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		if(isset($_POST["quizID"]) && isset($_POST["week"])){
+	if ($_SERVER["REQUEST_METHOD"] == "POST"
+		&& isset($_POST["quizID"]) && isset($_POST["week"])){
 			$quizID = $_POST["quizID"];
 			$week = $_POST["week"];
-		} else {
-			
-		}
 	} else {
-		
+		debug_log("Illegal state!");
+		header("location:welcome.php");
+		exit;
 	}
 	
 	$conn = null;

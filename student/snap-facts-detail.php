@@ -8,14 +8,12 @@
     $pageName = "snap-facts";
 
     //check whether a request is GET or POST
-    if($_SERVER["REQUEST_METHOD"] == "GET"){
-        if(isset($_GET["topic_id"])){
+    if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["topic_id"])){
             $topicID = $_GET["topic_id"];
-        } else{
-
-        }
     } else{
-
+        debug_log("Illegal state!");
+        header("location:welcome.php");
+        exit;
     }
 
     $conn = null;

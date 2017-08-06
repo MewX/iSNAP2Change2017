@@ -3,14 +3,12 @@
     require_once("../mysql-lib.php");
     require_once("../debug.php");
 
-    if ($_SERVER["REQUEST_METHOD"] == "GET") {
-        if(isset($_GET["quiz_id"])){
+    if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["quiz_id"])){
             $quizID = $_GET["quiz_id"];
-        } else {
-
-        }
     } else {
-
+        debug_log("Illegal state!");
+        header("location:welcome.php");
+        exit;
     }
 
     $conn = null;

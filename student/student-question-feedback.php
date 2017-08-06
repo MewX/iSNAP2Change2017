@@ -2,41 +2,26 @@
     require_once("../mysql-lib.php");
     require_once("../debug.php");
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (isset($_POST['action'])) {
-            $action = $_POST['action'];
-
-            if ($action == "UPDATE") {
-                if (isset($_POST['student_id']) && isset($_POST['subject']) && isset($_POST['content']) && isset($_POST['send_time'])) {
-                    $studentID = $_POST['student_id'];
-                    $subject = $_POST['subject'];
-                    $content = $_POST['content'];
-                    $sendTime = $_POST['send_time'];
-                } else {
-
-                }
-            }
-
-            if ($action == "DELETE") {
-                if (isset($_POST['question_id'])) {
-                    $questionID = $_POST['question_id'];
-                } else {
-
-                }
-            }
-
-            if ($action == "VIEW") {
-                if (isset($_POST['question_id'])) {
-                    $questionID = $_POST['question_id'];
-                } else {
-
-                }
-            }
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
+        $action = $_POST['action'];
+        if ($action == "UPDATE" && isset($_POST['student_id']) && isset($_POST['subject']) && isset($_POST['content']) && isset($_POST['send_time'])) {
+            $studentID = $_POST['student_id'];
+            $subject = $_POST['subject'];
+            $content = $_POST['content'];
+            $sendTime = $_POST['send_time'];
+        } else if ($action == "DELETE" && isset($_POST['question_id'])) {
+            $questionID = $_POST['question_id'];
+        } else if ($action == "VIEW" && isset($_POST['question_id'])) {
+            $questionID = $_POST['question_id'];
         } else {
-
+            debug_log("Illegal state!");
+            header("location:welcome.php");
+            exit;
         }
     } else {
-
+        debug_log("Illegal state!");
+        header("location:welcome.php");
+        exit;
     }
 
     $feedback = array();

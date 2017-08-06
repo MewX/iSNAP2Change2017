@@ -6,14 +6,12 @@
     require_once("../debug.php");
     $pageName = "weekly-task";
 
-    if ($_SERVER["REQUEST_METHOD"] == "GET") {
-        if(isset($_GET["week"])) {
+    if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["week"])) {
             $week = $_GET["week"];
-        } else {
-
-        }
     } else {
-
+        debug_log("Illegal state!");
+        header("location:welcome.php");
+        exit;
     }
 
     $conn = null;

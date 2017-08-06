@@ -5,17 +5,16 @@ require_once("../debug.php");
 
 $pageName = "numeric-question-feedback";
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(isset($_POST['student_id']) && isset($_POST['quiz_id']) && isset($_POST['answer_arr']) && isset($_POST['type'])){
+if($_SERVER["REQUEST_METHOD"] == "POST" 
+    && isset($_POST['student_id']) && isset($_POST['quiz_id']) && isset($_POST['answer_arr']) && isset($_POST['type'])){
         $studentID = $_POST['student_id'];
         $quizID = $_POST['quiz_id'];
         $answerArr = json_decode($_POST['answer_arr']);
         $type = $_POST['type'];
-    } else{
-
-    }
 } else{
-
+    debug_log("Illegal state!");
+    header("location:welcome.php");
+    exit;
 }
 
 define("COST_CALCULATOR_CORRECT_COUNT", 3);

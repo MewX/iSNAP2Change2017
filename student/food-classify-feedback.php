@@ -2,16 +2,15 @@
     require_once("../mysql-lib.php");
     require_once("../debug.php");
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (isset($_POST["student_id"]) && isset($_POST["quiz_id"]) && isset($_POST["answer_arr"])) {
+    if ($_SERVER["REQUEST_METHOD"] == "POST"
+        && isset($_POST["student_id"]) && isset($_POST["quiz_id"]) && isset($_POST["answer_arr"])) {
             $studentID = $_POST["student_id"];
             $quizID = $_POST["quiz_id"];
             $answerArr = json_decode($_POST["answer_arr"], true);
-        } else {
-
-        }
     } else {
-
+        debug_log("Illegal state!");
+        header("location:welcome.php");
+        exit;
     }
 
     $conn = null;

@@ -5,37 +5,25 @@
 	$pageName = "poster-feedback";
 
 	//check whether a request is GET or POST
-	if($_SERVER["REQUEST_METHOD"] == "POST"){
-
-		if(isset($_POST['quiz_id']) && isset($_POST['student_id']) && isset($_POST['action'])){
-
+	if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['quiz_id']) && isset($_POST['student_id']) && isset($_POST['action'])){
 			$quizID = $_POST['quiz_id'];
 			$studentID = $_POST['student_id'];
 			$action = $_POST['action'];
 
-			if($action == "SAVE"){
-				if(isset($_POST['zwibbler_doc'])){
+			if ($action == "SAVE" && isset($_POST['zwibbler_doc'])){
 					$zwibblerDoc = $_POST['zwibbler_doc'];
-				} else{
-
-				}
-			}
-
-			if($action == "SUBMIT"){
-				if(isset($_POST['zwibbler_doc']) && isset($_POST['data_url'])){
+			} else if ($action == "SUBMIT" && isset($_POST['zwibbler_doc']) && isset($_POST['data_url'])){
 					$zwibblerDoc = $_POST['zwibbler_doc'];
 					$dataUrl = $_POST['data_url'];
-				}else{
-
-				}
+			} else {
+				debug_log("Illegal state!");
+				header("location:welcome.php");
+				exit;
 			}
-
-		} else{
-
-		}
-
 	} else{
-
+		debug_log("Illegal state!");
+		header("location:welcome.php");
+		exit;
 	}
 
 	$feedback = array();
