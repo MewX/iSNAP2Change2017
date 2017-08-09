@@ -574,14 +574,14 @@ function getStuWeekRecord(PDO $conn, $studentID, $week)
 /* Student Week Record*/
 
 /* Quiz */
-function createQuiz(PDO $conn, $topicID, $quizType, $week)
+function createQuiz(PDO $conn, $topicID, $quizType, $week, $extraQuiz)
 {
     if ($quizType == "Video" || $quizType == "Image")
         $quizType = 'SAQ';
-    $updateSql = "INSERT INTO Quiz(Week, QuizType, TopicID)
-             VALUES (?,?,?)";
+    $updateSql = "INSERT INTO Quiz(Week, QuizType, TopicID, ExtraQuiz)
+             VALUES (?,?,?,?)";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($week, $quizType, $topicID));
+    $updateSql->execute(array($week, $quizType, $topicID,$extraQuiz));
     return $conn->lastInsertId();
 }
 
@@ -726,7 +726,7 @@ function getQuizzes(PDO $conn)
 
 function getQuizzesByWeek(PDO $conn, $week)
 {
-    $quizSql = "SELECT QuizID, Week, QuizType, TopicName
+    $quizSql = "SELECT QuizID, Week, QuizType, TopicName, ExtraQuiz
                    FROM Quiz NATURAL JOIN Topic WHERE Week = ?";
     $quizQuery = $conn->prepare($quizSql);
     $quizQuery->execute(array($week));
@@ -1257,7 +1257,7 @@ function getSAQQuiz(PDO $conn, $quizID)
 
 function getSAQLikeQuizzes(PDO $conn, $typeIndicator)
 {
-    $quizSql = "SELECT QuizID, TopicID, Week, QuizType, TopicName, SAQID, SUM(Points) AS Points, COUNT(SAQID) AS Questions
+    $quizSql = "SELECT QuizID, TopicID, Week, QuizType, ExtraQuiz, TopicName, SAQID, SUM(Points) AS Points, COUNT(SAQID) AS Questions
                    FROM Quiz NATURAL JOIN Topic NATURAL JOIN Learning_Material NATURAL JOIN SAQ_Section LEFT JOIN SAQ_Question USING (QuizID) WHERE QuizType = 'SAQ' AND $typeIndicator GROUP BY QuizID";
     $quizQuery = $conn->prepare($quizSql);
     $quizQuery->execute();

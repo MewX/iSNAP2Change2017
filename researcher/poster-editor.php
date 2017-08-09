@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
@@ -18,10 +19,11 @@ try {
                     $points = $_POST['points'];
                     $title = $_POST['title'];
                     $description = $_POST['description'];
+                    $extraQuiz = $_POST['ExtraQuiz'];
                     $conn->beginTransaction();
 
                     $topicID = getTopicByName($conn, $topicName)->TopicID;
-                    updateQuiz($conn, $quizID, $topicID, $week);
+                    updateQuiz($conn, $quizID, $topicID, $week, $extraQuiz);
                     updatePosterSection($conn, $quizID, $description, $points, $title);
 
                     $conn->commit();
@@ -70,7 +72,11 @@ db_close($conn);
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header"><?php echo $pageNameForView; ?> Editor</h1>
+                <h1 class="page-header"><?php echo $pageNameForView; ?> Editor
+                    <button type="button" class="btn btn-lg btn-info pull-right"
+                            onclick="location.href='<?php echo "poster.php" ?>'">GO BACK
+                    </button>
+                </h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -124,17 +130,20 @@ db_close($conn);
                                     <p><strong>Reminder</strong> : You have not added title or description!
                                 </div>
                             <?php } ?>
-
+                            <label for='ExtraQuiz'>Extra Quiz</label>
+                            <select class="form-control" id="ExtraQuiz" form="metadata-submission" name="ExtraQuiz"
+                                    required>
+                                <option value="0" <?php if ($quizResult->ExtraQuiz == 0) echo 'selected';?> >No</option>
+                                <option value="1" <?php if ($quizResult->ExtraQuiz == 1) echo 'selected';?> >Yes</option>
+                            </select>
+                            <br>
                             <label for="points">Points</label>
                             <input type="text" class="form-control" id="points" name="points" placeholder="0"
                                    value="<?php echo $quizResult->Points; ?>" required>
                             <br>
                         </form>
                         <!--edit metadata-->
-                        <span class="glyphicon glyphicon-remove pull-right" id="metadata-remove"
-                              aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;</span><span
-                            class="glyphicon glyphicon-floppy-saved pull-right" id="metadata-save"
-                            aria-hidden="true"></span>
+                        <button type="button" class="btn btn-default btn-lg text-center pull-right" id="metadata-save">Save Changes</button>
                     </div>
                     <!-- /.panel-body -->
                 </div>

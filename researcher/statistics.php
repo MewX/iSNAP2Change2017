@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
@@ -105,6 +106,7 @@ db_close($conn);
 
                         <div>
                             <br>
+                            <span class="fa fa-check-circle pull-left" aria-hidden="true" style="font-size: 16px"> Extra Quiz </span>
                             <span class="fa fa fa-certificate pull-left" aria-hidden="true" style="font-size: 16px"> Graded</span>
                             <span class="fa fa-star pull-left" aria-hidden="true" style="font-size: 16px"> Not Graded</span>
                             <span class="fa fa-star-o pull-left" aria-hidden="true" style="font-size: 16px"> Not Submitted</span>

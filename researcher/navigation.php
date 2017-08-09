@@ -416,7 +416,7 @@
                 $pass = $_COOKIE['password'];
                 echo "<script>
                     document.getElementById('username').value = '$username';
-                    document.getElementById('password').valur = '$password';
+                    document.getElementById('password').value = '$password';
                 </script>";
             }
             ?>

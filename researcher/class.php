@@ -3,6 +3,8 @@ session_start();
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
+require_once('researcher-validation.php');
+
 $columnName = array('ClassID', 'ClassName', 'SchoolName', 'TokenString', 'EnrolledStudents', 'UnlockedProgress');
 
 //if insert/update/remove class

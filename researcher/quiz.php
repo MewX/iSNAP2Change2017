@@ -1,9 +1,10 @@
 <?php
 session_start();
+require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
-$columnName = array('QuizID', 'Week', 'QuizType', 'TopicName', 'Points');
+$columnName = array('QuizID', 'Week', 'QuizType', 'TopicName', 'ExtraQuiz', 'Points');
 
 
 try {
@@ -20,28 +21,29 @@ try {
 
                     $conn->beginTransaction();
                     $points = isset($_POST['points']) ? $_POST['points'] : 0;
+                    $extraQuiz = isset($_POST['ExtraQuiz'])? $_POST['ExtraQuiz'] : 0;
 
                     //if editable
                     if (in_array($quizType, $editableQuizTypeArr)) {
                         //create quiz section
                         switch ($quizType) {
                             case "MCQ":
-                                $quizID = createQuiz($conn, $topicID, $quizType, $week);
+                                $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
                                 createMCQSection($conn, $quizID, $points);
                                 break;
                             case "SAQ":
                             case "Video":
                             case "Image":
-                                $quizID = createQuiz($conn, $topicID, $quizType, $week);
+                                $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
                                 createSAQLikeSection($conn, $quizID);
                                 break;
                             case "Matching":
-                                $quizID = createQuiz($conn, $topicID, $quizType, $week);
+                                $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
                                 $description = '';
                                 createMatchingSection($conn, $quizID, $description, $points);
                                 break;
                             case "Poster":
-                                $quizID = createQuiz($conn, $topicID, $quizType, $week);
+                                $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
                                 $question = '';
                                 createPosterSection($conn, $quizID, $question, $points);
                                 break;
@@ -91,11 +93,8 @@ try {
 
 
 try {
-    // misc.php
-    if (strpos($pageName, 'misc') !== false) {
-        $quizResult = getMiscQuizzes($conn);
-    } // quiz.php
-    else if (strpos($pageName, 'quiz') !== false) {
+    // quiz.php
+    if (strpos($pageName, 'quiz') !== false) {
         if (isset($_GET['week'])) {
             $quizResult = getQuizzesByWeek($conn, $_GET['week']);
         } else {
@@ -164,6 +163,7 @@ db_close($conn);
                                         <td><?php echo $quizResult[$i]->Week ?></td>
                                         <td><?php echo $quizType ?></td>
                                         <td><?php echo $quizResult[$i]->TopicName ?></td>
+                                        <td><?php if($quizResult[$i]->ExtraQuiz==1) echo "Yes"; else echo "No"; ?></td>
                                         <td><?php echo $points ?>
                                             <span class="glyphicon glyphicon-remove pull-right"
                                                   aria-hidden="true"></span>
@@ -249,6 +249,13 @@ db_close($conn);
                             <option
                                 value='<?php echo $topicResult[$j]->TopicName ?>'><?php echo $topicResult[$j]->TopicName ?></option>
                         <?php } ?>
+                    </select>
+                    <br>
+                    <label for='ExtraQuiz'>Extra Quiz</label>
+                    <select class="form-control dialoginput" id="ExtraQuiz" form="submission" name="ExtraQuiz" required>
+                        <option value="" disabled selected>Extra Quiz or Not</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
                     </select>
                     <br>
                     <label for="Points">Points</label>

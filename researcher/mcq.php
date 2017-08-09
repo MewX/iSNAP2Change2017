@@ -1,9 +1,10 @@
 <?php
 session_start();
+require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
-$columnName = array('QuizID', 'Week', 'TopicName', 'Points', 'Questions');
+$columnName = array('QuizID', 'Week', 'TopicName', 'Points', 'ExtraQuiz', 'Questions');
 
 try {
     $conn = db_connect();
@@ -73,7 +74,7 @@ db_close($conn);
                     <div class="panel-heading">
                         <?php echo $pageNameForView; ?> Information Table <span
                             class="glyphicon glyphicon-plus pull-right"
-                            data-toggle="modal" data-target="#dialog"></span>
+                            ></span>
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -91,8 +92,15 @@ db_close($conn);
                                             <td <?php if ($j == 0) {
                                                 echo 'style="display:none"';
                                             } ?>>
-                                                <?php
-                                                echo $quizResult[$i]->$columnName[$j];
+                                                <?php if($j != 4){
+                                                    echo $quizResult[$i]->$columnName[$j];
+                                                }else{
+                                                    if($quizResult[$i]->$columnName[$j] == 1){
+                                                        echo "Yes";
+                                                    }else{
+                                                        echo "No";
+                                                    }
+                                                }
                                                 ?>
                                                 <?php if ($j == count($columnName) - 1) { ?>
                                                     <span class="glyphicon glyphicon-remove pull-right"
@@ -173,12 +181,10 @@ db_close($conn);
     //DO NOT put them in $(document).ready() since the table has multi pages
     var dialogInputArr = $('.dialoginput');
     $('.glyphicon-plus').on('click', function () {
-        $("label").remove(".error");
-        $('#dialogTitle').text("Add <?php echo $pageNameForView; ?>");
-        $('#update').val(1);
-        for (i = 0; i < dialogInputArr.length; i++) {
-            dialogInputArr.eq(i).val('');
+        if (confirm("You can only create a new quiz in Quiz Overview, click OK to go that page") == true) {
+            window.location.href='quiz.php';
         }
+
     });
     $('.glyphicon-remove').on('click', function () {
         if (confirm('[WARNING] Are you sure to remove this quiz? If you remove one quiz. All the questions and submission of this quiz will also get deleted (not recoverable). It includes learning material, questions and options, their submissions and your grading/feedback, not only the quiz itself.')) {
