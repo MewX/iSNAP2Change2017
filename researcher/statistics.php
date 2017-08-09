@@ -267,16 +267,19 @@ if (isset($_GET['studentID'])) {
         var week = $(this).parent().attr('Week');
         var warning = "[WARNING] Are you sure to reset timer for Student " + firstName + " " + lastName + " in week-" + week + "?"
         if (confirm(warning)) {
-            $('#update').val(-1);
             var StudentID = $(this).parent().parent().attr('StudentID');
             var QuizID = $(this).parent().attr('QuizID');
-            dialogInputArr.eq(0).val(StudentID);
-            dialogInputArr.eq(1).val(QuizID);
-            //enable all the input
-            dialogInputArr.each(function () {
-                $(this).prop('disabled', false);
-            });
-            $('#submission').submit();
+            var data = {
+                update: -1,
+                StudentID: StudentID,
+                QuizID: QuizID
+            }
+            $.ajax({
+                url:'statistics.php',
+                type:'post',
+                datatype:'json',
+                data: data
+            })
         }
 
     });
