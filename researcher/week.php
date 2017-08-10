@@ -7,17 +7,29 @@ require_once("researcher-lib.php");
 try {
     $conn = db_connect();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $week = $_POST['week'];
-        $updateSql = removeWeek($conn, $week);
-        //General error: 2014 Cannot execute queries while other unbuffered queries are active. Consider using PDOStatement::fetchAll().
-        unset($updateSql);
+        echo "<script>console.log( 'timer Objects post' );</script>";
+
+        if($_POST['update']==1){//update timer
+            $timer = $_POST['Timer'];
+            $weekNum = $_POST['WeekNum'];
+            echo "<script>console.log( 'timer Objects: " . $timer . "' );</script>";
+            echo "<script>console.log( 'weeknum Objects: " . $weekNum . "' );</script>";
+            setWeekTimer($conn, $weekNum, $timer);
+
+        }else{
+            $week = $_POST['week'];
+            $updateSql = removeWeek($conn, $week);
+            //General error: 2014 Cannot execute queries while other unbuffered queries are active. Consider using PDOStatement::fetchAll().
+            unset($updateSql);
+        }
+
     }
 } catch (Exception $e) {
     debug_err($e);
 }
 
 try {
-    $weekResult = getQuizNum($conn);
+    $weekResult = getWeekTimer($conn);
     $weekNumResult = getMaxWeek($conn);
 } catch (Exception $e) {
     debug_err($e);
@@ -60,6 +72,7 @@ db_close($conn);
                                 <tr>
                                     <th>Week</th>
                                     <th>QuizNum</th>
+                                    <th>Timer (Minutes)</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -73,12 +86,20 @@ db_close($conn);
                                             } else {
                                                 echo "even";
                                             } ?>">
-                                                <td><a id="<?php echo $i; ?>"
+                                                <td>
+                                                    <a id="<?php echo $i; ?>"
                                                        href="quiz.php?week=<?php echo $i; ?>"><?php echo $i; ?></a>
                                                 </td>
-                                                <td><?php echo $weekResult[$j]->QuizNum; ?><span
-                                                        class="glyphicon glyphicon-remove pull-right" aria-hidden="true"
-                                                        data-toggle="modal" data-target="#dialog"></span></td>
+                                                <td>
+                                                    <?php echo $weekResult[$j]->QuizNum==null? 0:$weekResult[$j]->QuizNum; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $weekResult[$j]->Timer==null? 0:$weekResult[$j]->Timer; ?>
+                                                    <span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"
+                                                            data-toggle="modal" data-target="#dialog"> </span>
+                                                    <span class="glyphicon glyphicon-edit pull-right" aria-hidden="true"
+                                                          data-toggle="modal" data-target="#dialog-edit"> </span>
+                                                </td>
                                             </tr>
                                             <?php $notEmpty = true;
                                         }
@@ -92,9 +113,11 @@ db_close($conn);
                                             <td><a id="<?php echo $i; ?>"
                                                    href="quiz.php?week=<?php echo $i; ?>"><?php echo $i; ?></a>
                                             </td>
+                                            <td><?php echo 0; ?></td>
                                             <td><?php echo 0; ?><span class="glyphicon glyphicon-remove pull-right"
                                                                       aria-hidden="true" data-toggle="modal"
-                                                                      data-target="#dialog"></span></td>
+                                                                      data-target="#dialog"></span>
+                                            </td>
                                         </tr>
                                     <?php }
                                 } ?>
@@ -144,7 +167,7 @@ db_close($conn);
             <div class="modal-body">
                 <form id="submission" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <label for="Week" style="display:none">Week</label>
-                    <select class="form-control dialoginput" id="Week" form="submission" name="week" required>
+                    <select class="form-control " id="Week" form="submission" name="week" required>
                         <?php for ($i = 1; $i <= $weekNumResult->WeekNum; $i++) { ?>
                             <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                         <?php } ?>
@@ -158,6 +181,36 @@ db_close($conn);
             </div>
             <div class="modal-footer">
                 <button type="button" id="btnConfirm" class="btn btn-default">Confirm</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /#wrapper for edit -->
+<div class="modal fade" id="dialog-edit" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="dialogTitle">Edit Timer</h4>
+            </div>
+            <div class="modal-body">
+                <form id="submission-timer" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <input type=hidden name="update" id="update" value="1" required>
+                    <input type=hidden name="WeekNum" class="dialoginput-timer" id="WeekNum" value="" required>
+                    <label for="Timer" style="display:none">Timer</label>
+                    <input type="text" class="form-control dialoginput-timer" id="Timer" name="Timer"
+                           placeholder="Minutes">
+                    <br>
+                </form>
+            </div>
+            <div class="alert alert-info">
+                <p><strong>Reminder</strong>: You can set the duration (minutes) for quiz in one week at here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnConfirm-timer" class="btn btn-default">Confirm</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -180,9 +233,14 @@ db_close($conn);
             dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).children('a').attr("id"));
         }
     });
-    $('#btnConfirm').on('click', function () {
-        $('#submission').validate();
-        $('#submission').submit();
+    $('.glyphicon-edit').on('click', function () {
+        $('.dialoginput-timer').eq(0).val($(this).parent().parent().children('td').eq(0).children('a').attr("id"));
+        $('.dialoginput-timer').eq(1).val($(this).parent().parent().children('td').eq(2).text().trim());
+    });
+    $('#btnConfirm-timer').on('click', function () {
+        console.log("clicked");
+        $('#submission-timer').validate();
+        $('#submission-timer').submit();
     });
 </script>
 </body>
