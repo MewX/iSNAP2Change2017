@@ -493,6 +493,14 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 # INSERT RAW DATA FOR TEST
 
+# Week Info
+INSERT INTO Week (Timer, WeekNum) VALUES (2,1);
+INSERT INTO Week (Timer, WeekNum) VALUES (3,2);
+INSERT INTO Week (Timer, WeekNum) VALUES (1,3);
+INSERT INTO Week (Timer, WeekNum) VALUES (10,4);
+INSERT INTO Week (Timer, WeekNum) VALUES (5,6);
+INSERT INTO Week (Timer, WeekNum) VALUES (4,7);
+
 # [Example] User Info
 INSERT IGNORE INTO School (SchoolName) VALUES ('Sample School');
 INSERT IGNORE INTO School (SchoolName) VALUES ('Sample Adelaide High School');

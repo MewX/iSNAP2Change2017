@@ -506,6 +506,14 @@ function getWeekTimer(PDO $conn){
     return $weekResult;
 }
 
+function getTimerByWeek(PDO $conn, $week){
+    $weekSql = "Select Timer FROM Week WHERE WeekNum = ? ";
+    $weekQuery = $conn->prepare($weekSql);
+    $weekQuery->execute(array($week));
+    $weekResult = $weekQuery->fetch(PDO::FETCH_OBJ);
+    return $weekResult;
+}
+
 function setWeekTimer(PDO $conn, $weekNum, $Timer){
     $weekSql = "UPDATE Week SET Timer = ? WHERE WeekNum = ?";
     $weekQuery = $conn->prepare($weekSql);
