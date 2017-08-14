@@ -36,8 +36,16 @@ db_close($conn);
 <!-- Header Library -->
 <?php require_once('header-lib.php'); ?>
 
-<body>
+<!--- Overlay the table-striped -->
+<style>
+    .table-striped > tbody > tr > .alert-danger,
+    .table-striped > tbody > .alert-danger > td,
+    .table-striped > tbody > .alert-danger > th {
+        background-color: #f2dede !important;
+    }
+</style>
 
+<body>
 <div id="wrapper">
     <!-- Navigation Layout-->
     <?php require_once('navigation.php'); ?>
@@ -65,11 +73,11 @@ db_close($conn);
                                 <?php require_once('table-head.php'); ?>
                                 <tbody>
                                 <?php for ($i = 0; $i < count($quizResult); $i++) { ?>
-                                    <tr class="<?php if ($i % 2 == 0) {
-                                        echo "odd";
-                                    } else {
-                                        echo "even";
-                                    } ?>">
+                                    <tr class="<?php
+                                        if($quizResult[$i]->CorrectChoice==null) {
+                                            echo ' alert-danger';
+                                        } ?>"
+                                    >
                                         <?php for ($j = 0; $j < count($columnName); $j++) { ?>
                                             <td <?php if ($j == 0) {
                                                 echo 'style="display:none"';
