@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
@@ -21,9 +22,9 @@ try {
                     $description = $_POST['description'];
                     $points = $_POST['points'];
                     $conn->beginTransaction();
-                    
+                    $extraQuiz = $_POST['ExtraQuiz'];
                     $topicID = getTopicByName($conn, $topicName)->TopicID;
-                    updateQuiz($conn, $quizID, $topicID, $week);
+                    updateQuiz($conn, $quizID, $topicID, $week, $extraQuiz);
                     updateMatchingSection($conn, $quizID, $description, $points);
 
                     $conn->commit();
@@ -153,6 +154,13 @@ db_close($conn);
                             <input type="text" class="form-control" id="Points" name="points" placeholder="Input Points"
                                    value="<?php echo $quizResult->Points; ?>" required>
                             <br>
+                            <label for='ExtraQuiz'>Extra Quiz</label>
+                            <select class="form-control" id="ExtraQuiz" form="metadata-submission" name="ExtraQuiz"
+                                    required>
+                                <option value="0" <?php if ($quizResult->ExtraQuiz == 0) echo 'selected';?> >No</option>
+                                <option value="1" <?php if ($quizResult->ExtraQuiz == 1) echo 'selected';?> >Yes</option>
+                            </select>
+                            <br>
                             <label for="MultipleChoice">MultipleChoice</label>
                             <input type="hidden" class="form-control" id="MultipleChoice" name="multiplechoice"
                                    value="0">
@@ -165,10 +173,8 @@ db_close($conn);
                             <br>
                         </form>
                         <!--edit metadata-->
-                        <span class="glyphicon glyphicon-remove pull-right" id="metadata-remove"
-                              aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;</span><span
-                            class="glyphicon glyphicon-floppy-saved pull-right" id="metadata-save"
-                            aria-hidden="true"></span>
+                        <button type="button" class="btn btn-default btn-lg text-center pull-right" id="metadata-save">Save Changes</button>
+
                     </div>
                     <!-- /.panel-body -->
                 </div>

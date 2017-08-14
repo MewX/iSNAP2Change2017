@@ -1,11 +1,13 @@
 <?php
 session_start();
+require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
 
 if (isset($_GET['quizID'])) {
     $quizID = $_GET['quizID'];
+    $studentID = $_GET['StudentID'];
 }
 
 try {
@@ -16,7 +18,7 @@ try {
             if ($update == 0) {
                 $studentID = $_POST['studentID'];
                 $grading = $_POST['grading'];
-                updatePosterGradings($conn, $quizID, $studentID, $grading);
+                updatePosterGrading($conn, $quizID, $studentID, $grading);
             }
         }
     }
@@ -25,9 +27,9 @@ try {
 }
 
 try {
-    $posterSubmissionResult = getPosterSubmissionsByQuiz($conn, $quizID);
+    $posterSubmissionResult = getPosterSubmissionsByQuiz($conn, $quizID, $studentID);
     $materialRes = getLearningMaterial($conn, $quizID);
-    $phpSelf = $pageName . '.php?quizID=' . $quizID;
+    $phpSelf = $pageName . '.php?quizID=' . $quizID . '&StudentID=' .$studentID;
 } catch (Exception $e) {
     debug_err($e);
 }
@@ -72,45 +74,22 @@ db_close($conn);
                                   style="text-align: center;">
                                 <input type=hidden name="update" id="update" value="0" required>
                                 <input type=hidden name="quizID" value="<?php echo $quizID ?>" required>
-                                <?php for ($i = 0; $i < count($posterSubmissionResult); $i++) {
-                                    $quizID = $posterSubmissionResult[$i]->QuizID;
-                                    ?>
-                                    <div class="col-lg-4">
-
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-
-                                            </div>
-                                            <div class="panel-body">
-                                                <input type=hidden id="studentID[]"
-                                                       disabled
-                                                       value="<?php echo $posterSubmissionResult[$i]->StudentID ?>">
-                                                <br>
-                                                <a href="<?php echo $posterSubmissionResult[$i]->ImageURL ?>"><img
-                                                        src="<?php echo $posterSubmissionResult[$i]->ImageURL ?>"
-                                                        alt="Failed to load poster. Please contact developers."
-                                                        width="200"
-                                                        height="200"/></a>
-                                                <br>
-                                                <br>
-                                                <label for="textInput<?php echo $quizID ?>">Grading</label>
-                                                <input type="text" class="pull-right"
-                                                       id="textInput<?php echo $quizID ?>" name="grading[]"
-                                                       value="<?php echo $posterSubmissionResult[$i]->Grading > 0 ? $posterSubmissionResult[$i]->Grading : $posterSubmissionResult[$i]->Points; ?>"
-                                                       disabled>
-                                                <label for="bonus<?php echo $quizID ?>">Bonus</label>
-                                                <input type="hidden" id="bonus[]" name="bonus[]"
-                                                       value="0">
-                                                <input class="form-control" type="checkbox"
-                                                       id="bonus<?php echo $quizID ?>" name="bonus[]"
-                                                       value="1" <?php if ($posterSubmissionResult[$i]->Grading > 0) echo 'checked'; ?>>
-                                                <br>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                <?php } ?>
+                                <input type=hidden name="studentID"
+                                       value="<?php echo $posterSubmissionResult[0]->StudentID ?>">
+                                <br>
+                                <a href="<?php echo $posterSubmissionResult[0]->ImageURL ?>"><img
+                                        src="<?php echo $posterSubmissionResult[0]->ImageURL ?>"
+                                        alt="Failed to load poster. Please contact developers."
+                                        width="400"
+                                        height="400"/></a>
+                                <br>
+                                <br>
+                                <label for="grading">Grading</label>
+                                <input type="text"
+                                       id="grading" name="grading"
+                                       value="<?php echo $posterSubmissionResult[0]->Grading ?>"
+                                >
+                                <br>
                             </form>
                         </div>
                     </div>

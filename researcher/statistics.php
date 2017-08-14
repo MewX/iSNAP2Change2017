@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
@@ -105,6 +106,7 @@ db_close($conn);
 
                         <div>
                             <br>
+                            <span class="fa fa-check-circle pull-left" aria-hidden="true" style="font-size: 16px"> Extra Quiz </span>
                             <span class="fa fa fa-certificate pull-left" aria-hidden="true" style="font-size: 16px"> Graded</span>
                             <span class="fa fa-star pull-left" aria-hidden="true" style="font-size: 16px"> Not Graded</span>
                             <span class="fa fa-star-o pull-left" aria-hidden="true" style="font-size: 16px"> Not Submitted</span>
@@ -265,16 +267,19 @@ if (isset($_GET['studentID'])) {
         var week = $(this).parent().attr('Week');
         var warning = "[WARNING] Are you sure to reset timer for Student " + firstName + " " + lastName + " in week-" + week + "?"
         if (confirm(warning)) {
-            $('#update').val(-1);
             var StudentID = $(this).parent().parent().attr('StudentID');
             var QuizID = $(this).parent().attr('QuizID');
-            dialogInputArr.eq(0).val(StudentID);
-            dialogInputArr.eq(1).val(QuizID);
-            //enable all the input
-            dialogInputArr.each(function () {
-                $(this).prop('disabled', false);
-            });
-            $('#submission').submit();
+            var data = {
+                update: -1,
+                StudentID: StudentID,
+                QuizID: QuizID
+            }
+            $.ajax({
+                url:'statistics.php',
+                type:'post',
+                datatype:'json',
+                data: data
+            })
         }
 
     });

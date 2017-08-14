@@ -1,9 +1,10 @@
 <?php
 session_start();
+require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
-$columnName = array('QuizID', 'Week', 'TopicName', 'Points', 'SubmissionNum', 'Ungraded', 'Edit');
+$columnName = array('QuizID', 'Week', 'TopicName', 'ClassName', 'Username', 'Score', 'Status');
 
 $conn = null;
 try {
@@ -75,18 +76,18 @@ db_close($conn);
                                                 if ($j < count($columnName) - 2)
                                                     echo $quizResult[$i]->$columnName[$j];
                                                 else if ($j == count($columnName) - 2) {
-                                                    try {
-                                                        if ($conn == null) $conn = db_connect();
-                                                        echo getUngradedPosterSubmissions($conn, $quizResult[$i]->QuizID);
-                                                        db_close($conn);
-                                                    } catch (Exception $e) {
-                                                        debug_err($e);
-                                                    }
-                                                } else { ?>
+                                                    echo $quizResult[$i]->Grading;
+                                                } else {
+                                                    echo $quizResult[$i]->$columnName[$j];
+                                                    $tempQuizID = $quizResult[$i]->QuizID;
+                                                    $tempStudentID = $quizResult[$i]->StudentID;
+                                                    $url = "poster-grader.php?quizID=$tempQuizID&StudentID=$tempStudentID"
+                                                    ?>
                                                     <span class="glyphicon glyphicon-remove pull-right"
                                                           aria-hidden="true"></span>
                                                     <span class="pull-right" aria-hidden="true">&nbsp;</span>
-                                                    <a href="poster-grader.php?quizID=<?php echo $quizResult[$i]->QuizID ?>">
+                                                    <a href="<?php echo $url?>">
+<!--                                                        <a href="poster-grader.php?quizID=9&StudentID=9">-->
                                                     <span class="glyphicon glyphicon-edit pull-right"
                                                           aria-hidden="true"></span>
                                                     </a>

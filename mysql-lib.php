@@ -598,7 +598,7 @@ function getStuWeekRecord(PDO $conn, $studentID, $week)
 /* Student Week Record*/
 
 /* Quiz */
-function createQuiz(PDO $conn, $topicID, $quizType, $week)
+function createQuiz(PDO $conn, $topicID, $quizType, $week, $extraQuiz="0")
 {
     if ($quizType == "Video" || $quizType == "Image")
         $quizType = 'SAQ';
@@ -608,21 +608,22 @@ function createQuiz(PDO $conn, $topicID, $quizType, $week)
                 WHERE WeekNum = ?)";
     $updateSql = $conn->prepare($updateSql);
     $updateSql->execute(array($week, $week, $week));
-    $updateSql = "INSERT INTO Quiz(Week, QuizType, TopicID)
-             VALUES (?,?,?)";
+    $updateSql = "INSERT INTO Quiz(Week, QuizType, TopicID, ExtraQuiz)
+             VALUES (?,?,?,?)";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($week, $quizType, $topicID));
+    $updateSql->execute(array($week, $quizType, $topicID,$extraQuiz));
+
 
     return $conn->lastInsertId();
 }
 
-function updateQuiz(PDO $conn, $quizID, $topicID, $week)
+function updateQuiz(PDO $conn, $quizID, $topicID, $week, $extraQuiz)
 {
     $updateSql = "UPDATE Quiz 
-                SET Week = ?, TopicID = ?
+                SET Week = ?, TopicID = ?, ExtraQuiz = ?
                 WHERE QuizID = ?";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($week, $topicID, $quizID));
+    $updateSql->execute(array($week, $topicID, $extraQuiz, $quizID));
 }
 
 function deleteQuiz(PDO $conn, $quizID)
@@ -757,7 +758,7 @@ function getQuizzes(PDO $conn)
 
 function getQuizzesByWeek(PDO $conn, $week)
 {
-    $quizSql = "SELECT QuizID, Week, QuizType, TopicName
+    $quizSql = "SELECT QuizID, Week, QuizType, TopicName, ExtraQuiz
                    FROM Quiz NATURAL JOIN Topic WHERE Week = ?";
     $quizQuery = $conn->prepare($quizSql);
     $quizQuery->execute(array($week));
@@ -1288,7 +1289,7 @@ function getSAQQuiz(PDO $conn, $quizID)
 
 function getSAQLikeQuizzes(PDO $conn, $typeIndicator)
 {
-    $quizSql = "SELECT QuizID, TopicID, Week, QuizType, TopicName, SAQID, SUM(Points) AS Points, COUNT(SAQID) AS Questions
+    $quizSql = "SELECT QuizID, TopicID, Week, QuizType, ExtraQuiz, TopicName, SAQID, SUM(Points) AS Points, COUNT(SAQID) AS Questions
                    FROM Quiz NATURAL JOIN Topic NATURAL JOIN Learning_Material NATURAL JOIN SAQ_Section LEFT JOIN SAQ_Question USING (QuizID) WHERE QuizType = 'SAQ' AND $typeIndicator GROUP BY QuizID";
     $quizQuery = $conn->prepare($quizSql);
     $quizQuery->execute();
@@ -1764,22 +1765,12 @@ function updatePosterSubmission(PDO $conn, $quizID, $studentID, $zwibblerDoc, $i
     $posterRecordSubmittedQuery->execute(array($quizID, $studentID, $zwibblerDoc, $imageUrl, $zwibblerDoc, $imageUrl));
 }
 
-function updatePosterGradings(PDO $conn, $quizID, array $studentID, array $grading)
+function updatePosterGrading(PDO $conn, $quizID, $studentID, $grading)
 {
-    if (count($studentID) == count($grading)) {
-        try {
-            $conn->beginTransaction();
-            for ($i = 0; $i < count($studentID); $i++) {
-                updateQuizRecord($conn, $quizID, $studentID[$i], "GRADED");
-                updatePostGrading($conn, $quizID, $studentID[$i], $grading[$i]);
-            }
-            $conn->commit();
-        } catch (Exception $e) {
-            debug_err($e);
-            $conn->rollBack();
-        }
-    } else
-        throw new Exception("The length of studentID array and grading array don't match. ");
+    $conn->beginTransaction();
+    updateQuizRecord($conn, $quizID, $studentID, "GRADED");
+    updatePostGrading($conn, $quizID, $studentID, $grading);
+    $conn->commit();
 }
 
 function updatePostGrading(PDO $conn, $quizID, $studentID, $grading)
@@ -1860,20 +1851,23 @@ function getPosterQuizzes(PDO $conn)
     return getRecords($conn, "Poster_Section", array("Quiz", "Topic"));
 }
 
+
 function getPosterSubmissions(PDO $conn)
 {
-    $tableSql = "SELECT * , COUNT(*) AS SubmissionNum FROM poster_section NATURAL JOIN quiz NATURAL JOIN topic NATURAL JOIN quiz_record NATURAL JOIN poster_record GROUP BY QuizID";
+    $tableSql = "SELECT * FROM poster_section NATURAL JOIN quiz NATURAL JOIN topic 
+NATURAL JOIN quiz_record NATURAL JOIN poster_record NATURAL JOIN Student NATURAL JOIN Class ORDER BY QuizID";
     $tableQuery = $conn->prepare($tableSql);
     $tableQuery->execute();
     $tableResult = $tableQuery->fetchAll(PDO::FETCH_OBJ);
     return $tableResult;
 }
 
-function getPosterSubmissionsByQuiz(PDO $conn, $quizID)
+function getPosterSubmissionsByQuiz(PDO $conn, $quizID, $studentID)
 {
-    $tableSql = "SELECT * FROM poster_section NATURAL JOIN quiz NATURAL JOIN topic NATURAL JOIN quiz_record NATURAL JOIN poster_record WHERE QuizID = ?";
+    $tableSql = "SELECT * FROM poster_section NATURAL JOIN quiz NATURAL JOIN topic NATURAL JOIN quiz_record 
+                  NATURAL JOIN poster_record NATURAL JOIN Student WHERE QuizID = ? AND StudentID = ?";
     $tableQuery = $conn->prepare($tableSql);
-    $tableQuery->execute(array($quizID));
+    $tableQuery->execute(array($quizID,$studentID));
     $tableResult = $tableQuery->fetchAll(PDO::FETCH_OBJ);
     return $tableResult;
 }

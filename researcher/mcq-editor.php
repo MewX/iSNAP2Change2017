@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
@@ -17,10 +18,10 @@ try {
                     $week = $_POST['week'];
                     $topicName = $_POST['topicName'];
                     $points = $_POST['points'];
+                    $extraQuiz = $_POST['ExtraQuiz'];
                     $conn->beginTransaction();
-
                     $topicID = getTopicByName($conn, $topicName)->TopicID;
-                    updateQuiz($conn, $quizID, $topicID, $week);
+                    updateQuiz($conn, $quizID, $topicID, $week, $extraQuiz);
                     updateMCQSection($conn, $quizID, $points);
 
                     $conn->commit();
@@ -112,7 +113,7 @@ db_close($conn);
                             <input type="text" class="form-control" id="Week" name="week"
                                    placeholder="Input Week Number" value="<?php echo $quizResult->Week; ?>">
                             <br>
-                            <label for='TopicName'>TopicName</label>
+                            <label for='TopicName'>Topic Name</label>
                             <select class="form-control" id="TopicName" form="metadata-submission" name="topicName"
                                     required>
                                 <?php for ($j = 0; $j < count($topicResult); $j++) { ?>
@@ -125,16 +126,21 @@ db_close($conn);
                             <input type="text" class="form-control" id="Points" name="points" placeholder="Input Points"
                                    value="<?php echo $quizResult->Points; ?>" required>
                             <br>
+                            <label for='ExtraQuiz'>Extra Quiz</label>
+                            <select class="form-control" id="ExtraQuiz" form="metadata-submission" name="ExtraQuiz"
+                                    required>
+                                <option value="0" <?php if ($quizResult->ExtraQuiz == 0) echo 'selected';?> >No</option>
+                                <option value="1" <?php if ($quizResult->ExtraQuiz == 1) echo 'selected';?> >Yes</option>
+                            </select>
+                            <br>
                             <label for="Questions">Questions</label>
                             <input type="text" class="form-control" id="Questions" name="questions"
                                    value="<?php echo $quizResult->Questions; ?>" disabled>
                             <br>
                         </form>
                         <!--edit metadata-->
-                        <span class="glyphicon glyphicon-remove pull-right" id="metadata-remove"
-                              aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;</span><span
-                            class="glyphicon glyphicon-floppy-saved pull-right" id="metadata-save"
-                            aria-hidden="true"></span>
+                        <button type="button" class="btn btn-default btn-lg text-center pull-right" id="metadata-save">Save Changes</button>
+
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -176,7 +182,7 @@ db_close($conn);
                                         <td>
                                             <span class="glyphicon glyphicon-remove pull-right "
                                                   aria-hidden="true"></span>
-                                            <span class="pull-right" aria-hidden="true">&nbsp;</span>
+                                            <span class="pull-right" aria-hidden="true"> </span>
                                             <a href="mcq-option-editor.php?quizID=<?php echo $quizID ?>&mcqID=<?php echo $mcqQuesResult[$i]->$columnName[0]; ?>">
                                                 <span class="glyphicon glyphicon-edit pull-right"
                                                       aria-hidden="true"></span></a>
