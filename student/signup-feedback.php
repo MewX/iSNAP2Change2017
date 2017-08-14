@@ -26,7 +26,6 @@
             $classID = $_POST["classID"];
         } else {
             debug_log("Illegal state!");
-            header("location:welcome.php");
             exit;
         }
     } else {
@@ -57,6 +56,7 @@
         }
 
         if($action == "REGISTER"){
+            // check validation
             $dob = $dobYear."-".$dobMon."-".$dobDay;
             createStudent($conn, $username, $password, $firstname, $lastname, $email, $gender, $dob, $identity, $classID);
         }
@@ -74,5 +74,3 @@
     db_close($conn);
     $feedback["message"] = "success";
     echo json_encode($feedback);
-?>
-

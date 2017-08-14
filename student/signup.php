@@ -363,7 +363,7 @@ db_close($conn);
                     <p>I am terms and conditions</p>
                 </div>
                 <div class="submitinfo" style="text-align: center;">
-                    <button type="button" onclick="checkValidaton()" class="header4 btn btn-primary btn-lg btn-block" style="margin-left: 35%; width:30%; margin-top:4%; border-radius: 10px; white-space: normal; border: #FCEE2D solid 2px; border-color: #FCEE2D !important; color:#FCEE2D; background-color: black; opacity: 0.7;">Register</button>
+                    <button type="button" onclick="checkValidation()" class="header4 btn btn-primary btn-lg btn-block" style="margin-left: 35%; width:30%; margin-top:4%; border-radius: 10px; white-space: normal; border: #FCEE2D solid 2px; border-color: #FCEE2D !important; color:#FCEE2D; background-color: black; opacity: 0.7;">Register</button>
                 </div>
         </div>
     </fieldset>
@@ -374,8 +374,12 @@ db_close($conn);
             // validate the form when it is submitted
             var validator = $("#sign-up-form").validate({
                 rules: {
-                    firstname: "required",
-                    lastname: "required",
+                    firstname:{
+                        required: true
+                    },
+                    lastname: {
+                        required: true
+                    },
                     email: {
                         required: true,
                         email: true
@@ -390,7 +394,7 @@ db_close($conn);
                         minlength: 5,
                         maxlength: 12,
                         equalTo: "#password-text"
-                    },
+                    }
                 },
                 errorElement: "span",
                 messages: {
@@ -490,7 +494,7 @@ db_close($conn);
             xmlhttp.send(postData);
         }
 
-        function checkValidaton(){
+        function checkValidation(){
             var username = $('#username-text').val();
             var password = $('#password-text').val();
             var lastname = $('#lastname-text').val();
