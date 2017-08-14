@@ -599,6 +599,7 @@ function getStuWeekRecord(PDO $conn, $studentID, $week)
 /* Quiz */
 function createQuiz(PDO $conn, $topicID, $quizType, $week, $extraQuiz)
 {
+    // FIXME: the extra quiz is not used in this function
     if ($quizType == "Video" || $quizType == "Image")
         $quizType = 'SAQ';
     $updateSql="INSERT INTO Week (WeekNum) SELECT ? FROM dual
