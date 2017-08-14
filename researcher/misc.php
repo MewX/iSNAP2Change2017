@@ -12,63 +12,7 @@ try {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['update'])) {
             $update = $_POST['update'];
-            if ($update == 1) {
-                try {
-                    $week = $_POST['week'];
-                    $quizType = $_POST['quizType'];
-                    $topicName = $_POST['topicName'];
-                    $topicID = getTopicByName($conn, $topicName)->TopicID;
-
-                    $conn->beginTransaction();
-                    $points = isset($_POST['points']) ? $_POST['points'] : 0;
-                    $extraQuiz = isset($_POST['ExtraQuiz'])? $_POST['ExtraQuiz'] : 0;
-
-                    //if editable
-                    if (in_array($quizType, $editableQuizTypeArr)) {
-                        //create quiz section
-                        switch ($quizType) {
-                            case "MCQ":
-                                $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
-                                createMCQSection($conn, $quizID, $points);
-                                break;
-                            case "SAQ":
-                            case "Video":
-                            case "Image":
-                                $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
-                                createSAQLikeSection($conn, $quizID);
-                                break;
-                            case "Matching":
-                                $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
-                                $description = '';
-                                createMatchingSection($conn, $quizID, $description, $points);
-                                break;
-                            case "Poster":
-                                $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
-                                $question = '';
-                                createPosterSection($conn, $quizID, $question, $points);
-                                break;
-                            default:
-                                throw new Exception("Unexpected Quiz Type. QuizID: " . $quizID);
-                        }
-                        //create default learning material
-                        if ($quizType == "Video")
-                            createVideoLearningMaterial($conn, $quizID);
-                        else if ($quizType == "Image")
-                            createImageLearningMaterial($conn, $quizID);
-                        else
-                            createEmptyLearningMaterial($conn, $quizID);
-                    } //if misc
-                    else {
-                        $quizID = createQuiz($conn, $topicID, 'Misc', $week);
-                        createMiscSection($conn, $quizID, $points, $quizType);
-                    }
-
-                    $conn->commit();
-                } catch (Exception $e) {
-                    debug_err($e);
-                    $conn->rollBack();
-                }
-            } else if ($update == 0) {
+            if ($update == 0) {
                 // if edit misc quiz
                 $week = $_POST['week'];
                 $quizID = $_POST['quizID'];
@@ -190,79 +134,6 @@ db_close($conn);
     <!-- /#page-wrapper -->
 </div>
 <!-- /#wrapper -->
-<!-- Modal -->
-<div class="modal fade" id="dialog" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="dialogTitle"></h4>
-            </div>
-            <div class="modal-body">
-                <form id="submission" method="post"
-                      action="<?php if (isset($_GET['week'])) echo $_SERVER['PHP_SELF'] . '?week=' . $_GET['week']; else echo $_SERVER['PHP_SELF']; ?>">
-                    <!--if 1, insert; else if -1 delete;-->
-                    <input type=hidden name="update" id="update" value="1" required>
-                    <label for="QuizID" style="display:none">QuizID</label>
-                    <input type="text" class="form-control dialoginput" id="QuizID" name="quizID" style="display:none">
-                    <label for="Week">Week</label>
-                    <input type="text" class="form-control dialoginput" id="Week" name="week"
-                           placeholder="Input Week Number" <?php if (isset($_GET['week'])) {
-                        $w = $_GET['week'];
-                        echo "value='" . $w . "'";
-                    } ?> required>
-                    <br>
-                    <label for='QuizType'>QuizType</label>
-                    <select class="form-control dialoginput" id="QuizType" form="submission" name="quizType" required>
-                        <option value="" disabled selected>Select Quiz Type</option>
-
-                        // quiz.php
-                        <?php if (strpos($pageName, 'quiz') !== false) { ?>
-                            <optgroup label="Editable Quiz">
-                                <?php for ($i = 0; $i < count($editableQuizTypeArr); $i++) { ?>
-                                    <option
-                                            value="<?php echo $editableQuizTypeArr[$i] ?>"><?php echo $editableQuizTypeArr[$i] ?></option>
-                                <?php } ?>
-                            </optgroup>
-                        <?php } ?>
-                        <optgroup label="Misc Quiz">
-                            <?php for ($i = 0; $i < count($miscQuizTypeArr); $i++) { ?>
-                                <option
-                                        value="<?php echo $miscQuizTypeArr[$i] ?>"><?php echo $miscQuizTypeArr[$i] ?></option>
-                            <?php } ?>
-                        </optgroup>
-                    </select>
-                    <br>
-                    <label for='TopicName'>TopicName</label>
-                    <select class="form-control dialoginput" id="TopicName" form="submission" name="topicName" required>
-                        <option value="" disabled selected>Select Topic</option>
-                        <?php for ($j = 0; $j < count($topicResult); $j++) { ?>
-                            <option
-                                    value='<?php echo $topicResult[$j]->TopicName ?>'><?php echo $topicResult[$j]->TopicName ?></option>
-                        <?php } ?>
-                    </select>
-                    <br>
-                    <label for='ExtraQuiz'>Extra Quiz</label>
-                    <select class="form-control dialoginput" id="ExtraQuiz" form="submission" name="ExtraQuiz" required>
-                        <option value="" disabled selected>Extra Quiz or Not</option>
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
-                    </select>
-                    <br>
-                    <label for="Points">Points</label>
-                    <input type="text" class="form-control dialoginput" id="Points" name="points"
-                           placeholder="Input Points">
-                    <br>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="btnSave" class="btn btn-default">Save</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 <input type=hidden name="keyword" id="keyword" value="<?php if (isset($_GET['week'])) {
     echo $_GET['week'];
 } ?>">
@@ -299,21 +170,6 @@ db_close($conn);
             }
             $('#submission').submit();
         }
-    });
-    $('#btnSave').on('click', function () {
-        $('#submission').validate({
-            rules: {
-                week: {
-                    required: true,
-                    digits: true
-                },
-                points: {
-                    <?php if (strpos($pageName, 'misc') !== false) echo "required: true,"; ?>
-                    digits: true
-                }
-            }
-        });
-        $('#submission').submit();
     });
 
     $(document).ready(function () {
