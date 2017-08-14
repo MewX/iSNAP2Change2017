@@ -37,6 +37,9 @@
         //get all quizzes by studentID and week
         $quizzesRes = getQuizzesStatusByWeek($conn, $studentID, $week, 0);
 
+        $timer = getTimerByWeek($conn, $week)->Timer;
+        echo "<script>console.log( 'Debug Objects: " . $timer . "' );</script>";
+
     } catch(Exception $e) {
         if($conn != null) {
             db_close($conn);
@@ -914,7 +917,7 @@
 
             }
 <?php   } else { ?>
-            newDue = new Date(Date.parse(new Date()) +  60 * 1000);
+            newDue = new Date(Date.parse(new Date()) +  60 * <?php echo $timer ?> * 1000);
 
             $('.countdown').final_countdown({
                 start: new Date().getTime() / 1000,

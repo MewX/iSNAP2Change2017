@@ -225,7 +225,6 @@ db_close($conn);
                     <select class="form-control dialoginput" id="QuizType" form="submission" name="quizType" required>
                         <option value="" disabled selected>Select Quiz Type</option>
 
-                        // quiz.php
                         <?php if (strpos($pageName, 'quiz') !== false) { ?>
                             <optgroup label="Editable Quiz">
                                 <?php for ($i = 0; $i < count($editableQuizTypeArr); $i++) { ?>

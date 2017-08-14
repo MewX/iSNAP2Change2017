@@ -497,6 +497,30 @@ function deleteResearcher(PDO $conn, $researcherID)
 /* Researcher */
 
 /* Week */
+
+function getWeekTimer(PDO $conn){
+    $weekSql = "Select Week, count(*) As QuizNum, Timer from Quiz LEFT JOIN Week ON Quiz.Week = Week.WeekNum GROUP BY Week ORDER BY Week";
+    $weekQuery = $conn->prepare($weekSql);
+    $weekQuery->execute();
+    $weekResult = $weekQuery->fetchAll(PDO::FETCH_OBJ);
+    return $weekResult;
+}
+
+function getTimerByWeek(PDO $conn, $week){
+    $weekSql = "Select Timer FROM Week WHERE WeekNum = ? ";
+    $weekQuery = $conn->prepare($weekSql);
+    $weekQuery->execute(array($week));
+    $weekResult = $weekQuery->fetch(PDO::FETCH_OBJ);
+    return $weekResult;
+}
+
+function setWeekTimer(PDO $conn, $weekNum, $Timer){
+    $weekSql = "UPDATE Week SET Timer = ? WHERE WeekNum = ?";
+    $weekQuery = $conn->prepare($weekSql);
+    $weekQuery->execute(array($Timer, $weekNum));
+    $weekQuery->execute();
+}
+
 function removeWeek(PDO $conn, $week)
 {
     $updateSql = "SET SQL_SAFE_UPDATES=0;
@@ -570,7 +594,6 @@ function getStuWeekRecord(PDO $conn, $studentID, $week)
     return $weekRecordRes->DueTime;
 }
 
-
 /* Student Week Record*/
 
 /* Quiz */
@@ -578,10 +601,16 @@ function createQuiz(PDO $conn, $topicID, $quizType, $week, $extraQuiz)
 {
     if ($quizType == "Video" || $quizType == "Image")
         $quizType = 'SAQ';
-    $updateSql = "INSERT INTO Quiz(Week, QuizType, TopicID, ExtraQuiz)
-             VALUES (?,?,?,?)";
+    $updateSql="INSERT INTO Week (WeekNum) SELECT ? FROM dual
+                WHERE NOT EXISTS (SELECT ? 
+                FROM Week 
+                WHERE WeekNum = ?)";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($week, $quizType, $topicID,$extraQuiz));
+    $updateSql->execute(array($week, $week, $week));
+    $updateSql = "INSERT INTO Quiz(Week, QuizType, TopicID)
+             VALUES (?,?,?)";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($week, $quizType, $topicID));
     return $conn->lastInsertId();
 }
 
@@ -636,7 +665,7 @@ function getStuQuizScore(PDO $conn, $quizID, $studentID)
 
 function getQuizNum(PDO $conn)
 {
-    $weekSql = "SELECT Week, COUNT(*) AS QuizNum FROM Quiz GROUP BY Week";
+    $weekSql = "SELECT Week, COUNT(*) AS QuizNum FROM Quiz GROUP BY Week ORDER BY Week";
     $weekQuery = $conn->prepare($weekSql);
     $weekQuery->execute();
     $weekResult = $weekQuery->fetchAll(PDO::FETCH_OBJ);
