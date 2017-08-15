@@ -65,9 +65,14 @@ db_close($conn);
                                     <?php for ($i = 0; $i < count($columnName); $i++) { ?>
                                         <th <?php if ($i == 0) {
                                             echo 'style="display:none"';
-                                        } ?>><?php echo $columnName[$i]; ?></th>
+                                        } ?>><?php
+                                            $parts = preg_split('/(?=[A-Z])/', $columnName[$i]);
+                                            for($j=0;$j<count($parts);$j++){
+                                                echo $parts[$j];
+                                                echo " ";
+                                            }?></th>
                                         <?php if ($i == count($columnName) - 2) { ?>
-                                            <th>MultipleChoice</th>
+                                            <th>Multiple Choice</th>
                                         <?php }
                                     } ?>
                                 </tr>

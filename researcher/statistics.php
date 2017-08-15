@@ -139,7 +139,12 @@ db_close($conn);
                                                     <span class="fa fa-check-circle" aria-hidden="true"></span>
                                                 <?php endif ?>
                                             <?php else: ?>
-                                                <th><?php echo $columnName[$i]?>
+                                                <th><?php
+                                                $parts = preg_split('/(?=[A-Z])/', $columnName[$i]);
+                                                for($j=0;$j<count($parts);$j++){
+                                                    echo $parts[$j];
+                                                    echo " ";
+                                                }?>
                                             <?php endif ?>
                                             </th>
                                         <?php } ?>

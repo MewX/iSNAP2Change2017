@@ -72,7 +72,7 @@ db_close($conn);
                                 <thead>
                                 <tr>
                                     <th>Week</th>
-                                    <th>QuizNum</th>
+                                    <th>Quiz Num</th>
                                     <th>Timer (Minutes)</th>
                                 </tr>
                                 </thead>

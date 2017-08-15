@@ -132,10 +132,7 @@ db_close($conn);
                             <p><strong>Reminder</strong> : You have not chosen any correct choice for this question!
                         </div>
                         <!--edit metadata-->
-                        <span class="glyphicon glyphicon-remove pull-right" id="metadata-remove"
-                              aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;</span><span
-                            class="glyphicon glyphicon-floppy-saved pull-right" id="metadata-save"
-                            aria-hidden="true"></span>
+                        <button type="button" class="btn btn-default btn-lg text-center pull-right" id="metadata-save">Save Changes</button>
                     </div>
                     <!-- /.panel-body -->
                 </div>

@@ -75,7 +75,7 @@ db_close($conn);
                                 <thead>
                                 <tr>
                                     <th style="display:none">SchoolID</th>
-                                    <th>SchoolName</th>
+                                    <th>School Name</th>
                                     <th>Classes</th>
                                 </tr>
                                 </thead>
