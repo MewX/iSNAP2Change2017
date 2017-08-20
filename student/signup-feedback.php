@@ -50,7 +50,7 @@
                 $feedback["result"] = "invalid";
             }
         } else if ($action == "VALIDUSERNAME"){
-            if(!checkStudentUsernameExisting($conn, $username)) {
+            if(strlen($username) >= 3 && !checkStudentUsernameExisting($conn, $username)) {
                 $feedback["result"] = "valid";
             } else {
                 $feedback["result"] = "invalid";

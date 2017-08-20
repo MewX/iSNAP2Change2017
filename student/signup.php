@@ -449,8 +449,13 @@ db_close($conn);
 
         function validInfo(action){
             var username = document.getElementById("username-text").value;
-            var postData = "username="+username+"&action="+action;
+            if (username.length < 3) {
+                $('#username-validation-text').css("color","red");
+                $('#username-validation-text').text("This username is too short!");
+                return;
+            }
 
+            var postData = "username="+username+"&action="+action;
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
