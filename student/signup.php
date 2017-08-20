@@ -441,12 +441,10 @@ db_close($conn);
 
             if(feedback.message != "success"){
                 alert(feedback.message + ". Please try again!");
-                return;
             } else if(feedback.message == "success"){
                 alert("You have successfully registered!");
+                window.location = "./welcome.php";
             }
-
-
         }
 
         function validInfo(action){
@@ -513,13 +511,9 @@ db_close($conn);
             }
 
             var error = [];
-            if(dobDay == null || dobMon == null || dobYear == null ){
-                error.push("birthday");
-            }
-
-            if(gender == undefined){
-                error.push("gender");
-            }
+            if (username === "") error.push("username");
+            if (dobDay == null || dobMon == null || dobYear == null ) error.push("birthday");
+            if (gender == undefined) error.push("gender");
 
             if(error.length != 0){
                 errorMsg += "The ";

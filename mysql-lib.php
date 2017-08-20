@@ -42,7 +42,7 @@ function db_connect($logger = null)
 
     $serverName = "127.0.0.1";
     $username = "root";
-    $password = "";
+    $password = "root";
     if ($logger == null) {
         $conn = new PDO("mysql:host=$serverName; dbname=isnap2changedb; charset=utf8", $username, $password);
     } else {
@@ -235,7 +235,6 @@ function checkStudentUsernameExisting(PDO $conn, $username)
     $query = $conn->prepare($query);
     $query->execute(array($username));
     $ret = $query->fetchAll();
-    echo intval($ret[0]['ret']);
     return intval($ret[0]['ret']) === 1; // false: not existing; true: existing
 }
 
@@ -465,7 +464,6 @@ function checkResearcherUsernameExisting(PDO $conn, $username)
     $query = $conn->prepare($query);
     $query->execute(array($username));
     $ret = $query->fetchAll();
-    //echo intval($ret[0]['ret']);
     return intval($ret[0]['ret']) === 1; // false: not existing; true: existing
 }
 
