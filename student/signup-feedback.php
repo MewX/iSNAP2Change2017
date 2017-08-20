@@ -18,6 +18,7 @@
             $lastname = $_POST["lastname"];
             $firstname = $_POST["firstname"];
             $email = $_POST["email"];
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) goto ERROR; // validate email type
             $dobDay = $_POST["dobDay"];
             $dobMon = $_POST["dobMon"];
             $dobYear = $_POST["dobYear"];
@@ -25,8 +26,10 @@
             $identity = $_POST["identity"];
             $classID = $_POST["classID"];
         } else {
-            debug_log("Illegal state!");
-            header("location:welcome.php");
+            ERROR:
+            $feedback["result"] = "invalid";
+            $feedback["message"] = "Error contents";
+            echo json_encode($feedback);
             exit;
         }
     } else {
@@ -40,23 +43,20 @@
     try {
         $conn = db_connect();
 
-        if($action == "VALIDTOKEN"){
+        if ($action == "VALIDTOKEN"){
             if(validToken($conn, $token)) {
                 $feedback["result"] = "valid";
             } else {
                 $feedback["result"] = "invalid";
             }
-        }
-
-        if($action == "VALIDUSERNAME"){
-            if(checkStudentUsernameExisting($conn, $username)) {
+        } else if ($action == "VALIDUSERNAME"){
+            if(strlen($username) >= 3 && !checkStudentUsernameExisting($conn, $username)) {
                 $feedback["result"] = "valid";
             } else {
                 $feedback["result"] = "invalid";
             }
-        }
-
-        if($action == "REGISTER"){
+        } else if ($action == "REGISTER"){
+            // check validation
             $dob = $dobYear."-".$dobMon."-".$dobDay;
             createStudent($conn, $username, $password, $firstname, $lastname, $email, $gender, $dob, $identity, $classID);
         }
@@ -74,5 +74,3 @@
     db_close($conn);
     $feedback["message"] = "success";
     echo json_encode($feedback);
-?>
-
