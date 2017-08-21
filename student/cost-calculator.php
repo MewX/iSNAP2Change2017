@@ -52,7 +52,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>Cost Calculator</title>
+    <title>Cost Calculator | SNAP</title>
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/vendor/jqx.base.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
