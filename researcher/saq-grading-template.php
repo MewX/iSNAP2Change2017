@@ -73,7 +73,12 @@ db_close($conn);
                                     <?php for ($i = 0; $i < count($columnName); $i++) { ?>
                                         <th <?php if ($i == 0 || $i == 2) {
                                             echo 'style="display:none"';
-                                        } ?>><?php echo $columnName[$i]; ?></th>
+                                        } ?>><?php
+                                            $parts = preg_split('/(?=[A-Z])/', $columnName[$i]);
+                                            for($j=0;$j<count($parts);$j++){
+                                                echo $parts[$j];
+                                                echo " ";
+                                            } ?></th>
                                     <?php } ?>
                                     <th>Score</th>
                                     <th>Status</th>

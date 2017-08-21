@@ -75,6 +75,14 @@ db_close($conn);
 <?php require_once('header-lib.php'); ?>
 
 <body>
+<!--- Overlay the table-striped -->
+<style>
+    .table-striped > tbody > tr > .alert-danger,
+    .table-striped > tbody > .alert-danger > td,
+    .table-striped > tbody > .alert-danger > th {
+        background-color: #f2dede !important;
+    }
+</style>
 
 <div id="wrapper">
     <!-- Navigation Layout-->
@@ -162,16 +170,17 @@ db_close($conn);
                                 <?php require_once('table-head.php'); ?>
                                 <tbody>
                                 <?php for ($i = 0; $i < count($mcqQuesResult); $i++) { ?>
-                                    <tr class="<?php if ($i % 2 == 0) {
-                                        echo "odd";
-                                    } else {
-                                        echo "even";
-                                    } ?>">
+                                    <tr class="<?php
+                                    if($mcqQuesResult[$i]->CorrectChoice==null) {
+                                        echo ' alert-danger';
+                                    } ?>"
+                                    >
                                         <td style="display:none"><?php echo $mcqQuesResult[$i]->$columnName[0]; ?></td>
                                         <!--Question-->
                                         <td><?php echo $mcqQuesResult[$i]->$columnName[1] ?>
                                         </td>
-                                        <td class="<?php if ($mcqQuesResult[$i]->OptionID == $mcqQuesResult[$i]->CorrectChoice) {
+                                        <td class="<?php if ($mcqQuesResult[$i]->OptionID == $mcqQuesResult[$i]->CorrectChoice
+                                            && $mcqQuesResult[$i]->CorrectChoice!=null) {
                                             echo 'bg-success';
                                         } else {
                                             echo 'bg-danger';
