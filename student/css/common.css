@@ -221,7 +221,7 @@ body {
     height: 20px;
     background-size: 100% 100%;
     margin-top: 15px;
-    background-image: url("../img/snap_single_wordform_white.png");
+    background-image: url("../img/Snap_Single_Wordform_White.png");
 }
 .nav-list {
     float: left;
@@ -234,7 +234,7 @@ body {
     height: 50px;
     line-height: 50px;
     display: inline-block;
-    font-weight: 18px;
+    font-weight: normal;
 }
 .settings {
     float: right;
@@ -557,30 +557,22 @@ body {
     margin: 20px auto;
     border-radius: 10px;
     padding: 0 10px;
-    color: rgb();
 }
 .snap-message-content {
     width: 80%;
     margin: 20px auto;
     border-radius: 10px;
     padding:  10px 20px;
-    color: rgb();
 }
 .snap-message-replay {
     width: 80%;
     margin: 20px auto;
     border-radius: 10px;
     padding:  10px 20px;
-    color: rgb();
 }
-
-            <div class="snap-message-title">x</div>
-            <div class="snap-message-content">3</div>
-            <div class="snap-message-repaly">33</div>
 .snap-alert-operation {
     text-align: center;
 }
-
 .snap-alert-btn {
     margin: 0 10px;
     display: inline-block;
@@ -592,7 +584,6 @@ body {
     font-size: 18px;
     cursor: pointer;
 }
-
 
 /**
  * $attachment
@@ -750,7 +741,7 @@ body {
     margin-bottom: 10px;
 }
 .question-update-icon {
-    background-image: url("./img/update_icon.png");
+    background-image: url("../img/update_icon.png");
 
 }
 .question-submit:disabled {
