@@ -88,12 +88,12 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active">
-                            <a class="navbar-brand" href="#">
+                            <a class="navbar-brand">
                                 <img alt="Brand" src="./img/Snap_Single_Wordform_White.png" style="height: 100%;">
                             </a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="#">Snap Facts</a></li>
+                        <li><a href="./snap-facts.php">Snap Facts</a></li>
                     </ul>
                     <ul class="nav pull-right navbar-nav">
                         <!-- <li>

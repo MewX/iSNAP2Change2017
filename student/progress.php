@@ -420,7 +420,7 @@
 <div class="page-wrapper">
     <div class="header-wrapper">
         <div class="header">
-            <a class="home-link">SNAP</a>
+            <a class="home-link" href="welcome.php">SNAP</a>
             <ul class="nav-list">
                 <li class="nav-item"><a  class="nav-link" href="game-home.php">Snap Change</a></li>
                 <li class="nav-item"><a  class="nav-link" href="snap-facts.php">Snap Facts</a></li>

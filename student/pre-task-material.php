@@ -115,7 +115,7 @@
 <div class="page-wrapper">
     <div class="header-wrapper">
         <div class="header">
-            <a class="home-link">SNAP</a>
+            <a class="home-link" href="welcome.php">SNAP</a>
             <div class="settings">
                 <div class="setting-icon dropdown">
                     <ul class="dropdown-menu">

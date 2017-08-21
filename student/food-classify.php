@@ -198,7 +198,7 @@
     <div class="header-wrapper">
         <div class="header">
             <a href="#" class="header-back-link"></a>
-            <a class="home-link" href="#">SNAP</a>
+            <a class="home-link" href="welcome.php">SNAP</a>
             <ul class="nav-list">
                 <li class="nav-item"><a class="nav-link" href="http://taobao.com">GAME HOME</a></li>
                 <li class="nav-item"><a class="nav-link" href="http://taobao.com">Snap Facts</a></li>
