@@ -292,11 +292,16 @@ function getStudentsStatistic(PDO $conn){
     $quizQuery = $conn->prepare($quizSql);
     $quizQuery->execute();
     $result = $quizQuery->fetchAll(PDO::FETCH_OBJ);
-    $studentSql="Select ClassID, ClassName, StudentID, FirstName, LastName ";
+    $studentSql="Select ClassID, ClassName, StudentID, FirstName, LastName";
+    //Select the status of each quiz & student
     for($i = 0; $i < count($result); $i++){
         $studentSql .= ",MAX(IF(QuizID=" .$result[$i]->NumOfQuiz.", Status,null)) as Quiz" .$result[$i]->NumOfQuiz."";
     }
-    $studentSql .= " From (SELECT ClassID,ClassName, CS.StudentID, FirstName, LastName, QuizID, Status
+    //Select the grading of each quiz & student
+    for($i = 0; $i < count($result); $i++){
+        $studentSql .= ",MAX(IF(QuizID=" .$result[$i]->NumOfQuiz.", Grading,null)) as Grading" .$result[$i]->NumOfQuiz."";
+    }
+    $studentSql .= " From (SELECT ClassID,ClassName, CS.StudentID, FirstName, LastName, QuizID, Status, Grading
                    FROM (SELECT * FROM Student NATURAL JOIN Class) AS CS left join Quiz_Record
                    on CS.StudentID = Quiz_Record.StudentID) temp group by StudentID";
 

@@ -166,7 +166,10 @@ db_close($conn);
                                                 QuizID = "<?php if($j >2) echo substr($quizList[$j],4); ?>"
                                             >
                                                 <?php if($studentStatistic[$i]->$quizList[$j] == "GRADED"): ?>
-                                                    <span class="fa fa-certificate pull-left" aria-hidden="true"></span>
+                                                    <span><?php
+                                                        $grading = str_replace("Quiz","Grading",$quizList[$j]);
+                                                        echo $studentStatistic[$i]->$grading;
+                                                        ?></span>
                                                     <span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>
                                                 <?php elseif($studentStatistic[$i]->$quizList[$j] == "UNGRADED"): ?>
                                                     <?php if($getQuizInfo[$j-3]->QuizType=="SAQ"): ?>
