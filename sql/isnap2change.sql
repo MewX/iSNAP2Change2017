@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `Quiz_Record` (
   StudentID MEDIUMINT,
   `Status`  ENUM ('UNSUBMITTED', 'UNGRADED', 'GRADED') DEFAULT 'GRADED',
   Viewed    BOOLEAN                                    DEFAULT 0,
-  Grading   MEDIUMINT                                  DEFAULT 0,
+  Grade   MEDIUMINT                                    DEFAULT 0,
   CONSTRAINT Quiz_Record_PK PRIMARY KEY (QuizID, StudentID),
   CONSTRAINT Quiz_Record_QuizID_FK FOREIGN KEY (QuizID)
   REFERENCES Quiz (QuizID)

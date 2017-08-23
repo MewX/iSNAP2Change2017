@@ -299,9 +299,9 @@ function getStudentsStatistic(PDO $conn){
     }
     //Select the grading of each quiz & student
     for($i = 0; $i < count($result); $i++){
-        $studentSql .= ",MAX(IF(QuizID=" .$result[$i]->NumOfQuiz.", Grading,null)) as Grading" .$result[$i]->NumOfQuiz."";
+        $studentSql .= ",MAX(IF(QuizID=" .$result[$i]->NumOfQuiz.", Grade,null)) as Grading" .$result[$i]->NumOfQuiz."";
     }
-    $studentSql .= " From (SELECT ClassID,ClassName, CS.StudentID, FirstName, LastName, QuizID, Status, Grading
+    $studentSql .= " From (SELECT ClassID,ClassName, CS.StudentID, FirstName, LastName, QuizID, Status, Grade
                    FROM (SELECT * FROM Student NATURAL JOIN Class) AS CS left join Quiz_Record
                    on CS.StudentID = Quiz_Record.StudentID) temp group by StudentID";
 
@@ -1591,12 +1591,12 @@ function calculateStudentScore(PDO $conn, $studentID)
 {
     $score = 0;
 
-    $quizSql = "SELECT * FROM Quiz NATURAL JOIN Quiz_Record WHERE StudentID = ? AND `Status`='GRADED'";
+    $quizSql = "SELECT * FROM Quiz NATURAL JOIN Quiz_Record WHERE StudentID = ?";
     $quizQuery = $conn->prepare($quizSql);
     $quizQuery->execute(array($studentID));
     $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);
     for ($i = 0; $i < count($quizResult); $i++) {
-        $score += getStuQuizScore($conn, $quizResult[$i]->QuizID, $studentID);
+        $score += $quizResult[$i]->Grade;//getStuQuizScore($conn, $quizResult[$i]->QuizID, $studentID);
     }
 
     return $score;
@@ -1655,12 +1655,12 @@ function refreshAllStudentsScore(PDO $conn)
 }
 
 
-function updateQuizRecord(PDO $conn, $quizID, $studentID, $status)
+function updateQuizRecord(PDO $conn, $quizID, $studentID, $status, $grade=0)
 {
-    $updateQuizRecordSql = "INSERT INTO Quiz_Record(QuizID, StudentID, Status)
-							    VALUES (?,?,?) ON DUPLICATE KEY UPDATE Status = ?";
+    $updateQuizRecordSql = "INSERT INTO Quiz_Record(QuizID, StudentID, Status, Grade)
+							    VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE Status = ?, Grade = ?";
     $updateQuizRecordQuery = $conn->prepare($updateQuizRecordSql);
-    $updateQuizRecordQuery->execute(array($quizID, $studentID, $status, $status));
+    $updateQuizRecordQuery->execute(array($quizID, $studentID, $status, $grade, $status, $grade));
 }
 
 function deleteQuizRecord(PDO $conn, $quizID, $studentID)
@@ -1771,7 +1771,7 @@ function updatePosterSubmission(PDO $conn, $quizID, $studentID, $zwibblerDoc, $i
 function updatePosterGrading(PDO $conn, $quizID, $studentID, $grading)
 {
     $conn->beginTransaction();
-    updateQuizRecord($conn, $quizID, $studentID, "GRADED");
+    updateQuizRecord($conn, $quizID, $studentID, "GRADED", $grading);
     updatePostGrading($conn, $quizID, $studentID, $grading);
     $conn->commit();
 }
@@ -1901,10 +1901,12 @@ function updateSAQSubmissionGrading(PDO $conn, $quizID, array $saqID, $studentID
     if (count($saqID) == count($grading) && count($saqID) == count($feedback)) {
         try {
             $conn->beginTransaction();
-            updateQuizRecord($conn, $quizID, $studentID, "GRADED");
+            $grade = 0;
             for ($i = 0; $i < count($saqID); $i++) {
                 updateSAQQuestionGrading($conn, $saqID[$i], $studentID, $feedback[$i], $grading[$i]);
+                $grade += $grading[$i];
             }
+            updateQuizRecord($conn, $quizID, $studentID, "GRADED", $grade);
             $conn->commit();
         } catch (Exception $e) {
             debug_err($e);
@@ -1944,39 +1946,38 @@ function getSAQRecords(PDO $conn, $quizID, $studentID)
 }
 
 
-function updateSAQDraft(PDO $conn, $quizID, $saqID, $studentID, $answer)
-{
-    if (count($saqID) == count($answer)) {
-        try {
-            $conn->beginTransaction();
-            updateQuizRecord($conn, $quizID, $studentID, "UNSUBMITTED");
-            for ($i = 0; $i < count($saqID); $i++) {
-                updateSAQQuestionRecord($conn, $saqID[$i], $studentID, $answer[$i]);
-            }
-            $conn->commit();
-        } catch (Exception $e) {
-            debug_err($e);
-            $conn->rollBack();
-        }
-    } else
-        throw new Exception("The length of answer array and question array don't match. ");
+//function updateSAQDraft(PDO $conn, $quizID, $saqID, $studentID, $answer)
+//{
+//    if (count($saqID) == count($answer)) {
+//        try {
+//            $conn->beginTransaction();
+//            updateQuizRecord($conn, $quizID, $studentID, "UNSUBMITTED");
+//            for ($i = 0; $i < count($saqID); $i++) {
+//                updateSAQQuestionRecord($conn, $saqID[$i], $studentID, $answer[$i]);
+//            }
+//            $conn->commit();
+//        } catch (Exception $e) {
+//            debug_err($e);
+//            $conn->rollBack();
+//        }
+//    } else
+//        throw new Exception("The length of answer array and question array don't match. ");
+//}
 
-}
-
-function updateSAQSubmission(PDO $conn, $quizID, $saqID, $studentID, $answer)
-{
-    try {
-        $conn->beginTransaction();
-        updateQuizRecord($conn, $quizID, $studentID, "UNGRADED");
-        for ($i = 0; $i < count($saqID); $i++) {
-            updateSAQQuestionRecord($conn, $saqID[$i], $studentID, $answer[$i]);
-        }
-        $conn->commit();
-    } catch (Exception $e) {
-        debug_err($e);
-        $conn->rollBack();
-    }
-}
+//function updateSAQSubmission(PDO $conn, $quizID, $saqID, $studentID, $answer)
+//{
+//    try {
+//        $conn->beginTransaction();
+//        updateQuizRecord($conn, $quizID, $studentID, "UNGRADED");
+//        for ($i = 0; $i < count($saqID); $i++) {
+//            updateSAQQuestionRecord($conn, $saqID[$i], $studentID, $answer[$i]);
+//        }
+//        $conn->commit();
+//    } catch (Exception $e) {
+//        debug_err($e);
+//        $conn->rollBack();
+//    }
+//}
 
 function deleteSAQSubmission(PDO $conn, $quizID, $studentID)
 {
@@ -2535,7 +2536,7 @@ function generateRandomSAQSubmissions(PDO $conn)
         for ($studentIndex = 0; $studentIndex < count($studentResult); $studentIndex++) {
             $studentID = $studentResult[$studentIndex]->StudentID;
             if ($studentID >= 3) {
-                updateQuizRecord($conn, $quizID, $studentID, "UNGRADED");
+                updateQuizRecord($conn, $quizID, $studentID, "UNGRADED", 0);
                 for ($saqIndex = 0; $saqIndex < count($saqResult); $saqIndex++) {
                     $saqID = $saqResult[$saqIndex]->SAQID;
                     updateSAQQuestionRecord($conn, $saqID, $studentID, generateRandomString(300));

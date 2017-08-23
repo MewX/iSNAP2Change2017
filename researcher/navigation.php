@@ -1,11 +1,13 @@
 <?php
+require_once('researcher-validation.php');
+require_once("../mysql-lib.php");
+require_once("../debug.php");
+require_once("researcher-lib.php");
 try {
     $conn = db_connect();
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["username"]) && isset($_POST["password"])) {
         $username = $_POST["username"];
         $password = $_POST["password"];
-        echo "<script>console.log( 'Debug Objects: " . $username . "' );</script>";
-        echo "<script>console.log( 'Debug Objects: " . $password . "' );</script>";
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $update = $_POST['update'];
@@ -426,9 +428,9 @@ db_close($conn);
                 <h4 class="modal-title" id="dialogTitle">Settings</h4>
             </div>
             <div class="modal-body">
-                <form id="submission" method="post" action="
+                <form id="profileSubmission" method="post" action="
                 <?php
-                    if($_SERVER['PHP_SELF']=="/researcher/statistics.php"){
+                    if($_SERVER['PHP_SELF']!="/researcher/statistics.php"){
                         echo $_SERVER['PHP_SELF'];
                     } else{
                         echo "navigation.php";
@@ -551,9 +553,9 @@ db_close($conn);
     });
 
     $('#btnSaveChange').on('click', function () {
-        $('#submission').validate();
+        $('#profileSubmission').validate();
         newInfoArr.eq(0).prop('disabled', false);
-        $('#submission').submit();
+        $('#profileSubmission').submit();
     });
 
     $('#Password, #cPassword').on('keyup', function () {
