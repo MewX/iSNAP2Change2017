@@ -1,3 +1,43 @@
+<?php
+try {
+    $conn = db_connect();
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["username"]) && isset($_POST["password"])) {
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+        echo "<script>console.log( 'Debug Objects: " . $username . "' );</script>";
+        echo "<script>console.log( 'Debug Objects: " . $password . "' );</script>";
+    }
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+        $update = $_POST['update'];
+        if ($update == 0) {
+            // update
+            $userName = $_POST['Username'];
+            $password = $_POST['Password'];
+            $researcherID = $_POST['ResearcherID'];
+            updateResearcher($conn, $userName, $password, $researcherID);
+            $currentUserId = $_SESSION["researcherID"];
+        }
+    }
+
+} catch (Exception $e) {
+    debug_err($e);
+}
+
+try {
+    refreshAllStudentsScore($conn);
+    $studentResult = getStudents($conn);
+    $classResult = getClasses($conn);
+    $currentUsername = $_SESSION["researcherUsername"];
+    $currentUserId = $_SESSION["researcherID"];
+
+} catch (Exception $e) {
+    debug_err($e);
+}
+
+db_close($conn);
+?>
+<?php require_once('header-lib.php'); ?>
+
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"
      xmlns="http://www.w3.org/1999/html">
@@ -5,6 +45,7 @@
         <a class="navbar-brand" href="index.php">iSNAP2Change Administration System</a>
     </div>
     <!-- /.navbar-header -->
+    <?php if (isset($_SESSION['researcherID']) && isset($_SESSION['researcherUsername'])): ?>
 
     <ul class="nav navbar-top-links navbar-right">
         <li class="dropdown">
@@ -239,9 +280,7 @@
             <ul class="dropdown-menu dropdown-user">
                 <li><a href="../student/welcome.php"><i class="fa fa-home fa-fw"></i> Home</a>
                 </li>
-                <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                <li><a data-toggle="modal" href="#updateProfile" id="settings"><i class="fa fa-user fa-fw"></i> Settings</a>
                 </li>
                 <li class="divider"></li>
                 <?php if (isset($_SESSION['researcherID']) && isset($_SESSION['researcherUsername'])): ?>
@@ -254,6 +293,7 @@
         </li>
         <!-- /.dropdown -->
     </ul>
+    <? endif; ?>
     <!-- /.navbar-top-links -->
     <?php if (isset($_SESSION['researcherID']) && isset($_SESSION['researcherUsername'])): ?>
 
@@ -327,6 +367,106 @@
 
 </nav>
 
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Login</h4>
+            </div>
+            <span id="login-fail-text" style="color:red"></span>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label><b>Username</b></label>
+                        <input class="form-control" type="text" placeholder="Enter Username" id="username" required>
+                        <br>
+                        <label><b>Password</b></label>
+                        <input class="form-control" type="password" placeholder="Enter Password" id="password" required>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary" onclick="login()">Login</button>
+                <label>
+                    <input type="checkbox" checked="checked" name="remember" id="remember">
+                    Remember me
+                </label>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+
+            <?php
+            if(isset($_COOKIE['username']) and isset($_COOKIE['password'])){
+                $username = $_COOKIE['username'];
+                $pass = $_COOKIE['password'];
+                echo "<script>
+                    document.getElementById('username').value = '$username';
+                    document.getElementById('password').value = '$password';
+                </script>";
+            }
+            ?>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="updateProfile" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="dialogTitle">Settings</h4>
+            </div>
+            <div class="modal-body">
+                <form id="submission" method="post" action="
+                <?php
+                    if($_SERVER['PHP_SELF']=="/researcher/statistics.php"){
+                        echo $_SERVER['PHP_SELF'];
+                    } else{
+                        echo "navigation.php";
+                    }
+                ?>">
+                    <!--if 1, insert; else if 0 update; else if -1 delete;-->
+                    <input type=hidden name="update" id="update" value="1">
+                    <label for="ResearcherID" style="display:none">ResearcherID</label>
+                    <input type="text" class="form-control newInfo" id="ResearcherID" name="ResearcherID"
+                           style="display:none">
+                    <span id='Umessage'></span>
+                    <label for="Username">Username</label>
+                    <input type="text" class="form-control newInfo" id="Username" name="Username" readonly>
+                    <br>
+                    <label for="Password">Password</label>
+                    <input type="password" class="form-control newInfo" id="Password" name="Password">
+                    <br>
+                    <label for="cPassword">Confirmed Password</label>
+                    <br>
+                    <span id='message'></span>
+                    <input type="password" class="form-control newInfo" id="cPassword" name="cPassword">
+                    <br>
+                    <div class="alert alert-danger">
+                        <p><strong>Reminder</strong> : Username of researcher should be unique and no duplicate names are allowed.
+                        </p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSaveChange" class="btn btn-default" name="save">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php require_once('sb-admin-lib.php'); ?>
+
 <script>
     function login() {
         var username = $('#username').val();
@@ -362,6 +502,32 @@
         });
     }
 
+    function saveSetting(){
+        var username = $('#Username').val();
+        var password = $('#Password').val();
+        var update = 0;
+        var params = {
+            type: "POST",
+            dataType: "json",
+            url: "navigation.php",
+            data: {
+                username: username,
+                password: password,
+                update: update
+            }
+        }
+        $.ajax(params)
+        .done(function(feedback) {
+            parseFeedback(feedback);
+        })
+        .fail(function( xhr, status, errorThrown ) {
+            alert( "Please try again later" );
+            console.log( "Error: " + errorThrown );
+            console.log( "Status: " + status );
+            console.dir( xhr );
+        });
+    }
+
     function parseFeedback(feedback) {
         if(feedback.message != "success"){
             alert(feedback.message + ". Please try again!");
@@ -375,53 +541,31 @@
             $('#password').val("");
         }
     }
+
+    var newInfoArr = $('.newInfo');
+    $('#settings').on('click', function () {
+        $("label").remove(".error");
+        $('#update').val(0);
+        newInfoArr.eq(0).val("<?php echo $currentUserId?>");
+        newInfoArr.eq(1).val("<?php echo $currentUsername?>");
+    });
+
+    $('#btnSaveChange').on('click', function () {
+        $('#submission').validate();
+        newInfoArr.eq(0).prop('disabled', false);
+        $('#submission').submit();
+    });
+
+    $('#Password, #cPassword').on('keyup', function () {
+        console.log($('#Password').val() );
+        console.log( $('#cPassword').val());
+        if (($('#Password').val() == $('#cPassword').val()) && $('#Password').val()!="") {
+            $('#message').html('Matching').css('color', 'green');
+        } else
+            $('#message').html('Not Matching').css('color', 'red');
+    });
 </script>
 
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Login</h4>
-            </div>
-            <span id="login-fail-text" style="color:red"></span>
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-6">
-                    <label><b>Username</b></label>
-                    <input class="form-control" type="text" placeholder="Enter Username" id="username" required>
-                        <br>
-                    <label><b>Password</b></label>
-                    <input class="form-control" type="password" placeholder="Enter Password" id="password" required>
-                    </div>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary" onclick="login()">Login</button>
-                <label>
-                    <input type="checkbox" checked="checked" name="remember" id="remember">
-                    Remember me
-                </label>
-            </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-
-            <?php
-            if(isset($_COOKIE['username']) and isset($_COOKIE['password'])){
-                $username = $_COOKIE['username'];
-                $pass = $_COOKIE['password'];
-                echo "<script>
-                    document.getElementById('username').value = '$username';
-                    document.getElementById('password').value = '$password';
-                </script>";
-            }
-            ?>
-        </div>
-
-    </div>
-</div>
 

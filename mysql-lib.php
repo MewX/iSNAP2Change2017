@@ -42,7 +42,7 @@ function db_connect($logger = null)
 
     $serverName = "127.0.0.1";
     $username = "root";
-    $password = "root";
+    $password = "";
     if ($logger == null) {
         $conn = new PDO("mysql:host=$serverName; dbname=isnap2changedb; charset=utf8", $username, $password);
     } else {
@@ -479,13 +479,13 @@ function createResearcher(PDO $conn, $username, $password)
     //return $conn->lastInsertId();
 }
 
-function updateResearcher(PDO $conn, $username, $researcherID)
+function updateResearcher(PDO $conn, $username, $password, $researcherID)
 {
     $updateSql = "UPDATE Researcher 
-            SET Username = ?
+            SET Username = ?, Password = ?
             WHERE ResearcherID = ?";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($username, $researcherID));
+    $updateSql->execute(array($username, md5($password), $researcherID));
 }
 
 function deleteResearcher(PDO $conn, $researcherID)

@@ -9,19 +9,17 @@ $colspanName = array('');
 $quizList = array('ClassName', 'FirstName', 'LastName');
 try {
     $conn = db_connect();
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['update'])) {
             $update = $_POST['update'];
             //reset student password
             if ($update == 0) {
                 $studentID = $_POST['studentID'];
-                //resetPassword($conn, $studentID);
+                resetPassword($conn, $studentID);
             } //delete student (with help of DELETE CASCADE)
             else if ($update == -1) {
                 $studentID = $_POST['StudentID'];
                 $quizID = $_POST['QuizID'];
-
                 resetStuDueTime($conn,$studentID,$quizID);
             }
         }
@@ -286,7 +284,6 @@ if (isset($_GET['studentID'])) {
                 data: data
             })
         }
-
     });
 
 
@@ -345,8 +342,6 @@ if (isset($_GET['studentID'])) {
                     checkbox.removeClass('fa-check-square-o').addClass('fa-square-o');
                 else if (checkbox.hasClass('fa-square-o'))
                     checkbox.removeClass('fa-square-o').addClass('fa-check-square-o');
-
-
             }
 
         });
