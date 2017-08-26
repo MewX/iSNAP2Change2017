@@ -8,6 +8,9 @@
     require_once('../debug.php');
     $pageName = "welcome";
 
+    $NOJUMP = true;
+    require ('student-validation.php');
+
     $conn = null;
 
     try {
@@ -56,12 +59,15 @@
         <title>SNAP</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="./css/home.css"/>
+        <link rel="stylesheet" href="./css/common.css">
         <link rel="stylesheet" type="text/css" href="./css/vendor/animate.css"/>
-        <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <script src="./js/vendor/jquery.js"></script>
+
         <script src="./js/vendor/wow.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -93,18 +99,26 @@
                             </a>
                         </li>
                         <li class="divider"></li>
+                        <? if (isset($studentID)) { ?>
+                        <li><a href="game-home.php">Snap Change</a></li>
+                        <? } ?>
                         <li><a href="./snap-facts.php">Snap Facts</a></li>
                     </ul>
                     <ul class="nav pull-right navbar-nav">
-                        <!-- <li>
-                             <form class="navbar-form">
-                                 <input type="text" class="form-control" placeholder="Search">
-                                 <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                             </form>
-                         </li> -->
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-off"></i> LOGIN</a>
-                        </li>
+                        <? if (isset($studentID)) { ?>
+                            <li>
+                                <div class="setting-icon dropdown" style="margin-right: 0">
+                                    <ul class="dropdown-menu" style="margin-top: 0">
+                                        <li class="dropdown-item"><a href="settings.php">Settings</a></li>
+                                        <li class="dropdown-item"><a href="logout.php">Log out</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li><a class="setting-text"><?php echo $_SESSION["studentUsername"] ?></a></li>
+                        <? } else { ?>
+                            <li><a href="#" data-toggle="modal" data-target="#myModal"><i
+                                        class="glyphicon glyphicon-off"></i> LOGIN</a></li>
+                        <? } ?>
                     </ul>
                 </div>		
             </div>
