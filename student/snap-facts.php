@@ -241,8 +241,7 @@
 </div>
 
 
-    <div class="content-wrapper">
-
+    <div class="content-wrapper" style="margin-top: 60px">
         <div class="snap-facts-container">
             <div class="snap-facts-header">
                 <a href="#" class="snap-facts-logo"></a>
