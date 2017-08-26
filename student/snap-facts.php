@@ -1,10 +1,10 @@
 <?php
-    //check login status
-//    require_once('./student-validation.php');
-
     require_once("../mysql-lib.php");
     require_once("../debug.php");
     $pageName = "snap-facts";
+
+    $NOJUMP = true;
+    require('student-validation.php');
 
     $conn = null;
 
@@ -37,10 +37,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/common.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="./css/home.css"/>
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" type="text/css" href="./css/vendor/animate.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <script src="./js/vendor/wow.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="./js/snap.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <style>
         .snap-facts-logo {
             display: block;
@@ -168,82 +175,46 @@
 </head>
 <body>
 
-<div class="page-wrapper">
-    <div class="header-wrapper">
-        <div class="header">
-            <a class="home-link" href="welcome.php">SNAP</a>
-            <ul class="nav-list">
-                <li class="nav-item"><a  class="nav-link" href="game-home.php">Snap Change</a></li>
-                <li class="nav-item"><a  class="nav-link" href="snap-facts.php">Snap Facts</a></li>
-                <li class="nav-item"><a  class="nav-link" href="#">Resources</a></li>
+<nav class="navbar navbar-inverse navbar-static-top" id="nav">
+    <div class="container">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="glyphicon glyphicon-bar"></span>
+            <span class="glyphicon glyphicon-bar"></span>
+            <span class="glyphicon glyphicon-bar"></span>
+        </a>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a class="navbar-brand" href="./welcome.php">
+                        <img alt="Brand" src="./img/Snap_Single_Wordform_White.png" style="height: 100%;">
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <? if (isset($studentID)) { ?>
+                    <li><a href="game-home.php">Snap Change</a></li>
+                <? } ?>
+                <li><a>Snap Facts</a></li>
             </ul>
-            <div class="settings">
-                <div class="info-item info-notification">
-                    <a class="info-icon" href="javascript:;"></a>
-<?php           if (count($quizViewedAttrs) != 0) { ?>
-                        <span class="info-number"><?php echo count($quizViewedAttrs) ?></span>
-<?php           } ?>
-                    <ul class="info-message-list">
-<?php           for ($i = 0; $i < count($quizViewedAttrs); $i++) {
-                    if ($quizViewedAttrs[$i]["extraQuiz"] == 0) {
-                        $url = "weekly-task.php?week=".$quizViewedAttrs[$i]["week"];
-                    } else {
-                        $url = "extra-activities.php?week=".$quizViewedAttrs[$i]["week"];
-                    }?>
-                        <li class="info-message-item">
-                            <a href="<?php echo $url ?>">
-<?php
-                                    $message = "A ";
-
-                                    switch($quizViewedAttrs[$i]["quizType"]) {
-                                        case "Video":
-                                            $message = $message."Video task";
-                                            break;
-                                        case "Image":
-                                            $message = $message."Image task";
-                                            break;
-                                        case "SAQ":
-                                            $message = $message."Short Answer Question task";
-                                            break;
-                                        case "Poster":
-                                            $message = $message."Poster task";
-                                            break;
-                                    }
-
-                                    $message = $message." in Week ".$quizViewedAttrs[$i]["week"]." has feedback for you.";
-                                    echo $message;
-?>
-                                </a>
-                            </li>
-<?php           } ?>
-                    </ul>
-                </div>
-                <div class="info-item info-message">
-                    <a class="info-icon" href="javascript:;"></a>
-<?php           if (count($studentQuesViewedAttrs) != 0) { ?>
-                        <span class="info-number"><?php echo count($studentQuesViewedAttrs) ?></span>
-<?php           } ?>
-                    <ul class="info-message-list">
-                        <li class="info-message-item">
-<?php
-                            for ($i = 0; $i < count($studentQuesViewedAttrs); $i++) { ?>
-                                <a href="messages.php">
-                                    You message about <?php echo $studentQuesViewedAttrs[$i]->Subject ?> has been replied.
-                                </a>
-<?php                       } ?>
-                        </li>
-                    </ul>
-                </div>
-                <div class="setting-icon dropdown">
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="settings.php">Settings</a></li>
-                        <li class="dropdown-item"><a href="logout.php">Log out</a></li>
-                    </ul>
-                </div>
-                <a class="setting-text"><?php echo $_SESSION["studentUsername"]?></a>
-            </div>
+            <ul class="nav pull-right navbar-nav">
+                <? if (isset($studentID)) { ?>
+                    <li>
+                        <div class="setting-icon dropdown" style="margin-right: 0">
+                            <ul class="dropdown-menu" style="margin-top: 0">
+                                <li class="dropdown-item"><a href="settings.php">Settings</a></li>
+                                <li class="dropdown-item"><a href="logout.php">Log out</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a class="setting-text"><?php echo $_SESSION["studentUsername"] ?></a></li>
+                <? } else { ?>
+                    <li><a href="#" data-toggle="modal" data-target="#myModal"><i
+                                class="glyphicon glyphicon-off"></i> LOGIN</a></li>
+                <? } ?>
+            </ul>
         </div>
     </div>
+</nav>
 
 
     <div class="content-wrapper">
@@ -397,7 +368,38 @@
 
 
 <script>
+    $(document).ready(function () {
 
+        $('.scrollToTop').click(function(){
+            $('html, body').animate({scrollTop : 0},800);
+            return false;
+        });
+
+        $('#nav').affix({
+            offset: {
+                top: 0 - $('#nav').height()
+            }
+        });
+
+        $('body').scrollspy({target: '#nav'});
+
+        $('.scroll-top').click(function () {
+            $('body,html').animate({scrollTop: 0}, 1000);
+        });
+
+        /* smooth scrolling for nav sections */
+        $("#nav').find('.navbar-nav li>a').click(function () {
+            var link = $(this).attr('href');
+            var posi = $(link).offset().top;
+            $('body,html').animate({scrollTop: posi}, 700);
+        });
+
+        $('#login-close-btn').click(function () {
+            $('#login-fail-text').text("");
+            $('#username').val("");
+            $('#password').val("");
+        });
+    })
 </script>
 </body>
 </html>
