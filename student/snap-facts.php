@@ -36,9 +36,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>Document</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Snap Facts | SNAP</title>
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="./css/home.css"/>
     <link rel="stylesheet" href="./css/common.css">
