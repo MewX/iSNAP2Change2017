@@ -416,7 +416,7 @@
                     <span class="p1">Want to know more?</span>
                     <br>
                     <span style="height: 50%;">
-                        <img src="./img/snap_facts_icon.png" style="height: inherit; width: 10%;">
+                        <a href="./snap-facts.php"><img src="./img/snap_facts_icon.png" style="height: inherit; width: 10%;"/></a>
                     </span>
                 </div>
             </div>  
