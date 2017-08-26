@@ -17,6 +17,26 @@
         //get student question viewed attribute
         $studentQuesViewedAttrs = getStudentQuesViewedAttr($conn, $studentID);
 
+        //get fact topics
+        $topicRes = getFactTopics($conn);
+
+        //randomly select three topics to show
+        $topicArr = array();
+
+        foreach($topicRes as $singleTopic) {
+            array_push($topicArr, $singleTopic->TopicID);
+        }
+
+        $randKeys = array_rand($topicArr, 3);
+
+        //randomly select one fact from each topic
+        $factRes = array();
+
+        for($i = 0; $i < 3; $i++) {
+            $factsRes = getFactsByTopicID($conn, $topicArr[$randKeys[$i]]);
+            $randFactKey = array_rand($factsRes, 1);
+            $factRes[$i] = $factsRes[$randFactKey];
+        }
     } catch(Exception $e) {
         if($conn != null) {
             db_close($conn);
@@ -304,69 +324,73 @@
                 <div class="week-facts-list">
                     <div class="clearfix">
 
-                        <div class="week-facts-item week-facts-item-smoking">
-                            <a href="" class="week-facts-divnk">
-                                <span class="week-facts-icon image-icon-smoking"></span>
-                                <span class="week-facts-name">Smoking FAct #23</span>
+                        <? for ($i = 0; $i < 3; $i ++) { ?>
+                        <div class="week-facts-item <?
+                        switch ($factRes[$i]->TopicID) {
+//                            TODO: this should be adjusted into smoking
+                            case 1:
+                                echo "week-facts-item-drugs";
+                                break;
+                            case 2:
+                                echo "week-facts-item-health";
+                                break;
+                            default:
+                                echo "week-facts-item-smoking";
+                                break;
+                        }?>">
+                            <a class="week-facts-divnk">
+                                <span class="week-facts-icon <?
+                                switch ($factRes[$i]->TopicID) {
+//                            TODO: this should be adjusted into smoking
+                                    case 1:
+                                        echo "image-icon-drugs";
+                                        break;
+                                    case 2:
+                                        echo "image-icon-health";
+                                        break;
+                                    default:
+                                        echo "image-icon-smoking";
+                                        break;
+                                }?>"></span>
+                                <span class="week-facts-name"><? echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID ?></span>
                                     <span class="week-facts-intro">
-                                        According to Quitline, rates of smoking amongst young people have never been lower. The most recent data (2014) finds that 5.1 percent of 12 to 17 year olds in Australia are current smokers (have smoked in the past seven days).
+                                        <? echo $factRes[$i]->Content; ?>
                                     </span>
                             </a>
                         </div>
-
-                        <div class="week-facts-item week-facts-item-drugs">
-                            <a href="" class="week-facts-divnk">
-                                <span class="week-facts-icon image-icon-drugs"></span>
-                                <span class="week-facts-name">Smoking FAct #23</span>
-                                    <span class="week-facts-intro">
-                                        According to Quitline, rates of smoking amongst young people have never been lower. The most recent data (2014) finds that 5.1 percent of 12 to 17 year olds in Australia are current smokers (have smoked in the past seven days).
-                                    </span>
-                            </a>
-                        </div>
-
-                        <div class="week-facts-item week-facts-item-health">
-                            <a href="" class="week-facts-divnk">
-                                <span class="week-facts-icon image-icon-health"></span>
-                                <span class="week-facts-name">Smoking FAct #23</span>
-                                    <span class="week-facts-intro">
-                                        According to Quitline, rates of smoking amongst young people have never been lower. The most recent data (2014) finds that 5.1 percent of 12 to 17 year olds in Australia are current smokers (have smoked in the past seven days).
-                                    </span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="clearfix">
-
-                        <div class="week-facts-item week-facts-item-smoking">
-                            <a href="" class="week-facts-divnk">
-                                <span class="week-facts-icon image-icon-smoking"></span>
-                                <span class="week-facts-name">Smoking FAct #23</span>
-                                    <span class="week-facts-intro">
-                                        According to Quitline, rates of smoking amongst young people have never been lower. The most recent data (2014) finds that 5.1 percent of 12 to 17 year olds in Australia are current smokers (have smoked in the past seven days).
-                                    </span>
-                            </a>
-                        </div>
-
-                        <div class="week-facts-item week-facts-item-smoking">
-                            <a href="" class="week-facts-divnk">
-                                <span class="week-facts-icon image-icon-smoking"></span>
-                                <span class="week-facts-name">Smoking FAct #23</span>
-                                    <span class="week-facts-intro">
-                                        According to Quitline, rates of smoking amongst young people have never been lower. The most recent data (2014) finds that 5.1 percent of 12 to 17 year olds in Australia are current smokers (have smoked in the past seven days).
-                                    </span>
-                            </a>
-                        </div>
-
-                        <div class="week-facts-item week-facts-item-smoking">
-                            <a href="" class="week-facts-divnk">
-                                <span class="week-facts-icon image-icon-smoking"></span>
-                                <span class="week-facts-name">Smoking FAct #23</span>
-                                    <span class="week-facts-intro">
-                                        According to Quitline, rates of smoking amongst young people have never been lower. The most recent data (2014) finds that 5.1 percent of 12 to 17 year olds in Australia are current smokers (have smoked in the past seven days).
-                                    </span>
-                            </a>
-                        </div>
-                    </div>
+                        <? } ?>
+<!--                    <div class="clearfix">-->
+<!---->
+<!--                        <div class="week-facts-item week-facts-item-smoking">-->
+<!--                            <a href="" class="week-facts-divnk">-->
+<!--                                <span class="week-facts-icon image-icon-smoking"></span>-->
+<!--                                <span class="week-facts-name">Smoking FAct #23</span>-->
+<!--                                    <span class="week-facts-intro">-->
+<!--                                        According to Quitline, rates of smoking amongst young people have never been lower. The most recent data (2014) finds that 5.1 percent of 12 to 17 year olds in Australia are current smokers (have smoked in the past seven days).-->
+<!--                                    </span>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!---->
+<!--                        <div class="week-facts-item week-facts-item-smoking">-->
+<!--                            <a href="" class="week-facts-divnk">-->
+<!--                                <span class="week-facts-icon image-icon-smoking"></span>-->
+<!--                                <span class="week-facts-name">Smoking FAct #23</span>-->
+<!--                                    <span class="week-facts-intro">-->
+<!--                                        According to Quitline, rates of smoking amongst young people have never been lower. The most recent data (2014) finds that 5.1 percent of 12 to 17 year olds in Australia are current smokers (have smoked in the past seven days).-->
+<!--                                    </span>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!---->
+<!--                        <div class="week-facts-item week-facts-item-smoking">-->
+<!--                            <a href="" class="week-facts-divnk">-->
+<!--                                <span class="week-facts-icon image-icon-smoking"></span>-->
+<!--                                <span class="week-facts-name">Smoking FAct #23</span>-->
+<!--                                    <span class="week-facts-intro">-->
+<!--                                        According to Quitline, rates of smoking amongst young people have never been lower. The most recent data (2014) finds that 5.1 percent of 12 to 17 year olds in Australia are current smokers (have smoked in the past seven days).-->
+<!--                                    </span>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
                 </div>
             </div>
