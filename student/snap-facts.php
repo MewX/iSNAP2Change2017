@@ -215,6 +215,32 @@
         </div>
     </div>
 </nav>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="width:100%;">
+    <div class="modal-dialog" role="document" style="height:90%;">
+        <div class="modal-content" style="height:90%;">
+            <div class="modal-body">
+                <button id="login-close-btn" type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
+                <div class="col-xs-6 col-xs-offset-3">
+                    <img src="./img/Snap_Logo_Inverted.png" style="height:20%; width: 100%;">
+                    <div style="text-align: center; margin-top: 15%">
+                        <span id="login-fail-text" style="color:red"></span>
+                    </div>
+                    <div class="input-group input-group-lg" style="margin-top:5%; text-align: center;">
+                        <input id="username" type="text" style="text-align: center; border-radius: 10px; color:white; border: none; background-color: black;" class="form-control" placeholder="Username" onfocus="this.placeholder=''" onblur="this.placeholder='Username'" aria-describedby="sizing-addon1" autocomplete="off">
+                    </div>
+                    <div class="input-group input-group-lg" style="margin-top:5%; text-align: center;">
+                        <input id="password" type="password" style="text-align: center; border-radius: 10px; border: none; color:white; background-color: black;" class="form-control" placeholder="Password" onfocus="this.placeholder=''" onblur="this.placeholder='Password'" aria-describedby="sizing-addon1">
+                    </div>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" style="margin-top:5%; border-radius: 10px; border-color: #FCEE2D !important; color:#FCEE2D; background-color: black; opacity: 0.7;" onclick="validStudent()">Log In</button>
+                    <div style="text-align: center; margin-top: 5%">
+                        <span style="color: white;"> Don't have an account?</span>
+                        <a href='#' onclick="location.href = 'valid-token.php';" style='color:#FCEE2D;'>Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <div class="content-wrapper">
@@ -388,9 +414,9 @@
         });
 
         /* smooth scrolling for nav sections */
-        $("#nav').find('.navbar-nav li>a').click(function () {
+        $('#nav .navbar-nav li>a').click(function () {
             var link = $(this).attr('href');
-            var posi = $(link).offset().top;
+            var posi = $(link).offset();
             $('body,html').animate({scrollTop: posi}, 700);
         });
 
@@ -400,6 +426,46 @@
             $('#password').val("");
         });
     })
+
+    function validStudent() {
+        var username = $('#username').val();
+        var password = $('#password').val();
+
+        $.ajax({
+                url: "login.php",
+                data: {
+                    username: username,
+                    password: password
+                },
+                type: "POST",
+                dataType : "json"
+            })
+
+            .done(function(feedback) {
+                parseFeedback(feedback);
+            })
+
+            .fail(function( xhr, status, errorThrown ) {
+                alert( "Sorry, there was a problem!" );
+                console.log( "Error: " + errorThrown );
+                console.log( "Status: " + status );
+                console.dir( xhr );
+            });
+    }
+
+    function parseFeedback(feedback) {
+        if(feedback.message != "success"){
+            alert(feedback.message + ". Please try again!");
+            return;
+        }
+
+        if(feedback.result == "valid"){
+            location.href = 'game-home.php';
+        } else {
+            $('#login-fail-text').text("Invalid username and/or password!");
+            $('#password').val("");
+        }
+    }
 </script>
 </body>
 </html>

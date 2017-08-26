@@ -595,7 +595,7 @@
 
                 $('#nav').affix({
                     offset: {
-                        top: 0*$('header').height() - $('#nav').height()
+                        top: 0 - $('#nav').height()
                     }
                 });
 
@@ -608,7 +608,7 @@
                 /* smooth scrolling for nav sections */
                 $('#nav .navbar-nav li>a').click(function () {
                     var link = $(this).attr('href');
-                    var posi = $(link).offset().top;
+                    var posi = $(link).offset();
                     $('body,html').animate({scrollTop: posi}, 700);
                 });
 
