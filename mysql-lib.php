@@ -247,16 +247,20 @@ function createStudent(PDO $conn, $username, $password, $firstName, $lastName, $
     $insertStudentSql = "INSERT INTO Student(Username, `Password`, FirstName, LastName, Email, Gender, DOB, Identity, Score, ClassID)
 						 VALUES (?,?,?,?,?,?,?,?,?,?)";
     $insertStudentSql = $conn->prepare($insertStudentSql);
-
-    if (!$insertStudentSql->execute(array($username, md5($password), $firstName, $lastName, $email, $gender, $dob, $identity, 0, $classID))) {
-        return false;
-    }
-    return true; // successfully
+    return $insertStudentSql->execute(array($username, md5($password), $firstName, $lastName, $email, $gender, $dob, $identity, 0, $classID));
 }
 
-function updateStudent(PDO $conn, $username, $password, $firstName, $lastName, $email, $gender, $dob, $identity, $classID)
+function updateStudent(PDO $conn, $id, $firstName, $lastName, $email, $gender, $dob, $identity, $password = null)
 {
-    // TODO: update student
+    if ($password == null || $password == "") {
+        $insertStudentSql = "UPDATE Student SET FirstName=?, LastName=?, Email=?, Gender=?, DOB=?, Identity=? WHERE StudentID=?";
+        $insertStudentSql = $conn->prepare($insertStudentSql);
+        return $insertStudentSql->execute(array($firstName, $lastName, $email, $gender, $dob, $identity, $id));
+    } else {
+        $insertStudentSql = "UPDATE Student SET Password=?, FirstName=?, LastName=?, Email=?, Gender=?, DOB=?, Identity=? WHERE StudentID=?";
+        $insertStudentSql = $conn->prepare($insertStudentSql);
+        return $insertStudentSql->execute(array(md5($password), $firstName, $lastName, $email, $gender, $dob, $identity, $id));
+    }
 }
 
 function deleteStudent(PDO $conn, $studentID)

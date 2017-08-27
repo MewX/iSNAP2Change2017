@@ -201,7 +201,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="username" style="color: #FCEE2D">Username:</label>
                         <div class="col-sm-8">
-                            <input class="form-control" id="username" placeholder="Enter username" value="<?php echo $studentInfo->Username?>">
+                            <input class="form-control" id="username" placeholder="Enter username" value="<?php echo $studentInfo->Username?>" readonly>
                         </div>
                     </div>
 
@@ -355,7 +355,7 @@
         }
 
         var obj = {
-            username: username,
+            name: username,
             email: email,
             firstname: firstname,
             lastname: lastname,
@@ -366,8 +366,6 @@
             oldpass: oldpass,
             newpass: newpass
         };
-        console.log(obj);
-        return;
 
         $.ajax({
             // NOTE: This is not save enough by transferring plain password
@@ -382,6 +380,8 @@
                 alert(feedback.message + ". Please try again!");
             } else {
                 $('#oldpass').val("");
+                $('#newpass').val("");
+                $('#newpass2').val("");
                 alert("Successfuly updated!");
             }
         })
