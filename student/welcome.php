@@ -492,12 +492,12 @@
                             <label class="header5" style="color: #FCEE2D">Email</label>
                             <input type="email" class="form-control" id="emailID">
                         </div>     
-                        <textarea class="form-control" rows="4" style="margin-top: 3%"></textarea>
+                        <textarea id="commentContent" class="form-control" rows="4" style="margin-top: 3%"></textarea>
                     </form>
                     <div class="sendbutton" style="display:flex;justify-content:center;align-items:center;width:100%;height:20%; margin-top:1%;">
                         <div style="width:50%;color:#FCEE2D; text-align:center;">
                             <span>
-                            <a href='#'>
+                            <a onclick="leaveComment();">
                                 <img src="./img/send_icon.png" style="height: 75px; width: 75px;">
                             </a>
                             </span>
@@ -646,17 +646,50 @@
             }
 
             function parseFeedback(feedback) {
-                if(feedback.message != "success"){
+                if(feedback.message !== "success"){
                     alert(feedback.message + ". Please try again!");
                     return;
                 }
 
-                if(feedback.result == "valid"){
+                if(feedback.result === "valid"){
                     location.href = 'game-home.php';
                 } else {
                     $('#login-fail-text').text("Invalid username and/or password!");
                     $('#password').val("");
                 }
+            }
+
+            function leaveComment() {
+                var name = $('#myName').val();
+                var email = $('#emailID').val();
+                var content = $('#commentContent').val();
+
+                $.ajax({
+                    url: "visitor-comment-feedback.php",
+                    data: {
+                        name: name,
+                        email: email,
+                        content: content
+                    },
+                    type: "POST",
+                    dataType: "json"
+                })
+                .done(function (feedback) {
+                    if(feedback.message !== "success") {
+                        alert(feedback.message + ". Please try again!");
+                    } else {
+                        $('#myName').val("");
+                        $('#emailID').val("");
+                        $('#commentContent').val("");
+                        alert("Successfuly submission! Thank you!");
+                    }
+                })
+                .fail(function (xhr, status, errorThrown) {
+                    alert("Sorry, there was a problem! Please try again later.");
+                    console.log("Error: " + errorThrown);
+                    console.log("Status: " + status);
+                    console.dir(xhr);
+                });
             }
         </script>
                         
