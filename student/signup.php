@@ -194,27 +194,22 @@ db_close($conn);
                 <div class="input-group">
                     <label class="input-label">Password(*)</label>
                     <input id="password-text" name="password" type="password" class="form-control input-text-box" aria-describedby="sizing-addon1">
-
                 </div>
                 <div class="input-group">
                     <label class="input-label">Confirm Password(*)</label>
                     <input id="password-text2" name="password2" type="password" class="form-control input-text-box" aria-describedby="sizing-addon1">
-
-                </div>
-                <div class="input-group">
-                    <label class="input-label">Last Name(*)</label>
-                    <input id="lastname-text" name="lastname"  type="text" class="form-control input-text-box" aria-describedby="sizing-addon1">
-
                 </div>
                 <div class="input-group">
                     <label class="input-label">First Name(*)</label>
                     <input id="firstname-text" name="firstname" type="text" class="form-control input-text-box" aria-describedby="sizing-addon1">
-
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Last Name(*)</label>
+                    <input id="lastname-text" name="lastname"  type="text" class="form-control input-text-box" aria-describedby="sizing-addon1">
                 </div>
                 <div class="input-group">
                     <label class="input-label">Email(*)</label>
                     <input id="email-text" name="email" type="email" class="form-control input-text-box" aria-describedby="sizing-addon1">
-
                 </div>
                 <div class="input-group">
                     <label class="input-label">Date Of Birth(*)</label>
