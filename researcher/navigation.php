@@ -437,7 +437,7 @@ db_close($conn);
                     }
                 ?>">
                     <!--if 1, insert; else if 0 update; else if -1 delete;-->
-                    <input type=hidden name="update" id="update" value="1">
+                    <input type=hidden name="update" id="updateInfo" value="1">
                     <label for="ResearcherID" style="display:none">ResearcherID</label>
                     <input type="text" class="form-control newInfo" id="ResearcherID" name="ResearcherID"
                            style="display:none">
@@ -547,7 +547,7 @@ db_close($conn);
     var newInfoArr = $('.newInfo');
     $('#settings').on('click', function () {
         $("label").remove(".error");
-        $('#update').val(0);
+        $('#updateInfo').val(0);
         newInfoArr.eq(0).val("<?php echo $currentUserId?>");
         newInfoArr.eq(1).val("<?php echo $currentUsername?>");
     });
@@ -559,8 +559,6 @@ db_close($conn);
     });
 
     $('#Password, #cPassword').on('keyup', function () {
-        console.log($('#Password').val() );
-        console.log( $('#cPassword').val());
         if (($('#Password').val() == $('#cPassword').val()) && $('#Password').val()!="") {
             $('#message').html('Matching').css('color', 'green');
         } else

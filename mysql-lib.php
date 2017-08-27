@@ -1054,9 +1054,14 @@ function updateMCQQuestion(PDO $conn, $mcqID, $correctChoice, $question)
 
 function deleteMCQQuestion(PDO $conn, $mcqID)
 {
+    $updateSql = "SELECT QuizID FROM MCQ_Question WHERE MCQID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($mcqID));
+    $quizID = $updateSql->fetch(PDO::FETCH_OBJ)->QuizID;
     $updateSql = "DELETE FROM MCQ_Question WHERE MCQID = ?";
     $updateSql = $conn->prepare($updateSql);
     $updateSql->execute(array($mcqID));
+    updateMCQQuizPoints($conn, $quizID);
 }
 
 function getMCQSection(PDO $conn, $quizID)
