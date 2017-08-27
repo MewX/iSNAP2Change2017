@@ -59,6 +59,7 @@ DROP TABLE IF EXISTS Student_Question;
 DROP TABLE IF EXISTS Student_Question_Feedback;
 DROP TABLE IF EXISTS Public_Question;
 DROP TABLE IF EXISTS Week;
+DROP TABLE IF EXISTS Comments;
 
 CREATE TABLE IF NOT EXISTS `School` (
   SchoolID   MEDIUMINT AUTO_INCREMENT,
@@ -1341,3 +1342,11 @@ WHERE
     StudentID = 1 AND Week = 1;
 */
 
+CREATE TABLE IF NOT EXISTS `Comments` (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  content LONGTEXT NOT NULL,
+  time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+INSERT INTO Comments (name, email, content) values ('Amos', 'i@mewx.org', 'This is an initial message for testing propose');

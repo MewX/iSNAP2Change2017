@@ -2540,5 +2540,20 @@ function generateRandomSAQSubmissions(PDO $conn)
     }
 }
 
-/* Unit Test */
-?>
+
+/* Comments */
+function getAllComments(PDO $conn) {
+    return getRecords($conn, "Comments");
+}
+
+function addComment(PDO $conn, $name, $email, $content) {
+    $sql = "INSERT INTO Comments(name, email, content) VALUES (?,?,?);";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(array($name, $email, $content)); // true on success
+}
+
+function deleteComment( PDO $conn, $commentID) {
+    $sql = "delete from Comments where id = ?";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(array($commentID)); // true on success
+}
