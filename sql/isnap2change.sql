@@ -1334,7 +1334,7 @@ SELECT
             Quiz
         WHERE
             Week = 1) - COUNT(*)
-FROM
+FROMz
     Quiz_Record
         NATURAL JOIN
     Quiz
@@ -1347,6 +1347,7 @@ CREATE TABLE IF NOT EXISTS `Comments` (
   name TEXT NOT NULL,
   email TEXT NOT NULL,
   content LONGTEXT NOT NULL,
+  readOrNot BOOLEAN DEFAULT FALSE,
   time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 INSERT INTO Comments (name, email, content) values ('Amos', 'i@mewx.org', 'This is an initial message for testing propose');

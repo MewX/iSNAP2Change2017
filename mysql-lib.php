@@ -2552,8 +2552,26 @@ function addComment(PDO $conn, $name, $email, $content) {
     return $sql->execute(array($name, $email, $content)); // true on success
 }
 
-function deleteComment( PDO $conn, $commentID) {
+function deleteComment(PDO $conn, $commentID) {
     $sql = "delete from Comments where id = ?";
     $sql = $conn->prepare($sql);
     return $sql->execute(array($commentID)); // true on success
+}
+
+function markCommentRead(PDO $conn, $commentID) {
+    $sql = "UPDATE Comments SET readOrNot = true WHERE id = ?";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(array($commentID)); // true on success
+}
+
+function markCommentUnread(PDO $conn, $commentID) {
+    $sql = "UPDATE Comments SET readOrNot = false WHERE id = ?";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(array($commentID)); // true on success
+}
+
+function markAllCommentRead(PDO $conn) {
+    $sql = "UPDATE Comments SET readOrNot = true";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(); // true on success
 }
