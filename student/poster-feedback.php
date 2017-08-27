@@ -90,7 +90,7 @@
 		$ifp = fopen($output_file, "wb");
 
 		if($ifp == false) {
-			throw new Exception('Fail to open file');
+			throw new Exception('Fail to open file: ' . $output_file);
 		}
 
 		$data = explode(',', $base64_string);
@@ -102,5 +102,3 @@
 
 		fclose($ifp);
 	}
-
-?>

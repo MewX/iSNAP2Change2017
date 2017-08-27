@@ -59,7 +59,7 @@
     <link rel="stylesheet" href="./css/common.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="http://zwibbler.com/zwibbler-demo.js"></script>
+    <script src="./js/zwibbler-demo.js"></script>
     <script src="./js/snap.js"></script>
     <style>
         .canvas-title {
@@ -394,19 +394,19 @@
     }
 
     function parseFeedback(feedback){
-        if(feedback.message != "success"){
+        if(feedback.message !== "success"){
             alert(feedback.message + ". Please try again!");
             return;
         }
 
-        if(feedback.action == "SAVE"){
+        if(feedback.action === "SAVE"){
             snap.alert({
                 content: 'You have successfully saved the poster.',
                 onClose: function () { }
             });
         }
 
-        if(feedback.action == "SUBMIT") {
+        if(feedback.action === "SUBMIT") {
             snap.alert({
                 content: 'You have successfully submitted the poster.',
                 onClose: function () { }
@@ -418,24 +418,24 @@
             $(".question-submit").attr("disabled", "disabled");
         }
     }
-/*
-    function uploadDone(status, result) {
-        if (status === "ok") {
-            if(result.message == "success"){
-                var url = <?php getURL("/tmp_poster_img/") ?> + result.fileid;
 
-                ctx.beginTransaction();
-                var nodeId = ctx.createNode("ImageNode", {
-                    url: url
-                });
-                ctx.translateNode(nodeId, 100, 100);
-                ctx.commitTransaction();
-            } else{
-                alert(result.message);
-            }
-        }
-    }
-*/
+//    function uploadDone(status, result) {
+//        if (status === "ok") {
+//            if(result.message == "success"){
+//                var url = <?php //getURL("/tmp_poster_img/") ?>// + result.fileid;
+//
+//                ctx.beginTransaction();
+//                var nodeId = ctx.createNode("ImageNode", {
+//                    url: url
+//                });
+//                ctx.translateNode(nodeId, 100, 100);
+//                ctx.commitTransaction();
+//            } else{
+//                alert(result.message);
+//            }
+//        }
+//    }
+
     function upload(form) {
         var progress = new ProgressNotification("Reading file");
         var xhr = new XMLHttpRequest();
