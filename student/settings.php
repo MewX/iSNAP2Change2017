@@ -197,8 +197,7 @@
             <div class="account-info">
                 <h2 class="account-title" style="color: white">Account Information</h2>
 
-                <form class="form-horizontal">
-
+                <form class="form-horizontal" id="update-form">
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="username" style="color: #FCEE2D">Username:</label>
                         <div class="col-sm-8">
@@ -210,6 +209,53 @@
                         <label class="control-label col-sm-4" for="email" style="color: #FCEE2D">Email:</label>
                         <div class="col-sm-8">
                             <input type="email" class="form-control" id="email" placeholder="Enter email" value="<?php echo $studentInfo->Email?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="firstname" style="color: #FCEE2D">First name:</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="firstname" placeholder="Enter first name" value="<?php echo $studentInfo->FirstName?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="lastname" style="color: #FCEE2D">Last name:</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="lastname" placeholder="Enter last name" value="<?php echo $studentInfo->LastName?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="dob" style="color: #FCEE2D">Date Of Birth (YYYY-MM-DD): </label>
+                        <div class="col-sm-8">
+<!--                            TODO: Fix this date format into DD/MM/YYYY-->
+                            <input type="date" class="form-control" id="dob" placeholder="Date of Birth" value="<? echo $studentInfo->DOB ?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="gender" style="color: #FCEE2D">Gender:</label>
+                        <div class="col-sm-8">
+                            <div class="input-group" id="gender">
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender-radio" id="inlineRadio1" value="Male" <? if ($studentInfo->Gender === "Male") echo "checked" ?>><span style="color: white">Male</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender-radio" id="inlineRadio2" value="Female"<? if ($studentInfo->Gender === "Female") echo "checked" ?>><span style="color: white;">Female</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="identity" style="color: #FCEE2D">Identified as:</label>
+                        <div class="col-sm-8">
+                            <div class="input-group" id="identity">
+                                <select id="identity-selection" class="form-control">
+                                    <option <? if ($studentInfo->Identity === "Resident") echo "checked" ?>>Resident</option>
+                                    <option <? if ($studentInfo->Identity === "Aboriginal") echo "checked" ?>>Aboriginal</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -236,7 +282,7 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-8">
-                            <button type="submit" class="btn btn-default" onclick="submitChanges()">Update</button>
+                            <button class="btn btn-default">Update</button>
                         </div>
                     </div>
                 </form>
@@ -274,7 +320,90 @@
 
 <script>
     function submitChanges() {
-        // todo
+        var username = $('#username').val();
+        var email = $('#email').val();
+        var firstname = $('#firstname').val();
+        var lastname = $('#lastname').val();
+        var dob = $('#dob').val();
+        var gender = $("input[type='radio'][name='gender-radio']:checked").val();
+        var identity = $('#identity-selection').val();
+
+        var oldpass = $('#oldpass').val();
+        var newpass = $('#newpass').val();
+        var newpass2 = $('#newpass2'); // get object
+
+        // new password detection
+        if (newpass2.val() !== newpass) {
+            alert("Two new passwords were not the same! Please try again!");
+            newpass2.val("");
+            return;
+        }
+
+        // convert dob into YYYY-MM-DD
+        if (dob.match(/^\d\d\/\d\d\/\d\d\d\d$/) !== null) {
+            var d = new Date(dob);
+            if ( !!d.valueOf() ) { // Valid date
+                year = d.getFullYear();
+                month = d.getMonth();
+                day = d.getDate();
+            }
+            dob = year + "-" + month + "-" + day;
+        }
+        if (dob.match(/^\d\d\d\d-\d\d-\d\d$/) === null) {
+            alert("Date of birth format was invalid!");
+            return;
+        }
+
+        var obj = {
+            username: username,
+            email: email,
+            firstname: firstname,
+            lastname: lastname,
+            dob: dob,
+            gender: gender,
+            identity: identity,
+
+            oldpass: oldpass,
+            newpass: newpass
+        };
+        console.log(obj);
+        return;
+
+        $.ajax({
+            // NOTE: This is not save enough by transferring plain password
+            // Though, this is an old system issue, not just in this code
+            url: "settings-feedback.php",
+            data: obj,
+            type: "POST",
+            dataType: "json"
+        })
+        .done(function (feedback) {
+            if(feedback.message !== "success") {
+                alert(feedback.message + ". Please try again!");
+            } else {
+                $('#oldpass').val("");
+                alert("Successfuly updated!");
+            }
+        })
+        .fail(function (xhr, status, errorThrown) {
+            alert("Sorry, there was a problem! Please try again later.");
+            console.log("Error: " + errorThrown);
+            console.log("Status: " + status);
+            console.dir(xhr);
+        });
+    }
+
+    function processForm(e) {
+        if (e.preventDefault) e.preventDefault();
+        submitChanges();
+        return false;
+    }
+
+    var form = document.getElementById('update-form');
+    if (form.attachEvent) {
+        form.attachEvent("submit", processForm);
+    } else {
+        form.addEventListener("submit", processForm);
     }
 </script>
 </body>

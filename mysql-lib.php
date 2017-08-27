@@ -254,6 +254,11 @@ function createStudent(PDO $conn, $username, $password, $firstName, $lastName, $
     return true; // successfully
 }
 
+function updateStudent(PDO $conn, $username, $password, $firstName, $lastName, $email, $gender, $dob, $identity, $classID)
+{
+    // TODO: update student
+}
+
 function deleteStudent(PDO $conn, $studentID)
 {
     deleteRecord($conn, $studentID, "Student");
