@@ -192,11 +192,6 @@ db_close($conn);
                     <span id="username-validation-text"></span>
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Nickname(*)</label>
-                    <input id="lastname-text" name="lastname"  type="text" class="form-control input-text-box" aria-describedby="sizing-addon1">
-
-                </div>
-                <div class="input-group">
                     <label class="input-label">Password(*)</label>
                     <input id="password-text" name="password" type="password" class="form-control input-text-box" aria-describedby="sizing-addon1">
 

@@ -176,12 +176,12 @@
                             <input type="text" name="name" class="account-field" value="<?php echo $studentInfo->Username?>">
                         </label>
                     </div>
-                    <div class="account-item">
-                        <label>
-                            <span class="account-field-name">Nickname</span>
-                            <input type="text" name="username" class="account-field">
-                        </label>
-                    </div>
+<!--                    <div class="account-item">-->
+<!--                        <label>-->
+<!--                            <span class="account-field-name">Nickname</span>-->
+<!--                            <input type="text" name="username" class="account-field">-->
+<!--                        </label>-->
+<!--                    </div>-->
                     <div class="account-item">
                         <label>
                             <span class="account-field-name">Password</span>
@@ -218,10 +218,11 @@
     </div>
 
     <ul class="sitenav">
-        <li class="sitenav-item sitenav-game-home"><a href="#"></a></li>
-        <li class="sitenav-item sitenav-achievement"><a href="#"></a></li>
-        <li class="sitenav-item sitenav-progress"><a href="#"></a></li>
-        <li class="sitenav-item sitenav-reading-material"><a href="#"></a></li>
+        <li class="sitenav-item sitenav-healthy-recipes"><a href="#" data-toggle="tooltip" title="Healthy Recipes"></a></li>
+        <li class="sitenav-item sitenav-game-home"><a href="#" data-toggle="tooltip" title="Game Home"></a></li>
+        <li class="sitenav-item sitenav-extra-activities"><a href="extra-activities.php" data-toggle="tooltip" title="Extra Activities"></a></li>
+        <li class="sitenav-item sitenav-progress"><a href="progress.php" data-toggle="tooltip" title="Progress"></a>
+        <li class="sitenav-item sitenav-reading-material"><a href="reading-material.php" data-toggle="tooltip" title="Reading Materials"></a></li>
     </ul>
 
     <div class="footer-wrapper">
@@ -243,37 +244,37 @@
         init: function (opt) {
             opt = opt || {
                     onSubmit: $.noop
-                }
-            this.onSubmit = opt.onSubmit
-            this.cacheElements()
-            this.addListeners()
+                };
+            this.onSubmit = opt.onSubmit;
+            this.cacheElements();
+            this.addListeners();
         },
         cacheElements: function () {
             this.$infoForm = $('.account-form')
         },
         addListeners: function () {
-            var that = this
+            var that = this;
 
             this.$infoForm.on('submit', function (e) {
-                e.preventDefault()
-                var data = that.getInfoData()
-                that.onSubmit(data)
+                e.preventDefault();
+                var data = that.getInfoData();
+                that.onSubmit(data);
             })
         },
         getInfoData: function () {
-            var infoArray = this.$infoForm.serializeArray()
-            var infoData = {}
+            var infoArray = this.$infoForm.serializeArray();
+            var infoData = {};
             infoArray.forEach(function (item) {
                 infoData[item.name] = item.value
-            })
+            });
             return infoData
         }
-    }
+    };
     AccountCtrl.init({
         onSubmit: function (data) {
             console.log(data)
         }
-    })
+    });
 
 
     var $additionSubmit = $('.addition-submit');

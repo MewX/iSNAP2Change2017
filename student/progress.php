@@ -509,12 +509,7 @@
                     </div>
                     <div class="progress-user">
                         <div class="mini-row">
-                            <div class="col-6">
-                                <div class="h2">Nickname: <?php echo $student->Nickname ?></div>
-                            </div>
-                            <div class="col-6">
-                                <div class="h2">Username: <?php echo $student->Username ?></div>
-                            </div>
+                            <div class="h2" style="text-align: center;">Username: <?php echo $student->Username ?></div>
                         </div>
                     </div>
                     <div class="progress-summary">
