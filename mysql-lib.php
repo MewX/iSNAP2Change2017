@@ -1025,7 +1025,22 @@ function createMCQQuestion(PDO $conn, $quizID, $question)
                     VALUES (?,?)";
     $updateSql = $conn->prepare($updateSql);
     $updateSql->execute(array(htmlspecialchars($question), $quizID));
-    return $conn->lastInsertId();
+    $mcqID = $conn->lastInsertId();
+    updateMCQQuizPoints($conn, $quizID);
+    return $mcqID;
+}
+
+function updateMCQQuizPoints(PDO $conn, $quizID)
+{
+    $updateSql = "SELECT count(*) AS num FROM `MCQ_Question` WHERE QuizID = ?;";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($quizID));
+    $point =  $updateSql->fetch(PDO::FETCH_OBJ)->num;
+    $updateSql = "UPDATE MCQ_Section
+                    SET Points = ?
+                    WHERE QuizID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($point, $quizID));
 }
 
 function updateMCQQuestion(PDO $conn, $mcqID, $correctChoice, $question)

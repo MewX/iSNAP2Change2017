@@ -14,6 +14,7 @@ try {
             if ($update == -1) {
                 $quizID = $_POST['quizID'];
                 deleteQuiz($conn, $quizID);
+
             }
         }
     }

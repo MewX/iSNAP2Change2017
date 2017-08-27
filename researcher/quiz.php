@@ -221,7 +221,7 @@ db_close($conn);
                         echo "value='" . $w . "'";
                     } ?> required>
                     <br>
-                    <label for='QuizType'>QuizType</label>
+                    <label for='QuizType'>Quiz Type</label>
                     <select class="form-control dialoginput" id="QuizType" form="submission" name="quizType" required>
                         <option value="" disabled selected>Select Quiz Type</option>
 
@@ -241,7 +241,7 @@ db_close($conn);
                         </optgroup>
                     </select>
                     <br>
-                    <label for='TopicName'>TopicName</label>
+                    <label for='TopicName'>Topic Name</label>
                     <select class="form-control dialoginput" id="TopicName" form="submission" name="topicName" required>
                         <option value="" disabled selected>Select Topic</option>
                         <?php for ($j = 0; $j < count($topicResult); $j++) { ?>
@@ -354,7 +354,9 @@ db_close($conn);
         $("#QuizType").change(function () {
             if ($.inArray($(this).val().trim(), <?php echo json_encode($saqLikeQuizTypeArr); ?>) != -1) {
                 dialogInputArr.eq(pointsIndex).attr('disabled', 'disabled');
-            } else {
+            } else if ($(this).val().trim()=="MCQ"){
+                dialogInputArr.eq(pointsIndex).attr('disabled', 'disabled');
+            } else{
                 dialogInputArr.eq(pointsIndex).prop('disabled', false);
             }
         });

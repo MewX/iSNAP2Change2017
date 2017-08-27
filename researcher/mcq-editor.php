@@ -132,7 +132,7 @@ db_close($conn);
                             <br>
                             <label for="Points">Points</label>
                             <input type="text" class="form-control" id="Points" name="points" placeholder="Input Points"
-                                   value="<?php echo $quizResult->Points; ?>" required>
+                                   value="<?php echo $quizResult->Points; ?>" disabled>
                             <br>
                             <label for='ExtraQuiz'>Extra Quiz</label>
                             <select class="form-control" id="ExtraQuiz" form="metadata-submission" name="ExtraQuiz"
