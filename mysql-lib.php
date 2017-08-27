@@ -1104,6 +1104,16 @@ function updateMCQQuestionRecord(PDO $conn, $MCQID, $studentID, $choice)
     $updateMCQQuesRecordQuery->execute(array($studentID, $MCQID, $choice, $choice));
 }
 
+function getMCQQuestionRecord(PDO $conn, $quizID, $studentID)
+{
+    $getMCQQuesRecordSql = "SELECT MCQID, Choice FROM MCQ_Question_Record NATURAL JOIN MCQ_Question WHERE QuizID = ?
+                                AND StudentID = ?;";
+    $getMCQQuesRecordQuery = $conn->prepare($getMCQQuesRecordSql);
+    $getMCQQuesRecordQuery->execute(array($quizID, $studentID));
+    $result = $getMCQQuesRecordQuery->fetchAll(PDO::FETCH_OBJ);
+    return $result;
+}
+
 function getMCQQuiz(PDO $conn, $quizID)
 {
     $quizSql = "SELECT *, COUNT(MCQID) AS Questions
@@ -1156,6 +1166,32 @@ function getMCQSubmissionCorrectNum(PDO $conn, $answerArr)
     }
 
     return $score;
+}
+
+function getMCQAttemptInfo(PDO $conn, $quizID, $studentID)
+{
+    $mcqCorrectNumSql = "SELECT Attempt, HighestGrade FROM MCQ_Attempt_Record 
+                         WHERE QuizID = ? AND StudentID = ?";
+    $mcqCorrectNumQuery = $conn->prepare($mcqCorrectNumSql);
+    $mcqCorrectNumQuery->execute(array($quizID, $studentID));
+    $attempt = $mcqCorrectNumQuery->fetch(PDO::FETCH_OBJ);
+    return $attempt;
+}
+
+function updateMCQAttemptRecord(PDO $conn, $quizID, $studentID, $attempt, $highestGrade=0)
+{
+    $updateQuizRecordSql = "INSERT INTO MCQ_Attempt_Record(QuizID, StudentID, Attempt, HighestGrade)
+							    VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE Attempt = ?, HighestGrade = ?";
+    $updateQuizRecordQuery = $conn->prepare($updateQuizRecordSql);
+    $updateQuizRecordQuery->execute(array($quizID, $studentID, $attempt, $highestGrade, $attempt, $highestGrade));
+}
+
+function updateMCQAttempt(PDO $conn, $quizID, $studentID, $attempt)
+{
+    $updateQuizRecordSql = "INSERT INTO MCQ_Attempt_Record(QuizID, StudentID, Attempt)
+							    VALUES (?,?,?) ON DUPLICATE KEY UPDATE Attempt = ?";
+    $updateQuizRecordQuery = $conn->prepare($updateQuizRecordSql);
+    $updateQuizRecordQuery->execute(array($quizID, $studentID, $attempt, $attempt));
 }
 
 /* MCQ */
