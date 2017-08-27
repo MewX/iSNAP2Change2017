@@ -35,10 +35,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
     <title>Setting | SNAP</title>
-    <link rel="stylesheet" href="./css/common.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" type="text/css" href="./css/vendor/animate.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <script src="./js/vendor/wow.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="./js/snap.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <style>
         .setting-content {
             max-width: 1000px;
@@ -68,39 +72,6 @@
             margin: 30px 0;
             font-size: 20px;
 
-        }
-        .account-item {
-            border-bottom: 2px solid #fcec1b;
-            padding: 20px 0 10px;
-            overflow: hidden;
-        }
-        .account-field-name {
-            width: 160px;
-            float: left;
-            color: #fcec1b;
-            font-size: 18px;
-        }
-        .account-field {
-            width: 400px;
-            float: left;
-            background-color: #000;
-            color: #fff;
-            border: 0;
-            font-size: 18px;
-            font-family: Maitree, serif;
-            border-bottom: 1px solid #fff;
-        }
-        .account-field:focus {
-            outline: 0;
-        }
-        .account-submit {
-            display: block;
-            width: 80px;
-            text-align: center;
-            margin: 20px auto;
-            color: #fcec1b;
-            height: 40px;
-            line-height: 40px;
         }
         .addition-info {
             max-width: 600px;
@@ -205,7 +176,6 @@
                     </ul>
                 </div>
 
-
                 <div class="setting-icon dropdown">
                     <ul class="dropdown-menu">
                         <li class="dropdown-item"><a href="logout.php">Log out</a></li>
@@ -221,54 +191,60 @@
         <div class="setting-content">
             <div class="setting-header">
                 <div class="setting-logo"></div>
-                <div class="setting-label">Settings</div>
-                <div class="setting-prompt">Change your account settings</div>
+                <div class="setting-label p1" style="color: white">Settings</div>
+                <div class="setting-prompt p1" style="color: white">Change your account settings</div>
             </div>
             <div class="account-info">
-                <h2 class="account-title">Account Information</h2>
-                <form class="account-form">
-                    <div class="account-item">
-                        <label>
-                            <span class="account-field-name">Username</span>
-                            <input type="text" name="name" class="account-field" value="<?php echo $studentInfo->Username?>">
-                        </label>
+                <h2 class="account-title" style="color: white">Account Information</h2>
+
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="username" style="color: #FCEE2D">Username:</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="username" placeholder="Enter username" value="<?php echo $studentInfo->Username?>">
+                        </div>
                     </div>
-<!--                    <div class="account-item">-->
-<!--                        <label>-->
-<!--                            <span class="account-field-name">Nickname</span>-->
-<!--                            <input type="text" name="username" class="account-field">-->
-<!--                        </label>-->
-<!--                    </div>-->
-                    <div class="account-item">
-                        <label>
-                            <span class="account-field-name">Password</span>
-                            <input type="password" name="password" class="account-field">
-                        </label>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="email" style="color: #FCEE2D">Email:</label>
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control" id="email" placeholder="Enter email" value="<?php echo $studentInfo->Email?>">
+                        </div>
                     </div>
-                    <div class="account-item">
-                        <label>
-                            <span class="account-field-name">rePassword</span>
-                            <input type="password" name="repassword" class="account-field">
-                        </label>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="oldpass" style="color: #FCEE2D">Old password for verification:</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="oldpass" placeholder="Enter old password">
+                        </div>
                     </div>
-                    <div class="account-item">
-                        <label>
-                            <span class="account-field-name">Email</span>
-                            <input type="text" name="email" class="account-field" value="<?php echo $studentInfo->Email?>">
-                        </label>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="newpass" style="color: #FCEE2D">New password:</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="newpass" placeholder="Enter new password">
+                        </div>
                     </div>
-                    <div class="account-operation">
-                        <button type="submit" class="account-submit">Update</button>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="newpass2" style="color: #FCEE2D">New password again:</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="newpass2" placeholder="Enter new password again">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button type="submit" class="btn btn-default" onclick="submitChanges()">Update</button>
+                        </div>
                     </div>
                 </form>
             </div>
 
             <div class="addition-info">
-                <div class="addition-title">Any issues of questions? Please send them through and we will get back to you quickly.</div>
-                <textarea cols="30" rows="10" class="addition-field"></textarea>
-                <div class="addition-footer">
-                    <button type="submit" class="addition-submit"></button>
-                </div>
+<!--                TODO: Add a link to notification centre-->
+                <div class="addition-title p1" style="color: white">Any issues of questions?<br/>Please contact the researcher in your notification centre.</div>
             </div>
         </div>
 
@@ -297,49 +273,9 @@
 
 
 <script>
-    var AccountCtrl = {
-        init: function (opt) {
-            opt = opt || {
-                    onSubmit: $.noop
-                };
-            this.onSubmit = opt.onSubmit;
-            this.cacheElements();
-            this.addListeners();
-        },
-        cacheElements: function () {
-            this.$infoForm = $('.account-form')
-        },
-        addListeners: function () {
-            var that = this;
-
-            this.$infoForm.on('submit', function (e) {
-                e.preventDefault();
-                var data = that.getInfoData();
-                that.onSubmit(data);
-            })
-        },
-        getInfoData: function () {
-            var infoArray = this.$infoForm.serializeArray();
-            var infoData = {};
-            infoArray.forEach(function (item) {
-                infoData[item.name] = item.value
-            });
-            return infoData
-        }
-    };
-    AccountCtrl.init({
-        onSubmit: function (data) {
-            console.log(data)
-        }
-    });
-
-
-    var $additionSubmit = $('.addition-submit');
-    var $additionField = $('.addition-field');
-    $additionSubmit.on('click', function (e) {
-        e.preventDefault();
-        console.log($additionField.val())
-    })
+    function submitChanges() {
+        // todo
+    }
 </script>
 </body>
 </html>
