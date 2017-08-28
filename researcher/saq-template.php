@@ -170,7 +170,6 @@ db_close($conn);
         if (confirm("You can only create a new quiz in Quiz Overview, click OK to go that page") == true) {
             window.location.href='quiz.php';
         }
-
     });
     $('.glyphicon-remove').on('click', function () {
         if (confirm('[WARNING] Are you sure to remove this quiz? If you remove one quiz. All the questions and submission of this quiz will also get deleted (not recoverable). It includes learning material, questions and options, their submissions and your grading/feedback, not only the quiz itself.')) {

@@ -1641,7 +1641,21 @@ function getLearningMaterialByWeek(PDO $conn, $week)
 }
 
 /* Learning_Material */
+function getOverallScore(PDO $conn){
+    $score = 0;
+    $tableName = array("Matching_Section", "Misc_Section", "Poster_Section", "SAQ_Question", "MCQ_Section");
 
+    for($i = 0; $i < count($tableName); $i++){
+        $quizSql = "SELECT Points FROM $tableName[$i];";
+        $quizQuery = $conn->prepare($quizSql);
+        $quizQuery->execute();
+        $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);
+        for ($j = 0; $j < count($quizResult); $j++) {
+            $score += $quizResult[$j]->Points;//getStuQuizScore($conn, $quizResult[$i]->QuizID, $studentID);
+        }
+    }
+    return $score;
+}
 
 function calculateStudentScore(PDO $conn, $studentID)
 {
@@ -1746,8 +1760,6 @@ function getQuizCompltdNumByTopic(PDO $conn, $studentID, $topicID)
     $quizNumResult = $quizNumQuery->fetch(PDO::FETCH_OBJ);
     return $quizNumResult->QuizNum;
 }
-
-
 
 function getQuizStatus(PDO $conn, $quizID, $studentID)
 {
