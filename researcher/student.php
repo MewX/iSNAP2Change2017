@@ -33,6 +33,7 @@ try {
     refreshAllStudentsScore($conn);
     $studentResult = getStudents($conn);
     $classResult = getClasses($conn);
+    $overallScore = getOverallScore($conn);
 
 } catch (Exception $e) {
     debug_err($e);
@@ -72,7 +73,10 @@ db_close($conn);
                         <div>
                             Toggle column:
                             <?php for ($i = 1; $i < count($columnName); $i++) {
-                                if ($columnName[$i] != 'Username') { ?>
+                                if ($columnName[$i] == 'Score') { ?>
+                                    <i class="fa fa-check-square-o fa-fw"></i><a class="toggle-vis"
+                                                                                 data-column="<?php echo $i; ?>"><?php echo "Score/Overall"; ?></a>&nbsp;
+                                <?php } elseif ($columnName[$i] != 'Username') { ?>
                                     <i class="fa fa-check-square-o fa-fw"></i><a class="toggle-vis"
                                                                                  data-column="<?php echo $i; ?>"><?php echo $columnName[$i]; ?></a>&nbsp;
                                 <?php }
@@ -82,7 +86,25 @@ db_close($conn);
                         </div>
                         <div class="dataTable_wrapper">
                             <table class="table table-striped table-bordered table-hover" id="datatables">
-                                <?php require_once('table-head.php'); ?>
+                                <thead>
+                                <tr>
+                                    <?php for ($i = 0; $i < count($columnName); $i++) { ?>
+                                        <th <?php if ($i == 0) {
+                                            echo 'style="display:none"';
+                                        } ?>><?php
+                                            if($columnName[$i]=="Score"){
+                                                echo "Score/Overall";
+                                            }else{
+                                                $parts = preg_split('/(?=[A-Z])/', $columnName[$i]);
+                                                for($j=0;$j<count($parts);$j++){
+                                                    echo $parts[$j];
+                                                    echo " ";
+                                                }
+                                            }
+                                            ?></th>
+                                    <?php } ?>
+                                </tr>
+                                </thead>
                                 <tbody>
                                 <?php for ($i = 0; $i < count($studentResult); $i++) { ?>
                                     <tr class="<?php if ($i % 2 == 0) {
@@ -105,10 +127,17 @@ db_close($conn);
                                                     <span class="glyphicon glyphicon-edit pull-right" data-toggle="modal" data-target="#dialog" aria-hidden="true"></span>
 
                                                 </td>
-
+                                            <?php elseif ($j == 8):?>
+                                                <td>
+                                                    <?php
+                                                    echo $studentResult[$i]->$columnName[$j];
+                                                    echo "/";
+                                                    echo $overallScore;
+                                                    ?>
+                                                </td>
                                             <?php else: ?>
                                                 <td>
-                                                    <?php echo $studentResult[$i]->$columnName[$j]; ?>
+                                                    <?php echo $studentResult[$i]->$columnName[$j];?>
                                                 </td>
                                             <?php endif ?>
                                         <?php } ?>

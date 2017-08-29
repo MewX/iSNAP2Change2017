@@ -5,7 +5,25 @@
     $pageName = "multiple-choice-question";
 
     if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["quiz_id"])){
-            $quizID = $_GET["quiz_id"];
+        $quizID = $_GET["quiz_id"];
+    } else if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["quiz_id"]) && isset($_POST["student_id"]) && isset($_POST["attempt"])){
+        $quizID = $_POST["quiz_id"];
+        $studentID = $_POST["student_id"];
+        $attempt = $_POST["attempt"];
+        try{
+            $conn = db_connect();
+            updateMCQAttempt($conn, $quizID, $studentID, 3);
+        }catch(Exception $e) {
+            if ($conn != null) {
+                db_close($conn);
+            }
+
+            debug_err($pageName, $e);
+            //to do: handle sql error
+            //...
+            exit;
+        }
+        db_close($conn);
     } else {
         debug_log("Illegal state!");
         header("location:welcome.php");
@@ -27,14 +45,19 @@
 
         //check quiz status
         $status = getQuizStatus($conn, $quizID, $studentID);
+        $attemptInfo = getMCQAttemptInfo($conn, $quizID, $studentID);
+        //student can not attempt one quiz more than 3 times
+        if($attemptInfo->Attempt<3){
+            $status = 'UNANSWERED';
+        }else{
+            $status = 'GRADED';
+        }
 
         //get learning material
         $materialRes = getLearningMaterial($conn, $quizID);
 
         //get mcq questions
         $mcqQuestions = getMCQQuestionsByQuizID($conn, $quizID);
-
-
         $mcqOptions = array();
         $feedback = array();
 
@@ -329,6 +352,7 @@
             })
 
                 .done(function(feedback) {
+                    console.log("got feedback");
                     parseFeedback(feedback);
                 })
 
@@ -344,18 +368,53 @@
 
 
     function parseFeedback(feedback) {
+        console.log(feedback.detail);
         if (feedback.message != "success") {
             alert(feedback.message + ". Please try again!");
             return;
         }
 
         if (feedback.result == "pass") {
-            snap.alert({
-                content: 'Congratulations! You have passed this quiz. The result is: ' + feedback.score + '/' + feedback.quesNum + '.'
-            });
+            if(feedback.attempt>=3){
+                snap.alert({
+                    content: 'You have finished this quiz. Your final score is: ' + feedback.score + '/' + feedback.quesNum + '. '
+                });
+                QuizCtrl.setFeedback(feedback.detail);
+            }else{
+                snap.alert({
+                    content: 'This is your ' + feedback.attempt + ' attempt. The result for this attempt is: ' +
+                    feedback.score + '/' + feedback.quesNum + '. '
+                });
+                snap.$alert.on('click', '.snap-alert-confirm', function () {
+                    snap.confirm({
+                        title: 'Finish this quiz?',
+                        content:'You still have ' + (3-feedback.attempt) + ' chances for this quiz. Do you want to give up these ' +
+                        'chances and finish this quiz? '
+                    })
+                    snap.$confirm.on('click', '.snap-alert-confirm', function () {
+                        //give up the rest of chance, set attempt = 3;
+                        var StudentID = <?php echo $studentID ?>;
+                        var QuizID = <?php echo $quizID ?>;
+                        var data = {
+                            attempt: 3,
+                            student_id: StudentID,
+                            quiz_id: QuizID
+                        }
+                        $.ajax({
+                            url:'multiple-choice-question.php',
+                            type:'post',
+                            datatype:'json',
+                            data: data
+                        })
+                        QuizCtrl.setFeedback(feedback.detail);
+                    })
+                    snap.$confirm.on('click', '.snap-alert-cancel', function () {
+                        //redirect to week page if still have chance
+                        document.location.href="weekly-task.php?week=<?php echo $week?>";
+                    })
 
-            QuizCtrl.setFeedback(feedback.detail);
-
+                })
+            }
         } else if (feedback.result == "fail") {
             snap.alert({
                 content: 'Sorry! You have failed this quiz. The result is: ' + feedback.score + '/' + feedback.quesNum + '.'

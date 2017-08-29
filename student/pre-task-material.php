@@ -144,7 +144,16 @@
 
 <?php
             switch ($quizType) {
-                case "MCQ": ?>
+                case "MCQ":
+                    try {
+                        $conn = db_connect();
+                        $attemtInfo = getMCQAttemptInfo($conn, $quizID, $studentID);
+                    } catch (Exception $e) {
+                        debug_err($e);
+                    }
+                    db_close($conn);?>
+                    <h2 class="material-title">This is your <?php echo ($attemtInfo->Attempt+1); ?> attempts.
+                        You can have 3 attempts for this quiz and your final score will be the best one in your 3 attempts.</h2>
                     <a href="multiple-choice-question.php?quiz_id=<?php echo $quizID?>" class="material-start">
                         <span class="material-start-icon"></span>
                         Start

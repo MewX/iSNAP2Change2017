@@ -22,9 +22,14 @@ try {
             else if ($update == 0) {
                 // update
                 $userName = $_POST['Username'];
+                $password = $_POST['Password'];
                 $researcherID = $_POST['ResearcherID'];
-                updateResearcher($conn, $userName, $researcherID);
-                header("Location: account.php"); // ==> ../index.php
+                updateResearcher($conn, $userName, $password, $researcherID);
+                $currentUserId = $_SESSION["researcherID"];
+                if($currentUserId == 1){
+                    header("Location: account.php"); // ==> ../index.php
+                }
+
             }
             else if ($update == -1) {
                 // remove school (with help of DELETE CASCADE)
@@ -39,7 +44,6 @@ try {
                     header("Location: account.php"); // ==> ../index.php
                 }
             }
-
         }
     }
 
@@ -113,7 +117,7 @@ db_close($conn);
                                             </span>
                                             <span
                                                     class="glyphicon glyphicon-edit pull-right" data-toggle="modal"
-                                                    data-target="#dialog" aria-hidden="true">
+                                                    data-target="#updateProfile" aria-hidden="true">
                                             </span>
                                         </td>
                                         <td style="display:none">Password</td>
@@ -146,46 +150,7 @@ db_close($conn);
 
 </div>
 <!-- /#wrapper -->
-<!-- Modal -->
-<div class="modal fade" id="dialog" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="dialogTitle">Edit School</h4>
-            </div>
-            <div class="modal-body">
-                <form id="submission" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                    <!--if 1, insert; else if 0 update; else if -1 delete;-->
-                    <input type=hidden name="update" id="update" value="1">
-                    <label for="ResearcherID" style="display:none">ResearcherID</label>
-                    <input type="text" class="form-control dialoginput" id="ResearcherID" name="ResearcherID"
-                           style="display:none">
-                    <label for="Username">Username</label>
-                    <input type="text" class="form-control dialoginput" id="Username" name="Username">
-                    <br>
-                    <label for="Password">Password</label>
-                    <input type="password" class="form-control dialoginput" id="Password" name="Password">
-                    <br>
-                    <label for="cPassword">Confirmed Password</label>
-                    <br>
-                    <span id='message'></span>
-                    <input type="password" class="form-control dialoginput" id="cPassword" name="cPassword">
-                    <br>
-                    <div class="alert alert-danger">
-                        <p><strong>Reminder</strong> : Username of researcher should be unique and no duplicate names are allowed.
-                        </p>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="btnSave" class="btn btn-default" name="save">Save</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- SB Admin Library -->
 <?php require_once('sb-admin-lib.php'); ?>
 
@@ -200,7 +165,7 @@ db_close($conn);
         });
     });
     //DO NOT put them in $(document).ready() since the table has multi pages
-    var dialogInputArr = $('.dialoginput');
+    var dialogInputArr = $('.newInfo');
     $('.glyphicon-edit').on('click', function () {
 		$("label").remove(".error");
         $('#dialogTitle').text("Edit <?php echo $pageNameForView ?>");
@@ -209,11 +174,8 @@ db_close($conn);
         for (i = 0; i < dialogInputArr.length-2; i++) {
             dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());
         }
-
-        //disable SchoolID and Classes
-//        dialogInputArr.eq(0).attr('disabled', 'disabled');
-//        dialogInputArr.eq(2).attr('disabled', 'disabled');
     });
+
     $('.glyphicon-plus').on('click', function () {
 		$("label").remove(".error");
         $('#dialogTitle').text("Add <?php echo $pageNameForView ?>");
@@ -221,10 +183,8 @@ db_close($conn);
         for (i = 0; i < dialogInputArr.length; i++) {
             dialogInputArr.eq(i).val('');
         }
-        //disable SchoolID and Classes
-//        dialogInputArr.eq(0).attr('disabled', 'disabled');
-//        dialogInputArr.eq(2).attr('disabled', 'disabled');
     });
+
     $('.glyphicon-remove').on('click', function () {
         if (confirm('[WARNING] Are you sure to remove this researcher? All the researcher data will also get deleted (not recoverable).')) {
             $('#update').val(-1);
@@ -236,29 +196,23 @@ db_close($conn);
             $('#submission').submit();
         }
     });
-    $('#btnSave').on('click', function () {
+
+    $('#btnSaveChange').on('click', function () {
         $('#submission').validate();
-        //enable SchoolID
         dialogInputArr.eq(0).prop('disabled', false);
         $('#submission').submit();
     });
 
     $('#Username').on('keyup', function () {
-        console.log("pressed");
-        <?php
-        $conn = db_connect();
-        echo $_POST['Username'];
-        if(checkResearcherUsernameExisting($conn,$_POST['Username'])){
-            echo '$(\'#message\').html(\'existing\').css(\'color\', \'red\')';
-        }else{
-            echo '$(\'#message\').html(\'valid unsername\').css(\'color\', \'green\')';
-        };
-        ?>
-
+        /***
+         * TO DO:
+         * Check Username is available or not
+         */
     });
 
-
     $('#Password, #cPassword').on('keyup', function () {
+        console.log($('#Password').val() );
+        console.log( $('#cPassword').val());
         if (($('#Password').val() == $('#cPassword').val()) && $('#Password').val()!="") {
             $('#message').html('Matching').css('color', 'green');
         } else

@@ -2,6 +2,7 @@
     require_once("../mysql-lib.php");
     require_once("../debug.php");
     $pageName = "multiple-choice-question-feedback";
+    $MaxAttemptTime = 3;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST"
         && isset($_POST["student_id"]) && isset($_POST["quiz_id"]) && isset($_POST["answer_arr"])) {
@@ -21,18 +22,24 @@
 
         $conn->beginTransaction();
 
-        $threshold = count($answerArr)*0.2;
-
         //Calculate Score
         $score = getMCQSubmissionCorrectNum($conn, $answerArr);
+        $attemptInfo = getMCQAttemptInfo($conn, $quizID, $studentID);
+        $attempt = 0;
+        $highestGrade = 0;
+        if($attemptInfo != null){
+            $attempt = $attemptInfo->Attempt;
+            $highestGrade = $attemptInfo->HighestGrade;
+        }
 
         $feedback = array();
         $feedback["score"] = $score;
         $feedback["quesNum"] = count($answerArr);
         $feedback["detail"] = array();
 
-        //if pass, update database.
-        if ($score >= $threshold) {
+        //if attempt no more than 3 times and the score is better than the highest one, update database.
+        if ($score >= $highestGrade && $attempt < $MaxAttemptTime) {
+        //feedback will be generated based on this attempt because this is the best one
             $feedback["result"] = "pass";
 
             foreach ($answerArr as $mcqID => $answer) {
@@ -57,14 +64,37 @@
             }
 
             //update quiz record
-            updateQuizRecord($conn, $quizID, $studentID, "GRADED");
-
+            $attempt += 1;
+            updateQuizRecord($conn, $quizID, $studentID, "GRADED",$score);
+            updateMCQAttemptRecord($conn, $quizID, $studentID, $attempt, $score);
             //update student score
             updateStudentScore($conn, $studentID);
-
+            $feedback["attempt"] = $attempt;
             $conn->commit();
         } else {
-            $feedback["result"] = "fail";
+            $attempt += 1;
+            updateMCQAttemptRecord($conn, $quizID, $studentID, $attempt, $highestGrade);
+            //if runout attempt times, give the feedback for the best attempt
+            $feedback["score"] = $highestGrade;
+            $bestResult = getMCQQuestionRecord($conn, $quizID, $studentID);
+            for($i=0; $i<count($bestResult); $i++){
+                $mcqID = $bestResult[$i]->MCQID;
+                $singleDetail = array();
+                //get correct answer and options
+                $mcqDetail = getOptions($conn, intval($mcqID));
+                $singleDetail["MCQID"] = intval($mcqID);
+                $singleDetail["correctAns"] = $mcqDetail[0]->CorrectChoice;
+                $singleDetail["explanation"] = array();
+
+                foreach($mcqDetail as $row){
+                    $singleDetail["explanation"][$row->OptionID] = $row->Explanation;
+                }
+
+                array_push($feedback["detail"], $singleDetail);
+            }
+            $feedback["attempt"] = $attempt;
+            $feedback["result"] = "pass";
+            $conn->commit();
         }
     } catch(Exception $e){
         if($conn != null) {

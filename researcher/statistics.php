@@ -9,19 +9,17 @@ $colspanName = array('');
 $quizList = array('ClassName', 'FirstName', 'LastName');
 try {
     $conn = db_connect();
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['update'])) {
             $update = $_POST['update'];
             //reset student password
             if ($update == 0) {
                 $studentID = $_POST['studentID'];
-                //resetPassword($conn, $studentID);
+                resetPassword($conn, $studentID);
             } //delete student (with help of DELETE CASCADE)
             else if ($update == -1) {
                 $studentID = $_POST['StudentID'];
                 $quizID = $_POST['QuizID'];
-
                 resetStuDueTime($conn,$studentID,$quizID);
             }
         }
@@ -107,7 +105,6 @@ db_close($conn);
                         <div>
                             <br>
                             <span class="fa fa-check-circle pull-left" aria-hidden="true" style="font-size: 16px"> Extra Quiz </span>
-                            <span class="fa fa fa-certificate pull-left" aria-hidden="true" style="font-size: 16px"> Graded</span>
                             <span class="fa fa-star pull-left" aria-hidden="true" style="font-size: 16px"> Not Graded</span>
                             <span class="fa fa-star-o pull-left" aria-hidden="true" style="font-size: 16px"> Not Submitted</span>
                             <span class="fa fa-clock-o pull-left" aria-hidden="true" style="font-size: 16px"> Reset Timer </span>
@@ -168,7 +165,10 @@ db_close($conn);
                                                 QuizID = "<?php if($j >2) echo substr($quizList[$j],4); ?>"
                                             >
                                                 <?php if($studentStatistic[$i]->$quizList[$j] == "GRADED"): ?>
-                                                    <span class="fa fa-certificate pull-left" aria-hidden="true"></span>
+                                                    <span><?php
+                                                        $grading = str_replace("Quiz","Grading",$quizList[$j]);
+                                                        echo $studentStatistic[$i]->$grading;
+                                                        ?></span>
                                                     <span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>
                                                 <?php elseif($studentStatistic[$i]->$quizList[$j] == "UNGRADED"): ?>
                                                     <?php if($getQuizInfo[$j-3]->QuizType=="SAQ"): ?>
@@ -286,7 +286,6 @@ if (isset($_GET['studentID'])) {
                 data: data
             })
         }
-
     });
 
 
@@ -345,8 +344,6 @@ if (isset($_GET['studentID'])) {
                     checkbox.removeClass('fa-check-square-o').addClass('fa-square-o');
                 else if (checkbox.hasClass('fa-square-o'))
                     checkbox.removeClass('fa-square-o').addClass('fa-check-square-o');
-
-
             }
 
         });

@@ -23,13 +23,13 @@ for ($i = -1; $i < 10; $i++) {
 }
 
 
-echo '###########################<br>';
-echo 'UNIT TEST<br>';
-echo '###########################<br>';
-echo 'calculateStudentScore(\$conn, $studentID)<br>';
-for ($i = -1; $i < 10; $i++) {
-    echo "calculateStudentScore(\$conn, $i) " . calculateStudentScore($conn, $i) . "<br>";
-}
+//echo '###########################<br>';
+//echo 'UNIT TEST<br>';
+//echo '###########################<br>';
+//echo 'calculateStudentScore(\$conn, $studentID)<br>';
+//for ($i = -1; $i < 10; $i++) {
+//    echo "calculateStudentScore(\$conn, $i) " . calculateStudentScore($conn, $i) . "<br>";
+//}
 
 echo '###########################<br>';
 echo 'UNIT TEST<br>';

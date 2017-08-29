@@ -104,10 +104,10 @@ db_close($conn);
                                             <?php
                                             $status = getQuizStatus($conn, $quizID, $studentID);
                                             if ($status == 'GRADED') {
-                                                $stuQuizScore = getStuQuizScore($conn, $quizID, $studentID);
+                                                $stuQuizScore = $submissionResult[$i]->Grade;//getStuQuizScore($conn, $quizID, $studentID);
                                                 $quizPoints = getQuizPoints($conn, $quizID);
                                                 $percentage = $stuQuizScore / $quizPoints;
-                                                echo $stuQuizScore . '/' . $quizPoints . '  (' . ($stuQuizScore / $quizPoints * 100) . '%)';
+                                                echo $stuQuizScore . '/' . $quizPoints . '  (' . round(($stuQuizScore / $quizPoints * 100),2) . '%)';
                                             } else
                                                 echo '-'; ?>
                                         </td>

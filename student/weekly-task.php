@@ -652,7 +652,16 @@
                 //list of question type
                 switch ($quizzesRes[$i]['QuizType']) {
                     case "MCQ":
-                        if (isset($quizzesRes[$i]['Status'])) { ?>
+                        if (isset($quizzesRes[$i]['Status'])) {
+                            try {
+                                $conn = db_connect();
+                                $quizID = $quizzesRes[$i]["QuizID"];
+                                $attemtInfo = getMCQAttemptInfo($conn, $quizID, $studentID);
+                            } catch (Exception $e) {
+                                debug_err($e);
+                            }
+                            db_close($conn);
+                            if ($attemtInfo->Attempt >= 3) {?>
                             <a href="multiple-choice-question.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
                                 <div class="game-nav-item game-nav-item-completed game-multiple-choice-quiz" >
                                     <div class="game-nav-logo"></div>
@@ -662,6 +671,16 @@
                                     <div class="game-nav-status">Completed</div>
                                 </div>
                             </a>
+<?php                       } else {?>
+                                <a href="pre-task-material.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID'] ?>">
+                                    <div class="game-nav-item game-multiple-choice-quiz">
+                                        <div class="game-nav-logo"></div>
+                                        <div class="game-nav-title">Multiple Choice Question</div>
+                                        <div class="game-nav-divider"></div>
+                                        <div class="game-nav-desc">Complete Multiple Choice Question on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
+                                    </div>
+                                </a>
+<?php                       } ?>
 <?php                   } else { ?>
                             <a href="pre-task-material.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID'] ?>">
                                 <div class="game-nav-item game-multiple-choice-quiz">

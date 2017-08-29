@@ -76,7 +76,10 @@ db_close($conn);
                                                 if ($j < count($columnName) - 2)
                                                     echo $quizResult[$i]->$columnName[$j];
                                                 else if ($j == count($columnName) - 2) {
-                                                    echo $quizResult[$i]->Grading;
+                                                    $stuQuizScore = $quizResult[$i]->Grade;//getStuQuizScore($conn, $quizID, $studentID);
+                                                    $quizPoints = $quizResult[$i]->Points;
+                                                    $percentage = $stuQuizScore / $quizPoints;
+                                                    echo $stuQuizScore . '/' . $quizPoints . '  (' . round(($stuQuizScore / $quizPoints * 100),2) . '%)';
                                                 } else {
                                                     echo $quizResult[$i]->$columnName[$j];
                                                     $tempQuizID = $quizResult[$i]->QuizID;

@@ -93,7 +93,7 @@ db_close($conn);
                                            id="feedback<?php echo $saqID ?>"
                                            name="feedback[]"
                                            placeholder="Input Feedback"
-                                           value="<?php echo $saqSubmissionResult[$i]->Feedback ?>" required>
+                                           value="<?php echo $saqSubmissionResult[$i]->Feedback ?>" >
                                     <br>
                                     <label for="grading[]">Grading</label>
                                     <input type="text" class="dialoginput pull-right" id="textInput<?php echo $saqID ?>"
@@ -133,6 +133,7 @@ db_close($conn);
 
     $(document).ready(function () {
         $('#btnSave').on('click', function () {
+            console.log("<?php echo $phpSelf?>")
             $('#submission').validate();
             $('#submission').submit();
         });

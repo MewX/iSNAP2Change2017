@@ -36,6 +36,7 @@ DROP TABLE IF EXISTS Learning_Material;
 DROP TABLE IF EXISTS Student_Week_Record;
 DROP TABLE IF EXISTS Quiz;
 DROP TABLE IF EXISTS Quiz_Record;
+DROP TABLE IF EXISTS MCQ_Attempt_Record;
 DROP TABLE IF EXISTS MCQ_Section;
 DROP TABLE IF EXISTS MCQ_Question;
 DROP TABLE IF EXISTS MCQ_Option;
@@ -172,12 +173,30 @@ CREATE TABLE IF NOT EXISTS `Quiz_Record` (
   StudentID MEDIUMINT,
   `Status`  ENUM ('UNSUBMITTED', 'UNGRADED', 'GRADED') DEFAULT 'GRADED',
   Viewed    BOOLEAN                                    DEFAULT 0,
+  Grade   MEDIUMINT                                    DEFAULT 0,
   CONSTRAINT Quiz_Record_PK PRIMARY KEY (QuizID, StudentID),
   CONSTRAINT Quiz_Record_QuizID_FK FOREIGN KEY (QuizID)
   REFERENCES Quiz (QuizID)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT Quiz_Record_StudentID_FK FOREIGN KEY (StudentID)
+  REFERENCES Student (StudentID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+)
+  ENGINE = INNODB;
+
+CREATE TABLE IF NOT EXISTS `MCQ_Attempt_Record` (
+  QuizID    MEDIUMINT,
+  StudentID MEDIUMINT,
+  Attempt   MEDIUMINT                                  DEFAULT 0,
+  HighestGrade   MEDIUMINT                             DEFAULT 0,
+  CONSTRAINT MCQ_Attempt_Record_PK PRIMARY KEY (QuizID, StudentID),
+  CONSTRAINT MCQ_Attempt_Record_QuizID_FK FOREIGN KEY (QuizID)
+  REFERENCES Quiz (QuizID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT MCQ_Attempt_Record_StudentID_FK FOREIGN KEY (StudentID)
   REFERENCES Student (StudentID)
     ON DELETE CASCADE
     ON UPDATE CASCADE

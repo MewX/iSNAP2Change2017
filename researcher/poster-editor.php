@@ -107,7 +107,11 @@ db_close($conn);
                                     required>
                                 <?php for ($j = 0; $j < count($topicResult); $j++) { ?>
                                     <option
-                                        value='<?php echo $topicResult[$j]->TopicName ?>' <?php if ($topicResult[$j]->TopicName == $quizResult->TopicName) echo 'selected' ?> ><?php echo $topicResult[$j]->TopicName ?></option>
+                                        value='<?php echo $topicResult[$j]->TopicName ?>'
+                                        <?php if ($topicResult[$j]->TopicName == $quizResult->TopicName) echo 'selected' ?>
+                                    >
+                                        <?php echo $topicResult[$j]->TopicName ?>
+                                    </option>
                                 <?php } ?>
                             </select>
                             <br>

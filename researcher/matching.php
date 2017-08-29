@@ -134,7 +134,51 @@ db_close($conn);
 
 </div>
 <!-- /#wrapper -->
-
+<!-- Modal -->
+<div class="modal fade" id="dialog" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="dialogTitle">Edit Quiz</h4>
+            </div>
+            <div class="modal-body">
+                <form id="submission" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <!--if 1, insert; else if -1 delete;-->
+                    <input type=hidden name="update" id="update" value="1" required>
+                    <label for="QuizID" style="display:none">QuizID</label>
+                    <input type="text" class="form-control dialoginput" id="QuizID" name="quizID" style="display:none">
+                    <label for="Week">Week</label>
+                    <input type="text" class="form-control dialoginput" id="Week" name="week"
+                           placeholder="Input Week Number" required>
+                    <br>
+                    <label for='TopicName'>TopicName</label>
+                    <select class="form-control dialoginput" id="TopicName" form="submission" name="topicName" required>
+                        <option value="" disabled selected>Select Topic</option>
+                        <?php for ($j = 0; $j < count($topicResult); $j++) { ?>
+                            <option
+                                    value='<?php echo $topicResult[$j]->TopicName ?>'><?php echo $topicResult[$j]->TopicName ?></option>
+                        <?php } ?>
+                    </select>
+                    <br>
+                    <label for="Description">Description</label>
+                    <input type="text" class="form-control dialoginput" id="Description" name="description"
+                           placeholder="Input Description" required>
+                    <br>
+                    <label for="Points">Points</label>
+                    <input type="text" class="form-control dialoginput" id="Points" name="points"
+                           placeholder="Input Points" required>
+                    <br>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" class="btn btn-default">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- SB Admin Library -->
 <?php require_once('sb-admin-lib.php'); ?>
 <!-- Page-Level Scripts -->
