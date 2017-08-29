@@ -368,8 +368,7 @@
 
 
     function parseFeedback(feedback) {
-        console.log(feedback.message);
-        console.log(feedback.result);
+        console.log(feedback.detail);
         if (feedback.message != "success") {
             alert(feedback.message + ". Please try again!");
             return;
@@ -407,22 +406,10 @@
                             datatype:'json',
                             data: data
                         })
-<!--                        --><?php
-//                        try {
-//                            $conn = db_connect();
-//                            updateMCQAttempt($conn, $quizID, $studentID, 3);
-//                        } catch (Exception $e) {
-//                            debug_err($e);
-//                        }
-//                        db_close($conn);
-//                        ?>
-                        //redirect to week page if still have chance
-                        console.log("ok clicked" + "Stu: " + StudentID + "quiz" + QuizID);
-                        document.location.href="weekly-task.php?week=<?php echo $week?>";
+                        QuizCtrl.setFeedback(feedback.detail);
                     })
                     snap.$confirm.on('click', '.snap-alert-cancel', function () {
                         //redirect to week page if still have chance
-                        console.log("cansole clicked");
                         document.location.href="weekly-task.php?week=<?php echo $week?>";
                     })
 

@@ -39,7 +39,7 @@
 
         //if attempt no more than 3 times and the score is better than the highest one, update database.
         if ($score >= $highestGrade && $attempt < $MaxAttemptTime) {
-        //if($score>$threshold){
+        //feedback will be generated based on this attempt because this is the best one
             $feedback["result"] = "pass";
 
             foreach ($answerArr as $mcqID => $answer) {
@@ -75,25 +75,22 @@
             $attempt += 1;
             updateMCQAttemptRecord($conn, $quizID, $studentID, $attempt, $highestGrade);
             //if runout attempt times, give the feedback for the best attempt
-            if($attempt>=3){
-                $feedback["score"] = $highestGrade;
-                $bestResult = getMCQQuestionRecord($conn, $quizID, $studentID);
-                for($i=0; $i<count($bestResult); $i++){
-                    $mcqID = $bestResult[$i]->MCQID;
-                    $singleDetail = array();
-                    //get correct answer and options
-                    $mcqDetail = getOptions($conn, intval($mcqID));
+            $feedback["score"] = $highestGrade;
+            $bestResult = getMCQQuestionRecord($conn, $quizID, $studentID);
+            for($i=0; $i<count($bestResult); $i++){
+                $mcqID = $bestResult[$i]->MCQID;
+                $singleDetail = array();
+                //get correct answer and options
+                $mcqDetail = getOptions($conn, intval($mcqID));
+                $singleDetail["MCQID"] = intval($mcqID);
+                $singleDetail["correctAns"] = $mcqDetail[0]->CorrectChoice;
+                $singleDetail["explanation"] = array();
 
-                    $singleDetail["MCQID"] = intval($mcqID);
-                    $singleDetail["correctAns"] = $mcqDetail[0]->CorrectChoice;
-                    $singleDetail["explanation"] = array();
-
-                    foreach($mcqDetail as $row){
-                        $singleDetail["explanation"][$row->OptionID] = $row->Explanation;
-                    }
-
-                    array_push($feedback["detail"], $singleDetail);
+                foreach($mcqDetail as $row){
+                    $singleDetail["explanation"][$row->OptionID] = $row->Explanation;
                 }
+
+                array_push($feedback["detail"], $singleDetail);
             }
             $feedback["attempt"] = $attempt;
             $feedback["result"] = "pass";
