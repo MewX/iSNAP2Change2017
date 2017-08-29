@@ -1087,14 +1087,14 @@ function getMCQQuestion(PDO $conn, $mcqID)
     return $mcqQuesResult;
 }
 
-function getMCQQuestionsByQuizID(PDO $conn, $quizID)
+function getMCQQuestionsByQuizID(PDO $conn, $quizID, $studentID)
 {
     $mcqQuesSql = "SELECT *
-                    FROM MCQ_Section NATURAL JOIN MCQ_Question
-                    WHERE QuizID = ?
+                    FROM MCQ_Section NATURAL JOIN MCQ_Question NATURAL JOIN MCQ_Question_Record
+                    WHERE QuizID = ? AND StudentID = ?
                     ORDER BY MCQID";
     $mcqQuesQuery = $conn->prepare($mcqQuesSql);
-    $mcqQuesQuery->execute(array($quizID));
+    $mcqQuesQuery->execute(array($quizID, $studentID));
     $mcqQuesResult = $mcqQuesQuery->fetchAll(PDO::FETCH_OBJ);
     return $mcqQuesResult;
 }

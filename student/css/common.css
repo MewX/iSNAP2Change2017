@@ -885,7 +885,7 @@ body {
  * $quiz layout
  **/
 .quiz-nav-list {
-    position: fixed;
+    float: left;
     left: 30px;
     top: 100px;
 }

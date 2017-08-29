@@ -57,7 +57,7 @@
         $materialRes = getLearningMaterial($conn, $quizID);
 
         //get mcq questions
-        $mcqQuestions = getMCQQuestionsByQuizID($conn, $quizID);
+        $mcqQuestions = getMCQQuestionsByQuizID($conn, $quizID, $studentID);
         $mcqOptions = array();
         $feedback = array();
 
@@ -75,6 +75,7 @@
                     $feedbackDetails = array();
                     $feedbackDetails["correctAns"] = $mcqQuestions[$i]->CorrectChoice;
                     $feedbackDetails["Explanation"] = $row->Explanation;
+                    $feedbackDetails["studentAns"] = $mcqQuestions[$i]->Choice;
                     array_push($singleFeedback, $feedbackDetails);
                 }
 
@@ -137,6 +138,11 @@
         for ($i = 0; $i < count($mcqQuestions); $i++) { ?>
             <li class="quiz-nav-item">
                 <span class="quiz-nav-label"></span>
+                <span class="<?php if($mcqQuestions[$i]->Choice == $mcqQuestions[$i]->CorrectChoice){
+                    echo "quiz-nav-state quiz-nav-state-correct";
+                }else{
+                    echo "quiz-nav-state quiz-nav-state-incorrect";
+                }?>"></span>
             </li>
 <?php   } ?>
         </ul>
@@ -155,7 +161,16 @@
                 </div>
                 <ul class="quiz-answer-list">
 <?php       for ($j = 0; $j < count($mcqOptions[$i]); $j++) { ?>
-                    <li class="quiz-answer-item" data-answer="<?php echo $mcqOptions[$i][$j]->OptionID ?>">
+                    <li class="quiz-answer-item
+                    <?php
+                        if($status == "GRADED" && $feedback[$i][$j]["correctAns"] == $feedback[$i][$j]["studentAns"]
+                        && $feedback[$i][$j]["studentAns"] == $mcqOptions[$i][$j]->OptionID){
+                            echo "quiz-answer-item-correct";
+                        }else if($status == "GRADED" && $feedback[$i][$j]["correctAns"] != $feedback[$i][$j]["studentAns"]
+                            && $feedback[$i][$j]["studentAns"] == $mcqOptions[$i][$j]->OptionID){
+                            echo "quiz-answer-item-incorrect";
+                        }
+                    ?>" data-answer="<?php echo $mcqOptions[$i][$j]->OptionID ?>">
                         <div class="quiz-label">
                             <span class="image-icon-speech"></span>
                         </div>
@@ -190,13 +205,11 @@
                 if($status == "UNANSWERED"){ ?>
                     <button type="submit" class="question-submit">
                         <span class="question-submit-icon"></span>
-                        SUBMIT
                     </button>
 <?php           }
                 if($status == "GRADED"){ ?>
                     <button type="submit" class="question-submit" disabled="disabled">
                         <span class="question-submit-icon"></span>
-                        SUBMIT
                     </button>
 <?php           } ?>
 
@@ -379,6 +392,7 @@
                 snap.alert({
                     content: 'You have finished this quiz. Your final score is: ' + feedback.score + '/' + feedback.quesNum + '. '
                 });
+                $(".question-submit").attr("disabled",true);
                 QuizCtrl.setFeedback(feedback.detail);
             }else{
                 snap.alert({
@@ -406,6 +420,7 @@
                             datatype:'json',
                             data: data
                         })
+                        $(".question-submit").attr("disabled",true);
                         QuizCtrl.setFeedback(feedback.detail);
                     })
                     snap.$confirm.on('click', '.snap-alert-cancel', function () {

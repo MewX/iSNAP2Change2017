@@ -453,13 +453,11 @@
                             if($status == "UNANSWERED"){ ?>
                                 <button type="submit" class="question-submit">
                                     <span class="question-submit-icon"></span>
-                                    SUBMIT
                                 </button>
                     <?php   }
                             if($status == "GRADED"){ ?>
                                 <button type="submit" class="question-submit" disabled="disabled">
                                     <span class="question-submit-icon"></span>
-                                    SUBMIT
                                 </button>
                     <?php   } ?>
                 </form>

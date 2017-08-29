@@ -212,7 +212,6 @@
                 <form class="question-form">
                     <button type="submit" class="question-submit">
                         <span class="question-submit-icon"></span>
-                        Submit
                     </button>
                 </form>
             </div>
