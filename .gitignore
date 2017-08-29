@@ -6,9 +6,9 @@ researcher/TODO.log
 researcher/playground.*
 pwd/
 tmp_poster_img/
+poster_img/
 .DS_Store
 Thumbs.db
 
 pma/
 bower_components/
-
