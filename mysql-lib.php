@@ -1155,8 +1155,9 @@ function getMCQQuiz(PDO $conn, $quizID)
 
 function getMCQQuizzes(PDO $conn)
 {
-    $quizSql = "SELECT *, COUNT(MCQID) AS Questions
-                   FROM Quiz NATURAL JOIN Topic NATURAL JOIN MCQ_Section LEFT JOIN MCQ_Question USING (QuizID) WHERE QuizType = 'MCQ' GROUP BY QuizID";
+    $quizSql = "SELECT *, COUNT(MCQID) AS Questions, COUNT(CorrectChoice) AS Answers 
+                   FROM Quiz NATURAL JOIN Topic NATURAL JOIN MCQ_Section LEFT JOIN MCQ_Question USING (QuizID) 
+                   WHERE QuizType = 'MCQ' GROUP BY QuizID";
     $quizQuery = $conn->prepare($quizSql);
     $quizQuery->execute();
     $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);

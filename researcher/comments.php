@@ -163,7 +163,6 @@ db_close($conn);
             })
     }
 
-
     function reply(value){
         url = "mailto:" +  $(value).attr("email");
         window.location.href = url;
