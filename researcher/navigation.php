@@ -1,5 +1,4 @@
 <?php
-require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
@@ -18,6 +17,14 @@ try {
             $researcherID = $_POST['ResearcherID'];
             updateResearcher($conn, $userName, $password, $researcherID);
             $currentUserId = $_SESSION["researcherID"];
+        }else if($update == 1){
+            $commentID = $_POST['commentID'];
+           // markCommentRead($conn, $commentID);
+            $response = array();
+            $response['status'] = 'success';
+            $response['message'] = 'This was successful';
+            echo json_encode($response);
+            exit();
         }
     }
 
@@ -31,7 +38,14 @@ try {
     $classResult = getClasses($conn);
     $currentUsername = $_SESSION["researcherUsername"];
     $currentUserId = $_SESSION["researcherID"];
-
+    $comments = getAllComments($conn);
+    $unreadComments = array();
+    foreach ($comments as $key => $value){
+        if($value->readOrNot == 0){
+            $unreadComments[] = $value;
+            unset($comments[$key]);
+        }
+    }
 } catch (Exception $e) {
     debug_err($e);
 }
@@ -55,50 +69,27 @@ db_close($conn);
                 <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-messages">
-                <!--
-                <li>
-                    <a href="#">
+                <?php foreach($unreadComments as $value){?>
+                <li id = "<?php echo $value->id ?>">
+                    <a href="#" onclick="readComment(this.id)" id = "<?php echo $value->id ?>">
                         <div>
-                            <strong>John Smith</strong>
+                            <strong><?php echo $value->name ?></strong>
                             <span class="pull-right text-muted">
-                                <em>Yesterday</em>
+                                <em><?php echo $value->time ?></em>
                             </span>
                         </div>
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                        <em><?php echo $value->email ?></em>
+                        <div><?php echo $value->content ?></div>
                     </a>
+                    <div class = "divider"></div>
                 </li>
-                <li class="divider"></li>
+                <?php } ?>
                 <li>
-                    <a href="#">
-                        <div>
-                            <strong>John Smith</strong>
-                            <span class="pull-right text-muted">
-                                <em>Yesterday</em>
-                            </span>
-                        </div>
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <strong>John Smith</strong>
-                            <span class="pull-right text-muted">
-                                <em>Yesterday</em>
-                            </span>
-                        </div>
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a class="text-center" href="#">
+                    <a class="text-center" href="comments.php">
                         <strong>Read All Messages</strong>
                         <i class="fa fa-angle-right"></i>
                     </a>
                 </li>
-                -->
             </ul>
             <!-- /.dropdown-messages -->
         </li>
@@ -564,6 +555,22 @@ db_close($conn);
         } else
             $('#message').html('Not Matching').css('color', 'red');
     });
+
+    function readComment(commentID){
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "navigation.php",
+            data: {
+                commentID: commentID,
+                update: 1
+            }
+        })
+            .done(function(feedback) {
+                $('#'+commentID).remove();
+                //location.reload();
+        })
+    }
 </script>
 
 

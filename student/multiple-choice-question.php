@@ -365,7 +365,6 @@
             })
 
                 .done(function(feedback) {
-                    console.log("got feedback");
                     parseFeedback(feedback);
                 })
 
