@@ -51,7 +51,6 @@
 
                 //get correct answer and options
                 $mcqDetail = getOptions($conn, intval($mcqID));
-
                 $singleDetail["MCQID"] = intval($mcqID);
                 $singleDetail["correctAns"] = $mcqDetail[0]->CorrectChoice;
                 $singleDetail["explanation"] = array();
@@ -75,7 +74,6 @@
             $attempt += 1;
             updateMCQAttemptRecord($conn, $quizID, $studentID, $attempt, $highestGrade);
             //if runout attempt times, give the feedback for the best attempt
-            $feedback["score"] = $highestGrade;
             $bestResult = getMCQQuestionRecord($conn, $quizID, $studentID);
             for($i=0; $i<count($bestResult); $i++){
                 $mcqID = $bestResult[$i]->MCQID;
