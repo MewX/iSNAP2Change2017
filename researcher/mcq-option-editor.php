@@ -259,11 +259,13 @@ db_close($conn);
         }
     });
     $('td > .glyphicon-remove').on('click', function () {
-        $('#update').val(-1);
-        for (i = 0; i < dialogInputArr.length - 1; i++) {
-            dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());
+        if (confirm('[WARNING] Are you sure to remove this Option?')){
+            $('#update').val(-1);
+            for (i = 0; i < dialogInputArr.length - 1; i++) {
+                dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());
+            }
+            $('#submission').submit();
         }
-        $('#submission').submit();
     });
     $('#btnSave').on('click', function () {
         $('#submission').validate();

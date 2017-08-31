@@ -66,9 +66,7 @@ db_close($conn);
                                         echo "even";
                                     } ?>">
                                         <?php
-                                        for ($j = 0;
-                                             $j < count($columnName);
-                                             $j++) { ?>
+                                        for ($j = 0; $j < count($columnName); $j++) { ?>
                                             <td <?php if ($j == 0) echo 'style="display:none"'; ?>>
                                                 <?php if ($j != EDIT_INDEX && $j != SUB_CONTENT_INDEX)
                                                 echo $verboseFactResult[$i]->$columnName[$j];
@@ -97,10 +95,11 @@ db_close($conn);
 
                                                     <?php }
                                                 } else if ($j == EDIT_INDEX){ ?>
-                                                <a href="verbose-fact-editor.php?topicID=<?php echo $verboseFactResult[$i]->TopicID ?>"><span
-                                                        class="pull-right" aria-hidden="true">&nbsp;</span><span
+                                                <a href="verbose-fact-editor.php?topicID=<?php echo $verboseFactResult[$i]->TopicID ?>">
+                                                    <span class="pull-right" aria-hidden="true">&nbsp;</span>
+                                                    <span
                                                         class="glyphicon glyphicon-edit pull-right" data-toggle="modal"
-                                                        data-target="#dialog" aria-hidden="true"></span>
+                                                        data-target="#dialog" aria-hidden="true"> </span>
                                                     <?php } ?>
                                             </td>
                                         <?php } ?>
@@ -149,6 +148,7 @@ db_close($conn);
             ]
         });
     });
+
 </script>
 <script src="researcher-tts.js"></script>
 </body>

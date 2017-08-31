@@ -172,11 +172,11 @@ db_close($conn);
                                                     <span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>
                                                 <?php elseif($studentStatistic[$i]->$quizList[$j] == "UNGRADED"): ?>
                                                     <?php if($getQuizInfo[$j-3]->QuizType=="SAQ"): ?>
-                                                        <a href=<?php $id = $studentStatistic[$i]->StudentID; echo "saq-grading.php?studentID=$id"?> >
+                                                        <a target="_blank" href=<?php $id = $studentStatistic[$i]->StudentID; echo "saq-grading.php?studentID=$id"?> >
                                                             <i class="fa fa fa-star pull-left" aria-hidden="true"></i>
                                                         </a>
                                                     <?php elseif($getQuizInfo[$j-3]->QuizType=="Poster"):?>
-                                                        <a href=<?php $id = $studentStatistic[$i]->StudentID; echo "poster-grading.php?studentID=$id"?> >
+                                                        <a target="_blank" href=<?php $id = $studentStatistic[$i]->StudentID; echo "poster-grading.php?studentID=$id"?> >
                                                             <i class="fa fa fa-star pull-left" aria-hidden="true"></i>
                                                         </a>
                                                     <?php else: ?>

@@ -153,7 +153,7 @@
                     }
                     db_close($conn);?>
                     <h2 class="material-title">This is your <?php echo ($attemtInfo->Attempt+1); ?> attempts.
-                        You can have 3 attempts for this quiz and your final score will be the best one in your 3 attempts.</h2>
+                        You can have 3 chances for this quiz and your final score will be the best one in your 3 attempts.</h2>
                     <a href="multiple-choice-question.php?quiz_id=<?php echo $quizID?>" class="material-start">
                         <span class="material-start-icon"></span>
                         Start

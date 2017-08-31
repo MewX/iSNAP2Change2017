@@ -18,13 +18,15 @@ try {
             updateResearcher($conn, $userName, $password, $researcherID);
             $currentUserId = $_SESSION["researcherID"];
         }else if($update == 1){
-            $commentID = $_POST['commentID'];
-           // markCommentRead($conn, $commentID);
-            $response = array();
-            $response['status'] = 'success';
-            $response['message'] = 'This was successful';
-            echo json_encode($response);
-            exit();
+            if(isset($_POST['commentID'])){
+                $commentID = $_POST['commentID'];
+                // markCommentRead($conn, $commentID);
+                $response = array();
+                $response['status'] = 'success';
+                $response['message'] = 'This was successful';
+                echo json_encode($response);
+                exit();
+            }
         }
     }
 
@@ -79,7 +81,16 @@ db_close($conn);
                             </span>
                         </div>
                         <em><?php echo $value->email ?></em>
-                        <div><?php echo $value->content ?></div>
+                        <div>
+                            <?php
+                                $len = 150;
+                            if(strlen($value->content) < $len){
+                                echo $value->content;
+                            }else{
+                                echo mb_strcut($value->content, 0, $len) . "...";
+                            }
+                            ?>
+                        </div>
                     </a>
                     <div class = "divider"></div>
                 </li>
