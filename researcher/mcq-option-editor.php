@@ -84,7 +84,7 @@ db_close($conn);
             <div class="col-lg-12">
                 <h1 class="page-header">Multiple Choice Question Editor
                     <button type="button" class="btn btn-lg btn-info pull-right"
-                            onclick="location.href='<?php echo "mcq-editor.php?quizID=" . $quizID; ?>'">GO BACK
+                            onclick="goBack()">GO BACK
                     </button>
                 </h1>
             </div>
@@ -111,7 +111,7 @@ db_close($conn);
                             <input type="text" class="form-control" id="Question" name="question"
                                    value="<?php echo $mcqQuesResult->Question; ?>" required>
                             <br>
-                            <label for="CorrectChoice">CorrectChoice</label>
+                            <label for="CorrectChoice">Correct Choice</label>
                             <select class="form-control" id="CorrectChoice" form="metadata-submission"
                                     name="correctChoice">
                                 <option value='' disabled selected>No Correct Choice Selected</option>
@@ -304,6 +304,20 @@ db_close($conn);
             $('#noCorrectChoiceReminder').show();
         } else {
             $('#noCorrectChoiceReminder').hide();
+        }
+    }
+
+    function goBack() {
+        var Question = document.getElementById("Question");
+        var CorrectChoice = document.getElementById("CorrectChoice");
+        var QuestionIsChanged = Question.value != Question.defaultValue;
+        var CorrectChoiceIsChanged = !CorrectChoice.options[CorrectChoice.selectedIndex].defaultSelected;
+        if(QuestionIsChanged||CorrectChoiceIsChanged){
+            if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
+                location.href='<?php echo "mcq-editor.php?quizID=" . $quizID; ?>'
+            }
+        }else{
+            location.href='<?php echo "mcq-editor.php?quizID=" . $quizID; ?>'
         }
     }
 

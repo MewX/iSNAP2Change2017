@@ -74,7 +74,7 @@ db_close($conn);
             <div class="col-lg-12">
                 <h1 class="page-header"><?php echo $pageNameForView; ?> Editor
                     <button type="button" class="btn btn-lg btn-info pull-right"
-                            onclick="location.href='<?php echo "poster.php" ?>'">GO BACK
+                            onclick="goBack()">GO BACK
                     </button>
                 </h1>
             </div>
@@ -193,6 +193,27 @@ db_close($conn);
             $('#metadata-submission').submit();
         });
     });
+    function goBack() {
+        var week = document.getElementById("week");
+        var topicName = document.getElementById("TopicName");
+        var title = document.getElementById("title");
+        var discription = document.getElementById("description");
+        var extraQuiz = document.getElementById("ExtraQuiz");
+        var points = document.getElementById("points");
+        var titleIsChanged = title.value != title.defaultValue;
+        var weekIsChanged = week.value != week.defaultValue;
+        var discriptionIsChanged = discription.value != discription.defaultValue;
+        var pointsIsChanged = points.value != points.defaultValue;
+        var topicNameIsChanged = !topicName.options[topicName.selectedIndex].defaultSelected;
+        var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
+        if(weekIsChanged||topicNameIsChanged||extraQuizIsChanged || discriptionIsChanged || pointsIsChanged || titleIsChanged){
+            if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
+                location.href='<?php echo "poster.php" ?>'
+            }
+        }else{
+            location.href='<?php echo "poster.php" ?>'
+        }
+    }
 </script>
 </body>
 </html>
