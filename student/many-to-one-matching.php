@@ -194,7 +194,6 @@
                 <form class="question-form">
                         <button type="submit" class="question-submit" <?php echo $btnDisabled?>>
                             <span class="question-submit-icon"></span>
-                            Submit
                         </button>
                 </form>
             </div>
