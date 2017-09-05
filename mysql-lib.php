@@ -2154,24 +2154,20 @@ function getStudentGameScores(PDO $conn, $gameID, $studentID)
     return $scoreArray;
 }
 
-function updateStudentGameScores(PDO $conn, $gameID, $studentID, $score)
+function updateStudentGameScores(PDO $conn, $gameID, $studentID, $level, $score)
 {
-
+    // not better than history high score
     $historyHighScore = getStudentGameScores($conn, $gameID, $studentID);
+    if (isset($historyHighScore[$level]) && $historyHighScore[$level] >= $score) return true;
+
     $updateSql = "INSERT INTO Game_Record(GameID,StudentID,`Level`,Score)
                      VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE Score = ?";
     $updateSql = $conn->prepare($updateSql);
-    for ($level = 1; $level <= count($score); $level++) {
-        if ($score[$level - 1] > $historyHighScore[$level - 1]) {
-            if (!$updateSql->execute(array($gameID, $studentID, $level, $score[$level - 1], $score[$level - 1]))) {
-                debug_alert("Error occurred to submit game score. Report this bug to researchers.");
-            } else {
-                debug_log("Game Record Submitted. gameID: $gameID  studentID: $studentID");
-            }
-        } else {
-            debug_log("Score does not exceed high score. high score: " . $historyHighScore[$level - 1] . "  score: " . $score[$level - 1]);
-        }
-    }
+    return $updateSql->execute(array($gameID, $studentID, $level, $score, $score));
+}
+
+function getGameLevelRanking(PDO $conn, $gameID, $level) {
+
 }
 
 /* Game */
