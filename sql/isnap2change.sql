@@ -51,10 +51,6 @@ DROP TABLE IF EXISTS Poster_Record;
 DROP TABLE IF EXISTS Misc_Section;
 DROP TABLE IF EXISTS Game;
 DROP TABLE IF EXISTS Game_Record;
-DROP TABLE IF EXISTS Recipe;
-DROP TABLE IF EXISTS Recipe_Ingredient;
-DROP TABLE IF EXISTS Recipe_Nutrition;
-DROP TABLE IF EXISTS Recipe_Step;
 DROP TABLE IF EXISTS Student_Question;
 DROP TABLE IF EXISTS Student_Question_Feedback;
 DROP TABLE IF EXISTS Public_Question;
@@ -410,58 +406,6 @@ CREATE TABLE IF NOT EXISTS `Game_Record` (
     ON UPDATE CASCADE
 )
   ENGINE = INNODB;
-
-
-CREATE TABLE IF NOT EXISTS `Recipe` (
-  RecipeID        MEDIUMINT AUTO_INCREMENT,
-  RecipeName      TEXT      NOT NULL,
-  Source          TEXT, # for credit
-  MealType        TEXT      NOT NULL,
-  PreparationTime MEDIUMINT NOT NULL,
-  CookingTime     MEDIUMINT NOT NULL,
-  Serves          MEDIUMINT NOT NULL,
-  Image           TEXT      DEFAULT NULL,
-  CONSTRAINT Recipe_RecipeID_PK PRIMARY KEY (RecipeID)
-)
-  ENGINE = INNODB;
-
-CREATE TABLE IF NOT EXISTS `Recipe_Ingredient` (
-  IngredientID MEDIUMINT AUTO_INCREMENT,
-  Content      TEXT,
-  RecipeID     MEDIUMINT NOT NULL,
-  CONSTRAINT Recipe_Ingredient_IngredientID_PK PRIMARY KEY (IngredientID),
-  CONSTRAINT Recipe_Ingredient_RecipeID_FK FOREIGN KEY (RecipeID)
-  REFERENCES Recipe (RecipeID)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-)
-  ENGINE = INNODB;
-
-CREATE TABLE IF NOT EXISTS `Recipe_Step` (
-  StepID      MEDIUMINT AUTO_INCREMENT,
-  Description TEXT,
-  RecipeID    MEDIUMINT NOT NULL,
-  CONSTRAINT Recipe_Step_StepID_PK PRIMARY KEY (StepID),
-  CONSTRAINT Recipe_Step_RecipeID_FK FOREIGN KEY (RecipeID)
-  REFERENCES Recipe (RecipeID)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-)
-  ENGINE = INNODB;
-
-CREATE TABLE IF NOT EXISTS `Recipe_Nutrition` (
-  NutritionID     MEDIUMINT AUTO_INCREMENT,
-  NutritionName   TEXT,
-  MeasurementUnit TEXT, # e.g. kj, g, mg, etc.
-  RecipeID        MEDIUMINT NOT NULL,
-  CONSTRAINT Recipe_Nutrition_NutritionID_PK PRIMARY KEY (NutritionID),
-  CONSTRAINT Recipe_Nutrition_RecipeID_FK FOREIGN KEY (RecipeID)
-  REFERENCES Recipe (RecipeID)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
-)
-  ENGINE = INNODB;
-
 
 CREATE TABLE IF NOT EXISTS `Student_Question` (
   QuestionID MEDIUMINT AUTO_INCREMENT,
@@ -1262,85 +1206,6 @@ INSERT INTO `isnap2changedb`.`Poster_Section` (`QuizID`, `Title`, `Description`,
    'What would you linke to achieve this school term? Make board with pictures of what you would like to achieve and the people and things that inspire you and whtat you aspire to be. You can also put down things about yourself that you would like to improve on. If you would feel more comvortable using words or pictures that only you know what they mean, you can . After all, some goals are personal.',
    20);
 
-# [Example] add poster record
-# run unit_test/poster-generator.php
-
-# [Example] add recipe
-INSERT INTO `isnap2changedb`.`Recipe` (`RecipeName`, `Source`, `MealType`,`PreparationTime`,`CookingTime`,`Serves`) VALUES ('Eggplant Parmesan Pizza', 'http://www.eatingwell.com/recipes_menus/recipe_slideshows/vegetarian_pizza_recipes?slide=1#leaderboardad', 'Main Meal', 15,20,4);
-SET @RECIPE_LAST_INSERT_ID = LAST_INSERT_ID();
-INSERT INTO `isnap2changedb`.`Recipe_Ingredient` (`Content`, `RecipeID`) VALUES ('1 small eggplant, (about 12 ounces)', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Ingredient` (`Content`, `RecipeID`) VALUES ('Yellow cornmeal, for dusting', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Ingredient` (`Content`, `RecipeID`) VALUES ('1 pound Easy Whole-Wheat Pizza Dough, or other prepared dough (recipe follows)', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Ingredient` (`Content`, `RecipeID`) VALUES ('3/4 cup prepared marinara sauce', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Ingredient` (`Content`, `RecipeID`) VALUES ('2 tablespoons chopped fresh basil', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Ingredient` (`Content`, `RecipeID`) VALUES ('1 medium clove garlic, minced medium clove garlic, minced', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Ingredient` (`Content`, `RecipeID`) VALUES ('3/4 cup thinly shaved Parmigiano-Reggiano cheese, (see Tip)', @RECIPE_LAST_INSERT_ID);
-
-INSERT INTO `isnap2changedb`.`Recipe_Step` (`Description`, `RecipeID`) VALUES ('Preheat grill to medium-high. (For charcoal grilling or an oven variation, see below.)', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Step` (`Description`, `RecipeID`) VALUES ('Cut eggplant into 1/2-inch thick rounds. Grill, turning once, until marked and softened, 4 to 6 minutes. Let cool slightly, then thinly slice into strips. Reduce heat to low.', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Step` (`Description`, `RecipeID`) VALUES ('Sprinkle cornmeal onto a pizza peel or large baking sheet. Roll out the dough (see Tip) and transfer it to the prepared peel or baking sheet, making sure the underside of the dough is completely coated with cornmeal.', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Step` (`Description`, `RecipeID`) VALUES ('Slide the crust onto the grill rack; close the lid. Cook until lightly browned, 3 to 4 minutes.', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Step` (`Description`, `RecipeID`) VALUES ('Using a large spatula, flip the crust. Spread marinara sauce on the crust, leaving a 1-inch border. Quickly top with the eggplant, basil and garlic. Lay the Parmigiano-Reggiano shavings on top.', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Step` (`Description`, `RecipeID`) VALUES ('Close the lid again and grill until the cheese has melted and the bottom of the crust has browned, about 8 minutes.', @RECIPE_LAST_INSERT_ID);
-
-INSERT INTO `isnap2changedb`.`Recipe_Nutrition` (`MeasurementUnit`,`NutritionName`, `RecipeID`) VALUES ('359','calories', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Nutrition` (`MeasurementUnit`,`NutritionName`, `RecipeID`) VALUES ('7 g','fat', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Nutrition` (`MeasurementUnit`,`NutritionName`, `RecipeID`) VALUES ('12 mg','cholesterol', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Nutrition` (`MeasurementUnit`,`NutritionName`, `RecipeID`) VALUES ('59 g','carbohydrates', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Nutrition` (`MeasurementUnit`,`NutritionName`, `RecipeID`) VALUES ('16 g','protein', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Nutrition` (`MeasurementUnit`,`NutritionName`, `RecipeID`) VALUES ('9 g','fiber', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Nutrition` (`MeasurementUnit`,`NutritionName`, `RecipeID`) VALUES ('713 mg','sodium', @RECIPE_LAST_INSERT_ID);
-INSERT INTO `isnap2changedb`.`Recipe_Nutrition` (`MeasurementUnit`,`NutritionName`, `RecipeID`) VALUES ('416 mg','potassium', @RECIPE_LAST_INSERT_ID);
-
-
-/*
-#TEST
-
-#TEST 1[PASSED]: ON DELETE CASCADE
-#DELETE FROM Student WHERE StudentID = 1;
-
-#TEST 2[PASSED]: ON DELETE CASCADE IN MULTIPLE TABLE;
-#DELETE FROM MCQ_Section WHERE QuizID = 1;
-
-#TEST 3[PASSED]: INSERT MCQ_Section QUESTION
-START TRANSACTION;
-INSERT IGNORE INTO MCQ_Question(Question, CorrectChoice, QuizID) VALUES('this is a test question for insert new question', 'A', 1);
-SET @MCQ_QUESTION_LAST_INSERT_ID = LAST_INSERT_ID();
-INSERT IGNORE INTO `MCQ_Option`(Content, Explanation, MCQID) VALUES('answeroftest1', @MCQ_QUESTION_LAST_INSERT_ID);
-INSERT IGNORE INTO `MCQ_Option`(Content, Explanation, MCQID) VALUES('answeroftest2', @MCQ_QUESTION_LAST_INSERT_ID);
-COMMIT;
-#SELECT LAST_INSERT_ID();
-
-#QUERY GET UNFINISHED QUIZZES
-SELECT 
-    QuizID, QuizType
-FROM
-    Quiz
-WHERE
-    Week = 1
-        AND NOT EXISTS( SELECT 
-            QuizID, QuizType
-        FROM
-            Quiz_Record
-                NATURAL JOIN
-            Quiz
-        WHERE
-            StudentID = 1 AND Week = 1);
-
-SELECT 
-    (SELECT 
-            COUNT(*)
-        FROM
-            Quiz
-        WHERE
-            Week = 1) - COUNT(*)
-FROMz
-    Quiz_Record
-        NATURAL JOIN
-    Quiz
-WHERE
-    StudentID = 1 AND Week = 1;
-*/
 
 CREATE TABLE IF NOT EXISTS `Comments` (
   id INT AUTO_INCREMENT PRIMARY KEY,
