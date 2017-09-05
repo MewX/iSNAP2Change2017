@@ -2138,11 +2138,16 @@ function getStudentWeek(PDO $conn, $studentID)
     return $week;
 }
 
+/**
+ * This function returns the score and level which exists
+ * @param PDO $conn
+ * @param $gameID
+ * @param $studentID
+ * @return array [level]=>score (not all levels are returned)
+ */
 function getStudentGameScores(PDO $conn, $gameID, $studentID)
 {
-    $levels = getGame($conn, $gameID)->Levels;
-    $scoreArray = array_fill(0, $levels, 0);
-
+    $scoreArray = array();
     $retrieveScoreSql = "SELECT GameID,StudentID,`Level`,Score FROM Game_Record WHERE `GameID` = ? AND `StudentID` = ?";
     $retrieveScoreQuery = $conn->prepare($retrieveScoreSql);
     $retrieveScoreQuery->execute(array($gameID, $studentID));
@@ -2166,8 +2171,13 @@ function updateStudentGameScores(PDO $conn, $gameID, $studentID, $level, $score)
     return $updateSql->execute(array($gameID, $studentID, $level, $score, $score));
 }
 
-function getGameLevelRanking(PDO $conn, $gameID, $level) {
-
+function getGameLevelRanking(PDO $conn, $gameID, $level, $numberOfRecords) {
+    $retrieveScoreSql = "SELECT game_record.Score, student.Username FROM game_record INNER JOIN student
+ON game_record.StudentID = student.StudentID AND game_record.GameID = ? AND game_record.Level = ?
+ORDER BY game_record.Score DESC LIMIT $numberOfRecords;";
+    $retrieveScoreQuery = $conn->prepare($retrieveScoreSql);
+    $retrieveScoreQuery->execute(array($gameID, $level));
+    return $retrieveScoreQuery->fetchAll();
 }
 
 /* Game */
