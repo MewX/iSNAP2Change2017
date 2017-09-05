@@ -20,7 +20,7 @@ try {
         }else if($update == 1){
             if(isset($_POST['commentID'])){
                 $commentID = $_POST['commentID'];
-                // markCommentRead($conn, $commentID);
+                //markCommentRead($conn, $commentID);
                 $response = array();
                 $response['status'] = 'success';
                 $response['message'] = 'This was successful';
@@ -68,29 +68,34 @@ db_close($conn);
     <ul class="nav navbar-top-links navbar-right">
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+                <?php if(count($unreadComments)>0) {?>
+                <span class="badge"> <?php echo count($unreadComments)?></span>
+                <?php } ?>
+                <i class="fa fa-envelope fa-fw"></i>
+                <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-messages">
                 <?php foreach($unreadComments as $value){?>
-                <li id = "<?php echo $value->id ?>">
-                    <a href="#" onclick="readComment(this.id)" id = "<?php echo $value->id ?>">
-                        <div>
-                            <strong><?php echo $value->name ?></strong>
-                            <span class="pull-right text-muted">
-                                <em><?php echo $value->time ?></em>
-                            </span>
-                        </div>
+                <li id = "<?php echo $value->id ?>" class="list-group-item">
+                    <strong><?php echo $value->name ?></strong>
+                    <span class="pull-right text-muted">
+                        <em><?php echo $value->time ?></em>
+                    </span>
                         <em><?php echo $value->email ?></em>
-                        <div>
-                            <?php
-                                $len = 150;
-                            if(strlen($value->content) < $len){
-                                echo $value->content;
-                            }else{
-                                echo mb_strcut($value->content, 0, $len) . "...";
-                            }
-                            ?>
-                        </div>
+                    <div>
+                        <?php
+                        $len = 150;
+                        if(strlen($value->content) < $len){
+                            echo $value->content;
+                        }else{
+                            echo mb_strcut($value->content, 0, $len) . "...";
+                        }
+                        ?>
+                    </div>
+
+                    <a href="mailto:<?php echo $value->email;echo '?body=Reply to message: ';echo $value->content;?>"
+                       style="text-align: right" onclick="readComment(this.id)" id = "<?php echo $value->id ?>">
+                    Reply
                     </a>
                     <div class = "divider"></div>
                 </li>
