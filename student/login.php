@@ -24,8 +24,10 @@
 			$feedback["result"] = "valid";
 			$_SESSION["studentID"] = $validRes['StudentID'];
 			$_SESSION["studentUsername"] = $validRes['Username'];
+            $feedback["message"] = "success";
 		} else {
 			$feedback["result"] = "invalid";
+            $feedback["message"] = "failed";
 		}
 	} catch(Exception $e) {
 		if($conn != null) {
@@ -39,6 +41,4 @@
 	}
 
 	db_close($conn);
-	$feedback["message"] = "success";
 	echo json_encode($feedback);
-?>

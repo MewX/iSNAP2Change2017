@@ -2212,47 +2212,46 @@ function getStudentWeek(PDO $conn, $studentID)
     return $week;
 }
 
+/**
+ * This function returns the score and level which exists
+ * @param PDO $conn
+ * @param $gameID
+ * @param $studentID
+ * @return array [level]=>score (not all levels are returned)
+ */
 function getStudentGameScores(PDO $conn, $gameID, $studentID)
 {
-    $levels = getGame($conn, $gameID)->Levels;
-    $scoreArray = array_fill(0, $levels, 0);
+    $scoreArray = array();
+    $retrieveScoreSql = "SELECT GameID,StudentID,`Level`,Score FROM Game_Record WHERE `GameID` = ? AND `StudentID` = ?";
+    $retrieveScoreQuery = $conn->prepare($retrieveScoreSql);
+    $retrieveScoreQuery->execute(array($gameID, $studentID));
+    $retrieveScoreResult = $retrieveScoreQuery->fetchAll();
 
-    for ($level = 1; $level <= $levels; $level++) {
-        $retrieveScorePreSql = "SELECT COUNT(*) FROM Game_Record WHERE `GameID` = ? AND `StudentID` = ? AND `Level` = ?";
-        $retrieveScorePreQuery = $conn->prepare($retrieveScorePreSql);
-        $retrieveScorePreQuery->execute(array($gameID, $studentID, $level));
-        if ($retrieveScorePreQuery->fetchColumn() > 0) {
-            $retrieveScoreSql = "SELECT GameID,StudentID,`Level`,Score FROM Game_Record WHERE `GameID` = ? AND `StudentID` = ? AND `Level` = ?";
-            $retrieveScoreQuery = $conn->prepare($retrieveScoreSql);
-            $retrieveScoreQuery->execute(array($gameID, $studentID, $level));
-            $retrieveScoreResult = $retrieveScoreQuery->fetch(PDO::FETCH_OBJ);
-            $scoreArray[$level - 1] = $retrieveScoreResult->Score;
-        } else {
-            $scoreArray[$level - 1] = 0;
-        }
+    foreach ($retrieveScoreResult as $record) {
+        $scoreArray[$record['Level']] = $record['Score'];
     }
-
     return $scoreArray;
 }
 
-function updateStudentGameScores(PDO $conn, $gameID, $studentID, $score)
+function updateStudentGameScores(PDO $conn, $gameID, $studentID, $level, $score)
 {
-
+    // not better than history high score
     $historyHighScore = getStudentGameScores($conn, $gameID, $studentID);
+    if (isset($historyHighScore[$level]) && $historyHighScore[$level] >= $score) return true;
+
     $updateSql = "INSERT INTO Game_Record(GameID,StudentID,`Level`,Score)
                      VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE Score = ?";
     $updateSql = $conn->prepare($updateSql);
-    for ($level = 1; $level <= count($score); $level++) {
-        if ($score[$level - 1] > $historyHighScore[$level - 1]) {
-            if (!$updateSql->execute(array($gameID, $studentID, $level, $score[$level - 1], $score[$level - 1]))) {
-                debug_alert("Error occurred to submit game score. Report this bug to researchers.");
-            } else {
-                debug_log("Game Record Submitted. gameID: $gameID  studentID: $studentID");
-            }
-        } else {
-            debug_log("Score does not exceed high score. high score: " . $historyHighScore[$level - 1] . "  score: " . $score[$level - 1]);
-        }
-    }
+    return $updateSql->execute(array($gameID, $studentID, $level, $score, $score));
+}
+
+function getGameLevelRanking(PDO $conn, $gameID, $level, $numberOfRecords) {
+    $retrieveScoreSql = "SELECT game_record.Score, student.Username FROM game_record INNER JOIN student
+ON game_record.StudentID = student.StudentID AND game_record.GameID = ? AND game_record.Level = ?
+ORDER BY game_record.Score DESC LIMIT $numberOfRecords;";
+    $retrieveScoreQuery = $conn->prepare($retrieveScoreSql);
+    $retrieveScoreQuery->execute(array($gameID, $level));
+    return $retrieveScoreQuery->fetchAll();
 }
 
 /* Game */
