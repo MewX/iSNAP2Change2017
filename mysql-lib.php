@@ -2143,21 +2143,14 @@ function getStudentGameScores(PDO $conn, $gameID, $studentID)
     $levels = getGame($conn, $gameID)->Levels;
     $scoreArray = array_fill(0, $levels, 0);
 
-    for ($level = 1; $level <= $levels; $level++) {
-        $retrieveScorePreSql = "SELECT COUNT(*) FROM Game_Record WHERE `GameID` = ? AND `StudentID` = ? AND `Level` = ?";
-        $retrieveScorePreQuery = $conn->prepare($retrieveScorePreSql);
-        $retrieveScorePreQuery->execute(array($gameID, $studentID, $level));
-        if ($retrieveScorePreQuery->fetchColumn() > 0) {
-            $retrieveScoreSql = "SELECT GameID,StudentID,`Level`,Score FROM Game_Record WHERE `GameID` = ? AND `StudentID` = ? AND `Level` = ?";
-            $retrieveScoreQuery = $conn->prepare($retrieveScoreSql);
-            $retrieveScoreQuery->execute(array($gameID, $studentID, $level));
-            $retrieveScoreResult = $retrieveScoreQuery->fetch(PDO::FETCH_OBJ);
-            $scoreArray[$level - 1] = $retrieveScoreResult->Score;
-        } else {
-            $scoreArray[$level - 1] = 0;
-        }
-    }
+    $retrieveScoreSql = "SELECT GameID,StudentID,`Level`,Score FROM Game_Record WHERE `GameID` = ? AND `StudentID` = ?";
+    $retrieveScoreQuery = $conn->prepare($retrieveScoreSql);
+    $retrieveScoreQuery->execute(array($gameID, $studentID));
+    $retrieveScoreResult = $retrieveScoreQuery->fetchAll();
 
+    foreach ($retrieveScoreResult as $record) {
+        $scoreArray[$record['Level']] = $record['Score'];
+    }
     return $scoreArray;
 }
 
