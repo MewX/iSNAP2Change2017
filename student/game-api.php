@@ -1,8 +1,4 @@
 <?php
-/**
- * This file handles the requests for commenting.
- */
-
 require_once("../mysql-lib.php");
 
 $NOJUMP = true;
