@@ -356,10 +356,6 @@
             </h2>
 
             <div class=" operation-container">
-                <a href="#" class="operation-item operation-health-recipes">
-                    <img src="./img/recipe_icon.png" alt="" class="operation-logo">
-                    <span>Healthy Recipes</span>
-                </a>
                 <a href="#" class="operation-item operation-game">
                     <img src="./img/game_icon.png" alt="" class="operation-logo">
                     <span>Games</span>
