@@ -4,7 +4,7 @@
         Learning Material Editor
     </div>
     <!-- /.panel-heading -->
-    <div class="panel-body">
+    <div class="panel-body" style="height: 700px;">
         <div class="heading" style="color: black; max-height:10vh; text-align:center; border-bottom: 1px solid #eee;">
         </div>
         <iframe id="learning-material-editor" src="learning-material-editor.php?quizID=<?php echo $quizID; ?>"

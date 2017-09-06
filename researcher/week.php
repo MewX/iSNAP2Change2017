@@ -8,22 +8,21 @@ require_once("researcher-lib.php");
 try {
     $conn = db_connect();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        echo "<script>console.log( 'timer Objects post' );</script>";
-
         if($_POST['update']==1){//update timer
             $timer = $_POST['Timer'];
             $weekNum = $_POST['WeekNum'];
-            echo "<script>console.log( 'timer Objects: " . $timer . "' );</script>";
-            echo "<script>console.log( 'weeknum Objects: " . $weekNum . "' );</script>";
             setWeekTimer($conn, $weekNum, $timer);
-
-        }else{
+        }else if($_POST['update']==-1){
             $week = $_POST['week'];
             $updateSql = removeWeek($conn, $week);
             //General error: 2014 Cannot execute queries while other unbuffered queries are active. Consider using PDOStatement::fetchAll().
             unset($updateSql);
+            $response = array();
+            $response['status'] = 'success';
+            $response['message'] = 'This was successful';
+            echo json_encode($response);
+            exit();
         }
-
     }
 } catch (Exception $e) {
     debug_err($e);
@@ -115,10 +114,7 @@ db_close($conn);
                                                    href="quiz.php?week=<?php echo $i; ?>"><?php echo $i; ?></a>
                                             </td>
                                             <td><?php echo 0; ?></td>
-                                            <td><?php echo 0; ?><span class="glyphicon glyphicon-remove pull-right"
-                                                                      aria-hidden="true" data-toggle="modal"
-                                                                      data-target="#dialog"></span>
-                                            </td>
+                                            <td><?php echo 0; ?></td>
                                         </tr>
                                     <?php }
                                 } ?>
@@ -156,37 +152,6 @@ db_close($conn);
     <!-- /#page-wrapper -->
 
 </div>
-<!-- /#wrapper -->
-<div class="modal fade" id="dialog" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="dialogTitle">Remove Week</h4>
-            </div>
-            <div class="modal-body">
-                <form id="submission" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                    <label for="Week" style="display:none">Week</label>
-                    <select class="form-control " id="Week" form="submission" name="week" required>
-                        <?php for ($i = 1; $i <= $weekNumResult->WeekNum; $i++) { ?>
-                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                        <?php } ?>
-                    </select>
-                </form>
-            </div>
-            <div class="alert alert-danger">
-                <p><strong>Reminder</strong>: If you remove one week, all the <strong>quizzes</strong> linked to this
-                    week will still exist, but their "week" attribute will be set to "null" and you should assign them
-                    to another week if you need via <a href="quiz.php">Quiz Overview</a>.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="btnConfirm" class="btn btn-default">Confirm</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- /#wrapper for edit -->
 <div class="modal fade" id="dialog-edit" role="dialog">
@@ -211,8 +176,7 @@ db_close($conn);
                 <p><strong>Reminder</strong>: You can set the duration (minutes) for quiz in one week at here.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btnConfirm-timer" class="btn btn-default">Confirm</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnConfirm-timer" class="btn btn-default">Save</button>
             </div>
         </div>
     </div>
@@ -229,9 +193,23 @@ db_close($conn);
     });
     var dialogInputArr = $('.dialoginput');
     $('.glyphicon-remove').on('click', function () {
-        for (i = 0; i < dialogInputArr.length; i++) {
-            console.log($(this).parent().parent().children('span'));
-            dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).children('a').attr("id"));
+        if(confirm("[Warning] Are you sure to remove this week?" +
+                "If you remove one week, all the quizzes linked to this week will still exist, " +
+                "but you should assign them to another week if you need.")){
+            week = $(this).parent().parent().children('td').eq(0).children('a').attr('id');
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "week.php",
+                data: {
+                    week: week,
+                    update: -1
+                }
+            })
+                .done(function(feedback) {
+                //$('#'+commentID).remove();
+                location.reload();
+            })
         }
     });
     $('.glyphicon-edit').on('click', function () {

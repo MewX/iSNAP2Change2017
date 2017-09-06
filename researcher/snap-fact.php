@@ -142,7 +142,6 @@ db_close($conn);
             </div>
             <div class="modal-footer">
                 <button type="button" id="btnSave" class="btn btn-default">Save</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -172,14 +171,15 @@ db_close($conn);
         dialogInputArr.eq(0).attr('disabled', 'disabled');
     });
     $('.glyphicon-remove').on('click', function () {
-        $('#update').val(-1);
-        //fill required input
-        dialogInputArr.eq(0).prop('disabled', false);
-        for (i = 0; i < dialogInputArr.length; i++) {
-            dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());
+        if(confirm("[Warning]Are you sure to remove this snap-fact?")){
+            $('#update').val(-1);
+            //fill required input
+            dialogInputArr.eq(0).prop('disabled', false);
+            for (i = 0; i < dialogInputArr.length; i++) {
+                dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());
+            }
+            $('#submission').submit();
         }
-        $('#submission').submit();
-
     });
     $('#btnSave').on('click', function () {
         $('#submission').validate();

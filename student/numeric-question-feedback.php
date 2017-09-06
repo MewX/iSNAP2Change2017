@@ -55,9 +55,9 @@ function processStuAns($answerArr, $correctAns, $fullMarkCount) {
             $conn = db_connect();
 
             $conn->beginTransaction();
-
+            $score = getQuizPoints($conn, $GLOBALS['quizID']);
             //update Quiz_Record
-            updateQuizRecord($conn, $GLOBALS['quizID'], $GLOBALS['studentID'], "GRADED");
+            updateQuizRecord($conn, $GLOBALS['quizID'], $GLOBALS['studentID'], "GRADED", $score);
 
             //update student score
             updateStudentScore($conn, $GLOBALS['studentID']);

@@ -138,11 +138,16 @@
         for ($i = 0; $i < count($mcqQuestions); $i++) { ?>
             <li class="quiz-nav-item">
                 <span class="quiz-nav-label"></span>
-                <span class="<?php if($mcqQuestions[$i]->Choice == $mcqQuestions[$i]->CorrectChoice){
-                    echo "quiz-nav-state quiz-nav-state-correct";
-                }else{
-                    echo "quiz-nav-state quiz-nav-state-incorrect";
-                }?>"></span>
+                <span class="
+                <?php
+                if($status == "GRADED"){
+                    if($mcqQuestions[$i]->Choice == $mcqQuestions[$i]->CorrectChoice){
+                        echo "quiz-nav-state quiz-nav-state-correct";
+                    }else{
+                        echo "quiz-nav-state quiz-nav-state-incorrect";
+                    }
+                }
+                ?>"></span>
             </li>
 <?php   } ?>
         </ul>
@@ -365,7 +370,6 @@
             })
 
                 .done(function(feedback) {
-                    console.log("got feedback");
                     parseFeedback(feedback);
                 })
 
@@ -390,10 +394,11 @@
         if (feedback.result == "pass") {
             if(feedback.attempt>=3){
                 snap.alert({
-                    content: 'You have finished this quiz. Your final score is: ' + feedback.score + '/' + feedback.quesNum + '. '
+                    content: 'You have finished this quiz. Your final score is: ' + <?php echo $attemptInfo->HighestGrade?> + '/' + feedback.quesNum + '. '
                 });
                 $(".question-submit").attr("disabled",true);
-                QuizCtrl.setFeedback(feedback.detail);
+                //QuizCtrl.setFeedback(feedback.detail);
+                location.reload();
             }else{
                 snap.alert({
                     content: 'This is your ' + feedback.attempt + ' attempt. The result for this attempt is: ' +
@@ -421,7 +426,8 @@
                             data: data
                         })
                         $(".question-submit").attr("disabled",true);
-                        QuizCtrl.setFeedback(feedback.detail);
+                        //QuizCtrl.setFeedback(feedback.detail);
+                        location.reload();
                     })
                     snap.$confirm.on('click', '.snap-alert-cancel', function () {
                         //redirect to week page if still have chance

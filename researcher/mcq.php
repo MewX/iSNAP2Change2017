@@ -76,7 +76,8 @@ db_close($conn);
                                 <tbody>
                                 <?php for ($i = 0; $i < count($quizResult); $i++) { ?>
                                     <tr class="<?php
-                                        if($quizResult[$i]->CorrectChoice==null) {
+                                        if($quizResult[$i]->Answers <$quizResult[$i]->Questions
+                                        || $quizResult[$i]->Answers==0) {
                                             echo ' alert-danger';
                                         } ?>"
                                     >

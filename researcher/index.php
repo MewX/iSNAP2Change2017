@@ -3,6 +3,7 @@ session_start();
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
+
 $conn = db_connect();
 $connLog = db_connect('log');
 
@@ -11,17 +12,14 @@ try {
 } catch (Exception $e) {
     debug_err($e);
 }
-
-
 db_close($conn);
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <!-- Header Library -->
-<?php require_once('header-lib.php'); ?>
 
+<?php require_once('header-lib.php');?>
 <body>
 <div>
     <!-- Navigation Layout-->

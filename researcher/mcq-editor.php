@@ -93,7 +93,7 @@ db_close($conn);
             <div class="col-lg-12">
                 <h1 class="page-header">Multiple Choice Quiz Editor
                     <button type="button" class="btn btn-lg btn-info pull-right"
-                            onclick="location.href='<?php echo "mcq.php" ?>'">GO BACK
+                            onclick="goBack()">GO BACK
                     </button>
                 </h1>
             </div>
@@ -279,11 +279,13 @@ db_close($conn);
         }
     });
     $('td > .glyphicon-remove').on('click', function () {
-        $('#update').val(-1);
-        for (i = 0; i < dialogInputArr.length; i++) {
-            dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());
+        if (confirm('[WARNING] Are you sure to remove this Question?')){
+            $('#update').val(-1);
+            for (i = 0; i < dialogInputArr.length; i++) {
+                dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());
+            }
+            $('#submission').submit();
         }
-        $('#submission').submit();
     });
     $('#btnSave').on('click', function () {
         $('#submission').validate();
@@ -317,6 +319,21 @@ db_close($conn);
             $('#metadata-submission').submit();
         });
     });
+
+    function goBack() {
+        var week = document.getElementById("Week");
+        var topicName = document.getElementById("TopicName");
+        var extraQuiz = document.getElementById("ExtraQuiz");
+        var weekIsChanged = week.value != week.defaultValue;
+        var topicNameIsChanged = !topicName.options[topicName.selectedIndex].defaultSelected;
+        var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
+        if(weekIsChanged||topicNameIsChanged||extraQuizIsChanged){
+            if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
+                location.href='<?php echo "mcq.php" ?>'            }
+        }else{
+            location.href='<?php echo "mcq.php" ?>'
+        }
+    }
 </script>
 <script src="researcher-tts.js"></script>
 </body>

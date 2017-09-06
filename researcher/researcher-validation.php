@@ -8,3 +8,4 @@ if (isset($_SESSION['researcherID']) && isset($_SESSION['researcherUsername'])) 
     header("location:index.php");
     exit;
 }
+?>

@@ -41,7 +41,8 @@
             $feedback["result"] = "pass";
 
             //update quiz record
-            updateQuizRecord($conn, $quizID, $studentID, "GRADED");
+            $score = getQuizPoints($conn, $quizID);
+            updateQuizRecord($conn, $quizID, $studentID, "GRADED", $score);
 
             //update student score
             updateStudentScore($conn, $studentID);

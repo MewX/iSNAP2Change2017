@@ -198,7 +198,6 @@
         <div class="canvas-footer">
             <button class="question-submit u-submit" type="button">
                 <span class="question-submit-icon u-submit-icon"></span>
-                SUBMIT
             </button>
         </div>
     </div>

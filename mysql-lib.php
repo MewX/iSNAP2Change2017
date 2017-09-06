@@ -1089,14 +1089,32 @@ function getMCQQuestion(PDO $conn, $mcqID)
 
 function getMCQQuestionsByQuizID(PDO $conn, $quizID, $studentID)
 {
-    $mcqQuesSql = "SELECT *
+    $mcqQuesSql = "SELECT * FROM MCQ_Question LEFT JOIN MCQ_Question_Record 
+                    ON MCQ_Question.MCQID = MCQ_Question_Record.MCQID
+                    WHERE StudentID = ? AND QuizID = ?";
+    $mcqQuesQuery = $conn->prepare($mcqQuesSql);
+    $mcqQuesQuery->execute(array($studentID, $quizID));
+    $mcqQuesResult = $mcqQuesQuery->fetchAll(PDO::FETCH_OBJ);
+    if(count($mcqQuesResult)==0){
+        $mcqQuesSql = "SELECT *
+                    FROM MCQ_Section NATURAL JOIN MCQ_Question
+                    WHERE QuizID = ? 
+                    ORDER BY MCQID";
+        $mcqQuesQuery = $conn->prepare($mcqQuesSql);
+        $mcqQuesQuery->execute(array($quizID));
+        $mcqQuesResult = $mcqQuesQuery->fetchAll(PDO::FETCH_OBJ);
+        return $mcqQuesResult;
+    }else{
+        $mcqQuesSql = "SELECT *
                     FROM MCQ_Section NATURAL JOIN MCQ_Question NATURAL JOIN MCQ_Question_Record
                     WHERE QuizID = ? AND StudentID = ?
                     ORDER BY MCQID";
-    $mcqQuesQuery = $conn->prepare($mcqQuesSql);
-    $mcqQuesQuery->execute(array($quizID, $studentID));
-    $mcqQuesResult = $mcqQuesQuery->fetchAll(PDO::FETCH_OBJ);
-    return $mcqQuesResult;
+        $mcqQuesQuery = $conn->prepare($mcqQuesSql);
+        $mcqQuesQuery->execute(array($quizID, $studentID));
+        $mcqQuesResult = $mcqQuesQuery->fetchAll(PDO::FETCH_OBJ);
+        return $mcqQuesResult;
+    }
+
 }
 
 function getMCQQuestions(PDO $conn, $quizID)
@@ -1155,8 +1173,9 @@ function getMCQQuiz(PDO $conn, $quizID)
 
 function getMCQQuizzes(PDO $conn)
 {
-    $quizSql = "SELECT *, COUNT(MCQID) AS Questions
-                   FROM Quiz NATURAL JOIN Topic NATURAL JOIN MCQ_Section LEFT JOIN MCQ_Question USING (QuizID) WHERE QuizType = 'MCQ' GROUP BY QuizID";
+    $quizSql = "SELECT *, COUNT(MCQID) AS Questions, COUNT(CorrectChoice) AS Answers 
+                   FROM Quiz NATURAL JOIN Topic NATURAL JOIN MCQ_Section LEFT JOIN MCQ_Question USING (QuizID) 
+                   WHERE QuizType = 'MCQ' GROUP BY QuizID";
     $quizQuery = $conn->prepare($quizSql);
     $quizQuery->execute();
     $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);
