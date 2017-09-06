@@ -20,7 +20,7 @@ try {
         }else if($update == 1){
             if(isset($_POST['commentID'])){
                 $commentID = $_POST['commentID'];
-                //markCommentRead($conn, $commentID);
+                markCommentRead($conn, $commentID);
                 $response = array();
                 $response['status'] = 'success';
                 $response['message'] = 'This was successful';
