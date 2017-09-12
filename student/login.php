@@ -27,7 +27,7 @@
             $feedback["message"] = "success";
 		} else {
 			$feedback["result"] = "invalid";
-            $feedback["message"] = "failed";
+            $feedback["message"] = "Failed";
 		}
 	} catch(Exception $e) {
 		if($conn != null) {

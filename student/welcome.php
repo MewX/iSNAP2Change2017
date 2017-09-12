@@ -128,9 +128,9 @@
                         <button id="login-close-btn" type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
                         <div class="col-xs-6 col-xs-offset-3">
                             <img src="./img/Snap_Logo_Inverted.png" style="height:20%; width: 100%;">
-                             <div style="text-align: center; margin-top: 15%">
-                        <span id="login-fail-text" style="color:red"></span>
-                    </div>
+                            <div style="text-align: center; margin-top: 15%">
+                                <span id="login-fail-text" style="color:red"></span>
+                            </div>
                             <div class="input-group input-group-lg" style="margin-top:5%; text-align: center;">
                                 <input id="username" type="text" style="text-align: center; border-radius: 10px; color:white; border: none; background-color: black;" class="form-control" placeholder="Username" onfocus="this.placeholder=''" onblur="this.placeholder='Username'" aria-describedby="sizing-addon1" autocomplete="off">
                             </div>
@@ -139,16 +139,24 @@
                             </div>
                             <button type="button" class="btn btn-primary btn-lg btn-block" style="margin-top:5%; border-radius: 10px; border-color: #FCEE2D !important; color:#FCEE2D; background-color: black; opacity: 0.7;" onclick="validStudent()">Log In</button>
                             <div style="text-align: center; margin-top: 5%">
-                        <span style="color: white;"> Don't have an account?</span>
-                        <a href='#' onclick="location.href = 'valid-token.php';" style='color:#FCEE2D;'>Sign Up</a>
-                    </div>
+                                <span style="color: white;"> Don't have an account?</span>
+                                <a href='#' onclick="location.href = 'valid-token.php';" style='color:#FCEE2D;'>Sign Up</a>
+                            </div>
+
+                            <script>
+                                $(function(){
+                                    $('.modal-body').keypress(function(e){
+                                        if(e.which === 13) {
+                                            validStudent();
+                                        }
+                                    })
+                                })
+                            </script>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
 
         <!-- Page 2 -->
         <div class="pg2" id="2">
@@ -244,11 +252,7 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
-
 
                 <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0" style="background-color: black; padding-right:0px; padding-left:0px; padding-bottom:0px; height: 100%;">
                     <div class="scoreboard" style="height: 100%;">
@@ -431,7 +435,7 @@
                             <img src="./img/chris.jpg" style="width:90%; height:90%;">
                         </div>
                         <div class="col-xs-8" style="color:white; height: 100%;">
-                            <span class="header3" style="border: 0px solid #FCEE2D; border-bottom-color: #FCEE2D; border-bottom-width: 2px;">
+                            <span class="header3" style="border: 0px solid #FCEE2D;border-bottom-width: 2px;">
                                 Celebrity #1</span>
                             <div style="margin-top: 1.2%;">
                                 <span class="p1">Tobacco smoking is one of the largest causes of preventable illness and death in Australia. Research estimates that two in three lifetime smokers will die from a disease caused by their smoking. The most recent estimate of deaths caused by tobacco in Australia is for the financial year 2004–05. Tobacco use caused a total of 14,901 deaths in that year.</span>
@@ -445,7 +449,7 @@
                             <img src="./img/ch2.jpg" style="width:90%; height: 90%;">
                         </div>
                         <div class="col-xs-8" style="color:white; height: 100%;">
-                            <span class="header3" style="border: 0px solid #FCEE2D; border-bottom-color: #FCEE2D; border-bottom-width: 2px;">
+                            <span class="header3" style="border: 0px solid #FCEE2D;border-bottom-width: 2px;">
                                 Celebrity #2</span>
                             <div style=" margin-top: 1.2%;">
                                 <span class="p1">Tobacco smoking is one of the largest causes of preventable illness and death in Australia. Research estimates that two in three lifetime smokers will die from a disease caused by their smoking. The most recent estimate of deaths caused by tobacco in Australia is for the financial year 2004–05. Tobacco use caused a total of 14,901 deaths in that year.</span>
@@ -538,35 +542,8 @@
                     mobile:       true,       // default
                     live:         true        // default
                 }
-            )
+            );
             wow.init();
-
-            (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=909271749154924";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-
-            <!--Twitter widgets.js -->
-            window.twttr = (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0],
-                    t = window.twttr || {};
-                if (d.getElementById(id)) return t;
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "https://platform.twitter.com/widgets.js";
-                fjs.parentNode.insertBefore(js, fjs);
-
-                t._e = [];
-                t.ready = function(f) {
-                    t._e.push(f);
-                };
-
-                return t;
-            }(document, "script", "twitter-wjs"));
-
 
             $(document).ready(function () {
 
