@@ -254,6 +254,16 @@
                         <span style="color: white;"> Don't have an account?</span>
                         <a href='#' onclick="location.href = 'valid-token.php';" style='color:#FCEE2D;'>Sign Up</a>
                     </div>
+
+                    <script>
+                        $(function(){
+                            $('.modal-body').keypress(function(e){
+                                if(e.which === 13) {
+                                    validStudent();
+                                }
+                            })
+                        })
+                    </script>
                 </div>
             </div>
         </div>
