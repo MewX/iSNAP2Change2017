@@ -34,8 +34,6 @@ db_close($conn);
                 Please click the button to log in.
             </h2>
             <p class="logInBtn"><a class="btn btn-primary btn-lg" data-toggle="modal" href="#myModal" role="button">Log in</a></p>
-
-        </div>
     <? endif; ?>
 </div>
 
