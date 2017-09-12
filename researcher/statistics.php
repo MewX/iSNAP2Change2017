@@ -7,8 +7,78 @@ require_once("researcher-lib.php");
 $columnName = array('ClassName', 'FirstName', 'LastName');
 $colspanName = array('');
 $quizList = array('ClassName', 'FirstName', 'LastName');
+
+function renderTable($studentStatistic, $quizList, $getQuizInfo){
+    for ($i = 0; $i < count($studentStatistic); $i++) {
+        if($i % 2 == 0){
+            echo "<tr class='odd'";
+        }else{
+            echo "<tr class='even'";
+        }
+        $studentID = $studentStatistic[$i]->StudentID;
+        $firstName = $studentStatistic[$i]->FirstName;
+        $lastName = $studentStatistic[$i]->LastName;
+        echo "StudentID = $studentID FirstName = $firstName LastName = $lastName >";
+        for ($j = 0; $j < count($quizList); $j++) {
+            $week = $getQuizInfo[$j-3]->Week;
+            $quizID = substr($quizList[$j],4);
+            $status = $studentStatistic[$i]->$quizList[$j];
+            echo "<td ";
+            if($j >= 3){
+                echo "Week = $week";
+                if($j > 2){
+                    echo "QuizID = $quizID";
+                }
+            }
+            echo ">";
+            if($status == "GRADED"){
+                $grading = str_replace("Quiz","Grading",$quizList[$j]);
+                $grade = $studentStatistic[$i]->$grading;
+                echo "<span> $grade </span>";
+                echo "<span class='glyphicon glyphicon-time pull-right' aria-hidden='true'></span>";
+            }else if($status == "UNGRADED"){
+                $id = $studentStatistic[$i]->StudentID;
+                $quizType = $getQuizInfo[$j-3]->QuizType;
+                if($quizType == "SAQ"){
+                    echo "
+                        <a target='_blank' href='saq-grading.php?studentID=$id\' >
+                            <i class='fa fa fa-star pull-left' aria-hidden='true'></i>
+                        </a>
+                    ";
+                }else if($quizType == "Poster"){
+                    echo "
+                        <a target='_blank' href='poster-grading.php?studentID=$id' >
+                            <i class='fa fa fa-star pull-left' aria-hidden='true'></i>
+                        </a>
+                    ";
+                }else{
+                    echo "
+                        <i class='fa fa fa-star pull-left' aria-hidden='true'></i>
+                    ";
+                }
+                echo "
+                    <span class='glyphicon glyphicon-time pull-right' aria-hidden='true'></span>
+                ";
+            }else if($status == "UNSUBMITTED" || $status == ""){
+                echo "
+                    <span class='fa fa-star-o pull-left' aria-hidden='true'></span>
+                    <span class='glyphicon glyphicon-time pull-right' aria-hidden='true'></span>
+                ";
+            }else{
+                echo "
+                    $status
+                ";
+            }
+            echo "</td>";
+        }
+        echo "</tr>";
+    }
+}
+
+
 try {
     $conn = db_connect();
+    $studentStatistic;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['update'])) {
             $update = $_POST['update'];
@@ -22,6 +92,22 @@ try {
                 $quizID = $_POST['QuizID'];
                 resetStuDueTime($conn,$studentID,$quizID);
             }
+        }
+    }else if($_SERVER["REQUEST_METHOD"] == "GET") {
+        if (isset($_GET['filter'])){
+            $filter = $_GET['filter'];
+            if($filter == "All"){
+                $studentStatistic = getStudentsStatistic($conn);
+            }else{
+                $studentStatistic = getStudentsStatisticByStatus($conn, $filter);
+            }
+            $getQuizInfo = getQuizInfo($conn);
+            for ($i = 0; $i < count($getQuizInfo); $i++){
+                $j = $getQuizInfo[$i]->QuizID;
+                array_push($quizList,"Quiz$j");
+            }
+            renderTable($studentStatistic, $quizList, $getQuizInfo);
+            exit;
         }
     }
 } catch (Exception $e) {
@@ -90,10 +176,6 @@ db_close($conn);
                         <div>
                             Toggle column:
                             <i class="fa fa-check-square-o fa-fw"></i><a class="toggle-vis" data-column="-1">tick All</a>
-<!--                            --><?php //for ($i = 0; $i < count($columnName); $i++) {?>
-<!--                                <i class="fa fa-check-square-o fa-fw"></i>-->
-<!--                                <a class="toggle-vis" start = "2" data-column="--><?php //echo $i; ?><!--">--><?php //echo $columnName[$i]; ?><!--</a>&nbsp;-->
-<!--                            --><?php //} ?>
                             <?php for ($i = 0; $i < count($getQuizWithWeek); $i++) {?>
                                 <i class="fa fa-check-square-o fa-fw"></i>
                                 <a class="toggle-vis" start = "<?php echo $startColumn ?>" data-column="<?php $startColumn+=$getQuizWithWeek[$i]->QuizNum; echo $startColumn-1; ?>">
@@ -104,9 +186,16 @@ db_close($conn);
 
                         <div>
                             <br>
-                            <span class="fa fa-check-circle pull-left" aria-hidden="true" style="font-size: 16px"> Extra Quiz </span>
-                            <span class="fa fa-star pull-left" aria-hidden="true" style="font-size: 16px"> Not Graded</span>
-                            <span class="fa fa-star-o pull-left" aria-hidden="true" style="font-size: 16px"> Not Submitted</span>
+                            <a class="fa fa-bars pull-left" aria-hidden="true" style="font-size: 16px" onclick="studentFilter('All')">
+                                All Student
+                            </a>
+                            <a class="fa fa-star pull-left" aria-hidden="true" style="font-size: 16px" onclick="studentFilter('UNGRADED')">
+                                Not Graded
+                            </a>
+                            <a class="fa fa-star-o pull-left" aria-hidden="true" style="font-size: 16px" onclick="studentFilter('UNSUBMITTED')">
+                                Not Submitted
+                            </a>
+                            <span class="fa fa-check-circle pull-left" aria-hidden="true" style="font-size: 16px" > Extra Quiz </span>
                             <span class="fa fa-clock-o pull-left" aria-hidden="true" style="font-size: 16px"> Reset Timer </span>
                             <br>
                             <br>
@@ -147,7 +236,7 @@ db_close($conn);
                                         <?php } ?>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tableResults">
                                 <?php for ($i = 0; $i < count($studentStatistic); $i++) { ?>
                                     <tr class="<?php if ($i % 2 == 0) {
                                             echo "odd";
@@ -254,13 +343,27 @@ if (isset($_GET['studentID'])) {
         debug_err($e);
         echo '';
     }
-} else
-    echo '';
+}
 ?>">
 <!-- SB Admin Library -->
 <?php require_once('sb-admin-lib.php'); ?>
 <!-- Page-Level Scripts -->
 <script>
+    function studentFilter(filter){
+        console.log(filter);
+        var data = {
+            filter: filter
+        }
+        $.ajax({
+            url:'statistics.php',
+            type:'get',
+            datatype:'json',
+            data: data,
+            success: function(data){
+                $("#tableResults").html(data);
+            }
+        })
+    }
     function randomString(length) {
         return Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
     }
