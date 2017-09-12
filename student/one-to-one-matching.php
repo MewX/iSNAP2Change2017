@@ -153,7 +153,6 @@
             <form class="question-form">
                 <button type="submit" class="question-submit" <?php echo $btnDisabled?>>
                     <span class="question-submit-icon"></span>
-                    Submit
                 </button>
             </form>
 
@@ -208,7 +207,9 @@
             var that = this;
             this.$form.on('submit', function (e) {
                 e.preventDefault();
-                that.opt.onSubmit(that.getData())
+                if(confirm("Do you want to submit this quiz?")){
+                    that.opt.onSubmit(that.getData())
+                }
             })
         },
         getData: function () {

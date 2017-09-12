@@ -473,32 +473,35 @@
     var form = new snap.Form({
         form: '.question-form',
         onSubmit: function (data) {
-            $('.question-error').removeClass('question-error-show');
+            if(confirm("Do you want to submit this quiz?")){
+                $('.question-error').removeClass('question-error-show');
 
-            var answerArr = [data.q1, data.q2, data.q3];
+                var answerArr = [data.q1, data.q2, data.q3];
 
-            $.ajax({
-                url: "numeric-question-feedback.php",
-                data: {
-                    student_id: <?php echo $studentID?>,
-                    quiz_id: <?php echo $quizID?>,
-                    answer_arr: JSON.stringify(answerArr),
-                    type: "cost_calculator"
-                },
-                type: "POST",
-                dataType : "json"
-            })
-
-                .done(function(feedback) {
-                    parseFeedback(feedback);
+                $.ajax({
+                    url: "numeric-question-feedback.php",
+                    data: {
+                        student_id: <?php echo $studentID?>,
+                        quiz_id: <?php echo $quizID?>,
+                        answer_arr: JSON.stringify(answerArr),
+                        type: "cost_calculator"
+                    },
+                    type: "POST",
+                    dataType : "json"
                 })
 
-                .fail(function( xhr, status, errorThrown ) {
-                    alert( "Sorry, there was a problem!" );
-                    console.log( "Error: " + errorThrown );
-                    console.log( "Status: " + status );
-                    console.dir( xhr );
-                });
+                    .done(function(feedback) {
+                        parseFeedback(feedback);
+                    })
+
+                    .fail(function( xhr, status, errorThrown ) {
+                        alert( "Sorry, there was a problem!" );
+                        console.log( "Error: " + errorThrown );
+                        console.log( "Status: " + status );
+                        console.dir( xhr );
+                    });
+            }
+
         }
     });
 
