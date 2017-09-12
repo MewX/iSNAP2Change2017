@@ -423,25 +423,7 @@
         </div>
 
         <!-- Page 4 -->
-        <div class="pg4" id="4">           
-            <div class="social" style="width:100%; height:100%; align-content: center">
-                <div class="row" style="margin-left:0px; margin-right:0px; align-content:center; height:100%;">
-                    <div class="col-xs-8 col-xs-offset-2 col-md-4 col-md-offset-2 social1" style="margin-top:1.5%; height: 90%; margin-bottom: 4%;">
-                    <div class="fb-page" data-width="400" data-height="500" data-href="https://www.facebook.com/cpuresearch" data-tabs="timeline, messages" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                    <div style="height: 90%; width:95%;" class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/cpuresearch"><a href="https://www.facebook.com/cpuresearch">CPU Research</a></blockquote></div>
-                </div>
-                        
-                    </div>
-                    <div class="col-xs-8 col-xs-offset-2 col-md-4 col-md-offset-0 social2" style="margin-top:3%; height:90%; margin-bottom:4%;">
-                        <a class="twitter-timeline" data-width="400" data-height="500" href="https://twitter.com/CPUResearch" data-widget-id="732758309019607040">Tweets by @CPUResearch</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-                    </div>
-                </div>
-            </div> 
-        </div>
-
-        <!-- Page 5 -->
-        <div class="pg5" id="5">           
+        <div class="pg4" id="4">
             <div class="celebrity" style="width:100%; height:100%;">
                 <div class="col-xs-8 col-xs-offset-2 celeb1" style="margin-top:4%; height: 38%;">
                     <div class="row" style="height:100%;">
@@ -468,14 +450,14 @@
                             <div style=" margin-top: 1.2%;">
                                 <span class="p1">Tobacco smoking is one of the largest causes of preventable illness and death in Australia. Research estimates that two in three lifetime smokers will die from a disease caused by their smoking. The most recent estimate of deaths caused by tobacco in Australia is for the financial year 2004–05. Tobacco use caused a total of 14,901 deaths in that year.</span>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
 
-        <!-- Page 6 -->
-        <div class="pg6" id="6">           
+        <!-- Page 5 -->
+        <div class="pg5" id="5">           
             <div class="contact" style="width:100%; height:100%; text-align: center;">
                 <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-1 contact1" style="margin-top:2%; height: 50%; ">
                     <span class="p1">Any questions or comments?
@@ -491,7 +473,7 @@
                         <div class="form-group" style="text-align: center;">
                             <label class="header5" style="color: #FCEE2D">Email</label>
                             <input type="email" class="form-control" id="emailID">
-                        </div>     
+                        </div>
                         <textarea id="commentContent" class="form-control" rows="4" style="margin-top: 3%"></textarea>
                     </form>
                     <div class="sendbutton" style="display:flex;justify-content:center;align-items:center;width:100%;height:20%; margin-top:1%;">
@@ -502,16 +484,16 @@
                             </a>
                             </span>
                         </div>
-                    </div> 
+                    </div>
                 </div>
-                <div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1 contact2" style="margin-top:3%; height:50%; margin-bottom: 1%;">                  
+                <div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1 contact2" style="margin-top:3%; height:50%; margin-bottom: 1%;">
                     <div class="logo" style="height:35%;">
                         <img src="./img/Snap_Logo_Inverted.png" style="width:90%; height: 90%;">
                     </div>
                     <div style="margin-top:3%;text-align: justify">
                         <span class="p1">Tobacco smoking is one of the largest causes of preventable illness and death in Australia. Research estimates that two in three lifetime smokers will die from a disease caused by their smoking. The most recent estimate of deaths caused by tobacco in Australia is for the financial year 2004–05.
                         </span>
-                    </div> 
+                    </div>
                 </div>
                 <div class="col-xs-4 col-xs-offset-4 col-md-2 col-md-offset-5" style="height: 10%; margin-top:1%; margin-bottom: 1%;">
                     <div class="back2top" style="display:flex;justify-content:center;align-items:center;width:100%; height: 10%;">
@@ -524,7 +506,7 @@
                             <br>
                             <span class="header5">Back to Top</span>
                         </div>
-                    </div> 
+                    </div>
                 </div>
 
                 <nav class="navbar navbar-inverse navbar-fixed-bottom">
