@@ -4,10 +4,9 @@
     $pageName = "save-due-time";
 
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["student_id"]) && isset($_POST["week"]) && isset($_POST["due_time"])){
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["student_id"]) && isset($_POST["week"])){
             $studentID = $_POST["student_id"];
             $week = $_POST["week"];
-            $dueTime = $_POST["due_time"];
     } else {
         debug_log("Illegal state!");
         header("location:welcome.php");
@@ -19,8 +18,11 @@
 
     try {
         $conn = db_connect();
+        createStuWeekRecord($conn, $studentID, $week);
 
-        createStuWeekRecord($conn, $studentID, $week, $dueTime);
+        $dueTime = DateTime::createFromFormat('Y-m-d H:i:s', getStuWeekRecord($conn, $studentID, $week));
+        $currentTime = new DateTime();
+        $timeRemain = $dueTime->getTimestamp() - $currentTime->getTimestamp();
     } catch(Exception $e) {
         if($conn != null) {
             db_close($conn);
@@ -31,8 +33,8 @@
         echo json_encode($feedback);
         exit;
     }
-
     db_close($conn);
+
     $feedback["message"] = "success";
+    $feedback["time"] = $timeRemain;
     echo json_encode($feedback);
-?>
