@@ -13,7 +13,7 @@
         exit;
     }
 
-    $feedback = array();
+    $feedback = new stdClass();
     $conn = null;
 
     try {
@@ -29,12 +29,12 @@
         }
 
         debug_err($e);
-        $feedback["message"] = $e->getMessage();
+        $feedback->message = $e->getMessage();
         echo json_encode($feedback);
         exit;
     }
     db_close($conn);
 
-    $feedback["message"] = "success";
-    $feedback["time"] = $timeRemain;
+    $feedback->message = "success";
+    $feedback->time = $timeRemain;
     echo json_encode($feedback);

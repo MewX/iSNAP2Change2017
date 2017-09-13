@@ -577,20 +577,20 @@ function resetStuDueTime(PDO $conn, $studentID, $quizID)
 
 function createStuWeekRecord(PDO $conn, $studentID, $week)
 {
+    // TODO: can be simplified with one line
     $timer = "select Timer from Week where WeekID = ?";
     $timer = $conn->prepare($timer);
     $timer->execute(array($week));
     $timer = $timer->fetchAll();
     if (count($timer) == 0) return;
-    var_dump($timer);
     $timer = $timer[0]['Timer'];
 
     $updateSql = "INSERT IGNORE INTO Student_Week_Record(StudentID, Week, DueTime)
                   VALUES (?,?,?)";
     $updateSql = $conn->prepare($updateSql);
     $date = new DateTime();
-    $date->add(DateInterval::createFromDateString($timer . ' seconds'));
-    $updateSql->execute(array($studentID, $week, date("Y-m-d H:i:s", $date)));
+    $date->add(DateInterval::createFromDateString($timer . ' minutes'));
+    $updateSql->execute(array($studentID, $week, $date->format("Y-m-d H:i:s")));
 }
 
 function getStuWeekRecord(PDO $conn, $studentID, $week)

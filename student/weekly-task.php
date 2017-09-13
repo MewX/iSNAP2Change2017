@@ -919,7 +919,7 @@
 
 <script>
     function setCounter(timeRemain) {
-        console.log("total time: " + $timeRemain);
+        console.log("total time: " + timeRemain);
         var timeNow = new Date();
         var timeDue = new Date();
         timeDue.setSeconds(timeDue.getSeconds() + timeRemain);
@@ -948,14 +948,13 @@
                 url: "save-due-time.php",
                 data: {
                     student_id: <?php echo $studentID?>,
-                    week: <?php echo $week?>,
+                    week: <?php echo $week?>
                 },
                 type: "POST",
                 dataType : "json"
             })
                 .done(function(feedback) {
                     parseFeedback(feedback);
-                    // TODO: use returned remaining time
                 })
                 .fail(function( xhr, status, errorThrown ) {
                     alert( "Sorry, there was a problem!" );
