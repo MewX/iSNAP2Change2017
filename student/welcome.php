@@ -348,26 +348,27 @@
             </div> 
         </div>
 
-        <!-- Page 3 div -->
-        <div class="pg3" id="3">
+
+        <!-- Page 4 -->
+        <div class="pg4" id="4">
             <div class="pg3_heading" style="display:flex;justify-content:center;align-items:center;width:100%;height:15%;">
                 <div style="width:50%;color:#FCEE2D; text-align:center; margin-top:2%; height: inherit;">
                     <span style="font-size: 5vh;">
                         Facts of the Week
                     </span>
                 </div>
-            </div> 
+            </div>
             <div class="facts" style="width:100%; margin-top:5%; height:70%;">
                 <div class="row" style="margin-left:0px; margin-right:0px; height: 100%; width: 100%;">
                 <?php   for($i = 0; $i < 3; $i++) {
         if($i == 0) { ?>
-                    <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0 col-md-4 col-md-offset-0 fact1" style="text-align: center; height: 100%; ">  
-                    <?php   } else if($i == 1) { ?>   
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0 col-md-4 col-md-offset-0 fact1" style="text-align: center; height: 100%; ">
+                    <?php   } else if($i == 1) { ?>
                     <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0 col-md-4 col-md-offset-0 fact2" style="text-align: center; height: 100%; ">
 <?php   } else if($i == 2) { ?>
             <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-0 fact3" style="text-align: center; height: 100%; ">
-<?php   } ?> 
-                                  
+<?php   } ?>
+
                         <div class="col-xs-4 col-xs-offset-4" style="height: 25%;">
         <?php
             switch($factRes[$i]->TopicID) {
@@ -402,16 +403,11 @@
                             break;
                     }
                         echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID; ?>
-                    </div>
-
+                            </div>
                             <span class="fact"><?php echo $factRes[$i]->Content; ?></span>
                         </div>
-
                     </div>
-
-                    
-
-                  <?php   }   ?> 
+                  <?php   }   ?>
                 </div>
 
             </div>
@@ -423,45 +419,10 @@
                         <a href="./snap-facts.php"><img src="./img/snap_facts_icon.png" style="height: inherit; width: 10%;"/></a>
                     </span>
                 </div>
-            </div>  
-        </div>
-
-        <!-- Page 4 -->
-        <div class="pg4" id="4">
-            <div class="celebrity" style="width:100%; height:100%;">
-                <div class="col-xs-8 col-xs-offset-2 celeb1" style="margin-top:4%; height: 38%;">
-                    <div class="row" style="height:100%;">
-                        <div class="col-xs-4" style="height:100%;">
-                            <img src="./img/chris.jpg" style="width:90%; height:90%;">
-                        </div>
-                        <div class="col-xs-8" style="color:white; height: 100%;">
-                            <span class="header3" style="border: 0px solid #FCEE2D;border-bottom-width: 2px;">
-                                Celebrity #1</span>
-                            <div style="margin-top: 1.2%;">
-                                <span class="p1">Tobacco smoking is one of the largest causes of preventable illness and death in Australia. Research estimates that two in three lifetime smokers will die from a disease caused by their smoking. The most recent estimate of deaths caused by tobacco in Australia is for the financial year 2004–05. Tobacco use caused a total of 14,901 deaths in that year.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-8 col-xs-offset-2 celeb2" style="margin-top:2%; height:38%">
-                    <div class="row" style="height:100%;">
-                        <div class="col-xs-4" style="height:100%;">
-                            <img src="./img/ch2.jpg" style="width:90%; height: 90%;">
-                        </div>
-                        <div class="col-xs-8" style="color:white; height: 100%;">
-                            <span class="header3" style="border: 0px solid #FCEE2D;border-bottom-width: 2px;">
-                                Celebrity #2</span>
-                            <div style=" margin-top: 1.2%;">
-                                <span class="p1">Tobacco smoking is one of the largest causes of preventable illness and death in Australia. Research estimates that two in three lifetime smokers will die from a disease caused by their smoking. The most recent estimate of deaths caused by tobacco in Australia is for the financial year 2004–05. Tobacco use caused a total of 14,901 deaths in that year.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </div>          </div>
 
         <!-- Page 5 -->
-        <div class="pg5" id="5">           
+        <div class="pg5" id="5" style="height: auto; min-height: 0;">
             <div class="contact" style="width:100%; height:100%; text-align: center;">
                 <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-1 contact1" style="margin-top:2%; height: 50%; ">
                     <span class="p1">Any questions or comments?
@@ -499,7 +460,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-xs-4 col-xs-offset-4 col-md-2 col-md-offset-5" style="height: 10%; margin-top:1%; margin-bottom: 1%;">
+                <div class="col-xs-4 col-xs-offset-4 col-md-2 col-md-offset-5" style="padding-bottom: 72px; height: 10%; margin-top:1%; margin-bottom: 1%;">
                     <div class="back2top" style="display:flex;justify-content:center;align-items:center;width:100%; height: 10%;">
                         <div style="width:50%;color:#FCEE2D; text-align:center; height: 100%;">
                             <span>
