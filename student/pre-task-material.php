@@ -190,12 +190,6 @@
                         Start
                     </a>
         <?php       break;
-                case "DrinkingTool": ?>
-                    <a href="standard-drinking-tool.php?quiz_id=<?php echo $quizID?>" class="material-start">
-                        <span class="material-start-icon"></span>
-                        Start
-                    </a>
-        <?php       break;
                 case "Video": ?>
                     <a href="video.php?quiz_id=<?php echo $quizID?>" class="material-start">
                         <span class="material-start-icon"></span>

@@ -813,28 +813,6 @@
                                                     </a>
                                                 <?php               }
                                                 break;
-                                            case "DrinkingTool":
-                                                if (isset($activities[$i][$j]['Status'])) { ?>
-                                                    <a href="standard-drinking-tool.php?quiz_id=<?php echo $activities[$i][$j]['QuizID']?>">
-                                                        <div class="game-nav-item game-nav-item-completed game-standard-drinking-tool">
-                                                            <div class="game-nav-logo"></div>
-                                                            <div class="game-nav-title">Standard Drinking Tool</div>
-                                                            <div class="game-nav-divider"></div>
-                                                            <div class="game-nav-desc">Complete Standard Drinking Tool on <?php echo $activities[$i][$j]['TopicName']?> to receive <?php echo $activities[$i][$j]['Points']?> points.</div>
-                                                            <div class="game-nav-status">Completed</div>
-                                                        </div>
-                                                    </a>
-                                                <?php               } else { ?>
-                                                    <a href="pre-task-material.php?quiz_id=<?php echo $activities[$i][$j]['QuizID']?>">
-                                                        <div class="game-nav-item game-standard-drinking-tool">
-                                                            <div class="game-nav-logo"></div>
-                                                            <div class="game-nav-title">Standard Drinking Tool</div>
-                                                            <div class="game-nav-divider"></div>
-                                                            <div class="game-nav-desc">Complete Standard Drinking Tool on <?php echo $activities[$i][$j]['TopicName']?> to receive <?php echo $activities[$i][$j]['Points']?> points.</div>
-                                                        </div>
-                                                    </a>
-                                                <?php               }
-                                                break;
                                             case "Video":
                                                 if (isset($activities[$i][$j]['Status'])) {
                                                     if ($activities[$i][$j]['Status'] == "UNGRADED" || $activities[$i][$j]['Status'] == "GRADED") { ?>
