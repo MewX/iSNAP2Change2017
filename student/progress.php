@@ -390,12 +390,6 @@
         .game-cost-calculator .game-nav-logo {
             background-image: url("./img/calculator_icon.png");
         }
-        .game-standard-drinking-tool {
-            color: #DB1B1B;
-        }
-        .game-standard-drinking-tool .game-nav-logo {
-            background-image: url("./img/standard_drinking_tool_icon.png");
-        }
         .game-video {
             color: #AF24D1;
         }

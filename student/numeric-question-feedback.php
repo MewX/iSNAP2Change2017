@@ -18,17 +18,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"
 }
 
 define("COST_CALCULATOR_CORRECT_COUNT", 3);
-define("STANDARD_DRINKING_TOOL_CORRECT_COUNT", 4);
 
 $costCalculatorCorrectAns = array("45625.00", "182500.00", "365000.00");
-$drinkingToolCorrectAns = array("95", "355", "35", "110");
 
 switch($type) {
     case "cost_calculator":
         processStuAns($answerArr, $costCalculatorCorrectAns, COST_CALCULATOR_CORRECT_COUNT);
-        break;
-    case "standard_drinking_tool":
-        processStuAns($answerArr, $drinkingToolCorrectAns, STANDARD_DRINKING_TOOL_CORRECT_COUNT);
         break;
 }
 

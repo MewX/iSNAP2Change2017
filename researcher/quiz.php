@@ -59,6 +59,7 @@ try {
                             createEmptyLearningMaterial($conn, $quizID);
                     } //if misc
                     else {
+                        // TODO: debug this drinking tool removing error
                         $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
                         createMiscSection($conn, $quizID, $points, $quizType);
                     }
