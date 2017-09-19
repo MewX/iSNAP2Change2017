@@ -42,7 +42,7 @@ function db_connect($logger = null)
 
     $serverName = "127.0.0.1";
     $username = "root";
-    $password = "";
+    $password = "root";
     if ($logger == null) {
         $conn = new PDO("mysql:host=$serverName; dbname=isnap2changedb; charset=utf8", $username, $password);
     } else {
@@ -563,6 +563,7 @@ function getMaxWeek(PDO $conn)
 
 function resetStuDueTime(PDO $conn, $studentID, $quizID)
 {
+    // TODO: can be simplified with one line
     $weekSql = "SELECT Week AS week FROM Quiz WHERE QuizID = ?";
     $weekSql = $conn->prepare($weekSql);
     $weekSql->execute(array($quizID));
@@ -574,12 +575,22 @@ function resetStuDueTime(PDO $conn, $studentID, $quizID)
 }
 
 
-function createStuWeekRecord(PDO $conn, $studentID, $week, $dueTime)
+function createStuWeekRecord(PDO $conn, $studentID, $week)
 {
+    // TODO: can be simplified with one line
+    $timer = "select Timer from Week where WeekID = ?";
+    $timer = $conn->prepare($timer);
+    $timer->execute(array($week));
+    $timer = $timer->fetchAll();
+    if (count($timer) == 0) return;
+    $timer = $timer[0]['Timer'];
+
     $updateSql = "INSERT IGNORE INTO Student_Week_Record(StudentID, Week, DueTime)
                   VALUES (?,?,?)";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($studentID, $week, $dueTime));
+    $date = new DateTime();
+    $date->add(DateInterval::createFromDateString($timer . ' minutes'));
+    $updateSql->execute(array($studentID, $week, $date->format("Y-m-d H:i:s")));
 }
 
 function getStuWeekRecord(PDO $conn, $studentID, $week)
