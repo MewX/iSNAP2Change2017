@@ -103,9 +103,17 @@
         .task-operation {
             right: 350px;
         }
+        .noselect {
+            cursor: default;
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+        }
     </style>
-
-
     <style>
         /**
          * range样式
@@ -187,38 +195,38 @@
                 <div class="mini-row factor-list">
                     <div class="col-6">
                         <div class="factor-item">
-                            <div class="factor-title">How much do you pay for a pack of cigarettes?</div>
+                            <div class="factor-title noselect">How much do you pay for a pack of cigarettes?</div>
                             <div class="factor-slider">
                                 <input type="range" min="0" max="50" value="1" name="price">
                             </div>
-                            <div class="factor-label">$<span class="factor-value">1</span></div>
+                            <div class="factor-label noselect">$<span class="factor-value">1</span></div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="factor-item">
-                            <div class="factor-title">How many cigarettes are in each pack?</div>
+                            <div class="factor-title noselect">How many cigarettes are in each pack?</div>
                             <div class="factor-slider">
                                 <input type="range" min="1" max="50" value="20" name="cigaretteAmount">
                             </div>
-                            <div class="factor-label"><span class="factor-value">999</span></div>
+                            <div class="factor-label noselect"><span class="factor-value">999</span></div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="factor-item">
-                            <div class="factor-title">How many cigarettes do you smoke each day?</div>
+                            <div class="factor-title noselect">How many cigarettes do you smoke each day?</div>
                             <div class="factor-slider">
                                 <input type="range" min="1" max="100" value="1" name="frequency">
                             </div>
-                            <div class="factor-label"><span class="factor-value">1</span></div>
+                            <div class="factor-label noselect"><span class="factor-value">1</span></div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="factor-item">
-                            <div class="factor-title">How many years have you been smoking?</div>
+                            <div class="factor-title noselect">How many years have you been smoking?</div>
                             <div class="factor-slider">
                                 <input type="range" min="0" max="100" value="5" name="smokeYear">
                             </div>
-                            <div class="factor-label"><span class="factor-value">1</span></div>
+                            <div class="factor-label noselect"><span class="factor-value">1</span></div>
                         </div>
                     </div>
                 </div>
