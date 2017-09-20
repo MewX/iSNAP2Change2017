@@ -335,10 +335,46 @@ db_close($conn);
 
                 </div>
                 <div class="input-group">
-                    <span class="input-label">Identified as:</span>
+                    <span class="input-label">Country:</span>
                     <select id="identity-selection" class="form-control header4" style="opacity: 0.7; width: 69%; background-color: black; color:white; border-radius: 10px; border: none; text-align: center;">
-                        <option><span class="header4" style="color: white !important;text-align: center;">Resident</span></option>
-                        <option><span class="header4" style="color: white !important;text-align: center;">Aboriginal</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">AT - Austria</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">AU - Australia</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">BE - Belgium</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">BR - Brazil</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">CA - Canada</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">CH - Switzerland</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">CN - China</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">CO - Colombia</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">CZ - Czech Republic</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">DE - Germany</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">ES - Spain</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">FI - Finland</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">FR - France</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">GB - United Kingdom</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">HK - Hong Kong</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">IN - India</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">IO - British Indian Ocean Territory</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">IT - Italy</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">JP - Japan</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">KE - Kenya</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">KH - Cambodia</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">MX - Mexico</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">MY - Malaysia</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">NL - Netherlands</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">NO - Norway</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">NZ - New Zealand</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">PG - Papua New Guinea</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">PH - Philippines</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">PK - Pakistan</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">PL - Poland</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">RU - Russia</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">SE - Sweden</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">SG - Singapore</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">TH - Thailand</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">TW - Taiwan</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">TZ - Tanzania</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">US - United States</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">VN - Vietnam</span></option>
                     </select>
                 </div>
                 <div class="input-group">
@@ -471,13 +507,14 @@ db_close($conn);
             var identity = $('#identity-selection').val();
             var classID = $('#classid-hidden').val();
 
+            // tested and working
             var postData = "username="+username+"&password="+password+"&lastname="+lastname+"&firstname="+firstname
                 +"&email="+email+"&dobDay="+dobDay+"&dobMon="+dobMon+"&dobYear="+dobYear+"&gender="+gender
                 +"&identity="+identity+"&classID="+classID+"&action="+action;
 
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
                     parseSubmitInfoFeedback(xmlhttp.responseText);
                 }
             };
@@ -507,29 +544,29 @@ db_close($conn);
 
             var error = [];
             if (username === "") error.push("username");
-            if (dobDay == null || dobMon == null || dobYear == null ) error.push("birthday");
-            if (gender == undefined) error.push("gender");
+            if (dobDay === null || dobMon === null || dobYear === null ) error.push("birthday");
+            if (gender === undefined) error.push("gender");
 
-            if(error.length != 0){
+            if(error.length !== 0){
                 errorMsg += "The ";
                 for (i = 0; i < error.length; i ++) {
-                    if(i != 0 && i != error.length - 1){
+                    if(i !== 0 && i !== error.length - 1){
                         errorMsg +=", ";
                     }
-                    if(i == error.length - 1 && i != 0){
+                    if(i === error.length - 1 && i !== 0){
                         errorMsg += " and ";
                     }
                     errorMsg += error[i];
                 }
 
-                if(error.length == 1){
+                if(error.length === 1){
                     errorMsg += " is invalid. Please check again!";
                 }else{
                     errorMsg += " are invalid. Please check again!";
                 }
             }
 
-            if(errorMsg != ""){
+            if(errorMsg !== ""){
                 alert(errorMsg);
             }else{
                 submitInfo('REGISTER');

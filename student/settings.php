@@ -248,12 +248,48 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-sm-4" for="identity" style="color: #FCEE2D">Identified as:</label>
+                        <label class="control-label col-sm-4" for="identity" style="color: #FCEE2D">Country:</label>
                         <div class="col-sm-8">
                             <div class="input-group" id="identity">
                                 <select id="identity-selection" class="form-control">
-                                    <option <? if ($studentInfo->Identity === "Resident") echo "checked" ?>>Resident</option>
-                                    <option <? if ($studentInfo->Identity === "Aboriginal") echo "checked" ?>>Aboriginal</option>
+                                    <option <? if ($studentInfo->Identity === "AT - Austria") echo "selected=\"selected\"" ?>>AT - Austria</option>
+                                    <option <? if ($studentInfo->Identity === "AU - Australia") echo "selected=\"selected\"" ?>>AU - Australia</option>
+                                    <option <? if ($studentInfo->Identity === "BE - Belgium") echo "selected=\"selected\"" ?>>BE - Belgium</option>
+                                    <option <? if ($studentInfo->Identity === "BR - Brazil") echo "selected=\"selected\"" ?>>BR - Brazil</option>
+                                    <option <? if ($studentInfo->Identity === "CA - Canada") echo "selected=\"selected\"" ?>>CA - Canada</option>
+                                    <option <? if ($studentInfo->Identity === "CH - Switzerland") echo "selected=\"selected\"" ?>>CH - Switzerland</option>
+                                    <option <? if ($studentInfo->Identity === "CN - China") echo "selected=\"selected\"" ?>>CN - China</option>
+                                    <option <? if ($studentInfo->Identity === "CO - Colombia") echo "selected=\"selected\"" ?>>CO - Colombia</option>
+                                    <option <? if ($studentInfo->Identity === "CZ - Czech Republic") echo "selected=\"selected\"" ?>>CZ - Czech Republic</option>
+                                    <option <? if ($studentInfo->Identity === "DE - Germany") echo "selected=\"selected\"" ?>>DE - Germany</option>
+                                    <option <? if ($studentInfo->Identity === "ES - Spain") echo "selected=\"selected\"" ?>>ES - Spain</option>
+                                    <option <? if ($studentInfo->Identity === "FI - Finland") echo "selected=\"selected\"" ?>>FI - Finland</option>
+                                    <option <? if ($studentInfo->Identity === "FR - France") echo "selected=\"selected\"" ?>>FR - France</option>
+                                    <option <? if ($studentInfo->Identity === "GB - United Kingdom") echo "selected=\"selected\"" ?>>GB - United Kingdom</option>
+                                    <option <? if ($studentInfo->Identity === "HK - Hong Kong") echo "selected=\"selected\"" ?>>HK - Hong Kong</option>
+                                    <option <? if ($studentInfo->Identity === "IN - India") echo "selected=\"selected\"" ?>>IN - India</option>
+                                    <option <? if ($studentInfo->Identity === "IO - British Indian Ocean Territory") echo "selected=\"selected\"" ?>>IO - British Indian Ocean Territory</option>
+                                    <option <? if ($studentInfo->Identity === "IT - Italy") echo "selected=\"selected\"" ?>>IT - Italy</option>
+                                    <option <? if ($studentInfo->Identity === "JP - Japan") echo "selected=\"selected\"" ?>>JP - Japan</option>
+                                    <option <? if ($studentInfo->Identity === "KE - Kenya") echo "selected=\"selected\"" ?>>KE - Kenya</option>
+                                    <option <? if ($studentInfo->Identity === "KH - Cambodia") echo "selected=\"selected\"" ?>>KH - Cambodia</option>
+                                    <option <? if ($studentInfo->Identity === "MX - Mexico") echo "selected=\"selected\"" ?>>MX - Mexico</option>
+                                    <option <? if ($studentInfo->Identity === "MY - Malaysia") echo "selected=\"selected\"" ?>>MY - Malaysia</option>
+                                    <option <? if ($studentInfo->Identity === "NL - Netherlands") echo "selected=\"selected\"" ?>>NL - Netherlands</option>
+                                    <option <? if ($studentInfo->Identity === "NO - Norway") echo "selected=\"selected\"" ?>>NO - Norway</option>
+                                    <option <? if ($studentInfo->Identity === "NZ - New Zealand") echo "selected=\"selected\"" ?>>NZ - New Zealand</option>
+                                    <option <? if ($studentInfo->Identity === "PG - Papua New Guinea") echo "selected=\"selected\"" ?>>PG - Papua New Guinea</option>
+                                    <option <? if ($studentInfo->Identity === "PH - Philippines") echo "selected=\"selected\"" ?>>PH - Philippines</option>
+                                    <option <? if ($studentInfo->Identity === "PK - Pakistan") echo "selected=\"selected\"" ?>>PK - Pakistan</option>
+                                    <option <? if ($studentInfo->Identity === "PL - Poland") echo "selected=\"selected\"" ?>>PL - Poland</option>
+                                    <option <? if ($studentInfo->Identity === "RU - Russia") echo "selected=\"selected\"" ?>>RU - Russia</option>
+                                    <option <? if ($studentInfo->Identity === "SE - Sweden") echo "selected=\"selected\"" ?>>SE - Sweden</option>
+                                    <option <? if ($studentInfo->Identity === "SG - Singapore") echo "selected=\"selected\"" ?>>SG - Singapore</option>
+                                    <option <? if ($studentInfo->Identity === "TH - Thailand") echo "selected=\"selected\"" ?>>TH - Thailand</option>
+                                    <option <? if ($studentInfo->Identity === "TW - Taiwan") echo "selected=\"selected\"" ?>>TW - Taiwan</option>
+                                    <option <? if ($studentInfo->Identity === "TZ - Tanzania") echo "selected=\"selected\"" ?>>TZ - Tanzania</option>
+                                    <option <? if ($studentInfo->Identity === "US - United States") echo "selected=\"selected\"" ?>>US - United States</option>
+                                    <option <? if ($studentInfo->Identity === "VN - Vietnam") echo "selected=\"selected\"" ?>>VN - Vietnam</option>
                                 </select>
                             </div>
                         </div>
