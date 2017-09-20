@@ -180,7 +180,7 @@
 
         <div class="calculator-header">
             <h2 class="calculator-title">Cost Calculator</h2>
-            <div class="calculator-intro">Use the calculator to answer the questions below.</div>
+            <div class="calculator-intro">Use the calculator to answer the questions below. <b>(Note: please feel free to copy and paste the numbers!)</b></div>
         </div>
         <div class="calculator-content mini-row">
             <div class="col-6">

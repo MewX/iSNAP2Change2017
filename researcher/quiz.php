@@ -62,6 +62,7 @@ try {
                         // it's misc
                         $quizID = createQuiz($conn, $topicID, 'Misc', $week, $extraQuiz);
                         createMiscSection($conn, $quizID, $points, $quizType);
+                        createEmptyLearningMaterial($conn, $quizID);
                     }
 
                     $conn->commit();
