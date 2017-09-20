@@ -57,10 +57,10 @@ try {
                             createImageLearningMaterial($conn, $quizID);
                         else
                             createEmptyLearningMaterial($conn, $quizID);
-                    } //if misc
+                    }
                     else {
-                        // TODO: debug this drinking tool removing error
-                        $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
+                        // it's misc
+                        $quizID = createQuiz($conn, $topicID, 'Misc', $week, $extraQuiz);
                         createMiscSection($conn, $quizID, $points, $quizType);
                     }
 
