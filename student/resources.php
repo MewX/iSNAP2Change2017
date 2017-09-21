@@ -150,7 +150,6 @@
                     <li><a href="game-home.php">Snap Change</a></li>
                 <? } ?>
                 <li><a href="./snap-facts.php">Snap Facts</a></li>
-<!--                TODO: add resources in other pages-->
                 <li><a>Resources</a></li>
             </ul>
             <ul class="nav pull-right navbar-nav">
@@ -209,7 +208,6 @@
     </div>
 </div>
 
-
     <div class="content-wrapper" style="padding-top: 60px; min-height: calc(100vh - 127px);">
         <div class="snap-facts-container">
             <div class="snap-facts-header">
@@ -219,40 +217,39 @@
             </div>
             <div class="row" style="color: white; font-size: 16pt;">
                 <div class="col-4  col-md-offset-4">
-                <p>The following resources are initiatives targeting and raising awareness of smoking and its damaging effects on youth:</p>
-                <dl>
-                    <dt>Truth</dt>
-                    <dd>https://www.thetruth.com/</dd>
+                    <p>The following resources are initiatives targeting and raising awareness of smoking and its damaging effects on youth:</p>
+                    <dl>
+                        <dt>Truth</dt>
+                        <dd style="padding-left:40px">https://www.thetruth.com/</dd>
 
-                    <dt>No Smokes</dt>
-                    <dd>http://nosmokes.com.au/</dd>
+                        <dt>No Smokes</dt>
+                        <dd style="padding-left:40px">http://nosmokes.com.au/</dd>
 
-                    <dt>Smarter than Smoking</dt>
-                    <dd>http://www.smarterthansmoking.org.au/</dd>
+                        <dt>Smarter than Smoking</dt>
+                        <dd style="padding-left:40px">http://www.smarterthansmoking.org.au/</dd>
 
-                    <dt>Quitnow</dt>
-                    <dd>http://www.quitnow.gov.au/</dd>
+                        <dt>Quitnow</dt>
+                        <dd style="padding-left:40px">http://www.quitnow.gov.au/</dd>
 
-                    <dt>Reachout</dt>
-                    <dd>http://www.cyh.com/HealthTopics/HealthTopicDetails.aspx?p=243&np=163&id=2326</dd>
+                        <dt>Reachout</dt>
+                        <dd style="padding-left:40px">http://www.cyh.com/HealthTopics/HealthTopicDetails.aspx?p=243&np=163&id=2326</dd>
 
-                    <dt>Cancer Council SA</dt>
-                    <dd>https://www.cancersa.org.au/quitline</dd>
+                        <dt>Cancer Council SA</dt>
+                        <dd style="padding-left:40px">https://www.cancersa.org.au/quitline</dd>
 
-                    <dt>Centres for Disease Control and Prevention</dt>
-                    <dd>https://www.cdc.gov/tobacco/basic_information/youth/index.htm</dd>
-                </dl>
+                        <dt>Centres for Disease Control and Prevention</dt>
+                        <dd style="padding-left:40px">https://www.cdc.gov/tobacco/basic_information/youth/index.htm</dd>
+                    </dl>
 
-                <p>If you need help quitting get in contact with:</p>
-                <dl>
-                    <dt>QUIT Helpline</dt>
-                    <dd>137 848</dd>
-                </dl>
+                    <p style="padding-top: 20px">If you need help quitting get in contact with:</p>
+                    <dl>
+                        <dt>QUIT Helpline</dt>
+                        <dd style="padding-left:40px">137 848 </dd>
+                    </dl>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="footer-wrapper">
         <div class="footer">

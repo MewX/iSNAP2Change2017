@@ -207,6 +207,7 @@
                     <li><a href="game-home.php">Snap Change</a></li>
                 <? } ?>
                 <li><a>Snap Facts</a></li>
+                <li><a href="./resources.php">Resources</a></li>
             </ul>
             <ul class="nav pull-right navbar-nav">
                 <? if (isset($studentID)) { ?>

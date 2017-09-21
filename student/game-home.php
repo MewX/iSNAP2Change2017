@@ -248,7 +248,7 @@
             <ul class="nav-list">
                 <li class="nav-item"><a  class="nav-link" href="game-home.php">Snap Change</a></li>
                 <li class="nav-item"><a  class="nav-link" href="snap-facts.php">Snap Facts</a></li>
-                <li class="nav-item"><a  class="nav-link" href="#">Resources</a></li>
+                <li class="nav-item"><a  class="nav-link" href="./resources.php">Resources</a></li>
             </ul>
             <div class="settings">
                 <div class="info-item info-notification">
