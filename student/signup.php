@@ -337,8 +337,8 @@ db_close($conn);
                 <div class="input-group">
                     <span class="input-label">Country:</span>
                     <select id="identity-selection" class="form-control header4" style="opacity: 0.7; width: 69%; background-color: black; color:white; border-radius: 10px; border: none; text-align: center;">
-                        <option><span class="header4" style="color: white !important;text-align: center;">AT - Austria</span></option>
                         <option><span class="header4" style="color: white !important;text-align: center;">AU - Australia</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">AT - Austria</span></option>
                         <option><span class="header4" style="color: white !important;text-align: center;">BE - Belgium</span></option>
                         <option><span class="header4" style="color: white !important;text-align: center;">BR - Brazil</span></option>
                         <option><span class="header4" style="color: white !important;text-align: center;">CA - Canada</span></option>
@@ -375,6 +375,7 @@ db_close($conn);
                         <option><span class="header4" style="color: white !important;text-align: center;">TZ - Tanzania</span></option>
                         <option><span class="header4" style="color: white !important;text-align: center;">US - United States</span></option>
                         <option><span class="header4" style="color: white !important;text-align: center;">VN - Vietnam</span></option>
+                        <option><span class="header4" style="color: white !important;text-align: center;">Others</span></option>
                     </select>
                 </div>
                 <div class="input-group">

@@ -252,8 +252,8 @@
                         <div class="col-sm-8">
                             <div class="input-group" id="identity">
                                 <select id="identity-selection" class="form-control">
-                                    <option <? if ($studentInfo->Identity === "AT - Austria") echo "selected=\"selected\"" ?>>AT - Austria</option>
                                     <option <? if ($studentInfo->Identity === "AU - Australia") echo "selected=\"selected\"" ?>>AU - Australia</option>
+                                    <option <? if ($studentInfo->Identity === "AT - Austria") echo "selected=\"selected\"" ?>>AT - Austria</option>
                                     <option <? if ($studentInfo->Identity === "BE - Belgium") echo "selected=\"selected\"" ?>>BE - Belgium</option>
                                     <option <? if ($studentInfo->Identity === "BR - Brazil") echo "selected=\"selected\"" ?>>BR - Brazil</option>
                                     <option <? if ($studentInfo->Identity === "CA - Canada") echo "selected=\"selected\"" ?>>CA - Canada</option>
@@ -290,6 +290,7 @@
                                     <option <? if ($studentInfo->Identity === "TZ - Tanzania") echo "selected=\"selected\"" ?>>TZ - Tanzania</option>
                                     <option <? if ($studentInfo->Identity === "US - United States") echo "selected=\"selected\"" ?>>US - United States</option>
                                     <option <? if ($studentInfo->Identity === "VN - Vietnam") echo "selected=\"selected\"" ?>>VN - Vietnam</option>
+                                    <option <? if ($studentInfo->Identity === "Others") echo "selected=\"selected\"" ?>>Others</option>
                                 </select>
                             </div>
                         </div>
