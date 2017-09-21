@@ -38,6 +38,7 @@ define("EXCLUDED_IMAGE", -2);
 /* db connection*/
 function db_connect($logger = null)
 {
+    date_default_timezone_set('Australia/Adelaide');
     $conn = null;
 
     $serverName = "127.0.0.1";
