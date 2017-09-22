@@ -8,74 +8,6 @@ $columnName = array('ClassName', 'FirstName', 'LastName');
 $colspanName = array('');
 $quizList = array('ClassName', 'FirstName', 'LastName');
 
-function renderTable($studentStatistic, $quizList, $getQuizInfo){
-    for ($i = 0; $i < count($studentStatistic); $i++) {
-        if($i % 2 == 0){
-            echo "<tr class='odd'";
-        }else{
-            echo "<tr class='even'";
-        }
-        $studentID = $studentStatistic[$i]->StudentID;
-        $firstName = $studentStatistic[$i]->FirstName;
-        $lastName = $studentStatistic[$i]->LastName;
-        echo "StudentID = $studentID FirstName = $firstName LastName = $lastName >";
-        for ($j = 0; $j < count($quizList); $j++) {
-            $week = $getQuizInfo[$j-3]->Week;
-            $quizID = substr($quizList[$j],4);
-            $status = $studentStatistic[$i]->$quizList[$j];
-            echo "<td ";
-            if($j >= 3){
-                echo "Week = $week";
-                if($j > 2){
-                    echo "QuizID = $quizID";
-                }
-            }
-            echo ">";
-            if($status == "GRADED"){
-                $grading = str_replace("Quiz","Grading",$quizList[$j]);
-                $grade = $studentStatistic[$i]->$grading;
-                echo "<span> $grade </span>";
-                echo "<span class='glyphicon glyphicon-time pull-right' aria-hidden='true'></span>";
-            }else if($status == "UNGRADED"){
-                $id = $studentStatistic[$i]->StudentID;
-                $quizType = $getQuizInfo[$j-3]->QuizType;
-                if($quizType == "SAQ"){
-                    echo "
-                        <a target='_blank' href='saq-grading.php?studentID=$id\' >
-                            <i class='fa fa fa-star pull-left' aria-hidden='true'></i>
-                        </a>
-                    ";
-                }else if($quizType == "Poster"){
-                    echo "
-                        <a target='_blank' href='poster-grading.php?studentID=$id' >
-                            <i class='fa fa fa-star pull-left' aria-hidden='true'></i>
-                        </a>
-                    ";
-                }else{
-                    echo "
-                        <i class='fa fa fa-star pull-left' aria-hidden='true'></i>
-                    ";
-                }
-                echo "
-                    <span class='glyphicon glyphicon-time pull-right' aria-hidden='true'></span>
-                ";
-            }else if($status == "UNSUBMITTED" || $status == ""){
-                echo "
-                    <span class='fa fa-star-o pull-left' aria-hidden='true'></span>
-                    <span class='glyphicon glyphicon-time pull-right' aria-hidden='true'></span>
-                ";
-            }else{
-                echo "
-                    $status
-                ";
-            }
-            echo "</td>";
-        }
-        echo "</tr>";
-    }
-}
-
-
 try {
     $conn = db_connect();
     $studentStatistic;
@@ -92,22 +24,6 @@ try {
                 $quizID = $_POST['QuizID'];
                 resetStuDueTime($conn,$studentID,$quizID);
             }
-        }
-    }else if($_SERVER["REQUEST_METHOD"] == "GET") {
-        if (isset($_GET['filter'])){
-            $filter = $_GET['filter'];
-            if($filter == "All"){
-                $studentStatistic = getStudentsStatistic($conn);
-            }else{
-                $studentStatistic = getStudentsStatisticByStatus($conn, $filter);
-            }
-            $getQuizInfo = getQuizInfo($conn);
-            for ($i = 0; $i < count($getQuizInfo); $i++){
-                $j = $getQuizInfo[$i]->QuizID;
-                array_push($quizList,"Quiz$j");
-            }
-            renderTable($studentStatistic, $quizList, $getQuizInfo);
-            exit;
         }
     }
 } catch (Exception $e) {
@@ -263,18 +179,22 @@ db_close($conn);
                                                     <?php if($getQuizInfo[$j-3]->QuizType=="SAQ"): ?>
                                                         <a target="_blank" href=<?php $id = $studentStatistic[$i]->StudentID; echo "saq-grading.php?studentID=$id"?> >
                                                             <i class="fa fa fa-star pull-left" aria-hidden="true"></i>
+                                                            <span style="display:none">UNGRADED</span>
                                                         </a>
                                                     <?php elseif($getQuizInfo[$j-3]->QuizType=="Poster"):?>
                                                         <a target="_blank" href=<?php $id = $studentStatistic[$i]->StudentID; echo "poster-grading.php?studentID=$id"?> >
                                                             <i class="fa fa fa-star pull-left" aria-hidden="true"></i>
+                                                            <span style="display:none">UNGRADED</span>
                                                         </a>
                                                     <?php else: ?>
                                                         <i class="fa fa fa-star pull-left" aria-hidden="true"></i>
+                                                        <span style="display:none">UNGRADED</span>
                                                     <?php endif ?>
                                                     <span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>
                                                 <?php elseif($studentStatistic[$i]->$quizList[$j] == "UNSUBMITTED" || $studentStatistic[$i]->$quizList[$j]==""): ?>
                                                     <span class="fa fa-star-o pull-left" aria-hidden="true"></span>
                                                     <span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>
+                                                    <span style="display:none">UNSUBMITTED</span>
                                                 <?php else:?>
                                                     <?php echo $studentStatistic[$i]->$quizList[$j]; ?>
                                                 <?php endif; ?>
@@ -350,19 +270,34 @@ if (isset($_GET['studentID'])) {
 <!-- Page-Level Scripts -->
 <script>
     function studentFilter(filter){
-        console.log(filter);
-        var data = {
-            filter: filter
-        }
-        $.ajax({
-            url:'statistics.php',
-            type:'get',
-            datatype:'json',
-            data: data,
-            success: function(data){
-                $("#tableResults").html(data);
+        var table = $("#datatables").DataTable();
+        var tar = [];
+        var numOfColumn = table.row(1).data().length;
+        for(var i=0;i<numOfColumn;i++){
+            var column = table.column(i);
+            if(column.visible()!=true){
+                tar.push(i);
             }
-        })
+        }
+
+        table = $("#datatables").DataTable({
+            destroy: true,
+            responsive: true,
+            "columnDefs":[
+                {"searchable": false, "targets": tar}
+            ],
+            "pageLength": 50
+
+        });
+        if(filter == "All"){
+            table.search("").draw();
+        }else{
+            table.search(filter).draw();
+        }
+        for(var i=0;i<tar.length;i++){
+            var column = table.column(tar[i]);
+            column.visible(false);
+        }
     }
     function randomString(length) {
         return Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
@@ -413,6 +348,7 @@ if (isset($_GET['studentID'])) {
         $('a.toggle-vis').on('click', function (e) {
             e.preventDefault();
             // Get the column API object
+            table = $('#datatables').DataTable();
             if($(this).attr('data-column')==-1){
                 allVisible = !allVisible;
                 for(var i=3;i< <?php echo count($columnName)?>; i++){
