@@ -121,15 +121,7 @@ db_close($conn);
                             <input type="text" class="form-control" id="Week" name="week"
                                    placeholder="Input Week Number" value="<?php echo $quizResult->Week; ?>">
                             <br>
-                            <label for='TopicName'>Topic Name</label>
-                            <select class="form-control" id="TopicName" form="metadata-submission" name="topicName"
-                                    required>
-                                <?php for ($j = 0; $j < count($topicResult); $j++) { ?>
-                                    <option
-                                        value='<?php echo $topicResult[$j]->TopicName ?>' <?php if ($topicResult[$j]->TopicName == $quizResult->TopicName) echo 'selected' ?> ><?php echo $topicResult[$j]->TopicName ?></option>
-                                <?php } ?>
-                            </select>
-                            <br>
+                            <input type=hidden name="topicName" id="TopicName" value="Smoking" required>
                             <label for="Points">Points</label>
                             <input type="text" class="form-control" id="Points" name="points" placeholder="Input Points"
                                    value="<?php echo $quizResult->Points; ?>" disabled>

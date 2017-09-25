@@ -313,7 +313,9 @@ db_close($conn);
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li>
-                        <a href="index.php"><i class="fa fa-desktop fa-fw"></i> Dashboard<span class="fa arrow"></span></a>
+
+                        <a href="account.php"><i class="fa fa-archive" aria-hidden="true"></i> Account Administration<span class="fa arrow"></span></a>
+                        <a href="database.php"><i class="fa fa-database" aria-hidden="true"></i> Database Administration<span class="fa arrow"></span></a>
                     </li>
                     <!-- Only visible to super account-->
                     <?php if ($_SESSION['researcherID'] == 1): ?>

@@ -4,7 +4,7 @@ require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
-$columnName = array('QuizID', 'Week', 'TopicName', 'Points', 'ExtraQuiz', 'Questions');
+$columnName = array('QuizID', 'Week', 'Points', 'ExtraQuiz', 'Questions');
 
 try {
     $conn = db_connect();
@@ -81,30 +81,27 @@ db_close($conn);
                                             echo ' alert-danger';
                                         } ?>"
                                     >
-                                        <?php for ($j = 0; $j < count($columnName); $j++) { ?>
-                                            <td <?php if ($j == 0) {
-                                                echo 'style="display:none"';
-                                            } ?>>
-                                                <?php if($j != 4){
-                                                    echo $quizResult[$i]->$columnName[$j];
-                                                }else{
-                                                    if($quizResult[$i]->$columnName[$j] == 1){
-                                                        echo "Yes";
-                                                    }else{
-                                                        echo "No";
-                                                    }
-                                                }
-                                                ?>
-                                                <?php if ($j == count($columnName) - 1) { ?>
-                                                    <span class="glyphicon glyphicon-remove pull-right"
-                                                          aria-hidden="true"></span>
-                                                    <span class="pull-right" aria-hidden="true">&nbsp;</span>
-                                                    <a href="mcq-editor.php?quizID=<?php echo $quizResult[$i]->QuizID ?>">
+                                        <td style="display:none"><?php echo $quizResult[$i]->$columnName[0];?></td>
+                                        <td><?php echo $quizResult[$i]->$columnName[1];?></td>
+                                        <td><?php echo $quizResult[$i]->$columnName[2];?></td>
+                                        <td><?php
+                                            if($quizResult[$i]->$columnName[3] == 1){
+                                                echo "Yes";
+                                            }else{
+                                                echo "No";
+                                            };?>
+                                        </td>
+                                        <td>
+                                            <?php echo $quizResult[$i]->$columnName[4];?>
+                                            <span class="glyphicon glyphicon-remove pull-right"
+                                                  aria-hidden="true"></span>
+                                            <span class="pull-right" aria-hidden="true">&nbsp;</span>
+                                            <a href="mcq-editor.php?quizID=<?php echo $quizResult[$i]->QuizID ?>">
                                                         <span class="glyphicon glyphicon-edit pull-right"
                                                               aria-hidden="true"></span></a>
-                                                <?php } ?>
-                                            </td>
-                                        <?php } ?>
+                                        </td>
+
+
                                     </tr>
                                 <?php } ?>
                                 </tbody>
