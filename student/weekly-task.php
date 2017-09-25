@@ -32,7 +32,9 @@
         $studentQuesViewedAttrs = getStudentQuesViewedAttr($conn, $studentID);
 
         //get due time for this week
-        $dueTime = getStuWeekRecord($conn, $studentID, $week);
+//        $dueTime = getStuWeekRecord($conn, $studentID, $week);
+        $dueTime = DateTime::createFromFormat('Y-m-d H:i:s', getStuWeekRecord($conn, $studentID, $week));
+        $currentTime = new DateTime();
 
         //get all quizzes by studentID and week
         $quizzesRes = getQuizzesStatusByWeek($conn, $studentID, $week, 0);
@@ -280,12 +282,6 @@
         .game-cost-calculator .game-nav-logo {
             background-image: url("./img/calculator_icon.png");
         }
-        .game-standard-drinking-tool {
-            color: #DB1B1B;
-        }
-        .game-standard-drinking-tool .game-nav-logo {
-            background-image: url("./img/standard_drinking_tool_icon.png");
-        }
         .game-video {
             color: #AF24D1;
         }
@@ -375,7 +371,7 @@
             <ul class="nav-list">
                 <li class="nav-item"><a  class="nav-link" href="game-home.php">Snap Change</a></li>
                 <li class="nav-item"><a  class="nav-link" href="snap-facts.php">Snap Facts</a></li>
-                <li class="nav-item"><a  class="nav-link" href="#">Resources</a></li>
+                <li class="nav-item"><a  class="nav-link" href="resources.php">Resources</a></li>
             </ul>
             <div class="settings">
                 <div class="info-item info-notification">
@@ -656,12 +652,12 @@
                             try {
                                 $conn = db_connect();
                                 $quizID = $quizzesRes[$i]["QuizID"];
-                                $attemtInfo = getMCQAttemptInfo($conn, $quizID, $studentID);
+                                $attemptInfo = getMCQAttemptInfo($conn, $quizID, $studentID);
                             } catch (Exception $e) {
                                 debug_err($e);
                             }
                             db_close($conn);
-                            if ($attemtInfo->Attempt >= 3) {?>
+                            if (isset($attempInfo) && $attemptInfo->Attempt >= 3) {?>
                             <a href="multiple-choice-question.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
                                 <div class="game-nav-item game-nav-item-completed game-multiple-choice-quiz" >
                                     <div class="game-nav-logo"></div>
@@ -821,28 +817,6 @@
                         </a>
 <?php               }
                     break;
-                case "DrinkingTool":
-                    if (isset($quizzesRes[$i]['Status'])) { ?>
-                        <a href="standard-drinking-tool.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
-                            <div class="game-nav-item game-nav-item-completed game-standard-drinking-tool">
-                                <div class="game-nav-logo"></div>
-                                <div class="game-nav-title">Standard Drinking Tool</div>
-                                <div class="game-nav-divider"></div>
-                                <div class="game-nav-desc">Complete Standard Drinking Tool on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
-                                <div class="game-nav-status">Completed</div>
-                            </div>
-                        </a>
-<?php               } else { ?>
-                    <a href="pre-task-material.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
-                        <div class="game-nav-item game-standard-drinking-tool">
-                            <div class="game-nav-logo"></div>
-                            <div class="game-nav-title">Standard Drinking Tool</div>
-                            <div class="game-nav-divider"></div>
-                            <div class="game-nav-desc">Complete Standard Drinking Tool on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
-                        </div>
-                    </a>
-<?php               }
-                    break;
                 case "Video":
                     if (isset($quizzesRes[$i]['Status'])) {
                         if ($quizzesRes[$i]['Status'] == "UNGRADED" || $quizzesRes[$i]['Status'] == "GRADED") { ?>
@@ -916,31 +890,17 @@
 
 
 <script>
-<?php
-        if($dueTime != null) { ?>
-            if((Date.parse(new Date()) - Date.parse(new Date("<?php echo $dueTime?>"))) <= 0) {
-                $('.countdown').final_countdown({
-                    start: new Date().getTime() / 1000,
-                    end: Date.parse(new Date("<?php echo $dueTime?>"))/1000,
-                    now: new Date().getTime() / 1000
-                }, function() {
-                    snap.alert({
-                        content: 'You\'re out of time!',
-                        onClose: function () {
-                            console.log('alert close')
-                        }
-                    })
-                });
-            } else {
+    function setCounter(timeRemain) {
+        console.log("total time: " + timeRemain);
+        var timeNow = new Date();
+        var timeDue = new Date();
+        timeDue.setSeconds(timeDue.getSeconds() + timeRemain);
 
-            }
-<?php   } else { ?>
-            newDue = new Date(Date.parse(new Date()) +  60 * <?php echo $timer ?> * 1000);
-
+        if(timeRemain > 0) {
             $('.countdown').final_countdown({
-                start: new Date().getTime() / 1000,
-                end: Date.parse(newDue) / 1000,
-                now: new Date().getTime() / 1000
+                start: timeNow.getTime() / 1000,
+                end: timeDue.getTime() / 1000,
+                now: timeNow.getTime() / 1000
             }, function() {
                 snap.alert({
                     content: 'You\'re out of time!',
@@ -949,36 +909,25 @@
                     }
                 })
             });
+        }
+    }
 
-            var dd = newDue.getDate();
-            var mm = newDue.getMonth() + 1;
-            var yyyy = newDue.getFullYear();
-
-            if(dd<10) {
-                dd="0"+dd;
-            }
-
-            if(mm<10) {
-                mm="0"+mm;
-            }
-
-            newDue = yyyy+"-"+mm+"-"+dd+ " " +newDue.getHours() + ":" + newDue.getMinutes()+":" + newDue.getSeconds();
-
+<?php  if($dueTime != null) {
+            $timeRemain = $dueTime->getTimestamp() - $currentTime->getTimestamp();
+            echo "setCounter($timeRemain)";
+        } else { ?>
             $.ajax({
                 url: "save-due-time.php",
                 data: {
                     student_id: <?php echo $studentID?>,
-                    week: <?php echo $week?>,
-                    due_time: newDue
+                    week: <?php echo $week?>
                 },
                 type: "POST",
                 dataType : "json"
             })
-
                 .done(function(feedback) {
                     parseFeedback(feedback);
                 })
-
                 .fail(function( xhr, status, errorThrown ) {
                     alert( "Sorry, there was a problem!" );
                     console.log( "Error: " + errorThrown );
@@ -988,7 +937,7 @@
 <?php	} ?>
 
         function parseFeedback(feedback) {
-            if(feedback.message != "success"){
+            if(feedback.message !== "success"){
                 //alert(feedback.message + ". Please try again!");
                 //jump to error page
                 snap.alert({
@@ -997,6 +946,9 @@
                         console.log('alert close')
                     }
                 })
+            } else {
+                console.log(feedback);
+                setCounter(feedback.time);
             }
         }
 </script>

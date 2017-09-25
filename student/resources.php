@@ -1,48 +1,10 @@
 <?php
     require_once("../mysql-lib.php");
     require_once("../debug.php");
-    $pageName = "snap-facts";
+    $pageName = "resources";
 
     $NOJUMP = true;
     require('student-validation.php');
-
-    $conn = null;
-
-    try {
-        $conn = db_connect();
-
-        //get fact topics
-        $topicRes = getFactTopics($conn);
-
-        //randomly select three topics to show
-        $topicArr = array();
-
-        foreach($topicRes as $singleTopic) {
-            array_push($topicArr, $singleTopic->TopicID);
-        }
-
-        $randKeys = array_rand($topicArr, 3);
-
-        //randomly select one fact from each topic
-        $factRes = array();
-
-        for($i = 0; $i < 3; $i++) {
-            $factsRes = getFactsByTopicID($conn, $topicArr[$randKeys[$i]]);
-            $randFactKey = array_rand($factsRes, 1);
-            $factRes[$i] = $factsRes[$randFactKey];
-        }
-    } catch(Exception $e) {
-        if($conn != null) {
-            db_close($conn);
-        }
-
-        debug_err($e);
-        //to do: handle sql error
-        //...
-        exit;
-    }
-
-    db_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>Snap Facts | SNAP</title>
+    <title>Resources | SNAP</title>
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="./css/home.css"/>
     <link rel="stylesheet" href="./css/common.css">
@@ -164,25 +126,6 @@
         .week-facts-item-drugs .week-facts-name{
             color: #2fedc9;
         }
-
-        .week-facts-icon {
-            display: block;
-            width: 128px;
-            height: 128px;
-            background-size: 100% 100%;
-            margin: 0 auto;
-        }
-        .week-facts-name {
-            border-bottom: 2px solid;
-            margin-bottom: 20px;
-            display: block;
-            font-size: 24px;
-        }
-        .week-facts-intro {
-            color: #fff;
-            font-size: 20px;
-        }
-
     </style>
 </head>
 <body>
@@ -206,8 +149,8 @@
                 <? if (isset($studentID)) { ?>
                     <li><a href="game-home.php">Snap Change</a></li>
                 <? } ?>
-                <li><a>Snap Facts</a></li>
-                <li><a href="./resources.php">Resources</a></li>
+                <li><a href="./snap-facts.php">Snap Facts</a></li>
+                <li><a>Resources</a></li>
             </ul>
             <ul class="nav pull-right navbar-nav">
                 <? if (isset($studentID)) { ?>
@@ -265,122 +208,61 @@
     </div>
 </div>
 
-
     <div class="content-wrapper" style="padding-top: 60px; min-height: calc(100vh - 127px);">
         <div class="snap-facts-container">
             <div class="snap-facts-header">
-                <a href="#" class="snap-facts-logo"></a>
-                <div class="snap-facts-desc p1">
-                    Snap is all about providing information. <br/> Pick your category to start finding out more.
+                <div class="snap-facts-desc h1" style="color: white; margin-top: 100px; margin-bottom: 50px">
+                    Resources
                 </div>
             </div>
+            <div class="row" style="color: white; font-size: 16pt;">
+                <div class="col-4  col-md-offset-4">
+                    <p>The following resources are initiatives targeting and raising awareness of smoking and its damaging effects on youth:</p>
+                    <dl>
+                        <dt>Truth</dt>
+                        <dd style="padding-left:40px">https://www.thetruth.com/</dd>
 
-            <div class="snap-facts-all">
-                <ul class="snap-facts-list">
-                    <li class="snap-facts-item snap-facts-item-smoking">
-                        <a href="snap-facts-detail.php?topic_id=1" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-smoking"></span>
-                            <span class="snap-facts-item-name h4">Smoking</span>
-                        </a>
-                    </li>
-                    <li class="snap-facts-item snap-facts-item-nutrition">
-                        <a href="snap-facts-detail.php?topic_id=2" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-nutrition"></span>
-                            <span class="snap-facts-item-name h4" >Nutirtion</span>
-                        </a>
-                    </li>
-                    <li class="snap-facts-item snap-facts-item-alcohol">
-                        <a href="snap-facts-detail.php?topic_id=3" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-alcohol"></span>
-                            <span class="snap-facts-item-name h4" >Alcohol</span>
-                        </a>
-                    </li>
-                    <li class="snap-facts-item snap-facts-item-physical">
-                        <a href="snap-facts-detail.php?topic_id=4" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-physical"></span>
-                            <span class="snap-facts-item-name h4" >Physical</span>
-                        </a>
-                    </li>
-                    <li class="snap-facts-item snap-facts-item-health">
-                        <a href="snap-facts-detail.php?topic_id=8" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-health"></span>
-                            <span class="snap-facts-item-name h4" >Health and Wellbeing</span>
-                        </a>
-                    </li>
-                    <li class="snap-facts-item snap-facts-item-sexual">
-                        <a href="snap-facts-detail.php?topic_id=7" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-sexual"></span>
-                            <span class="snap-facts-item-name h4" >Sexual Health</span>
-                        </a>
-                    </li>
-                    <li class="snap-facts-item snap-facts-item-drugs">
-                        <a href="snap-facts-detail.php?topic_id=6" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-drugs"></span>
-                            <span class="snap-facts-item-name h4" >Drugs</span>
-                        </a>
-                    </li>
+                        <dt>No Smokes</dt>
+                        <dd style="padding-left:40px">http://nosmokes.com.au/</dd>
+
+                        <dt>Smarter than Smoking</dt>
+                        <dd style="padding-left:40px">http://www.smarterthansmoking.org.au/</dd>
+
+                        <dt>Quitnow</dt>
+                        <dd style="padding-left:40px">http://www.quitnow.gov.au/</dd>
+
+                        <dt>Reachout</dt>
+                        <dd style="padding-left:40px">http://www.cyh.com/HealthTopics/HealthTopicDetails.aspx?p=243&np=163&id=2326</dd>
+
+                        <dt>Cancer Council SA</dt>
+                        <dd style="padding-left:40px">https://www.cancersa.org.au/quitline</dd>
+
+                        <dt>Centres for Disease Control and Prevention</dt>
+                        <dd style="padding-left:40px">https://www.cdc.gov/tobacco/basic_information/youth/index.htm</dd>
+                    </dl>
+
+                    <p style="padding-top: 20px">If you need help quitting get in contact with:</p>
+                    <dl>
+                        <dt>QUIT Helpline</dt>
+                        <dd style="padding-left:40px">137 848 </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-wrapper">
+        <div class="footer">
+            <div class="footer-content">
+                <a href="#" class="footer-logo"></a>
+                <ul class="footer-nav">
+                    <li class="footer-nav-item"><a href="#">Any Legal Stuff</a></li>
+                    <li class="footer-nav-item"><a href="#">Acknowledgements</a></li>
                 </ul>
             </div>
         </div>
-
-        <div class="week-facts">
-            <h2 class="week-facts-title h1">Facts of the Week</h2>
-            <div class="week-facts-content">
-                <div class="week-facts-list">
-                    <div class="clearfix">
-
-                        <? for ($i = 0; $i < 3; $i ++) { ?>
-                        <div class="week-facts-item <?
-                        switch ($factRes[$i]->TopicID) {
-//                            TODO: this should be adjusted into smoking
-                            case 1:
-                                echo "week-facts-item-drugs";
-                                break;
-                            case 2:
-                                echo "week-facts-item-health";
-                                break;
-                            default:
-                                echo "week-facts-item-smoking";
-                                break;
-                        }?>">
-                            <a class="week-facts-divnk">
-                                <span class="week-facts-icon <?
-                                switch ($factRes[$i]->TopicID) {
-//                            TODO: this should be adjusted into smoking
-                                    case 1:
-                                        echo "image-icon-drugs";
-                                        break;
-                                    case 2:
-                                        echo "image-icon-health";
-                                        break;
-                                    default:
-                                        echo "image-icon-smoking";
-                                        break;
-                                }?>"></span>
-                                <span class="week-facts-name"><? echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID ?></span>
-                                    <span class="week-facts-intro">
-                                        <? echo $factRes[$i]->Content; ?>
-                                    </span>
-                            </a>
-                        </div>
-                        <? } ?>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
 
-<div class="footer-wrapper">
-    <div class="footer">
-        <div class="footer-content">
-            <a href="#" class="footer-logo"></a>
-            <ul class="footer-nav">
-                <li class="footer-nav-item"><a href="#">Any Legal Stuff</a></li>
-                <li class="footer-nav-item"><a href="#">Acknowledgements</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
 
 <script>
     $(document).ready(function () {
@@ -414,7 +296,7 @@
             $('#username').val("");
             $('#password').val("");
         });
-    })
+    });
 
     function validStudent() {
         var username = $('#username').val();

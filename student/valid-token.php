@@ -52,7 +52,7 @@
     </div>
     <div class="input-group input-group-lg" style="margin-top:8%; text-align: center; align-items: center; width: 100%;">
         <form id="valid-token" action="signup.php" method="post">
-            <input id="token" name="tokenString" type="password" style="text-align: center; border-radius: 8px; border: none; background-color: black; opacity: 0.7;" class="header3 form-control"  placeholder="Token Number" onfocus="this.placeholder=''" onblur="this.placeholder='Token Number'" aria-describedby="sizing-addon1">
+            <input id="token" name="tokenString" style="text-align: center; border-radius: 8px; border: none; background-color: black; opacity: 0.7;" class="header3 form-control"  placeholder="Token Number" onfocus="this.placeholder=''" onblur="this.placeholder='Token Number'" aria-describedby="sizing-addon1">
         </form>
     </div>
     <button type="button" onclick="validInfo('VALIDTOKEN')" class="header3 btn btn-primary btn-lg btn-block" style="margin-top:10%; border-radius: 10px; border-color: #FCEE2D !important; border: #FCEE2D solid 4px; background-color: black; opacity: 0.7; width: 80%; margin-left: 10%;">Verify</button>

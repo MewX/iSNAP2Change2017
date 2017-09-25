@@ -222,12 +222,6 @@
         .game-cost-calculator .game-nav-logo {
             background-image: url("./img/calculator_icon.png");
         }
-        .game-standard-drinking-tool {
-            color: #DB1B1B;
-        }
-        .game-standard-drinking-tool .game-nav-logo {
-            background-image: url("./img/standard_drinking_tool_icon.png");
-        }
         .game-video {
             color: #AF24D1;
         }
@@ -256,7 +250,7 @@
             <ul class="nav-list">
                 <li class="nav-item"><a  class="nav-link" href="game-home.php">Snap Change</a></li>
                 <li class="nav-item"><a  class="nav-link" href="snap-facts.php">Snap Facts</a></li>
-                <li class="nav-item"><a  class="nav-link" href="#">Resources</a></li>
+                <li class="nav-item"><a  class="nav-link" href="resources.php">Resources</a></li>
             </ul>
             <div class="settings">
                 <div class="info-item info-notification">
@@ -495,28 +489,6 @@
                                 <div class="game-nav-title">Cost Calculator</div>
                                 <div class="game-nav-divider"></div>
                                 <div class="game-nav-desc">Complete Cost Calculator on <?php echo $extraActivities[$i][$j]['TopicName']?> to receive <?php echo $extraActivities[$i][$j]['Points']?> points.</div>
-                            </div>
-                        </a>
-<?php               }
-                    break;
-                case "DrinkingTool":
-                    if (isset($extraActivities[$i][$j]['Status'])) { ?>
-                        <a href="standard-drinking-tool.php?quiz_id=<?php echo $extraActivities[$i][$j]['QuizID']?>">
-                            <div class="game-nav-item game-nav-item-completed game-standard-drinking-tool">
-                                <div class="game-nav-logo"></div>
-                                <div class="game-nav-title">Standard Drinking Tool</div>
-                                <div class="game-nav-divider"></div>
-                                <div class="game-nav-desc">Complete Standard Drinking Tool on <?php echo $extraActivities[$i][$j]['TopicName']?> to receive <?php echo $extraActivities[$i][$j]['Points']?> points.</div>
-                                <div class="game-nav-status">Completed</div>
-                            </div>
-                        </a>
-<?php               } else { ?>
-                        <a href="pre-task-material.php?quiz_id=<?php echo $extraActivities[$i][$j]['QuizID']?>">
-                            <div class="game-nav-item game-standard-drinking-tool">
-                                <div class="game-nav-logo"></div>
-                                <div class="game-nav-title">Standard Drinking Tool</div>
-                                <div class="game-nav-divider"></div>
-                                <div class="game-nav-desc">Complete Standard Drinking Tool on <?php echo $extraActivities[$i][$j]['TopicName']?> to receive <?php echo $extraActivities[$i][$j]['Points']?> points.</div>
                             </div>
                         </a>
 <?php               }

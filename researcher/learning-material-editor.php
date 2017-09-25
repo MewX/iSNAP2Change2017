@@ -35,7 +35,7 @@ try {
 <html>
 <head>
     <!-- Bootstrap Core CSS -->
-    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>
         tinymce.EditorManager.editors = []; //remove the old instances

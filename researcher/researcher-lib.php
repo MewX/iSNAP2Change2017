@@ -29,7 +29,7 @@ $gradingIconArr = array('pencil', 'video-camera', 'picture-o', 'magic');
 
 // php quiz type classification
 $editableQuizTypeArr = array('MCQ', 'SAQ', 'Matching', 'Poster', 'Video', 'Image');
-$miscQuizTypeArr = array('DrinkingTool', 'Calculator');
+$miscQuizTypeArr = array('Calculator');
 $saqLikeQuizTypeArr = array('SAQ', 'Video', 'Image');
 
 /* Array Definition */

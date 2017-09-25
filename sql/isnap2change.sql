@@ -1156,7 +1156,7 @@ WHERE `MCQID` = @MCQ_QUESTION_LAST_INSERT_ID;
 # [Example] insert a poster task into Poster_Section
 INSERT INTO `isnap2changedb`.`Poster_Section` (`QuizID`, `Title`, `Description`, `Points`) VALUES
   (9, 'Create a Future Board',
-   'What would you linke to achieve this school term? Make board with pictures of what you would like to achieve and the people and things that inspire you and whtat you aspire to be. You can also put down things about yourself that you would like to improve on. If you would feel more comvortable using words or pictures that only you know what they mean, you can . After all, some goals are personal.',
+   'What would you linke to achieve this school term? Make board with pictures of what you would like to achieve and the people and things that inspire you and what you aspire to be. You can also put down things about yourself that you would like to improve on. If you would feel more comvortable using words or pictures that only you know what they mean, you can . After all, some goals are personal.',
    20);
 
 # [Example] insert a learning material for a Poster task with QuizID = 9
@@ -1171,17 +1171,6 @@ VALUES ('<p>Learning material for this quiz has not been added.</p>', '10', 1);
 UPDATE `isnap2changedb`.`Class`
 SET `UnlockedProgress` = '3'
 WHERE `ClassID` = '1';
-
-# [Example] insert a standard drinking tool task into Quiz
-INSERT INTO `isnap2changedb`.`Quiz` (`Week`, `QuizType`, `TopicID`) VALUES ('2', 'Misc', '3');
-
-# [Example] insert a learning material for a standard drinking tool task with QuizID = 11
-INSERT INTO `isnap2changedb`.`Learning_Material` (`Content`, `QuizID`) VALUES (
-  '<p>Do you know what a standard drink is? (If no, go to the SNAP Facts page)</p><p>What is the standard amount of alcohol recommended by the National Health and Medical Research Council (NHMRC) to drink in a day? (You need to go to the iSNAPs facts page for this)</p><p>Alcoholic beverages are sold and served in many different sized containers. Different types of beverages contain different amounts of alcohol, and glass sizes are often not the same. A glass or container can hold more than one standard drink of alcohol. This can make it difficult to know how many standard drinks you consume.</p><p>Using standard drinks to measure your alcohol consumption is more accurate than counting the number of glasses or other containers you have consumed. If you are drinking packaged liquor the number of standard drinks should be written on the side of the beverage container.</p>',
-  '11');
-
-# [Example] insert a standard drinking tool task into Misc Quiz
-INSERT INTO `isnap2changedb`.`Misc_Section` (`QuizID`, `QuizSubType`, `Points`) VALUES ('11', 'DrinkingTool', '30');
 
 # [Example] set some quizzes as extra activities
 UPDATE `isnap2changedb`.`Quiz`
@@ -1221,7 +1210,7 @@ WHERE `OptionID` = '16';
 INSERT INTO `isnap2changedb`.`Quiz` (`Week`, `QuizType`, `TopicID`) VALUES ('4', 'Poster', '3');
 # [Example] insert a poster task into Poster_Section
 INSERT INTO `isnap2changedb`.`Poster_Section` (`QuizID`, `Title`, `Description`, `Points`) VALUES
-  (12, 'Create a Future Board',
+  (11, 'Create a Future Board',
    'What would you linke to achieve this school term? Make board with pictures of what you would like to achieve and the people and things that inspire you and whtat you aspire to be. You can also put down things about yourself that you would like to improve on. If you would feel more comvortable using words or pictures that only you know what they mean, you can . After all, some goals are personal.',
    20);
 

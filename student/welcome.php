@@ -101,6 +101,7 @@
                         <li><a href="game-home.php">Snap Change</a></li>
                         <? } ?>
                         <li><a href="./snap-facts.php">Snap Facts</a></li>
+                        <li><a href="./resources.php">Resources</a></li>
                     </ul>
                     <ul class="nav pull-right navbar-nav">
                         <? if (isset($studentID)) { ?>
@@ -128,9 +129,9 @@
                         <button id="login-close-btn" type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
                         <div class="col-xs-6 col-xs-offset-3">
                             <img src="./img/Snap_Logo_Inverted.png" style="height:20%; width: 100%;">
-                             <div style="text-align: center; margin-top: 15%">
-                        <span id="login-fail-text" style="color:red"></span>
-                    </div>
+                            <div style="text-align: center; margin-top: 15%">
+                                <span id="login-fail-text" style="color:red"></span>
+                            </div>
                             <div class="input-group input-group-lg" style="margin-top:5%; text-align: center;">
                                 <input id="username" type="text" style="text-align: center; border-radius: 10px; color:white; border: none; background-color: black;" class="form-control" placeholder="Username" onfocus="this.placeholder=''" onblur="this.placeholder='Username'" aria-describedby="sizing-addon1" autocomplete="off">
                             </div>
@@ -139,16 +140,24 @@
                             </div>
                             <button type="button" class="btn btn-primary btn-lg btn-block" style="margin-top:5%; border-radius: 10px; border-color: #FCEE2D !important; color:#FCEE2D; background-color: black; opacity: 0.7;" onclick="validStudent()">Log In</button>
                             <div style="text-align: center; margin-top: 5%">
-                        <span style="color: white;"> Don't have an account?</span>
-                        <a href='#' onclick="location.href = 'valid-token.php';" style='color:#FCEE2D;'>Sign Up</a>
-                    </div>
+                                <span style="color: white;"> Don't have an account?</span>
+                                <a href='#' onclick="location.href = 'valid-token.php';" style='color:#FCEE2D;'>Sign Up</a>
+                            </div>
+
+                            <script>
+                                $(function(){
+                                    $('.modal-body').keypress(function(e){
+                                        if(e.which === 13) {
+                                            validStudent();
+                                        }
+                                    })
+                                })
+                            </script>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
 
         <!-- Page 2 -->
         <div class="pg2" id="2">
@@ -244,11 +253,7 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
-
 
                 <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0" style="background-color: black; padding-right:0px; padding-left:0px; padding-bottom:0px; height: 100%;">
                     <div class="scoreboard" style="height: 100%;">
@@ -344,26 +349,27 @@
             </div> 
         </div>
 
-        <!-- Page 3 div -->
-        <div class="pg3" id="3">
+
+        <!-- Page 4 -->
+        <div class="pg4" id="4">
             <div class="pg3_heading" style="display:flex;justify-content:center;align-items:center;width:100%;height:15%;">
                 <div style="width:50%;color:#FCEE2D; text-align:center; margin-top:2%; height: inherit;">
                     <span style="font-size: 5vh;">
                         Facts of the Week
                     </span>
                 </div>
-            </div> 
+            </div>
             <div class="facts" style="width:100%; margin-top:5%; height:70%;">
                 <div class="row" style="margin-left:0px; margin-right:0px; height: 100%; width: 100%;">
                 <?php   for($i = 0; $i < 3; $i++) {
         if($i == 0) { ?>
-                    <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0 col-md-4 col-md-offset-0 fact1" style="text-align: center; height: 100%; ">  
-                    <?php   } else if($i == 1) { ?>   
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0 col-md-4 col-md-offset-0 fact1" style="text-align: center; height: 100%; ">
+                    <?php   } else if($i == 1) { ?>
                     <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0 col-md-4 col-md-offset-0 fact2" style="text-align: center; height: 100%; ">
 <?php   } else if($i == 2) { ?>
             <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-0 fact3" style="text-align: center; height: 100%; ">
-<?php   } ?> 
-                                  
+<?php   } ?>
+
                         <div class="col-xs-4 col-xs-offset-4" style="height: 25%;">
         <?php
             switch($factRes[$i]->TopicID) {
@@ -398,16 +404,11 @@
                             break;
                     }
                         echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID; ?>
-                    </div>
-
+                            </div>
                             <span class="fact"><?php echo $factRes[$i]->Content; ?></span>
                         </div>
-
                     </div>
-
-                    
-
-                  <?php   }   ?> 
+                  <?php   }   ?>
                 </div>
 
             </div>
@@ -419,63 +420,10 @@
                         <a href="./snap-facts.php"><img src="./img/snap_facts_icon.png" style="height: inherit; width: 10%;"/></a>
                     </span>
                 </div>
-            </div>  
-        </div>
-
-        <!-- Page 4 -->
-        <div class="pg4" id="4">           
-            <div class="social" style="width:100%; height:100%; align-content: center">
-                <div class="row" style="margin-left:0px; margin-right:0px; align-content:center; height:100%;">
-                    <div class="col-xs-8 col-xs-offset-2 col-md-4 col-md-offset-2 social1" style="margin-top:1.5%; height: 90%; margin-bottom: 4%;">
-                    <div class="fb-page" data-width="400" data-height="500" data-href="https://www.facebook.com/cpuresearch" data-tabs="timeline, messages" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                    <div style="height: 90%; width:95%;" class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/cpuresearch"><a href="https://www.facebook.com/cpuresearch">CPU Research</a></blockquote></div>
-                </div>
-                        
-                    </div>
-                    <div class="col-xs-8 col-xs-offset-2 col-md-4 col-md-offset-0 social2" style="margin-top:3%; height:90%; margin-bottom:4%;">
-                        <a class="twitter-timeline" data-width="400" data-height="500" href="https://twitter.com/CPUResearch" data-widget-id="732758309019607040">Tweets by @CPUResearch</a>
-                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-                    </div>
-                </div>
-            </div> 
-        </div>
+            </div>          </div>
 
         <!-- Page 5 -->
-        <div class="pg5" id="5">           
-            <div class="celebrity" style="width:100%; height:100%;">
-                <div class="col-xs-8 col-xs-offset-2 celeb1" style="margin-top:4%; height: 38%;">
-                    <div class="row" style="height:100%;">
-                        <div class="col-xs-4" style="height:100%;">
-                            <img src="./img/chris.jpg" style="width:90%; height:90%;">
-                        </div>
-                        <div class="col-xs-8" style="color:white; height: 100%;">
-                            <span class="header3" style="border: 0px solid #FCEE2D; border-bottom-color: #FCEE2D; border-bottom-width: 2px;">
-                                Celebrity #1</span>
-                            <div style="margin-top: 1.2%;">
-                                <span class="p1">Tobacco smoking is one of the largest causes of preventable illness and death in Australia. Research estimates that two in three lifetime smokers will die from a disease caused by their smoking. The most recent estimate of deaths caused by tobacco in Australia is for the financial year 2004–05. Tobacco use caused a total of 14,901 deaths in that year.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-8 col-xs-offset-2 celeb2" style="margin-top:2%; height:38%">
-                    <div class="row" style="height:100%;">
-                        <div class="col-xs-4" style="height:100%;">
-                            <img src="./img/ch2.jpg" style="width:90%; height: 90%;">
-                        </div>
-                        <div class="col-xs-8" style="color:white; height: 100%;">
-                            <span class="header3" style="border: 0px solid #FCEE2D; border-bottom-color: #FCEE2D; border-bottom-width: 2px;">
-                                Celebrity #2</span>
-                            <div style=" margin-top: 1.2%;">
-                                <span class="p1">Tobacco smoking is one of the largest causes of preventable illness and death in Australia. Research estimates that two in three lifetime smokers will die from a disease caused by their smoking. The most recent estimate of deaths caused by tobacco in Australia is for the financial year 2004–05. Tobacco use caused a total of 14,901 deaths in that year.</span>
-                            </div>
-                        </div> 
-                    </div>
-                </div>
-            </div> 
-        </div>
-
-        <!-- Page 6 -->
-        <div class="pg6" id="6">           
+        <div class="pg5" id="5" style="height: auto; min-height: 0;">
             <div class="contact" style="width:100%; height:100%; text-align: center;">
                 <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-1 contact1" style="margin-top:2%; height: 50%; ">
                     <span class="p1">Any questions or comments?
@@ -491,7 +439,7 @@
                         <div class="form-group" style="text-align: center;">
                             <label class="header5" style="color: #FCEE2D">Email</label>
                             <input type="email" class="form-control" id="emailID">
-                        </div>     
+                        </div>
                         <textarea id="commentContent" class="form-control" rows="4" style="margin-top: 3%"></textarea>
                     </form>
                     <div class="sendbutton" style="display:flex;justify-content:center;align-items:center;width:100%;height:20%; margin-top:1%;">
@@ -502,18 +450,18 @@
                             </a>
                             </span>
                         </div>
-                    </div> 
+                    </div>
                 </div>
-                <div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1 contact2" style="margin-top:3%; height:50%; margin-bottom: 1%;">                  
+                <div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1 contact2" style="margin-top:3%; height:50%; margin-bottom: 1%;">
                     <div class="logo" style="height:35%;">
                         <img src="./img/Snap_Logo_Inverted.png" style="width:90%; height: 90%;">
                     </div>
                     <div style="margin-top:3%;text-align: justify">
                         <span class="p1">Tobacco smoking is one of the largest causes of preventable illness and death in Australia. Research estimates that two in three lifetime smokers will die from a disease caused by their smoking. The most recent estimate of deaths caused by tobacco in Australia is for the financial year 2004–05.
                         </span>
-                    </div> 
+                    </div>
                 </div>
-                <div class="col-xs-4 col-xs-offset-4 col-md-2 col-md-offset-5" style="height: 10%; margin-top:1%; margin-bottom: 1%;">
+                <div class="col-xs-4 col-xs-offset-4 col-md-2 col-md-offset-5" style="padding-bottom: 72px; height: 10%; margin-top:1%; margin-bottom: 1%;">
                     <div class="back2top" style="display:flex;justify-content:center;align-items:center;width:100%; height: 10%;">
                         <div style="width:50%;color:#FCEE2D; text-align:center; height: 100%;">
                             <span>
@@ -524,7 +472,7 @@
                             <br>
                             <span class="header5">Back to Top</span>
                         </div>
-                    </div> 
+                    </div>
                 </div>
 
                 <nav class="navbar navbar-inverse navbar-fixed-bottom">
@@ -556,35 +504,8 @@
                     mobile:       true,       // default
                     live:         true        // default
                 }
-            )
+            );
             wow.init();
-
-            (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=909271749154924";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-
-            <!--Twitter widgets.js -->
-            window.twttr = (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0],
-                    t = window.twttr || {};
-                if (d.getElementById(id)) return t;
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "https://platform.twitter.com/widgets.js";
-                fjs.parentNode.insertBefore(js, fjs);
-
-                t._e = [];
-                t.ready = function(f) {
-                    t._e.push(f);
-                };
-
-                return t;
-            }(document, "script", "twitter-wjs"));
-
 
             $(document).ready(function () {
 
