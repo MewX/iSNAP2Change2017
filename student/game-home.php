@@ -246,8 +246,8 @@
         <div class="header">
             <a class="home-link" href="welcome.php">SNAP</a>
             <ul class="nav-list">
-                <li class="nav-item"><a  class="nav-link" href="game-home.php">Snap Change</a></li>
-                <li class="nav-item"><a  class="nav-link" href="snap-facts.php">Snap Facts</a></li>
+                <li class="nav-item"><a  class="nav-link" href="game-home.php">Snap<sup>2</sup> Change</a></li>
+                <li class="nav-item"><a  class="nav-link" href="snap-facts.php">Snap<sup>2</sup> Facts</a></li>
                 <li class="nav-item"><a  class="nav-link" href="./resources.php">Resources</a></li>
             </ul>
             <div class="settings">
