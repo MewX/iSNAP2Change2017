@@ -100,6 +100,7 @@ db_close($conn);
                                 <input type="hidden" name="MAX_FILE_SIZE" value="50000000" />
                                 <!-- Name of input element determines name in $_FILES array -->
                                 <input name="userfile" type="file" id="upload"/>
+                                <br>
                                 <input type="submit" value="Restore" class="btn btn-default"/>
                             </form>
                         </div>
