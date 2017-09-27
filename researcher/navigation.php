@@ -320,6 +320,8 @@ db_close($conn);
                         <li>
                             <a href="account.php"><i class="fa fa-archive" aria-hidden="true"></i> Account
                                 Administration<span class="fa arrow"></span></a>
+                            <a href="database.php"><i class="fa fa-database" aria-hidden="true"></i>
+                                Database Administration<span class="fa arrow"></span></a>
                         </li>
                     <? endif; ?>
                     <li>

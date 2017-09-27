@@ -27,7 +27,6 @@ try {
         if(isset($_POST["remember"])){
             //cookie will be saved for 7 days
             setcookie('username',$username,time()+60*60*7);
-            setcookie('password',$password,time()+60*60*7);
         }
 
     } else {

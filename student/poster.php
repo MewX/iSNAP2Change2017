@@ -518,7 +518,11 @@
         }
     };
 
-    $('.question-submit').on('click', onSubmitClick)
+    $('.question-submit').on('click', function(){
+        if(confirm("Do you want to submit this quiz?")){
+            onSubmitClick();
+        }
+    })
 </script>
 </body>
 </html>

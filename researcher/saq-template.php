@@ -4,7 +4,7 @@ require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
-$columnName = array('QuizID', 'Week', 'TopicName', 'Points', 'ExtraQuiz', 'Questions');
+$columnName = array('QuizID', 'Week', 'Points', 'ExtraQuiz', 'Questions');
 
 try {
     $conn = db_connect();
@@ -79,7 +79,7 @@ db_close($conn);
                                                 echo 'style="display:none"';
                                             } ?>>
                                                 <?php if (strlen($quizResult[$i]->$columnName[$j]) > 0){
-                                                    if($j == 4){
+                                                    if($j == 3){
                                                         if($quizResult[$i]->$columnName[$j] == 1){
                                                             echo "Yes";
                                                         }else{

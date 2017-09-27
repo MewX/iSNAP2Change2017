@@ -7,8 +7,10 @@ require_once("researcher-lib.php");
 $columnName = array('ClassName', 'FirstName', 'LastName');
 $colspanName = array('');
 $quizList = array('ClassName', 'FirstName', 'LastName');
+
 try {
     $conn = db_connect();
+    $studentStatistic;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['update'])) {
             $update = $_POST['update'];
@@ -90,10 +92,6 @@ db_close($conn);
                         <div>
                             Toggle column:
                             <i class="fa fa-check-square-o fa-fw"></i><a class="toggle-vis" data-column="-1">tick All</a>
-<!--                            --><?php //for ($i = 0; $i < count($columnName); $i++) {?>
-<!--                                <i class="fa fa-check-square-o fa-fw"></i>-->
-<!--                                <a class="toggle-vis" start = "2" data-column="--><?php //echo $i; ?><!--">--><?php //echo $columnName[$i]; ?><!--</a>&nbsp;-->
-<!--                            --><?php //} ?>
                             <?php for ($i = 0; $i < count($getQuizWithWeek); $i++) {?>
                                 <i class="fa fa-check-square-o fa-fw"></i>
                                 <a class="toggle-vis" start = "<?php echo $startColumn ?>" data-column="<?php $startColumn+=$getQuizWithWeek[$i]->QuizNum; echo $startColumn-1; ?>">
@@ -104,9 +102,16 @@ db_close($conn);
 
                         <div>
                             <br>
-                            <span class="fa fa-check-circle pull-left" aria-hidden="true" style="font-size: 16px"> Extra Quiz </span>
-                            <span class="fa fa-star pull-left" aria-hidden="true" style="font-size: 16px"> Not Graded</span>
-                            <span class="fa fa-star-o pull-left" aria-hidden="true" style="font-size: 16px"> Not Submitted</span>
+                            <a class="fa fa-bars pull-left" aria-hidden="true" style="font-size: 16px" onclick="studentFilter('All')">
+                                All Student
+                            </a>
+                            <a class="fa fa-star pull-left" aria-hidden="true" style="font-size: 16px" onclick="studentFilter('UNGRADED')">
+                                Not Graded
+                            </a>
+                            <a class="fa fa-star-o pull-left" aria-hidden="true" style="font-size: 16px" onclick="studentFilter('UNSUBMITTED')">
+                                Not Submitted
+                            </a>
+                            <span class="fa fa-check-circle pull-left" aria-hidden="true" style="font-size: 16px" > Extra Quiz </span>
                             <span class="fa fa-clock-o pull-left" aria-hidden="true" style="font-size: 16px"> Reset Timer </span>
                             <br>
                             <br>
@@ -147,7 +152,7 @@ db_close($conn);
                                         <?php } ?>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tableResults">
                                 <?php for ($i = 0; $i < count($studentStatistic); $i++) { ?>
                                     <tr class="<?php if ($i % 2 == 0) {
                                             echo "odd";
@@ -174,18 +179,22 @@ db_close($conn);
                                                     <?php if($getQuizInfo[$j-3]->QuizType=="SAQ"): ?>
                                                         <a target="_blank" href=<?php $id = $studentStatistic[$i]->StudentID; echo "saq-grading.php?studentID=$id"?> >
                                                             <i class="fa fa fa-star pull-left" aria-hidden="true"></i>
+                                                            <span style="display:none">UNGRADED</span>
                                                         </a>
                                                     <?php elseif($getQuizInfo[$j-3]->QuizType=="Poster"):?>
                                                         <a target="_blank" href=<?php $id = $studentStatistic[$i]->StudentID; echo "poster-grading.php?studentID=$id"?> >
                                                             <i class="fa fa fa-star pull-left" aria-hidden="true"></i>
+                                                            <span style="display:none">UNGRADED</span>
                                                         </a>
                                                     <?php else: ?>
                                                         <i class="fa fa fa-star pull-left" aria-hidden="true"></i>
+                                                        <span style="display:none">UNGRADED</span>
                                                     <?php endif ?>
                                                     <span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>
                                                 <?php elseif($studentStatistic[$i]->$quizList[$j] == "UNSUBMITTED" || $studentStatistic[$i]->$quizList[$j]==""): ?>
                                                     <span class="fa fa-star-o pull-left" aria-hidden="true"></span>
                                                     <span class="glyphicon glyphicon-time pull-right" aria-hidden="true"></span>
+                                                    <span style="display:none">UNSUBMITTED</span>
                                                 <?php else:?>
                                                     <?php echo $studentStatistic[$i]->$quizList[$j]; ?>
                                                 <?php endif; ?>
@@ -254,13 +263,42 @@ if (isset($_GET['studentID'])) {
         debug_err($e);
         echo '';
     }
-} else
-    echo '';
+}
 ?>">
 <!-- SB Admin Library -->
 <?php require_once('sb-admin-lib.php'); ?>
 <!-- Page-Level Scripts -->
 <script>
+    function studentFilter(filter){
+        var table = $("#datatables").DataTable();
+        var tar = [];
+        var numOfColumn = table.row(1).data().length;
+        for(var i=0;i<numOfColumn;i++){
+            var column = table.column(i);
+            if(column.visible()!=true){
+                tar.push(i);
+            }
+        }
+
+        table = $("#datatables").DataTable({
+            destroy: true,
+            responsive: true,
+            "columnDefs":[
+                {"searchable": false, "targets": tar}
+            ],
+            "pageLength": 50
+
+        });
+        if(filter == "All"){
+            table.search("").draw();
+        }else{
+            table.search(filter).draw();
+        }
+        for(var i=0;i<tar.length;i++){
+            var column = table.column(tar[i]);
+            column.visible(false);
+        }
+    }
     function randomString(length) {
         return Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
     }
@@ -310,6 +348,7 @@ if (isset($_GET['studentID'])) {
         $('a.toggle-vis').on('click', function (e) {
             e.preventDefault();
             // Get the column API object
+            table = $('#datatables').DataTable();
             if($(this).attr('data-column')==-1){
                 allVisible = !allVisible;
                 for(var i=3;i< <?php echo count($columnName)?>; i++){

@@ -274,7 +274,9 @@
             var $doc = $(document);
             this.$form.on('submit', function (e) {
                 e.preventDefault();
-                that.opt.onSubmit(that.getData())
+                if(confirm("Do you want to submit this quiz?")){
+                    that.opt.onSubmit(that.getData())
+                }
             })
         },
         getData: function () {
