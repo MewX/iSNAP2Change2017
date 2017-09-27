@@ -8,7 +8,10 @@
 
 require '../mysql-lib.php';
 
-$connection = db_connect();
+$conn = db_connect();
 echo strtolower("Todd\n");
 //var_dump(checkStudentUsernameExisting($connection, 'todd'));
-var_dump(validStudent($connection, 'Todd', 'ISNAP'));
+//var_dump(validStudent($connection, 'Todd', 'ISNAP'));
+
+$quizID = createQuiz($conn, 3, 'Calculator', 1);
+createMiscSection($conn, $quizID, 12, 'Calculator');

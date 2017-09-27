@@ -126,6 +126,11 @@
         .week-facts-item-drugs .week-facts-name{
             color: #2fedc9;
         }
+        .break-line {
+            word-wrap: break-word;      /* IE 5.5-7 */
+            white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+            white-space: pre-wrap;      /* current browsers */
+        }
     </style>
 </head>
 <body>
@@ -216,31 +221,30 @@
                 </div>
             </div>
             <div class="row" style="color: white; font-size: 16pt;">
-                <div class="col-4  col-md-offset-4">
+                <div class="col-6  col-md-offset-3">
                     <p>The following resources are initiatives targeting and raising awareness of smoking and its damaging effects on youth:</p>
                     <dl>
                         <dt>Truth</dt>
-                        <dd style="padding-left:40px">https://www.thetruth.com/</dd>
+                        <dd class="break-line" style="padding-left:40px"><a href="https://www.thetruth.com/" target="_blank">https://www.thetruth.com/</a></dd>
 
                         <dt>No Smokes</dt>
-                        <dd style="padding-left:40px">http://nosmokes.com.au/</dd>
+                        <dd class="break-line" style="padding-left:40px"><a href="http://nosmokes.com.au/" target="_blank">http://nosmokes.com.au/</a></dd>
 
                         <dt>Smarter than Smoking</dt>
-                        <dd style="padding-left:40px">http://www.smarterthansmoking.org.au/</dd>
+                        <dd class="break-line" style="padding-left:40px"><a href="http://www.smarterthansmoking.org.au/" target="_blank">http://www.smarterthansmoking.org.au/</a></dd>
 
                         <dt>Quitnow</dt>
-                        <dd style="padding-left:40px">http://www.quitnow.gov.au/</dd>
+                        <dd class="break-line" style="padding-left:40px"><a href="http://www.quitnow.gov.au/" target="_blank">http://www.quitnow.gov.au/</a></dd>
 
                         <dt>Reachout</dt>
-                        <dd style="padding-left:40px">http://www.cyh.com/HealthTopics/HealthTopicDetails.aspx?p=243&np=163&id=2326</dd>
+                        <dd class="break-line" style="padding-left:40px"><a href="http://www.cyh.com/HealthTopics/HealthTopicDetails.aspx?p=243&np=163&id=2326" target="_blank">http://www.cyh.com/HealthTopics/HealthTopicDetails.aspx?p=243&np=163&id=2326</a></dd>
 
                         <dt>Cancer Council SA</dt>
-                        <dd style="padding-left:40px">https://www.cancersa.org.au/quitline</dd>
+                        <dd class="break-line" style="padding-left:40px"><a href="https://www.cancersa.org.au/quitline" target="_blank">https://www.cancersa.org.au/quitline</a></dd>
 
                         <dt>Centres for Disease Control and Prevention</dt>
-                        <dd style="padding-left:40px">https://www.cdc.gov/tobacco/basic_information/youth/index.htm</dd>
+                        <dd class="break-line" style="padding-left:40px"><a href="https://www.cdc.gov/tobacco/basic_information/youth/index.htm" target="_blank">https://www.cdc.gov/tobacco/basic_information/youth/index.htm</a></dd>
                     </dl>
-
                     <p style="padding-top: 20px">If you need help quitting get in contact with:</p>
                     <dl>
                         <dt>QUIT Helpline</dt>
