@@ -164,8 +164,8 @@ db_close($conn);
                                 value="<?php echo $schoolResult[$i]->SchoolName ?>"><?php echo $schoolResult[$i]->SchoolName ?></option>
                         <?php } ?>
                     </select>
-                    <br><label for="tokenString">TokenString</label><span
-                        class="glyphicon glyphicon-random pull-right"></span>
+                    <br><label for="tokenString">TokenString (Unique)</label><span
+                        class="glyphicon glyphicon-random pull-right"> Random</span>
                     <input type="text" class="form-control dialogInput" id="tokenString" name="tokenString" required>
                     <br>
                     <label for="EnrolledStudents">EnrolledStudents</label>
@@ -206,7 +206,11 @@ if (isset($_GET['schoolID'])) {
 <!-- Page-Level Scripts -->
 <script>
     function randomString(length) {
-        return Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
+        var text = "";
+        var possible = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // optimzied for visualization
+        for (var i = 0; i < length; i++)
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        return text;
     }
 
     function updateTextInput(val) {
@@ -261,7 +265,7 @@ if (isset($_GET['schoolID'])) {
         }
     });
     $('.glyphicon-random').on('click', function () {
-        $('#tokenString').val(randomString(16));
+        $('#tokenString').val(randomString(6));
     });
     $('#btnSave').on('click', function () {
         $('#submission').validate();
