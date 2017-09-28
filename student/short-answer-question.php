@@ -231,7 +231,7 @@
 
     <div class="attachment">
         <ul class="attachment-nav">
-            <li class="attachment-nav-item">SNAP <br>FACTS</li>
+            <li class="attachment-nav-item">SNAP² <br>FACTS</li>
             <li class="attachment-nav-item">READING <br> MATERIAL</li>
         </ul>
     </div>

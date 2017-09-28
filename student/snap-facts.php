@@ -271,7 +271,7 @@
             <div class="snap-facts-header">
                 <a href="#" class="snap-facts-logo"></a>
                 <div class="snap-facts-desc p1">
-                    Snap is all about providing information. <br/> Pick your category to start finding out more.
+                    SNAP² is all about providing information. <br/> Pick your category to start finding out more.
                 </div>
             </div>
 

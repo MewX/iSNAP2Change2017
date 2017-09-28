@@ -176,7 +176,7 @@
                                 <div style="width: 100%; border: 0px solid; border-bottom-color: #FCEE2D; border-bottom-width: 2px;">
                                     <span class="header4">Perfect Attendance</span></div>
                                 <br>
-                                <span class="p1">Log in every day for the entire SNAP Program to unlock this achievement </span>
+                                <span class="p1">Log in every day for the entire SNAP² Program to unlock this achievement </span>
                             </div>                                                        
                         </div>
                     </div>

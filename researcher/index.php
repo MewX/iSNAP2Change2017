@@ -28,7 +28,7 @@ db_close($conn);
         require_once ('dashboard.php');
     else: ?>
         <div class="jumbotron">
-            <h1 align="center">Welcome to SNAP for Researcher</h1>
+            <h1 align="center">Welcome to SNAP² for Researcher</h1>
 
             <h2 align="center">
                 Please click the button to log in.

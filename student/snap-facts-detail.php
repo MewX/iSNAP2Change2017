@@ -321,7 +321,7 @@ switch ($topicID) {
 <?php               for($j = 0; $j < 9; $j++) { ?>
                         <div class="facts-detail-item">
                             <div class="item-header">
-                                <h2 class="h3 item-title">SNAP Fact</h2>
+                                <h2 class="h3 item-title">SNAP² Fact</h2>
                             </div>
                             <div class="item-content"><?php echo $snapFacts[$i*9+$j]->Content ?></div>
                         </div>
@@ -333,7 +333,7 @@ switch ($topicID) {
 <?php               for($k = $snapFactsPageCount*9; $k < $snapFactsCount; $k++) { ?>
                         <div class="facts-detail-item">
                             <div class="item-header">
-                                <h2 class="h3 item-title">SNAP Fact</h2>
+                                <h2 class="h3 item-title">SNAP² Fact</h2>
                             </div>
                             <div class="item-content"><?php echo $snapFacts[$k]->Content ?></div>
                         </div>
