@@ -45,7 +45,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>Snap Change | SNAP²</title>
+    <title>SNAP² Change | SNAP²</title>
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/vendor/slick.css">
     <link rel="stylesheet" href="./css/vendor/slick-theme.css">
@@ -246,8 +246,8 @@
         <div class="header">
             <a class="home-link" href="welcome.php">SNAP²</a>
             <ul class="nav-list">
-                <li class="nav-item"><a  class="nav-link" href="game-home.php">Snap Change</a></li>
-                <li class="nav-item"><a  class="nav-link" href="snap-facts.php">Snap Facts</a></li>
+                <li class="nav-item"><a  class="nav-link" href="game-home.php">SNAP² Change</a></li>
+                <li class="nav-item"><a  class="nav-link" href="snap-facts.php">SNAP² Facts</a></li>
                 <li class="nav-item"><a  class="nav-link" href="./resources.php">Resources</a></li>
             </ul>
             <div class="settings">

@@ -201,7 +201,7 @@
             <a class="home-link" href="welcome.php">SNAP²</a>
             <ul class="nav-list">
                 <li class="nav-item"><a class="nav-link" href="http://taobao.com">GAME HOME</a></li>
-                <li class="nav-item"><a class="nav-link" href="http://taobao.com">Snap Facts</a></li>
+                <li class="nav-item"><a class="nav-link" href="http://taobao.com">SNAP² Facts</a></li>
                 <li class="nav-item"><a class="nav-link" href="http://taobao.com">Resources</a></li>
             </ul>
             <div class="settings">

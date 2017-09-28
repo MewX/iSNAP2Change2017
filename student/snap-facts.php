@@ -50,7 +50,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>Snap Facts | SNAP²</title>
+    <title>SNAP² Facts | SNAP²</title>
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="./css/home.css"/>
     <link rel="stylesheet" href="./css/common.css">
@@ -204,9 +204,9 @@
                 </li>
                 <li class="divider"></li>
                 <? if (isset($studentID)) { ?>
-                    <li><a href="game-home.php">Snap Change</a></li>
+                    <li><a href="game-home.php">SNAP² Change</a></li>
                 <? } ?>
-                <li><a>Snap Facts</a></li>
+                <li><a>SNAP² Facts</a></li>
                 <li><a href="./resources.php">Resources</a></li>
             </ul>
             <ul class="nav pull-right navbar-nav">

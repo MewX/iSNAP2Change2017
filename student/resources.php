@@ -152,9 +152,9 @@
                 </li>
                 <li class="divider"></li>
                 <? if (isset($studentID)) { ?>
-                    <li><a href="game-home.php">Snap Change</a></li>
+                    <li><a href="game-home.php">SNAP² Change</a></li>
                 <? } ?>
-                <li><a href="./snap-facts.php">Snap Facts</a></li>
+                <li><a href="./snap-facts.php">SNAP² Facts</a></li>
                 <li><a>Resources</a></li>
             </ul>
             <ul class="nav pull-right navbar-nav">
