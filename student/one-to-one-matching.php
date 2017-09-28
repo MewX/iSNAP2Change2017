@@ -66,7 +66,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>Matching | SNAP</title>
+    <title>Matching | SNAP²</title>
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/vendor/dragula.min.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
@@ -111,7 +111,7 @@
 <div class="page-wrapper">
     <div class="header-wrapper">
         <div class="header">
-            <a class="home-link" href="welcome.php">SNAP</a>
+            <a class="home-link" href="welcome.php">SNAP²</a>
 
             <div class="settings">
                 <div class="setting-icon dropdown">
