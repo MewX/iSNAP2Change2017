@@ -45,7 +45,7 @@ body
     height: 100%;
     top: 0;
     left: 0;
-    background: url('../img/landing_page_background.png') no-repeat center center;
+    background: url('../img/landing_page_background.jpg') no-repeat center center;
     background-size: cover;
     will-change: transform; 
     z-index: -1;
@@ -124,7 +124,7 @@ body
     width: 100%;
     overflow: auto; 
     position: relative;
-    background: url('../img/crossing_background.png') no-repeat center center; 
+    background: url('../img/crossing_background.jpg') no-repeat center center;
     background-size: cover;
     will-change: transform;   
     /* z-index: -1; */

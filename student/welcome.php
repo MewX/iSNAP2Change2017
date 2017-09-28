@@ -204,7 +204,7 @@
 
                                     <div class="carousel-inner" role="listbox"> 
                                         <div class="item active">
-                                            <img src="./img/Temple.png" alt="..." style="border-radius:30px;">
+                                            <img src="./img/Temple.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
                                                 <div style="font-size: 2.5vh; color:rgb(54,232,197); border: 0px solid rgb(54,232,197); border-bottom-color: rgb(54,232,197); border-bottom-width: 2px; ">TEMPLE HIGH SCORE </div>
                                                 <p style="font-size: 50px;">
@@ -231,7 +231,7 @@
                                             </div>
                                         </div>
                                         <div class="item">
-                                            <img src="./img/Candy.png" alt="..." style="border-radius:30px;">
+                                            <img src="./img/Candy.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
                                                 <div style="font-size: 2.5vh; color:rgb(54,232,197); border: 0px solid rgb(54,232,197); border-bottom-color: rgb(54,232,197); border-bottom-width: 2px; ">CANDY CRUSH HIGH SCORE </div>
                                                 <p style="font-size: 50px;">
@@ -481,7 +481,7 @@
                             <ul class="nav navbar-nav">
                                 <li class="active">
                                     <a class="navbar-brand" href="#">
-                                        <img alt="Brand" src="./img/Snap_Logo_Inverted.png" style="height: 100%;">
+                                        <img alt="Brand" src="./img/footer-logo.png" style="height: 100%;">
                                     </a>
                                 </li>
                                 <li class="divider"></li>
