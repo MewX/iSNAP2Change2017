@@ -13,7 +13,7 @@
 
         body {
             margin: 0px !important;
-            background: url('./img/miss_pacman.png') no-repeat center center fixed;
+            background: url('./img/miss_pacman.jpg') no-repeat center center fixed;
             background-size: cover;
             -webkit-background-size: cover;
             -moz-background-size: cover;

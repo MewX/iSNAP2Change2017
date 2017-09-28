@@ -177,7 +177,7 @@
     </div>
 </nav>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="width:100%;">
-    <div class="modal-dialog" role="document" style="height:90%;">
+    <div class="modal-dialog" role="document" style="height:450px;">
         <div class="modal-content" style="height:90%;">
             <div class="modal-body">
                 <button id="login-close-btn" type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
