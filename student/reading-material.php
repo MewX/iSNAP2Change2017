@@ -335,8 +335,7 @@
     </div>
 
 
-    <div class="content-wrapper">
-
+    <div class="content-wrapper" style="min-height: calc(100% - 90px)">
         <div class="reading-detail">
             <div class="reading-header">
                 <div class="reading-logo"></div>

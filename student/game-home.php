@@ -320,7 +320,7 @@
         </div>
     </div>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="min-height: calc(100% - 80px)">
         <div class="week-content">
             <div class="week-carousel">
 <?php

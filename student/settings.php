@@ -187,7 +187,7 @@
     </div>
 
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="min-height: calc(100% - 120px)">
         <div class="setting-content">
             <div class="setting-header">
                 <div class="setting-logo"></div>
