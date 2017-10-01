@@ -52,7 +52,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>Cost Calculator | SNAP</title>
+    <title>Cost Calculator | SNAP²</title>
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/vendor/jqx.base.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
@@ -169,7 +169,7 @@
 <div class="page-wrapper">
     <div class="header-wrapper">
         <div class="header">
-            <a class="home-link" href="welcome.php">SNAP</a>
+            <a class="home-link" href="welcome.php">SNAP²</a>
 
             <div class="settings">
                 <div class="setting-icon dropdown">
@@ -481,32 +481,35 @@
     var form = new snap.Form({
         form: '.question-form',
         onSubmit: function (data) {
-            $('.question-error').removeClass('question-error-show');
+            if(confirm("Do you want to submit this quiz?")){
+                $('.question-error').removeClass('question-error-show');
 
-            var answerArr = [data.q1, data.q2, data.q3];
+                var answerArr = [data.q1, data.q2, data.q3];
 
-            $.ajax({
-                url: "numeric-question-feedback.php",
-                data: {
-                    student_id: <?php echo $studentID?>,
-                    quiz_id: <?php echo $quizID?>,
-                    answer_arr: JSON.stringify(answerArr),
-                    type: "cost_calculator"
-                },
-                type: "POST",
-                dataType : "json"
-            })
-
-                .done(function(feedback) {
-                    parseFeedback(feedback);
+                $.ajax({
+                    url: "numeric-question-feedback.php",
+                    data: {
+                        student_id: <?php echo $studentID?>,
+                        quiz_id: <?php echo $quizID?>,
+                        answer_arr: JSON.stringify(answerArr),
+                        type: "cost_calculator"
+                    },
+                    type: "POST",
+                    dataType : "json"
                 })
 
-                .fail(function( xhr, status, errorThrown ) {
-                    alert( "Sorry, there was a problem!" );
-                    console.log( "Error: " + errorThrown );
-                    console.log( "Status: " + status );
-                    console.dir( xhr );
-                });
+                    .done(function(feedback) {
+                        parseFeedback(feedback);
+                    })
+
+                    .fail(function( xhr, status, errorThrown ) {
+                        alert( "Sorry, there was a problem!" );
+                        console.log( "Error: " + errorThrown );
+                        console.log( "Status: " + status );
+                        console.dir( xhr );
+                    });
+            }
+
         }
     });
 

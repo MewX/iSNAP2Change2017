@@ -28,7 +28,7 @@ db_close($conn);
 
 <html>
 <head>
-    <title>Sign Up | SNAP</title>
+    <title>Sign Up | SNAP²</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -42,7 +42,7 @@ db_close($conn);
 
         body {
             margin: 0px !important;
-            background: url('./img/miss_pacman.png') no-repeat center center fixed;
+            background: url('./img/miss_pacman.jpg') no-repeat center center fixed;
             background-size: cover;
             -webkit-background-size: cover;
             -moz-background-size: cover;

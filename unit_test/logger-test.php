@@ -31,6 +31,3 @@ echo '###########################<br>';
 echo 'UNIT TEST<br>';
 echo 'testAuthenticationFailure()<br>';
 echo '###########################<br>';
-
-
-?>

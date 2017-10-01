@@ -1,5 +1,5 @@
-# iSNAP2Change
-iSNAP2Change program is an internet-based intervention website to help children resist unhealthy behaviors and engage more in healthy behaviors. It is supported by Basil Hetzel Institute, SA Health, Government of South Australia.
+# SNAP² Change
+SNAP² Change program is an internet-based intervention website to help children resist unhealthy behaviors and engage more in healthy behaviors. It is supported by Basil Hetzel Institute, SA Health, Government of South Australia.
 
 ## Supervisor
 Harshani Jayasinghe, The Clinical Practice Unit (Respiratory Medicine)

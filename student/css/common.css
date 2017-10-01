@@ -217,7 +217,7 @@ body {
 .home-link {
     float: left;
     text-indent: -9999em;
-    width: 60px;
+    width: 80px;
     height: 20px;
     background-size: 100% 100%;
     margin-top: 15px;
@@ -538,7 +538,7 @@ body {
     left: 0;
     margin: auto;
     background-size: 100% 100%;
-    background-image: url("../img/game_home_background.png");
+    background-image: url("../img/miss_pacman.jpg");
 }
 
 .snap-alert-logo {

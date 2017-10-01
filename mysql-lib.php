@@ -321,6 +321,37 @@ function getStudentsStatistic(PDO $conn){
     return $studentResult;
 }
 
+function getStudentsStatisticByStatus(PDO $conn, $status){
+    $quizSql = "SELECT DISTINCT quizID AS NumOfQuiz FROM Quiz Order by Week";
+    $quizQuery = $conn->prepare($quizSql);
+    $quizQuery->execute();
+    $result = $quizQuery->fetchAll(PDO::FETCH_OBJ);
+    $studentSql="Select ClassID, ClassName, StudentID, FirstName, LastName";
+    //Select the status of each quiz & student
+    for($i = 0; $i < count($result); $i++){
+        $studentSql .= ",MAX(IF(QuizID=" .$result[$i]->NumOfQuiz.", Status,null)) as Quiz" .$result[$i]->NumOfQuiz."";
+    }
+    //Select the grading of each quiz & student
+    for($i = 0; $i < count($result); $i++){
+        $studentSql .= ",MAX(IF(QuizID=" .$result[$i]->NumOfQuiz.", Grade,null)) as Grading" .$result[$i]->NumOfQuiz."";
+    }
+    if($status != "UNSUBMITTED"){
+        $studentSql .= " From (SELECT ClassID,ClassName, CS.StudentID, FirstName, LastName, QuizID, Status, Grade
+                   FROM (SELECT * FROM Student NATURAL JOIN Class) AS CS left join Quiz_Record
+                   on CS.StudentID = Quiz_Record.StudentID) temp where temp.Status = '$status' group by StudentID";
+    }else{
+        $studentSql .= " From (SELECT ClassID,ClassName, CS.StudentID, FirstName, LastName, QuizID, Status, Grade
+                   FROM (SELECT * FROM Student NATURAL JOIN Class) AS CS left join Quiz_Record
+                   on CS.StudentID = Quiz_Record.StudentID) temp where temp.Status IS NULL group by StudentID";
+    }
+
+
+    $studentQuery = $conn->prepare($studentSql);
+    $studentQuery->execute();
+    $studentResult = $studentQuery->fetchAll(PDO::FETCH_OBJ);
+    return $studentResult;
+}
+
 
 function getStudentsNum(PDO $conn)
 {

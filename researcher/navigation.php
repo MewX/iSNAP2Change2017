@@ -60,7 +60,7 @@ db_close($conn);
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"
      xmlns="http://www.w3.org/1999/html">
     <div class="navbar-header">
-        <a class="navbar-brand" href="index.php">iSNAP2Change Administration System</a>
+        <a class="navbar-brand" href="index.php">SNAP² Change Administration System</a>
     </div>
     <!-- /.navbar-header -->
     <?php if (isset($_SESSION['researcherID']) && isset($_SESSION['researcherUsername'])): ?>
@@ -320,6 +320,8 @@ db_close($conn);
                         <li>
                             <a href="account.php"><i class="fa fa-archive" aria-hidden="true"></i> Account
                                 Administration<span class="fa arrow"></span></a>
+                            <a href="database.php"><i class="fa fa-database" aria-hidden="true"></i>
+                                Database Administration<span class="fa arrow"></span></a>
                         </li>
                     <? endif; ?>
                     <li>

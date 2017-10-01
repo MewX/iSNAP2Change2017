@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Sign Up | SNAP</title>
+    <title>Sign Up | SNAP²</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./css/signup.css"/>
@@ -13,7 +13,7 @@
 
         body {
             margin: 0px !important;
-            background: url('./img/miss_pacman.png') no-repeat center center fixed;
+            background: url('./img/miss_pacman.jpg') no-repeat center center fixed;
             background-size: cover;
             -webkit-background-size: cover;
             -moz-background-size: cover;

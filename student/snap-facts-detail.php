@@ -27,7 +27,7 @@
         //get student question viewed attribute
         $studentQuesViewedAttrs = getStudentQuesViewedAttr($conn, $studentID);
 
-        //get snap facts by topic id
+        //get SNAP² Facts by topic id
         $snapFacts = getSnapFactsByTopic($conn, $topicID);
 
         //get verbose facts by topic id
@@ -44,7 +44,7 @@
             $pageCount = intval($totalFactsCount / 9) + 1;
         }
 
-        //count snap facts pages
+        //count SNAP² Facts pages
         $snapFactsPageCount = intval($snapFactsCount / 9);
 
         $snapFactsLeftCount = $snapFactsCount % 9;
@@ -69,7 +69,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>Snap Facts | SNAP</title>
+    <title>SNAP² Facts | SNAP²</title>
     <link rel="stylesheet" href="./css/common.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -186,10 +186,10 @@
 <div class="page-wrapper">
     <div class="header-wrapper">
         <div class="header">
-            <a class="home-link" href="welcome.php">SNAP</a>
+            <a class="home-link" href="welcome.php">SNAP²</a>
             <ul class="nav-list">
-                <li class="nav-item"><a  class="nav-link" href="game-home.php">Snap Change</a></li>
-                <li class="nav-item"><a  class="nav-link" href="snap-facts.php">Snap Facts</a></li>
+                <li class="nav-item"><a  class="nav-link" href="game-home.php">SNAP² Change</a></li>
+                <li class="nav-item"><a  class="nav-link" href="snap-facts.php">SNAP² Facts</a></li>
                 <li class="nav-item"><a  class="nav-link" href="resources.php">Resources</a></li>
             </ul>
             <div class="settings">
@@ -321,7 +321,7 @@ switch ($topicID) {
 <?php               for($j = 0; $j < 9; $j++) { ?>
                         <div class="facts-detail-item">
                             <div class="item-header">
-                                <h2 class="h3 item-title">SNAP Fact</h2>
+                                <h2 class="h3 item-title">SNAP² Fact</h2>
                             </div>
                             <div class="item-content"><?php echo $snapFacts[$i*9+$j]->Content ?></div>
                         </div>
@@ -333,7 +333,7 @@ switch ($topicID) {
 <?php               for($k = $snapFactsPageCount*9; $k < $snapFactsCount; $k++) { ?>
                         <div class="facts-detail-item">
                             <div class="item-header">
-                                <h2 class="h3 item-title">SNAP Fact</h2>
+                                <h2 class="h3 item-title">SNAP² Fact</h2>
                             </div>
                             <div class="item-content"><?php echo $snapFacts[$k]->Content ?></div>
                         </div>

@@ -54,7 +54,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>SNAP</title>
+        <title>SNAP²</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -98,9 +98,9 @@
                         </li>
                         <li class="divider"></li>
                         <? if (isset($studentID)) { ?>
-                        <li><a href="game-home.php">Snap Change</a></li>
+                        <li><a href="game-home.php">SNAP² Change</a></li>
                         <? } ?>
-                        <li><a href="./snap-facts.php">Snap Facts</a></li>
+                        <li><a href="./snap-facts.php">SNAP² Facts</a></li>
                         <li><a href="./resources.php">Resources</a></li>
                     </ul>
                     <ul class="nav pull-right navbar-nav">
@@ -123,7 +123,7 @@
             </div>
         </nav>
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="width:100%;">
-            <div class="modal-dialog" role="document" style="height:90%;">
+            <div class="modal-dialog" role="document" style="height:450px;">
                 <div class="modal-content" style="height:90%;">
                     <div class="modal-body">
                         <button id="login-close-btn" type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
@@ -176,7 +176,7 @@
                                 <div style="width: 100%; border: 0px solid; border-bottom-color: #FCEE2D; border-bottom-width: 2px;">
                                     <span class="header4">Perfect Attendance</span></div>
                                 <br>
-                                <span class="p1">Log in every day for the entire SNAP Program to unlock this achievement </span>
+                                <span class="p1">Log in every day for the entire SNAP² Program to unlock this achievement </span>
                             </div>                                                        
                         </div>
                     </div>
@@ -204,7 +204,7 @@
 
                                     <div class="carousel-inner" role="listbox"> 
                                         <div class="item active">
-                                            <img src="./img/Temple.png" alt="..." style="border-radius:30px;">
+                                            <img src="./img/Temple.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
                                                 <div style="font-size: 2.5vh; color:rgb(54,232,197); border: 0px solid rgb(54,232,197); border-bottom-color: rgb(54,232,197); border-bottom-width: 2px; ">TEMPLE HIGH SCORE </div>
                                                 <p style="font-size: 50px;">
@@ -231,7 +231,7 @@
                                             </div>
                                         </div>
                                         <div class="item">
-                                            <img src="./img/Candy.png" alt="..." style="border-radius:30px;">
+                                            <img src="./img/Candy.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
                                                 <div style="font-size: 2.5vh; color:rgb(54,232,197); border: 0px solid rgb(54,232,197); border-bottom-color: rgb(54,232,197); border-bottom-width: 2px; ">CANDY CRUSH HIGH SCORE </div>
                                                 <p style="font-size: 50px;">
@@ -481,7 +481,7 @@
                             <ul class="nav navbar-nav">
                                 <li class="active">
                                     <a class="navbar-brand" href="#">
-                                        <img alt="Brand" src="./img/Snap_Logo_Inverted.png" style="height: 100%;">
+                                        <img alt="Brand" src="./img/footer-logo.png" style="height: 100%;">
                                     </a>
                                 </li>
                                 <li class="divider"></li>

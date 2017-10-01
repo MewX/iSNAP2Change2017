@@ -68,7 +68,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>Short Answer Question | SNAP</title>
+    <title>Short Answer Question | SNAP²</title>
     <link rel="stylesheet" href="./css/common.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -129,7 +129,7 @@
 <div class="page-wrapper">
     <div class="header-wrapper">
         <div class="header">
-            <a class="home-link" href="welcome.php">SNAP</a>
+            <a class="home-link" href="welcome.php">SNAP²</a>
             <div class="settings">
                 <div class="setting-icon dropdown">
                     <ul class="dropdown-menu">
@@ -231,7 +231,7 @@
 
     <div class="attachment">
         <ul class="attachment-nav">
-            <li class="attachment-nav-item">SNAP <br>FACTS</li>
+            <li class="attachment-nav-item">SNAP² <br>FACTS</li>
             <li class="attachment-nav-item">READING <br> MATERIAL</li>
         </ul>
     </div>
@@ -274,7 +274,9 @@
             var $doc = $(document);
             this.$form.on('submit', function (e) {
                 e.preventDefault();
-                that.opt.onSubmit(that.getData())
+                if(confirm("Do you want to submit this quiz?")){
+                    that.opt.onSubmit(that.getData())
+                }
             })
         },
         getData: function () {

@@ -469,10 +469,10 @@ INSERT INTO Week (Timer, WeekNum) VALUES (4,7);
 INSERT IGNORE INTO School (SchoolName) VALUES ('Sample School');
 INSERT IGNORE INTO School (SchoolName) VALUES ('Sample Adelaide High School');
 INSERT IGNORE INTO School (SchoolName) VALUES ('Sample Woodville High School');
-INSERT IGNORE INTO Class (ClassName, SchoolID, TokenString) VALUES ('Sample Class 1A', 1, 'TOKENSTRING01');
-INSERT IGNORE INTO Class (ClassName, SchoolID, TokenString) VALUES ('Sample Class 1B', 1, 'TOKENSTRING02');
-INSERT IGNORE INTO Class (ClassName, SchoolID, TokenString) VALUES ('Sample Class 1C', 1, 'TOKENSTRING03');
-INSERT IGNORE INTO Class (ClassName, SchoolID, TokenString) VALUES ('Sample Class 2C', 2, 'TOKENSTRING04');
+INSERT IGNORE INTO Class (ClassName, SchoolID, TokenString) VALUES ('Sample Class 1A', 1, 'TOKEN1');
+INSERT IGNORE INTO Class (ClassName, SchoolID, TokenString) VALUES ('Sample Class 1B', 1, 'TOKEN2');
+INSERT IGNORE INTO Class (ClassName, SchoolID, TokenString) VALUES ('Sample Class 1C', 1, 'TOKEN3');
+INSERT IGNORE INTO Class (ClassName, SchoolID, TokenString) VALUES ('Sample Class 2C', 2, 'TOKEN4');
 
 INSERT IGNORE INTO Student (Username, `Password`, Email, FirstName, LastName, Gender, DOB, Identity, ClassID) VALUES
   ('Fernando', 'd59324e4d5acb950c4022cd5df834cc3', 'fernado@gmail.com', 'Fernando', 'Trump', 'Male', '2003-10-20',

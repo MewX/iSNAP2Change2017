@@ -4,7 +4,7 @@ require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
-$columnName = array('QuizID', 'Week', 'QuizType', 'TopicName', 'ExtraQuiz', 'Points');
+$columnName = array('QuizID', 'Week', 'QuizType', 'ExtraQuiz', 'Points');
 
 
 try {
@@ -164,7 +164,6 @@ db_close($conn);
                                         <td style="display:none"><?php echo $quizID ?></td>
                                         <td><?php echo $quizResult[$i]->Week ?></td>
                                         <td><?php echo $quizType ?></td>
-                                        <td><?php echo $quizResult[$i]->TopicName ?></td>
                                         <td><?php if($quizResult[$i]->ExtraQuiz==1) echo "Yes"; else echo "No"; ?></td>
                                         <td><?php echo $points ?>
                                             <span class="glyphicon glyphicon-remove pull-right"
@@ -243,15 +242,7 @@ db_close($conn);
                         </optgroup>
                     </select>
                     <br>
-                    <label for='TopicName'>Topic Name</label>
-                    <select class="form-control dialoginput" id="TopicName" form="submission" name="topicName" required>
-                        <option value="" disabled selected>Select Topic</option>
-                        <?php for ($j = 0; $j < count($topicResult); $j++) { ?>
-                            <option
-                                value='<?php echo $topicResult[$j]->TopicName ?>'><?php echo $topicResult[$j]->TopicName ?></option>
-                        <?php } ?>
-                    </select>
-                    <br>
+                    <input type=hidden name="topicName" id="TopicName" value="Smoking" required>
                     <label for='ExtraQuiz'>Extra Quiz</label>
                     <select class="form-control dialoginput" id="ExtraQuiz" form="submission" name="ExtraQuiz" required>
                         <option value="" disabled selected>Extra Quiz or Not</option>

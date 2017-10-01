@@ -56,7 +56,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>Pre Task Material | SNAP</title>
+    <title>Pre Task Material | SNAP²</title>
     <link rel="stylesheet" href="./css/common.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -115,7 +115,7 @@
 <div class="page-wrapper">
     <div class="header-wrapper">
         <div class="header">
-            <a class="home-link" href="welcome.php">SNAP</a>
+            <a class="home-link" href="welcome.php">SNAP²</a>
             <div class="settings">
                 <div class="setting-icon dropdown">
                     <ul class="dropdown-menu">

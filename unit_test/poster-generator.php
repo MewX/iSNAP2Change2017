@@ -51,7 +51,3 @@ function generatePosterRecordInFile()
 
     db_close($conn);
 }
-
-
-?>
-

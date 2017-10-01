@@ -50,7 +50,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>Snap Facts | SNAP</title>
+    <title>SNAP² Facts | SNAP²</title>
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="./css/home.css"/>
     <link rel="stylesheet" href="./css/common.css">
@@ -204,9 +204,9 @@
                 </li>
                 <li class="divider"></li>
                 <? if (isset($studentID)) { ?>
-                    <li><a href="game-home.php">Snap Change</a></li>
+                    <li><a href="game-home.php">SNAP² Change</a></li>
                 <? } ?>
-                <li><a>Snap Facts</a></li>
+                <li><a>SNAP² Facts</a></li>
                 <li><a href="./resources.php">Resources</a></li>
             </ul>
             <ul class="nav pull-right navbar-nav">
@@ -229,7 +229,7 @@
     </div>
 </nav>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="width:100%;">
-    <div class="modal-dialog" role="document" style="height:90%;">
+    <div class="modal-dialog" role="document" style="height:450px;">
         <div class="modal-content" style="height:90%;">
             <div class="modal-body">
                 <button id="login-close-btn" type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
@@ -271,7 +271,7 @@
             <div class="snap-facts-header">
                 <a href="#" class="snap-facts-logo"></a>
                 <div class="snap-facts-desc p1">
-                    Snap is all about providing information. <br/> Pick your category to start finding out more.
+                    SNAP² is all about providing information. <br/> Pick your category to start finding out more.
                 </div>
             </div>
 
