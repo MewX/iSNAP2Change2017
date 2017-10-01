@@ -1224,3 +1224,17 @@ CREATE TABLE IF NOT EXISTS `Comments` (
   time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 INSERT INTO Comments (name, email, content) values ('Amos', 'i@mewx.org', 'This is an initial message for testing propose');
+
+CREATE TABLE IF NOT EXISTS `Messages` (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  StudentID MEDIUMINT,
+
+  isFromStudent BOOLEAN DEFAULT TRUE,
+  title TEXT NOT NULL,
+  content LONGTEXT NOT NULL,
+  readOrNot BOOLEAN DEFAULT FALSE,
+  time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  CONSTRAINT Messages_StudentID_FK FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
+);
+INSERT INTO Messages (StudentId, title, content) values (1, 'Welcome', 'This is an initial message for testing propose');

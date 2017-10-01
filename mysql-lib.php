@@ -2558,3 +2558,41 @@ function markAllCommentRead(PDO $conn) {
     $sql = $conn->prepare($sql);
     return $sql->execute(); // true on success
 }
+
+
+/* Messages */
+function getAllMessages(PDO $conn) {
+    return getRecords($conn, "Messages");
+}
+
+function addNewMessage(PDO $conn, $studentId, $title, $content, $isFromStudent) {
+    $sql = "INSERT INTO Messages(StudentId, title, content, isFromStudent) VALUES (?,?,?,?);";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(array($studentId, $title, $content, $isFromStudent)); // true on success
+}
+
+function deleteMessage(PDO $conn, $messageId) {
+    $sql = "delete from Messages where id = ?";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(array($messageId)); // true on success
+}
+
+function markMessageAsRead(PDO $conn, $messageId){
+    $sql = "UPDATE Messages SET readOrNot = true WHERE id = ?";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(array($messageId)); // true on success
+}
+
+function markMessageAsUnread(PDO $conn, $messageId) {
+    $sql = "UPDATE Messages SET readOrNot = false WHERE id = ?";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(array($messageId)); // true on success
+
+}
+
+function markAllMessageAsUnread(PDO $conn) {
+    $sql = "UPDATE Messages SET readOrNot = true";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(); // true on success
+}
+
