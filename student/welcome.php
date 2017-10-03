@@ -213,7 +213,7 @@
                                             </div>
                                         </div>
                                         <div class="item">
-                                            <img src="./img/Fruit.png" alt="..." style="border-radius:30px;">
+                                            <img src="./img/Fruit.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
                                                 <div style="font-size: 2.5vh; color:rgb(54,232,197); border: 0px solid rgb(54,232,197); border-bottom-color: rgb(54,232,197); border-bottom-width: 2px; ">FRUIT NINJA HIGH SCORE </div>
                                                 <p style="font-size: 50px;">
@@ -222,7 +222,7 @@
                                             </div>
                                         </div>
                                         <div class="item">
-                                            <img src="./img/Angry.png" alt="..." style="border-radius:30px;">
+                                            <img src="./img/Angry.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
                                                 <div style="font-size: 2.5vh; color:rgb(54,232,197); border: 0px solid rgb(54,232,197); border-bottom-color: rgb(54,232,197); border-bottom-width: 2px; ">ANGRY BIRDS HIGH SCORE </div>
                                                 <p style="font-size: 50px;">
