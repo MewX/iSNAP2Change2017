@@ -103,7 +103,16 @@ db_close($conn);
                             </table>
                         </div>
                         <!-- /.table-responsive -->
-                        <?php require_once('quiz-overview-notification.php'); ?>
+                        <div class="well row">
+                            <h4><?php echo $pageNameForView; ?> Overview Notification</h4>
+                            <div class="alert alert-info">
+                                <p>View quizzes by filtering or searching. You can create/update/delete any quiz.</p>
+                            </div>
+                            <div class="alert alert-danger">
+                                <p><strong>Warning</strong> : If you remove one submission. All the data for the student in this
+                                submission will be removed.
+                            </div>
+                        </div>
                     </div>
                     <!-- /.panel-body -->
                 </div>

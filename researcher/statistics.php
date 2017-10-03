@@ -213,9 +213,9 @@ db_close($conn);
                                         password</strong> or delete students.</p>
                             </div>
                             <div class="alert alert-danger">
-                                <p><strong>Reminder</strong> : If you remove one student. All the data of this student
-                                    will also get deleted (not recoverable). It includes <strong>student submissions of
-                                        every task and your grading/feedback</strong>, not only the student itself.</p>
+                                <p><strong>Reminder</strong> : If you reset timer for one student, it will reset the
+                                    timer for that week rather than for that quiz.
+                                </p>
                             </div>
                         </div>
                     </div>
