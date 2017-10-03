@@ -152,7 +152,7 @@
                 </li>
                 <li class="divider"></li>
                 <? if (isset($studentID)) { ?>
-                    <li><a href="game-home.php">SNAP² Change</a></li>
+                    <li><a href="game-home.php">Dashboard</a></li>
                 <? } ?>
                 <li><a href="./snap-facts.php">SNAP² Facts</a></li>
                 <li><a>Resources</a></li>
