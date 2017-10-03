@@ -9,38 +9,56 @@ try {
     $conn = db_connect();
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $update = $_POST['update'];
+        $response = array();
         if ($update == -1) {
             // delete
-            $commentID = $_POST['commentID'];
-            deleteComment($conn, $commentID);
+            $messageID = $_POST['messageID'];
+            deleteMessage($conn, $messageID);
+            $response['status'] = 'success';
+            $response['message'] = 'This was successful';
+            echo json_encode($response);
+            exit();
         }else if($update == 1){
-            $commentID = $_POST['commentID'];
-            markCommentRead($conn, $commentID);
-            $response = array();
+            $messageID = $_POST['messageID'];
+            markMessageAsRead($conn, $messageID);
             $response['status'] = 'success';
             $response['message'] = 'This was successful';
             echo json_encode($response);
             exit();
         }else if($update == 2){
-            markAllCommentRead($conn);
+            markAllMessageRead($conn);
+            $response['status'] = 'success';
+            $response['message'] = 'This was successful';
+            echo json_encode($response);
+            exit();
+        }else if($update == 3){
+            $content = $_POST['content'];
+            $studentID = $_POST['studentId'];
+            if(addNewMessage($conn, $studentID, "", $content, 0)){
+                $response['status'] = 'success';
+                $response['message'] = 'This was successful';
+                echo json_encode($response);
+                exit();
+            }else{
+                $response['status'] = 'fail';
+                $response['message'] = 'Please try again';
+                echo json_encode($response);
+                exit();
+            }
         }
-        $response = array();
-        $response['status'] = 'success';
-        $response['message'] = 'This was successful';
-        echo json_encode($response);
-        exit();
+
     }
 } catch (Exception $e) {
     debug_err($e);
 }
 
 try {
-    $comments = getAllComments($conn);
-    $unreadComments = array();
-    foreach ($comments as $key => $value){
+    $messages = getAllMessages($conn);
+    $unreadMessages = array();
+    foreach ($messages as $key => $value){
         if($value->readOrNot == 0){
-            $unreadComments[] = $value;
-            unset($comments[$key]);
+            $unreadMessages[] = $value;
+            unset($messages[$key]);
         }
     }
 } catch (Exception $e) {
@@ -67,7 +85,7 @@ db_close($conn);
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Comments
+            <h1 class="page-header">Messages
                 <button type="button" class="btn btn-default text-muted pull-right"
                         onclick = "markAllRead()">
                     Mark All Read
@@ -77,11 +95,13 @@ db_close($conn);
         </div>
         <!-- /.col-lg-12 -->
     </div>
-    <?php foreach($unreadComments as $value){?>
-        <div class="panel <?php echo ($value->readOrNot==0)?"panel-info" : "panel-default"?>" id = "<?php echo $value->id ?>">
+    <?php foreach($unreadMessages as $value){?>
+        <div class="panel <?php echo ($value->readOrNot==0)?"panel-info" : "panel-default"?>"
+             id = "<?php echo $value->id ?>"
+             studentID = "<?php echo $value->StudentID ?>">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    <?php echo $value->name ?>
+                    <?php echo $value->Username ?>
                     <span class="pull-right text-muted">
                         <em><?php echo $value->time ?></em>
                     </span>
@@ -91,22 +111,25 @@ db_close($conn);
                 <?php echo $value->content ?>
             </div>
             <div class="panel-footer">
+                <textarea type="text" value="enter your message here"></textarea>
                 <button type="button" class="btn btn-default text-muted" aria-label="Right Align"
-                onclick = "reply(this)" email = "<?php echo $value->email ?>">
-                    Reply to <?php echo $value->email ?>
+                        onclick = "reply(this)">
+                    Reply
                 </button>
                 <button type="button" class="btn btn-default text-muted" aria-label="Right Align"
-                        onclick = "deleteComment(this)" commentID = "<?php echo $value->id ?>">
+                        onclick = "deleteComment(this)" messageID = "<?php echo $value->id ?>">
                     Delete
                 </button>
             </div>
         </div>
     <?php } ?>
-    <?php foreach($comments as $value){?>
-        <div class="panel <?php echo ($value->readOrNot==0)?"panel-info" : "panel-default"?>" id = "<?php echo $value->id ?>">
+    <?php foreach($messages as $value){?>
+        <div class="panel <?php echo ($value->readOrNot==0)?"panel-info" : "panel-default"?>"
+             id = "<?php echo $value->id ?>"
+             studentID = "<?php echo $value->StudentID ?>">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    <?php echo $value->name ?>
+                    <?php echo $value->Username ?>
                     <span class="pull-right text-muted">
                         <em><?php echo $value->time ?></em>
                     </span>
@@ -116,12 +139,13 @@ db_close($conn);
                 <?php echo $value->content ?>
             </div>
             <div class="panel-footer">
+                <textarea type="text" value="enter your message here"></textarea>
                 <button type="button" class="btn btn-default text-muted" aria-label="Right Align"
-                        onclick = "reply(this)" email = "<?php echo $value->email ?>">
-                    Reply to <?php echo $value->email ?>
+                        onclick = "reply(this)">
+                    Reply
                 </button>
                 <button type="button" class="btn btn-default text-muted" aria-label="Right Align"
-                        onclick = "deleteComment(this)" commentID = "<?php echo $value->id ?>">
+                        onclick = "deleteComment(this)" messageID = "<?php echo $value->id ?>">
                     Delete
                 </button>
             </div>
@@ -134,13 +158,13 @@ db_close($conn);
 
 <script>
     function deleteComment(value){
-        commentID = $(value).attr("commentID");
+        messageID = $(value).attr("messageID");
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: "comments.php",
+            url: "messages.php",
             data: {
-                commentID: commentID,
+                messageID: messageID,
                 update: -1
             }
         })
@@ -153,19 +177,34 @@ db_close($conn);
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: "comments.php",
+            url: "messages.php",
             data: {
                 update: 2
             }
         })
             .done(function(feedback) {
+                console.log(feedback.status);
                 location.reload();
             })
     }
 
     function reply(value){
-        url = "mailto:" +  $(value).attr("email");
-        window.location.href = url;
+        content = $(value).parent().children()[0].value;
+        studentID =  $(value).parent().parent().attr('studentID');
+        console.log(studentID);
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "messages.php",
+            data: {
+                update: 3,
+                content: content,
+                studentId: studentID
+            }
+        })
+            .done(function(feedback) {
+                location.reload();
+            })
     }
 </script>
 

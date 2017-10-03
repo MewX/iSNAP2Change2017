@@ -2593,7 +2593,8 @@ function markAllCommentRead(PDO $conn) {
 
 /* Messages */
 function getAllMessages(PDO $conn) {
-    return getRecords($conn, "Messages");
+    $joinTables = array("Student");
+    return getRecords($conn, "Messages", $joinTables);
 }
 
 function addNewMessage(PDO $conn, $studentId, $title, $content, $isFromStudent) {
@@ -2621,7 +2622,7 @@ function markMessageAsUnread(PDO $conn, $messageId) {
 
 }
 
-function markAllMessageAsUnread(PDO $conn) {
+function markAllMessageRead(PDO $conn) {
     $sql = "UPDATE Messages SET readOrNot = true";
     $sql = $conn->prepare($sql);
     return $sql->execute(); // true on success
