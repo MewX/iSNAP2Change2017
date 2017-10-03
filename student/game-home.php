@@ -309,7 +309,6 @@
                     </ul>
                 </div>
 
-
                 <div class="setting-icon dropdown">
                     <ul class="dropdown-menu">
                         <li class="dropdown-item"><a href="settings.php">Settings</a></li>

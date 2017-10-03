@@ -30,27 +30,6 @@
             text-align: center;
         }
 
-        .week-facts-item-smoking .week-facts-name{
-            color: #fcee2d;
-        }
-        .week-facts-item-nutrition .week-facts-name{
-            color: #f7751e;
-        }
-        .week-facts-item-alcohol .week-facts-name{
-            color: #93c;
-        }
-        .week-facts-item-physical .week-facts-name{
-            color: #db1b1b;
-        }
-        .week-facts-item-health .week-facts-name{
-            color: #db1b1b;
-        }
-        .week-facts-item-sexual .week-facts-name{
-            color: #af24d1;
-        }
-        .week-facts-item-drugs .week-facts-name{
-            color: #2fedc9;
-        }
         .break-line {
             word-wrap: break-word;      /* IE 5.5-7 */
             white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
