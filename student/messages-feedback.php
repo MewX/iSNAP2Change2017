@@ -4,11 +4,12 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
         $action = $_POST['action'];
-        if ($action == "UPDATE" && isset($_POST['student_id']) && isset($_POST['subject']) && isset($_POST['content']) && isset($_POST['send_time'])) {
+        // TODO: write this
+        // TODO: but lots of changes will be required
+        if ($action == "UPDATE" && isset($_POST['student_id']) && isset($_POST['subject']) && isset($_POST['content'])) {
             $studentID = $_POST['student_id'];
             $subject = $_POST['subject'];
             $content = $_POST['content'];
-            $sendTime = $_POST['send_time'];
         } else if ($action == "DELETE" && isset($_POST['question_id'])) {
             $questionID = $_POST['question_id'];
         } else if ($action == "VIEW" && isset($_POST['question_id'])) {

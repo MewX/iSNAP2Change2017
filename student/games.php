@@ -4,7 +4,6 @@
     require_once("../mysql-lib.php");
     require_once("../debug.php");
 
-    $pageName = "games";
     $conn = null;
 
     try {

@@ -445,12 +445,11 @@
                 sendTime = yyyy+"-"+mm+"-"+dd+ " " +sendTime.getHours() + ":" + sendTime.getMinutes()+":" + sendTime.getSeconds();
 
                 $.ajax({
-                    url: "student-question-feedback.php",
+                    url: "messages-feedback.php",
                     data: {
                         student_id: <?php echo $studentID?>,
                         subject: data.title,
                         content: data.content,
-                        send_time: sendTime,
                         action: 'UPDATE'
                     },
                     type: "POST",
@@ -469,15 +468,15 @@
                     });
             }
         })
-    })
+    });
 
     function parseFeedback(feedback) {
-        if(feedback.message != "success"){
+        if(feedback.message !== "success"){
             snap.alert({
                 content: 'Sorry. Please try again',
                 onClose: function () { }
             });
-        } else if(feedback.message == "success"){
+        } else if(feedback.message === "success"){
             snap.alert({
                 content: 'You have sent a message to the researcher. Please wait for reply',
                 onClose: function () { }

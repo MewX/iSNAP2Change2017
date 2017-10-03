@@ -1,33 +1,28 @@
 <?php
-
     //check login status
     require_once('./student-validation.php');
-
     require_once("../mysql-lib.php");
     require_once("../debug.php");
 
     $conn = null;
 
-    try{
+    try {
         $conn = db_connect();
-
-        $messages = getStudentQuestion($conn, $studentID);
 
         //get quiz viewed attribute
         $quizViewedAttrs = getQuizViewdAttr($conn, $studentID);
 
         //get student question viewed attribute
         $studentQuesViewedAttrs = getStudentQuesViewedAttr($conn, $studentID);
-        
-    }catch(Exception $e) {
-        if($conn != null) {
-        db_close($conn);
-        }
 
+        //get student week
+        $studentWeek = getStudentWeek($conn, $studentID);
+
+    } catch (Exception $e) {
+        if ($conn != null) {
+            db_close($conn);
+        }
         debug_err($e);
-        //to do: handle sql error
-        //...
-        exit;
     }
 
     db_close($conn);
@@ -43,7 +38,11 @@
     <link rel="stylesheet" href="./css/common.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="./js/snap.js"></script>
+
     <style>
         .inbox-container {
             max-width: 1000px;
@@ -54,9 +53,9 @@
         }
         .inbox-icon {
             width: 100px;
-            height: 80px;
+            height: 100px;
             background-size: 100% 100%;
-            background-image: url("./img/inbox_icon.png");
+            background-image: url("./img/text_to_speech_icon.png");
             margin: 0 auto 20px;
         }
         .inbox-content {
@@ -67,10 +66,6 @@
             padding: 10px 20px;
             overflow: hidden;
             font-size: 18px;
-        }
-        .inbox-item-unread {
-            background-color: rgb(61, 61, 61);
-            font-weight: bold;
         }
 
         .inbox-item span {
@@ -366,7 +361,7 @@
 <script>
     function onItemDelete(itemId) {
         $.ajax({
-            url: "student-question-feedback.php",
+            url: "messages-feedback.php",
             data: {
                 question_id: itemId,
                 action: 'DELETE'
@@ -437,7 +432,7 @@
             this.$main.show();
 
             $.ajax({
-                url: "student-question-feedback.php",
+                url: "messages-feedback.php",
                 data: {
                     question_id: targetId,
                     action: 'VIEW'
@@ -480,12 +475,11 @@
         sendTime = yyyy+"-"+mm+"-"+dd+ " " +sendTime.getHours() + ":" + sendTime.getMinutes()+":" + sendTime.getSeconds();
 
         $.ajax({
-            url: "student-question-feedback.php",
+            url: "messages-feedback.php",
             data: {
                 student_id: <?php echo $studentID?>,
                 subject: data.title,
                 content: data.content,
-                send_time: sendTime,
                 action: 'UPDATE'
             },
             type: "POST",
