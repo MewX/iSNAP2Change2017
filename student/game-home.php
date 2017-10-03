@@ -356,7 +356,7 @@
             </h2>
 
             <div class=" operation-container">
-                <a href="#" class="operation-item operation-game">
+                <a href="games.php" class="operation-item operation-game">
                     <img src="./img/game_icon.png" alt="" class="operation-logo">
                     <span>Games</span>
                 </a>
