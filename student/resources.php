@@ -13,6 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
     <title>Resources | SNAP²</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="./css/home.css"/>
     <link rel="stylesheet" href="./css/common.css">
@@ -23,86 +24,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <style>
-        .snap-facts-logo {
-            display: block;
-            width: 200px;
-            height: 130px;
-            margin: 20px auto;
-            background-size: 100% 100%;
-            background-image: url("./img/snap_facts_icon.png");
-        }
         .snap-facts-desc {
             width: 400px;
             margin: 0 auto 20px;
             text-align: center;
-        }
-        .snap-facts-all {
-            width: 800px;
-            margin: 0 auto;
-            padding-bottom: 20px;
-            text-align: center;
-        }
-        .snap-facts-list {
-            flex-wrap: wrap;
-            display: flex;
-            justify-content: center;
-        }
-        .snap-facts-item {
-            margin: 0 10px 20px;
-            /*float: left;*/
-        }
-        .snap-facts-link {
-            display: block;
-            color: inherit;
-            width: 128px;
-        }
-        .snap-facts-item-name {
-            display: block;
-            height: 60px;
-        }
-        .snap-facts-item-logo {
-            display: block;
-            width: 128px;
-            height: 128px;
-            background-size: 100% 100%;
-        }
-        .snap-facts-item-smoking {
-            color: #fcee2d;
-        }
-        .snap-facts-item-nutrition {
-            color: #f7751e;
-        }
-        .snap-facts-item-alcohol {
-            color: #93c;
-        }
-        .snap-facts-item-physical {
-            color: #db1b1b;
-        }
-        .snap-facts-item-health {
-            color: #db1b1b;
-        }
-        .snap-facts-item-sexual {
-            color: #af24d1;
-        }
-        .snap-facts-item-drugs {
-            color: #2fedc9;
-        }
-
-
-        .week-facts {
-            max-width: 1000px;
-            margin: 20px auto 20px;
-            text-align: center;
-        }
-        .week-facts-title {
-            color: #fcee2d;
-            margin-bottom: 20px;
-        }
-        .week-facts-item {
-            width: 33.33%;
-            padding: 0 10px;
-            float: left;
-            margin-bottom: 20px;
         }
 
         .week-facts-item-smoking .week-facts-name{

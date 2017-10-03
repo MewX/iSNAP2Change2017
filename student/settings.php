@@ -82,29 +82,6 @@
             margin: 0 auto 20px;
             font-size: 18px;
         }
-        .addition-field {
-            display: block;
-            width: 400px;
-            margin: 0 auto;
-            height: 350px;
-            font-size: 18px;
-        }
-        .addition-footer {
-            padding: 20px;
-        }
-        .addition-submit {
-            width: 100px;
-            height: 40px;
-            margin: 0 auto;
-            cursor: pointer;
-            background-size: 100% 100%;
-            background-color: #000;
-            border: 0;
-            background-image: url("./img/send_icon.png");
-        }
-        .addition-submit:focus {
-            outline: 0;
-        }
     </style>
 </head>
 <body>
