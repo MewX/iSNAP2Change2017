@@ -89,7 +89,7 @@
         }
         .post .post-img-content
         {
-            height: 196px;
+            height: 260px;
             position: relative;
         }
         .post .post-img-content img
@@ -195,7 +195,7 @@
         </div>
     </div>
 
-    <div class="content-wrapper container">
+    <div class="content-wrapper">
         <div class="row" style="color: white; font-size: 16pt;">
             <div class="col-6  col-md-offset-3">
                 <div class="extra-activities-detail">
@@ -210,7 +210,7 @@
 
         <!-- Two games -->
         <div class="row" style="color: white; font-size: 16pt; padding-top: 24px">
-            <div class="col-8  col-xs-offset-2">
+            <div class="col-6  col-xs-offset-3">
                 <div class="col-sm-6">
                     <div class="post">
                         <div class="post-img-content">
@@ -267,108 +267,5 @@
         </div>
     </div>
 </div>
-
-<script>
-    var TabCtrl = {
-        cls: {
-            tabActive: 'extra-activities-tab-item-active',
-            tabDisabled: 'extra-activities-tab-item-disabled',
-            tabContentActive: 'extra-activities-week-detail-active'
-        },
-        init: function (opt) {
-            opt = opt || {
-                    onTabChange: $.noop
-                }
-            this.onTabChange = opt.onTabChange
-            this.cacheElements()
-            this.addListeners()
-        },
-        cacheElements: function () {
-            var $main = $('.extra-activities-tab')
-            this.$main = $main
-            this.$tabItems = $main.find('.extra-activities-tab-item')
-            this.$tabContent = $('.extra-activities-tab-content')
-            this.$tabContentItems = this.$tabContent.find('.extra-activities-week-detail')
-        },
-        addListeners: function () {
-            var that = this
-
-            this.$main.on('click', '.extra-activities-tab-item', function (e) {
-                var $target = $(e.currentTarget)
-                var cls = that.cls
-
-                if (!$target.hasClass(cls.tabActive) && !$target.hasClass(cls.tabDisabled)) {
-                    var index = that.$tabItems.index(e.currentTarget)
-                    that.activeItem(index)
-                    that.onTabChange(index)
-                }
-            })
-        },
-        activeItem: function (index) {
-            this.$tabItems.removeClass(this.cls.tabActive)
-                .eq(index)
-                .addClass(this.cls.tabActive)
-            this.$tabContentItems.removeClass(this.cls.tabContentActive)
-                .eq(index)
-                .addClass(this.cls.tabContentActive)
-        }
-    }
-    TabCtrl.init({
-        onTabChange: function (index) {
-            MaterialCtrl.showNavPanel(index)
-        }
-    })
-
-    TabCtrl.activeItem(<?php echo $activeWeek-1 ?>);
-
-
-    var MaterialCtrl = {
-        init: function () {
-            this.cacheElements()
-            this.addListeners()
-        },
-        cacheElements: function () {
-            var $navMain = $('.extra-activities-tab-content')
-            this.$navMain = $navMain
-            this.$navPanels = $navMain.find('.extra-activities-week-detail')
-            var $materialList = $('.material-list')
-            this.$materialList = $materialList
-            this.$materialItems = $materialList.find('.material-item')
-        },
-        addListeners: function () {
-            var that = this
-            that.$navMain.on('click', '.extra-activities-item', function (e) {
-                var $target = $(e.currentTarget)
-                var targetMaterialCls = $target.data('target')
-                that.showMaterialDetail(targetMaterialCls)
-            })
-            that.$materialList.on('click', '.material-close', function (e) {
-                that.hideMaterialDetail()
-            })
-        },
-        showNavPanel: function (index) {
-            this.$navMain.show()
-            this.$navPanels.hide()
-                .eq(index)
-                .show()
-            this.$materialItems.removeClass('material-item-active')
-            this.$materialList.hide()
-        },
-        showMaterialDetail: function (targetMaterialCls) {
-            this.$navMain.hide()
-            this.$materialList.show()
-            this.$materialItems.removeClass('material-item-active')
-                .filter(targetMaterialCls)
-                .addClass('material-item-active')
-        },
-
-        hideMaterialDetail: function () {
-            this.$navMain.show()
-            this.$materialList.hide()
-            this.$materialItems.removeClass('material-item-active')
-        }
-    }
-
-</script>
 </body>
 </html>
