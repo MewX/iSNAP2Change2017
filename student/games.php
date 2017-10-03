@@ -80,12 +80,7 @@
         {
             padding: 15px;
         }
-        .post .author
-        {
-            font-size: 11px;
-            color: #737373;
-            padding: 25px 30px 20px;
-        }
+
         .post .post-img-content
         {
             height: 260px;

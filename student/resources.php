@@ -35,6 +35,47 @@
             white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
             white-space: pre-wrap;      /* current browsers */
         }
+
+        .post .content
+        {
+            padding: 15px;
+        }
+
+        .post .post-img-content
+        {
+            height: 230px;
+            position: relative;
+        }
+        .post .post-img-content img
+        {
+            position: absolute;
+        }
+        .post .post-title
+        {
+            display: table-cell;
+            vertical-align: bottom;
+            z-index: 2;
+            position: relative;
+        }
+        .post .post-title b
+        {
+            background-color: rgba(51, 51, 51, 0.58);
+            display: inline-block;
+            margin-bottom: 5px;
+            color: #FFF;
+            padding: 10px 15px;
+            margin-top: 5px;
+        }
+
+        .extra-activities-intro {
+            width: 300px;
+            font-family: "Maitree", serif;
+            font-size: 18px;
+            margin: 0 auto;
+            color: white;
+        }
+
+        .top-buffer { margin-top:24px; }
     </style>
 </head>
 <body>
@@ -120,40 +161,108 @@
     <div class="content-wrapper" style="padding-top: 60px; min-height: calc(100vh - 127px);">
         <div class="snap-facts-container">
             <div class="snap-facts-header">
-                <div class="snap-facts-desc h1" style="color: white; margin-top: 100px; margin-bottom: 50px">
-                    Resources
+                <div class="snap-facts-desc h1" style="color: white; margin-top: 100px; margin-bottom: 24px">Resources</div>
+                <div class="extra-activities-intro">The following resources are initiatives targeting and raising awareness of smoking and its damaging effects on youth:</div>
+            </div>
+            <div class="row" style="color: white; font-size: 16pt; margin-top: 24px">
+                <div class="col-6  col-xs-offset-3">
+                    <div class="col-sm-6">
+                        <div class="post">
+                            <div class="post-img-content">
+                                <a href="https://www.thetruth.com/" target="_blank">
+                                    <img src="img/websites/thetruth.jpg" class="img-responsive" />
+                                </a>
+                                <span class="post-title"><b>Truth</b><br /></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="post">
+                            <div class="post-img-content">
+                                <a href="http://nosmokes.com.au/" target="_blank">
+                                    <img src="img/websites/nosmokes.jpg" class="img-responsive" />
+                                </a>
+                                <span class="post-title"><b>No Smokes</b><br /></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="row" style="color: white; font-size: 16pt;">
-                <div class="col-6  col-md-offset-3">
-                    <p>The following resources are initiatives targeting and raising awareness of smoking and its damaging effects on youth:</p>
-                    <dl>
-                        <dt>Truth</dt>
-                        <dd class="break-line" style="padding-left:40px"><a href="https://www.thetruth.com/" target="_blank">https://www.thetruth.com/</a></dd>
 
-                        <dt>No Smokes</dt>
-                        <dd class="break-line" style="padding-left:40px"><a href="http://nosmokes.com.au/" target="_blank">http://nosmokes.com.au/</a></dd>
+            <div class="row top-buffer" style="color: white; font-size: 16pt">
+                <div class="col-6  col-xs-offset-3">
+                    <div class="col-sm-6">
+                        <div class="post">
+                            <div class="post-img-content">
+                                <a href="http://www.smarterthansmoking.org.au/" target="_blank">
+                                    <img src="img/websites/smarterthansmoking.jpg" class="img-responsive" />
+                                </a>
+                                <span class="post-title"><b>Smarter than Smoking</b><br /></span>
+                            </div>
+                        </div>
+                    </div>
 
-                        <dt>Smarter than Smoking</dt>
-                        <dd class="break-line" style="padding-left:40px"><a href="http://www.smarterthansmoking.org.au/" target="_blank">http://www.smarterthansmoking.org.au/</a></dd>
+                    <div class="col-sm-6">
+                        <div class="post">
+                            <div class="post-img-content">
+                                <a href="http://www.quitnow.gov.au/" target="_blank">
+                                    <img src="img/websites/quitnow.jpg" class="img-responsive" />
+                                </a>
+                                <span class="post-title"><b>Quit Now</b><br /></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                        <dt>Quitnow</dt>
-                        <dd class="break-line" style="padding-left:40px"><a href="http://www.quitnow.gov.au/" target="_blank">http://www.quitnow.gov.au/</a></dd>
+            <div class="row top-buffer" style="color: white; font-size: 16pt">
+                <div class="col-6  col-xs-offset-3">
+                    <div class="col-sm-6">
+                        <div class="post">
+                            <div class="post-img-content">
+                                <a href="http://www.cyh.com/HealthTopics/HealthTopicDetails.aspx?p=243&np=163&id=2326" target="_blank">
+                                    <img src="img/websites/cyh.jpg" class="img-responsive" />
+                                </a>
+                                <span class="post-title"><b>Reachout</b><br /></span>
+                            </div>
+                        </div>
+                    </div>
 
-                        <dt>Reachout</dt>
-                        <dd class="break-line" style="padding-left:40px"><a href="http://www.cyh.com/HealthTopics/HealthTopicDetails.aspx?p=243&np=163&id=2326" target="_blank">http://www.cyh.com/HealthTopics/HealthTopicDetails.aspx?p=243&np=163&id=2326</a></dd>
+                    <div class="col-sm-6">
+                        <div class="post">
+                            <div class="post-img-content">
+                                <a href="https://www.cancersa.org.au/quitline" target="_blank">
+                                    <img src="img/websites/cancersa.jpg" class="img-responsive" />
+                                </a>
+                                <span class="post-title"><b>Cancer Council SA</b><br /></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                        <dt>Cancer Council SA</dt>
-                        <dd class="break-line" style="padding-left:40px"><a href="https://www.cancersa.org.au/quitline" target="_blank">https://www.cancersa.org.au/quitline</a></dd>
+            <div class="row top-buffer" style="color: white; font-size: 16pt">
+                <div class="col-6  col-xs-offset-3">
+                    <div class="col-sm-6">
+                        <div class="post">
+                            <div class="post-img-content">
+                                <a href="https://www.cdc.gov/tobacco/basic_information/youth/index.htm" target="_blank">
+                                    <img src="img/websites/cdc.jpg" class="img-responsive" />
+                                </a>
+                                <span class="post-title"><b>Centres for Disease Control and Prevention</b><br /></span>
+                            </div>
+                        </div>
+                    </div>
 
-                        <dt>Centres for Disease Control and Prevention</dt>
-                        <dd class="break-line" style="padding-left:40px"><a href="https://www.cdc.gov/tobacco/basic_information/youth/index.htm" target="_blank">https://www.cdc.gov/tobacco/basic_information/youth/index.htm</a></dd>
-                    </dl>
-                    <p style="padding-top: 20px">If you need help quitting get in contact with:</p>
-                    <dl>
-                        <dt>QUIT Helpline</dt>
-                        <dd style="padding-left:40px">137 848 </dd>
-                    </dl>
+                    <div class="col-sm-6">
+                        <div class="post">
+                            <div class="post-img-content">
+                                <img src="img/websites/sahealth.jpg" class="img-responsive" />
+                                <span class="post-title"><b>QUIT Helpline: 137 848</b><br /></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
