@@ -4,7 +4,7 @@ require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
-$columnName = array('StudentID', 'ClassName', 'Username', 'FirstName', 'LastName', 'Email', 'Gender', 'Identity', 'DOB', 'Score' );
+$columnName = array('StudentID', 'ClassName', 'Username', 'FirstName', 'LastName', 'Email', 'Gender', 'Identity', 'DOB', 'Score', 'SubmissionDate' );
 
 try {
     $conn = db_connect();
