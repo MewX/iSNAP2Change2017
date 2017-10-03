@@ -4,7 +4,7 @@ require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
-$columnName = array('StudentID', 'ClassName', 'Username', 'FirstName', 'LastName', 'Email', 'Gender', 'DOB', 'Score', 'SubmissionDate');
+$columnName = array('StudentID', 'ClassName', 'Username', 'FirstName', 'LastName', 'Email', 'Gender', 'Identity', 'DOB', 'Score', 'SubmissionDate' );
 
 try {
     $conn = db_connect();
@@ -76,6 +76,9 @@ db_close($conn);
                                 if ($columnName[$i] == 'Score') { ?>
                                     <i class="fa fa-check-square-o fa-fw"></i><a class="toggle-vis"
                                                                                  data-column="<?php echo $i; ?>"><?php echo "Score/Overall"; ?></a>&nbsp;
+                                <?php } elseif ($columnName[$i] == 'Identity') { ?>
+                                    <i class="fa fa-check-square-o fa-fw"></i><a class="toggle-vis"
+                                                                                 data-column="<?php echo $i; ?>"><?php echo "Country"; ?></a>&nbsp;
                                 <?php } elseif ($columnName[$i] != 'Username') { ?>
                                     <i class="fa fa-check-square-o fa-fw"></i><a class="toggle-vis"
                                                                                  data-column="<?php echo $i; ?>"><?php echo $columnName[$i]; ?></a>&nbsp;
@@ -84,7 +87,7 @@ db_close($conn);
                             <br>
                             <br>
                         </div>
-                        <div class="dataTable_wrapper">
+                        <div class="dataTable_wrapper" style="width: 100%; overflow:scroll">
                             <table class="table table-striped table-bordered table-hover" id="datatables">
                                 <thead>
                                 <tr>
@@ -94,6 +97,8 @@ db_close($conn);
                                         } ?>><?php
                                             if($columnName[$i]=="Score"){
                                                 echo "Score/Overall";
+                                            }else if($columnName[$i]=="Identity"){
+                                                echo "Country";
                                             }else{
                                                 $parts = preg_split('/(?=[A-Z])/', $columnName[$i]);
                                                 for($j=0;$j<count($parts);$j++){
