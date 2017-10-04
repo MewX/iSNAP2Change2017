@@ -4,7 +4,9 @@ date_default_timezone_set('Australia/Adelaide');
 $currentDate = date('_d_m_Y');
 $file = $database. $currentDate. ".sql";
 //the path here should be the full path for mysqldump
-$cmd = "/usr/local/bin/mysqldump -h localhost --user $username $database > $file";
+//$cmd = "/usr/local/bin/mysqldump -h localhost -u$username -p$password $database > $file";
+$cmd = "mysqldump -h localhost -u$username -p$password $database > $file";
+
 system($cmd);
 
 if (file_exists($file)) {
