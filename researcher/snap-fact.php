@@ -83,7 +83,8 @@ db_close($conn);
                                         echo "even";
                                     } ?>">
                                         <?php for ($j = 0; $j < count($columnName); $j++) { ?>
-                                            <td <?php if ($j == 0) echo 'style="display:none"'; ?>><?php if ($j != 3) echo $snapFactResult[$i]->$columnName[$j]; ?>
+                                            <td <?php if ($j == 0) echo 'style="display:none"'; ?>>
+                                                <?php if ($j != 3) echo $snapFactResult[$i]->$columnName[$j]; ?>
                                                 <?php if ($j == 3) echo '<span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;</span><span class="glyphicon glyphicon-edit pull-right" data-toggle="modal" data-target="#dialog" aria-hidden="true"></span>'; ?>
                                             </td>
                                         <?php } ?>
@@ -196,7 +197,7 @@ db_close($conn);
         })
     });
 </script>
-<script src="researcher-tts.js"></script>
+
 </body>
 
 </html>
