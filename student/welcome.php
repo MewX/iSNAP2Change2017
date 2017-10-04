@@ -32,7 +32,6 @@
         //randomly select one fact from each topic
         $factRes = array();
 
-
         $factsRes = getFactsByTopicID($conn, 1);
         $randFactKey = array_rand($factsRes, 3);
         for($i = 0; $i < 3; $i++) {

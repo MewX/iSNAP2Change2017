@@ -191,9 +191,8 @@ db_close($conn);
         var weekIsChanged = week.value != week.defaultValue;
         var discriptionIsChanged = discription.value != discription.defaultValue;
         var pointsIsChanged = points.value != points.defaultValue;
-        var topicNameIsChanged = !topicName.options[topicName.selectedIndex].defaultSelected;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
-        if(weekIsChanged||topicNameIsChanged||extraQuizIsChanged || discriptionIsChanged || pointsIsChanged || titleIsChanged){
+        if(weekIsChanged||extraQuizIsChanged || discriptionIsChanged || pointsIsChanged || titleIsChanged){
             if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                 location.href='<?php echo "poster.php" ?>'
             }

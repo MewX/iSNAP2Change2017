@@ -317,9 +317,8 @@ db_close($conn);
         var topicName = document.getElementById("TopicName");
         var extraQuiz = document.getElementById("ExtraQuiz");
         var weekIsChanged = week.value != week.defaultValue;
-        var topicNameIsChanged = !topicName.options[topicName.selectedIndex].defaultSelected;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
-        if(weekIsChanged||topicNameIsChanged||extraQuizIsChanged){
+        if(weekIsChanged||extraQuizIsChanged){
             if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                 location.href='<?php echo "mcq.php" ?>'            }
         }else{

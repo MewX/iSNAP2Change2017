@@ -343,12 +343,11 @@ db_close($conn);
         var mediaTitle = document.getElementById("mediaTitle");
         var mediaSource = document.getElementById("mediaSource");
         var weekIsChanged = week.value != week.defaultValue;
-        var topicNameIsChanged = !topicName.options[topicName.selectedIndex].defaultSelected;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
         if(mediaTitle!=null && mediaSource!=null){
             var mediaTitleIsChanged = mediaTitle.value != mediaTitle.defaultValue;
             var mediaSourceIsChanged = mediaSource.value != mediaSource.defaultValue;
-            if(weekIsChanged||topicNameIsChanged||extraQuizIsChanged||mediaTitleIsChanged || mediaSourceIsChanged){
+            if(weekIsChanged||extraQuizIsChanged||mediaTitleIsChanged || mediaSourceIsChanged){
                 if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                     location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
                 }
@@ -356,7 +355,7 @@ db_close($conn);
                 location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
             }
         }else{
-            if(weekIsChanged||topicNameIsChanged||extraQuizIsChanged){
+            if(weekIsChanged||extraQuizIsChanged){
                 if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                     location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
                 }
