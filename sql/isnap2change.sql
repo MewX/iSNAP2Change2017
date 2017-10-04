@@ -57,6 +57,7 @@ DROP TABLE IF EXISTS Student_Question_Feedback;
 DROP TABLE IF EXISTS Public_Question;
 DROP TABLE IF EXISTS Week;
 DROP TABLE IF EXISTS Comments;
+DROP TABLE IF EXISTS messages;
 
 CREATE TABLE IF NOT EXISTS `School` (
   SchoolID   MEDIUMINT AUTO_INCREMENT,
@@ -1234,7 +1235,8 @@ CREATE TABLE IF NOT EXISTS `Messages` (
   content LONGTEXT NOT NULL,
   readOrNot BOOLEAN DEFAULT FALSE,
   time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
+  deleteByStu BOOLEAN DEFAULT FALSE,
+  deleteByRes BOOLEAN DEFAULT FALSE,
   CONSTRAINT Messages_StudentID_FK FOREIGN KEY (StudentID) REFERENCES Student(StudentID)
 );
 INSERT INTO Messages (StudentId, title, content) values (1, 'Welcome', 'This is an initial message for testing propose');

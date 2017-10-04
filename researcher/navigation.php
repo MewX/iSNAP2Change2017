@@ -52,7 +52,7 @@ try {
     $messages = getAllMessages($conn);
     $unreadMessages = array();
     foreach ($messages as $key => $value) {
-        if ($value->readOrNot == 0) {
+        if ($value->readOrNot == 0 && $value->isFromStudent == 1) {
             $unreadMessages[] = $value;
             unset($messages[$key]);
         }
@@ -147,7 +147,7 @@ db_close($conn);
                                 ?>
                             </div>
 
-                            <a style="text-align:right">
+                            <a style="text-align:right" href="messages.php#<?php echo $value->StudentID?>">
                                 Reply
                             </a>
                             <div class="divider"></div>

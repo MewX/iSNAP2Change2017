@@ -1,9 +1,7 @@
 <?php
+require_once ("../mysql-lib.php");
 date_default_timezone_set('Australia/Adelaide');
 $currentDate = date('_d_m_Y');
-$database = "isnap2changedb";
-$password = "";
-$username = "root";
 $file = $database. $currentDate. ".sql";
 //the path here should be the full path for mysqldump
 $cmd = "/usr/local/bin/mysqldump -h localhost --user $username $database > $file";
