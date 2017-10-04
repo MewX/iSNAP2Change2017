@@ -89,6 +89,7 @@ db_close($conn);
                                        id="grading" name="grading"
                                        value="<?php echo $posterSubmissionResult[0]->Grading ?>"
                                 >
+                                <label>out of <?php echo $posterSubmissionResult[0]->Points?></label>
                                 <br>
                             </form>
                         </div>
