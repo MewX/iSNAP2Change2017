@@ -5,7 +5,7 @@ require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
 
-$columnName = array('SnapFactID', 'TopicName', 'Content', 'Edit');
+$columnName = array('SnapFactID', 'Content', 'Edit');
 
 try {
     $conn = db_connect();
@@ -84,8 +84,8 @@ db_close($conn);
                                     } ?>">
                                         <?php for ($j = 0; $j < count($columnName); $j++) { ?>
                                             <td <?php if ($j == 0) echo 'style="display:none"'; ?>>
-                                                <?php if ($j != 3) echo $snapFactResult[$i]->$columnName[$j]; ?>
-                                                <?php if ($j == 3) echo '<span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;</span><span class="glyphicon glyphicon-edit pull-right" data-toggle="modal" data-target="#dialog" aria-hidden="true"></span>'; ?>
+                                                <?php if ($j != 2) echo $snapFactResult[$i]->$columnName[$j]; ?>
+                                                <?php if ($j == 2) echo '<span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;</span><span class="glyphicon glyphicon-edit pull-right" data-toggle="modal" data-target="#dialog" aria-hidden="true"></span>'; ?>
                                             </td>
                                         <?php } ?>
                                     </tr>
@@ -126,15 +126,7 @@ db_close($conn);
                            style="display:none">
                     <br>
 
-                    <label for='topicName'>TopicName</label>
-                    <select class="form-control dialoginput" id="topicName" form="submission" name="topicName" required>
-                        <option value="" disabled selected>Select Topic</option>
-                        <?php for ($j = 0; $j < count($topicResult); $j++) { ?>
-                            <option
-                                value='<?php echo $topicResult[$j]->TopicName ?>'><?php echo $topicResult[$j]->TopicName ?></option>
-                        <?php } ?>
-                    </select>
-                    <br>
+                    <input type=hidden name="topicName" id="TopicName" value="Smoking" required>
 
                     <label for="content">Content</label>
                     <textarea class="form-control dialoginput" id="content" name="content" rows="8" required></textarea>

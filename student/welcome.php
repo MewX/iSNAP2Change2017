@@ -27,15 +27,16 @@
             array_push($topicArr, $singleTopic->TopicID);
         }
 
-        $randKeys = array_rand($topicArr, 3);
+        //$randKeys = array_rand($topicArr, 3);
 
         //randomly select one fact from each topic
         $factRes = array();
 
+
+        $factsRes = getFactsByTopicID($conn, 1);
+        $randFactKey = array_rand($factsRes, 3);
         for($i = 0; $i < 3; $i++) {
-            $factsRes = getFactsByTopicID($conn, $topicArr[$randKeys[$i]]);
-            $randFactKey = array_rand($factsRes, 1);
-            $factRes[$i] = $factsRes[$randFactKey];
+            $factRes[$i] = $factsRes[$randFactKey[$i]];
         }
     } catch(Exception $e){
         if($conn != null) {
