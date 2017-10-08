@@ -25,7 +25,7 @@
         $quizViewedAttrs = getQuizViewdAttr($conn, $studentID);
 
         //get student question viewed attribute
-        $studentQuesViewedAttrs = getStudentQuesViewedAttr($conn, $studentID);
+        $studentQuesViewedAttrs = getUnreadMessages($conn, $studentID);
 
         //get SNAP² Facts by topic id
         $snapFacts = getSnapFactsByTopic($conn, $topicID);

@@ -1,31 +1,31 @@
 <?php
-    //check login status
-    require_once('./student-validation.php');
-    require_once("../mysql-lib.php");
-    require_once("../debug.php");
+//check login status
+require_once('./student-validation.php');
+require_once("../mysql-lib.php");
+require_once("../debug.php");
 
-    $conn = null;
+$conn = null;
 
-    try {
-        $conn = db_connect();
+try {
+    $conn = db_connect();
 
-        //get quiz viewed attribute
-        $quizViewedAttrs = getQuizViewdAttr($conn, $studentID);
+    //get quiz viewed attribute
+    $quizViewedAttrs = getQuizViewdAttr($conn, $studentID);
 
-        //get student question viewed attribute
-        $studentQuesViewedAttrs = getStudentQuesViewedAttr($conn, $studentID);
+    //get student question viewed attribute
+    $studentQuesViewedAttrs = getUnreadMessages($conn, $studentID);
 
-        //get student week
-        $studentWeek = getStudentWeek($conn, $studentID);
+    //get student week
+    $studentWeek = getStudentWeek($conn, $studentID);
 
-    } catch (Exception $e) {
-        if ($conn != null) {
-            db_close($conn);
-        }
-        debug_err($e);
+} catch (Exception $e) {
+    if ($conn != null) {
+        db_close($conn);
     }
+    debug_err($e);
+}
 
-    db_close($conn);
+db_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -34,23 +34,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
     <title>Messages | SNAP²</title>
-    <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico"/>
     <link rel="stylesheet" href="./css/common.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
     <script src="./js/snap.js"></script>
 
     <style>
-        .inbox-container {
-            max-width: 1000px;
-            margin: 20px auto 20px;
-        }
         .inbox-header {
             text-align: center;
         }
+
         .inbox-icon {
             width: 100px;
             height: 100px;
@@ -58,143 +58,142 @@
             background-image: url("./img/text_to_speech_icon.png");
             margin: 0 auto 20px;
         }
-        .inbox-content {
-            margin-top: 20px;
+
+        .mytext {
+            border: 0;
+            padding: 10px;
+            background: whitesmoke;
         }
-        .inbox-item {
-            border-top: 2px solid rgb(160, 160, 160);
-            padding: 10px 20px;
+
+        .text {
+            width: 75%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .text > p:first-of-type {
+            width: 100%;
+            margin-top: 0;
+            margin-bottom: auto;
+            line-height: 13px;
+            font-size: 12px;
+        }
+
+        .text > p:last-of-type {
+            width: 100%;
+            text-align: right;
+            color: silver;
+            margin-bottom: -7px;
+            margin-top: auto;
+        }
+
+        .text-l {
+            float: left;
+            padding-right: 10px;
+        }
+
+        .text-r {
+            float: right;
+            padding-left: 10px;
+        }
+
+        .avatar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 10%;
+            float: left;
+            padding-right: 10px;
+        }
+
+        .macro {
+            margin-top: 5px;
+            width: 85%;
+            border-radius: 5px;
+            padding: 5px;
+            display: flex;
+        }
+
+        .msj-rta {
+            float: right;
+            background: whitesmoke;
+        }
+
+        .msj {
+            float: left;
+            background: white;
+        }
+
+        .frame {
+            background: #e0e0de;
+            height: auto;
+            position: relative;
             overflow: hidden;
-            font-size: 18px;
+            padding: 0;
+        }
+
+        .frame > div:last-of-type {
+            bottom: 5px;
+            width: 100%;
+            display: flex;
+        }
+
+        .msgframe {
+            width: 100%;
+            list-style-type: none;
+            padding: 18px;
+            bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        .msj:before {
+            width: 0;
+            height: 0;
+            content: "";
+            top: -5px;
+            left: -14px;
+            position: relative;
+            border-style: solid;
+            border-width: 0 13px 13px 0;
+            border-color: transparent #ffffff transparent transparent;
+        }
+
+        .msj-rta:after {
+            width: 0;
+            height: 0;
+            content: "";
+            top: -5px;
+            left: 14px;
+            position: relative;
+            border-style: solid;
+            border-width: 13px 13px 0 0;
+            border-color: whitesmoke transparent transparent transparent;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: #d4d4d4;
+        }
+
+        ::-moz-placeholder { /* Firefox 19+ */
+            color: #d4d4d4;
+        }
+
+        :-ms-input-placeholder { /* IE 10+ */
+            color: #d4d4d4;
+        }
+
+        :-moz-placeholder { /* Firefox 18- */
+            color: #d4d4d4;
         }
 
         .inbox-item span {
             float: left;
-        }
-        .inbox-date {
-            width: 100px;
-            margin-right: 20px;
-            font-size: 18px;
-        }
-        .inbox-time {
-            width: 80px;
-            font-size: 18px;
-            margin-right: 30px;
-        }
-        .inbox-subject {
-            width:  330px;
-            cursor: pointer;
-        }
-        .inbox-message {
-            width: 330px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            color: rgb(160, 160, 160);
-        }
-        .inbox-item .inbox-delete {
-            width: 16px;
-            height: 16px;
-            background-size: 100% 100%;
-            background-image: url("./img/trash_icon.png");
-            float: right;
-            cursor: pointer;
-        }
-
-        .new-message-title {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .new-message-icon {
-            width: 120px;
-            height: 120px;
-            margin: 10px auto 40px;
-            background-size: 100% 100%;
-            background-image: url("./img/send_icon.png");
-            cursor: pointer;
-        }
-        .detail-container {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 99999;
-            display: none;
-        }
-        .detail-mask {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(0, 0, 0, 0.6);
-        }
-        .detail-wrapper {
-            width: 600px;
-            height: 640px;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-            border: 2px solid #ddd;
-            padding: 20px;
-            background-color: #000;
-        }
-        .detail-box {
-            display: none;
-            height: 560px;
-        }
-        .detail-box-active {
-            display: block;
-        }
-        .snap-logo {
-            width: 60px;
-            height: 20px;
-            background-size: 100% 100%;
-            margin: 5px auto 10px;
-            background-image: url("./img/snap_single_wordform_white.png");
-        }
-        .detail-prompt{
-            text-align: center;
-        }
-        .detail-title {
-            height: 30px;
-            line-height: 30px;
-            border-radius: 15px;
-            margin: 20px 0;
-            background-color: #dddede;
-            color: #5b5b5b;
-            padding: 0 10px;
-        }
-        .detail-content {
-            margin-bottom: 20px;
-            border-radius: 20px;
-            background-color: #dddede;
-            color: #5b5b5b;
-            padding: 10px 20px;
-            height: 200px;
-            overflow-y: auto;
-        }
-        .detail-sub-prompt {
-            margin-bottom: 20px;
-        }
-        .detail-close {
-            display: block;
-            width: 110px;
-            height: 36px;
-            line-height: 36px;
-            background-color: #090909;
-            border-radius: 10px;
-            margin: 0 auto 0;
-            position: absolute;
-            left: 0;
-            text-align: center;
-            right: 0;
-            bottom: 10px;
-            cursor: pointer;
         }
     </style>
 </head>
@@ -205,68 +204,68 @@
         <div class="header">
             <a class="home-link" href="welcome.php">SNAP²</a>
             <ul class="nav-list">
-                <li class="nav-item"><a  class="nav-link" href="game-home.php">Dashboard</a></li>
-                <li class="nav-item"><a  class="nav-link" href="snap-facts.php">SNAP² Facts</a></li>
-                <li class="nav-item"><a  class="nav-link" href="resources.php">Resources</a></li>
+                <li class="nav-item"><a class="nav-link" href="game-home.php">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="snap-facts.php">SNAP² Facts</a></li>
+                <li class="nav-item"><a class="nav-link" href="resources.php">Resources</a></li>
             </ul>
             <div class="settings">
                 <div class="info-item info-notification">
                     <a class="info-icon" href="javascript:;"></a>
-                    <?php           if (count($quizViewedAttrs) != 0) { ?>
+                    <?php if (count($quizViewedAttrs) != 0) { ?>
                         <span class="info-number"><?php echo count($quizViewedAttrs) ?></span>
-                    <?php           } ?>
+                    <?php } ?>
                     <ul class="info-message-list">
-                        <?php           for ($i = 0; $i < count($quizViewedAttrs); $i++) {
+                        <?php for ($i = 0; $i < count($quizViewedAttrs); $i++) {
                             if ($quizViewedAttrs[$i]["extraQuiz"] == 0) {
-                                $url = "weekly-task.php?week=".$quizViewedAttrs[$i]["week"];
+                                $url = "weekly-task.php?week=" . $quizViewedAttrs[$i]["week"];
                             } else {
-                                $url = "extra-activities.php?week=".$quizViewedAttrs[$i]["week"];
-                            }?>
+                                $url = "extra-activities.php?week=" . $quizViewedAttrs[$i]["week"];
+                            } ?>
                             <li class="info-message-item">
                                 <a href="<?php echo $url ?>">
                                     <?php
                                     $message = "A ";
 
-                                    switch($quizViewedAttrs[$i]["quizType"]) {
+                                    switch ($quizViewedAttrs[$i]["quizType"]) {
                                         case "Video":
-                                            $message = $message."Video task";
+                                            $message = $message . "Video task";
                                             break;
                                         case "Image":
-                                            $message = $message."Image task";
+                                            $message = $message . "Image task";
                                             break;
                                         case "SAQ":
-                                            $message = $message."Short Answer Question task";
+                                            $message = $message . "Short Answer Question task";
                                             break;
                                         case "Poster":
-                                            $message = $message."Poster task";
+                                            $message = $message . "Poster task";
                                             break;
                                     }
 
-                                    $message = $message." in Week ".$quizViewedAttrs[$i]["week"]." has feedback for you.";
+                                    $message = $message . " in Week " . $quizViewedAttrs[$i]["week"] . " has feedback for you.";
                                     echo $message;
                                     ?>
                                 </a>
                             </li>
-                        <?php           } ?>
+                        <?php } ?>
                     </ul>
                 </div>
                 <div class="info-item info-message">
                     <a class="info-icon" href="javascript:;"></a>
-                    <?php           if (count($studentQuesViewedAttrs) != 0) { ?>
+                    <?php if (count($studentQuesViewedAttrs) != 0) { ?>
                         <span class="info-number"><?php echo count($studentQuesViewedAttrs) ?></span>
-                    <?php           } ?>
+                    <?php } ?>
                     <ul class="info-message-list">
                         <li class="info-message-item">
                             <?php
                             for ($i = 0; $i < count($studentQuesViewedAttrs); $i++) { ?>
                                 <a href="messages.php">
-                                    You message about <?php echo $studentQuesViewedAttrs[$i]->Subject ?> has been replied.
+                                    You message about <?php echo $studentQuesViewedAttrs[$i]->Subject ?> has been
+                                    replied.
                                 </a>
-                            <?php               } ?>
+                            <?php } ?>
                         </li>
                     </ul>
                 </div>
-
 
                 <div class="setting-icon dropdown">
                     <ul class="dropdown-menu">
@@ -274,75 +273,39 @@
                         <li class="dropdown-item"><a href="logout.php">Log out</a></li>
                     </ul>
                 </div>
-                <a class="setting-text"><?php echo $_SESSION["studentUsername"]?></a>
+                <a class="setting-text"><?php echo $_SESSION["studentUsername"] ?></a>
             </div>
         </div>
     </div>
+
+    <!-- Real messages -->
+    <!-- Codes from: https://bootsnipp.com/snippets/featured/simple-chat -->
     <div class="content-wrapper">
-
-        <div class="inbox-container">
-            <div class="inbox-header">
-                <div class="inbox-icon"></div>
-                <h2 class="h2 inbox-title">Messages</h2>
-                <div class="p1 inbox-prompt">View your messages and replies.</div>
-            </div>
-            <div class="inbox-content">
-                <ul class="inbox-list">
-<?php           for ($i = 0; $i < count($messages); $i++) {
-                    if ($messages[$i]->Viewed == 0 ) {
-                        $unreadClass = "inbox-item-unread";
-                    } else {
-                        $unreadClass = "";
-                    }?>
-                    <li class="inbox-item <?php echo $unreadClass ?>" data-id="<?php echo $messages[$i]->QuestionID ?>">
-                        <span class="inbox-date"><?php echo date('j/n/Y', strtotime($messages[$i]->SendTime))?></span>
-                        <span class="inbox-time"><?php echo date('g:i a', strtotime($messages[$i]->SendTime))?></span>
-                        <span class="inbox-subject"><?php echo $messages[$i]->Subject ?></span>
-                        <span class="inbox-message"><?php if ($messages[$i]->Replied == 1) echo "Replied"; else echo "Unreplied"  ?></span>
-                        <span class="inbox-delete"></span>
-                    </li>
-<?php           } ?>
-                </ul>
-
-                <div class="new-message-container">
-                    <h2 class="h2 new-message-title">New Message</h2>
-                    <div class="new-message-icon"></div>
-                </div>
-            </div>
-
-            <div class="detail-container">
-                <div class="detail-mask"></div>
-                <div class="detail-wrapper">
-
-                    <div class="snap-logo"></div>
-                    <div class="h4 detail-prompt">Send us a message.</div>
-                    <div class="detail-box-list">
-<?php           for ($i = 0; $i < count($messages); $i++) { ?>
-                        <div class="detail-box" data-id="<?php echo $messages[$i]->QuestionID ?>">
-                            <div class="p1 detail-title">Subject: <?php echo $messages[$i]->Subject ?></div>
-                            <div class="detail-content p1">
-                                <div class="detail-sub-prompt">What you sent to the researchers.</div>
-                                <?php echo $messages[$i]->Content ?>
-                            </div>
-                            <div class="detail-content p1">
-                                <div class="detail-sub-prompt">The researchers reply.</div>
-                                <?php echo $messages[$i]->Feedback ?>
-                            </div>
-                        </div>
-<?php           } ?>
+        <div class="inbox-header">
+            <div class="inbox-icon"></div>
+            <h2 class="h2 inbox-title" style="color: white">Messages</h2>
+            <div class="p1 inbox-prompt" style="color: white">View your messages and replies.</div>
+        </div>
+        <div class="col-4 col-sm-offset-4 frame" style="float: none">
+            <ul id="msgall" class="msgframe"></ul>
+            <div class="msgframe">
+                <div class="msj-rta macro" style="margin:auto">
+                    <div class="text text-r" style="background:whitesmoke !important">
+                        <input class="mytext" placeholder="Type a message"/>
                     </div>
-                    <div class="detail-close">Close</div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <ul class="sitenav">
         <li class="sitenav-item sitenav-game-home"><a href="games.php" data-toggle="tooltip" title="Game Home"></a></li>
-        <li class="sitenav-item sitenav-extra-activities"><a href="extra-activities.php" data-toggle="tooltip" title="Extra Activities"></a></li>
-        <li class="sitenav-item sitenav-progress"><a href="progress.php" data-toggle="tooltip" title="Progress"></a></li>
-        <li class="sitenav-item sitenav-reading-material"><a href="reading-material.php" data-toggle="tooltip" title="Reading Materials"></a></li>
+        <li class="sitenav-item sitenav-extra-activities"><a href="extra-activities.php" data-toggle="tooltip"
+                                                             title="Extra Activities"></a></li>
+        <li class="sitenav-item sitenav-progress"><a href="progress.php" data-toggle="tooltip" title="Progress"></a>
+        </li>
+        <li class="sitenav-item sitenav-reading-material"><a href="reading-material.php" data-toggle="tooltip"
+                                                             title="Reading Materials"></a></li>
     </ul>
 
     <div class="footer-wrapper">
@@ -359,6 +322,90 @@
 </div>
 
 <script>
+    var me = {};
+    me.avatar = "https://lh6.googleusercontent.com/-lr2nyjhhjXw/AAAAAAAAAAI/AAAAAAAARmE/MdtfUmC0M4s/photo.jpg?sz=48";
+
+    var you = {};
+    you.avatar = "https://a11.t26.net/taringa/avatares/9/1/2/F/7/8/Demon_King1/48x48_5C5.jpg";
+
+    function formatAMPM(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        return hours + ':' + minutes + ' ' + ampm;
+    }
+
+    //-- No use time. It is a javaScript effect.
+    function insertChat(who, text, time = 0) {
+        var control = "";
+        var date = formatAMPM(new Date());
+
+        if (who !== "me") {
+            control = '<li style="width:100%">' +
+                '<div class="msj macro">' +
+                '<div class="avatar"><img class="img-circle" style="width:100%;" src="' + me.avatar + '" /></div>' +
+                '<div class="text text-l">' +
+                '<p>' + text + '</p>' +
+                '<p><small>' + date + '</small></p>' +
+                '</div>' +
+                '</div>' +
+                '</li>';
+        } else {
+            control = '<li style="width:100%;">' +
+                '<div class="msj-rta macro">' +
+                '<div class="text text-r">' +
+                '<p>' + text + '</p>' +
+                '<p><small>' + date + '</small></p>' +
+                '</div>' +
+                '<div class="avatar" style="padding:0px 0px 0px 10px !important"><img class="img-circle" style="width:100%;" src="' + you.avatar + '" /></div>' +
+                '</li>';
+        }
+        setTimeout(
+            function () {
+                $("#msgall").append(control);
+
+            }, time);
+
+    }
+
+    function resetChat() {
+        $("#msgall").empty();
+    }
+
+    // TODO; remove enter sending message
+    $(".mytext").on("keyup", function (e) {
+        if (e.which === 13) {
+            var text = $(this).val();
+            if (text !== "") {
+                insertChat("me", text);
+                $(this).val('');
+            }
+        }
+    });
+
+    //-- Clear Chat
+    resetChat();
+
+    //-- Print Messages
+    insertChat("me", "Hello Tom...", 0);
+    insertChat("you", "Hi, Pablo", 1500);
+    insertChat("me", "What would you like to talk about today?", 3500);
+    //    insertChat("you", "Tell me a joke",7000);
+    //    insertChat("me", "Spaceman: Computer! Computer! Do we bring battery?!", 9500);
+    //    insertChat("you", "LOL", 12000);
+
+
+    //--------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------
+
+
     function onItemDelete(itemId) {
         $.ajax({
             url: "messages-feedback.php",
@@ -367,18 +414,18 @@
                 action: 'DELETE'
             },
             type: "POST",
-            dataType : "json"
+            dataType: "json"
         })
 
-            .done(function(feedback) {
+            .done(function (feedback) {
                 parseDeleteFeedback(feedback);
             })
 
-            .fail(function( xhr, status, errorThrown ) {
-                alert( "Sorry, there was a problem!" );
-                console.log( "Error: " + errorThrown );
-                console.log( "Status: " + status );
-                console.dir( xhr );
+            .fail(function (xhr, status, errorThrown) {
+                alert("Sorry, there was a problem!");
+                console.log("Error: " + errorThrown);
+                console.log("Status: " + status);
+                console.dir(xhr);
             });
     }
 
@@ -426,7 +473,7 @@
         show: function (targetId) {
             this.$detailBoxes
                 .removeClass('detail-box-active')
-                .filter('[data-id=' + targetId+ ']')
+                .filter('[data-id=' + targetId + ']')
                 .addClass('detail-box-active')
 
             this.$main.show();
@@ -438,22 +485,23 @@
                     action: 'VIEW'
                 },
                 type: "POST",
-                dataType : "json"
+                dataType: "json"
             })
 
-                .done(function(feedback) {
+                .done(function (feedback) {
                     parseViewFeedback(feedback);
                 })
 
-                .fail(function( xhr, status, errorThrown ) {
-                    alert( "Sorry, there was a problem!" );
-                    console.log( "Error: " + errorThrown );
-                    console.log( "Status: " + status );
-                    console.dir( xhr );
+                .fail(function (xhr, status, errorThrown) {
+                    alert("Sorry, there was a problem!");
+                    console.log("Error: " + errorThrown);
+                    console.log("Status: " + status);
+                    console.dir(xhr);
                 });
         }
     }
     DetailCtrl.init();
+
 
     function onMessageSend(data) {
         console.log(data);
@@ -464,15 +512,15 @@
         var mm = sendTime.getMonth() + 1;
         var yyyy = sendTime.getFullYear();
 
-        if(dd<10) {
-            dd="0"+dd;
+        if (dd < 10) {
+            dd = "0" + dd;
         }
 
-        if(mm<10) {
-            mm="0"+mm;
+        if (mm < 10) {
+            mm = "0" + mm;
         }
 
-        sendTime = yyyy+"-"+mm+"-"+dd+ " " +sendTime.getHours() + ":" + sendTime.getMinutes()+":" + sendTime.getSeconds();
+        sendTime = yyyy + "-" + mm + "-" + dd + " " + sendTime.getHours() + ":" + sendTime.getMinutes() + ":" + sendTime.getSeconds();
 
         $.ajax({
             url: "messages-feedback.php",
@@ -483,54 +531,61 @@
                 action: 'UPDATE'
             },
             type: "POST",
-            dataType : "json"
+            dataType: "json"
         })
 
-            .done(function(feedback) {
+            .done(function (feedback) {
                 parseUpdateFeedback(feedback);
             })
 
-            .fail(function( xhr, status, errorThrown ) {
-                alert( "Sorry, there was a problem!" );
-                console.log( "Error: " + errorThrown );
-                console.log( "Status: " + status );
-                console.dir( xhr );
+            .fail(function (xhr, status, errorThrown) {
+                alert("Sorry, there was a problem!");
+                console.log("Error: " + errorThrown);
+                console.log("Status: " + status);
+                console.dir(xhr);
             });
     }
 
     function parseDeleteFeedback(feedback) {
-        if(feedback.message != "success"){
+        if (feedback.message != "success") {
             snap.alert({
                 content: 'Sorry. Please try again',
-                onClose: function () { }
+                onClose: function () {
+                }
             });
-        } else if(feedback.message == "success"){
+        } else if (feedback.message == "success") {
             snap.alert({
                 content: 'You have deleted this message',
-                onClose: function () {deleteMessage(feedback.questionID)}
+                onClose: function () {
+                    deleteMessage(feedback.questionID)
+                }
             });
         }
     }
 
     function parseUpdateFeedback(feedback) {
-        if(feedback.message != "success"){
+        if (feedback.message != "success") {
             snap.alert({
                 content: 'Sorry. Please try again',
-                onClose: function () { }
+                onClose: function () {
+                }
             });
-        } else if(feedback.message == "success"){
+        } else if (feedback.message == "success") {
             snap.alert({
                 content: 'You have sent a message to the researcher. Please wait for reply',
-                onClose: function () {window.location.href = "messages.php";}
+                onClose: function () {
+                    window.location.href = "messages.php";
+                }
             });
         }
     }
 
     function parseViewFeedback(feedback) {
-        if(feedback.message != "success"){
+        if (feedback.message != "success") {
             snap.alert({
                 content: 'Sorry. Please try again',
-                onClose: function () { }
+                onClose: function () {
+                }
             });
         }
     }
@@ -539,12 +594,6 @@
         $('.inbox-item').filter('[data-id=' + id + ']')
             .remove()
     }
-
-    $body.on('click', '.new-message-icon', function () {
-        snap.showSendDialog({
-            onConfirm: onMessageSend
-        })
-    })
 </script>
 </body>
 </html>

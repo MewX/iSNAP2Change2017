@@ -2348,17 +2348,7 @@ function deleteStudentQuestion(PDO $conn, $QuestionID)
     deleteRecord($conn, $QuestionID, "Student_Question");
 }
 
-function getStudentQuestion(PDO $conn, $studentID)
-{
-    $studentQuesSql = "SELECT * FROM Student_Question WHERE StudentID = ?";
-    $studentQuesQuery = $conn->prepare($studentQuesSql);
-    $studentQuesQuery->execute(array($studentID));
-    $studentQuesRes = $studentQuesQuery->fetchAll(PDO::FETCH_OBJ);
-
-    return $studentQuesRes;
-}
-
-function getStudentQuesViewedAttr(PDO $conn, $studentID)
+function getUnreadMessages(PDO $conn, $studentID)
 {
     $studentQuesSql = "SELECT * FROM Student_Question WHERE StudentID = ? AND Viewed = ? AND Replied = ?";
     $studentQuesQuery = $conn->prepare($studentQuesSql);
