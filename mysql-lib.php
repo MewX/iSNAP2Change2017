@@ -34,10 +34,7 @@ define("EXCLUDED_FALSE", 0);
 define("EXCLUDED_VIDEO", -1);
 define("EXCLUDED_IMAGE", -2);
 /* const */
-$serverName = "127.0.0.1";
-$username = "root";
-$password = "";
-$database = "isnap2changedb";
+require_once ("databaseConfig.php");
 /* db connection*/
 function db_connect($logger = null)
 {

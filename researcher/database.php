@@ -116,7 +116,16 @@ db_close($conn);
                                 <a href="../backup_restore_db/myphp-backup.php">backup</a>
                             </div>
                         </div>
-
+                        <div>
+                            <h4>Get CSV File</h4>
+                            <div class="alert alert-info">
+                                <p>
+                                    You can download a .csv file for database by clicking the <b>Generate</b> link below.
+                                </p>
+                                <br>
+                                <a href="../backup_restore_db/generateCSV.php">Generate</a>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.panel-body -->
                 </div>
