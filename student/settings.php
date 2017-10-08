@@ -82,29 +82,6 @@
             margin: 0 auto 20px;
             font-size: 18px;
         }
-        .addition-field {
-            display: block;
-            width: 400px;
-            margin: 0 auto;
-            height: 350px;
-            font-size: 18px;
-        }
-        .addition-footer {
-            padding: 20px;
-        }
-        .addition-submit {
-            width: 100px;
-            height: 40px;
-            margin: 0 auto;
-            cursor: pointer;
-            background-size: 100% 100%;
-            background-color: #000;
-            border: 0;
-            background-image: url("./img/send_icon.png");
-        }
-        .addition-submit:focus {
-            outline: 0;
-        }
     </style>
 </head>
 <body>
@@ -334,7 +311,7 @@
     </div>
 
     <ul class="sitenav">
-        <li class="sitenav-item sitenav-game-home"><a href="#" data-toggle="tooltip" title="Game Home"></a></li>
+        <li class="sitenav-item sitenav-game-home"><a href="games.php" data-toggle="tooltip" title="Game Home"></a></li>
         <li class="sitenav-item sitenav-extra-activities"><a href="extra-activities.php" data-toggle="tooltip" title="Extra Activities"></a></li>
         <li class="sitenav-item sitenav-progress"><a href="progress.php" data-toggle="tooltip" title="Progress"></a>
         <li class="sitenav-item sitenav-reading-material"><a href="reading-material.php" data-toggle="tooltip" title="Reading Materials"></a></li>

@@ -45,7 +45,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>SNAP² Change | SNAP²</title>
+    <title>Dashboard | SNAP²</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/vendor/slick.css">
     <link rel="stylesheet" href="./css/vendor/slick-theme.css">
@@ -308,7 +309,6 @@
                     </ul>
                 </div>
 
-
                 <div class="setting-icon dropdown">
                     <ul class="dropdown-menu">
                         <li class="dropdown-item"><a href="settings.php">Settings</a></li>
@@ -356,7 +356,7 @@
             </h2>
 
             <div class=" operation-container">
-                <a href="#" class="operation-item operation-game">
+                <a href="games.php" class="operation-item operation-game">
                     <img src="./img/game_icon.png" alt="" class="operation-logo">
                     <span>Games</span>
                 </a>
@@ -445,12 +445,11 @@
                 sendTime = yyyy+"-"+mm+"-"+dd+ " " +sendTime.getHours() + ":" + sendTime.getMinutes()+":" + sendTime.getSeconds();
 
                 $.ajax({
-                    url: "student-question-feedback.php",
+                    url: "messages-feedback.php",
                     data: {
                         student_id: <?php echo $studentID?>,
                         subject: data.title,
                         content: data.content,
-                        send_time: sendTime,
                         action: 'UPDATE'
                     },
                     type: "POST",
@@ -469,15 +468,15 @@
                     });
             }
         })
-    })
+    });
 
     function parseFeedback(feedback) {
-        if(feedback.message != "success"){
+        if(feedback.message !== "success"){
             snap.alert({
                 content: 'Sorry. Please try again',
                 onClose: function () { }
             });
-        } else if(feedback.message == "success"){
+        } else if(feedback.message === "success"){
             snap.alert({
                 content: 'You have sent a message to the researcher. Please wait for reply',
                 onClose: function () { }

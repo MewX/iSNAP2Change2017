@@ -69,7 +69,7 @@ db_close($conn);
 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"
      xmlns="http://www.w3.org/1999/html">
     <div class="navbar-header">
-        <a class="navbar-brand" href="index.php">SNAP² Change Administration System</a>
+        <a class="navbar-brand" href="index.php">SNAP² Administration System</a>
     </div>
     <!-- /.navbar-header -->
     <?php if (isset($_SESSION['researcherID']) && isset($_SESSION['researcherUsername'])): ?>

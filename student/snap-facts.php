@@ -51,6 +51,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
     <title>SNAP² Facts | SNAP²</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="./css/home.css"/>
     <link rel="stylesheet" href="./css/common.css">

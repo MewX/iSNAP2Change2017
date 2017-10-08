@@ -62,6 +62,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
     <title>Weekly Task | SNAP²</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
     <link rel="stylesheet" href="./css/common.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -869,7 +870,7 @@
     </div>
 
     <ul class="sitenav">
-        <li class="sitenav-item sitenav-game-home"><a href="#" data-toggle="tooltip" title="Game Home"></a></li>
+        <li class="sitenav-item sitenav-game-home"><a href="games.php" data-toggle="tooltip" title="Game Home"></a></li>
         <li class="sitenav-item sitenav-extra-activities"><a href="extra-activities.php" data-toggle="tooltip" title="Extra Activities"></a></li>
         <li class="sitenav-item sitenav-progress"><a href="progress.php" data-toggle="tooltip" title="Progress"></a>
         <li class="sitenav-item sitenav-reading-material"><a href="reading-material.php" data-toggle="tooltip" title="Reading Materials"></a></li>

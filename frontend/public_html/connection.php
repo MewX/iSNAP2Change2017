@@ -23,5 +23,3 @@
         function db_close($connection){
                 $connection = null;
         }
-
-?>

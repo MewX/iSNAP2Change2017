@@ -49,4 +49,3 @@
     $feedback["message"] = "success";
     $feedback["status"] = $status;
     echo json_encode($feedback);
-?>

@@ -88,6 +88,7 @@ if (!isset($studentID)) {
             array_push($outHistory, $temp);
         }
         $output->data = $outHistory;
+        $output->weekunlocked = getStudentClassWeek($conn, $studentID);
         $output->message = "success";
     } else if ($data['type'] == "submit") {
         // submit new score

@@ -5,7 +5,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SNAP² Change Admin</title>
+    <title>SNAP² Admin</title>
+
+    <!-- website icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../student/img/snap.ico" />
 
     <!-- Bootstrap Core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">

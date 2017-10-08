@@ -42,7 +42,7 @@ function db_connect($logger = null)
     $conn = null;
     $serverName = "127.0.0.1";
     $username = "root";
-    $password = "";
+    $password = "root";
     $database = "isnap2changedb";
     if ($logger == null) {
         $conn = new PDO("mysql:host=$serverName; dbname=$database; charset=utf8", $username, $password);
@@ -2265,6 +2265,13 @@ function getGame(PDO $conn, $gameID)
 function getGames(PDO $conn)
 {
     return getRecords($conn, "Game");
+}
+
+function getStudentClassWeek(PDO $conn, $studentID) {
+    // get student's class's unlocked week
+    $classID = getStudent($conn, $studentID)->ClassID;
+    $week = getClass($conn, $classID)->UnlockedProgress;
+    return $week;
 }
 
 function getStudentWeek(PDO $conn, $studentID)

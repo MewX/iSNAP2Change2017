@@ -58,6 +58,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
         <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="./css/home.css"/>
         <link rel="stylesheet" href="./css/common.css">
@@ -213,7 +214,7 @@
                                             </div>
                                         </div>
                                         <div class="item">
-                                            <img src="./img/Fruit.png" alt="..." style="border-radius:30px;">
+                                            <img src="./img/Fruit.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
                                                 <div style="font-size: 2.5vh; color:rgb(54,232,197); border: 0px solid rgb(54,232,197); border-bottom-color: rgb(54,232,197); border-bottom-width: 2px; ">FRUIT NINJA HIGH SCORE </div>
                                                 <p style="font-size: 50px;">
@@ -222,7 +223,7 @@
                                             </div>
                                         </div>
                                         <div class="item">
-                                            <img src="./img/Angry.png" alt="..." style="border-radius:30px;">
+                                            <img src="./img/Angry.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
                                                 <div style="font-size: 2.5vh; color:rgb(54,232,197); border: 0px solid rgb(54,232,197); border-bottom-color: rgb(54,232,197); border-bottom-width: 2px; ">ANGRY BIRDS HIGH SCORE </div>
                                                 <p style="font-size: 50px;">
