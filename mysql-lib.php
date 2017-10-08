@@ -34,13 +34,16 @@ define("EXCLUDED_FALSE", 0);
 define("EXCLUDED_VIDEO", -1);
 define("EXCLUDED_IMAGE", -2);
 /* const */
-require_once ("databaseConfig.php");
+
 /* db connection*/
 function db_connect($logger = null)
 {
     date_default_timezone_set('Australia/Adelaide');
     $conn = null;
-    global $serverName, $username, $password, $database;
+    $serverName = "127.0.0.1";
+    $username = "root";
+    $password = "";
+    $database = "isnap2changedb";
     if ($logger == null) {
         $conn = new PDO("mysql:host=$serverName; dbname=$database; charset=utf8", $username, $password);
     } else {
