@@ -128,9 +128,13 @@ db_close($conn);
                         </div>
                         <!-- /.table-responsive -->
                         <div class="well row">
-                            <h4>Short Answer Submissions Overview Notification</h4>
+                            <h4><?php echo $pageNameForView; ?> Overview Notification</h4>
                             <div class="alert alert-info">
-                                <p>View submissions by filtering or searching. </p>
+                                <p>View quizzes by filtering or searching. You can create/update/delete any quiz.</p>
+                            </div>
+                            <div class="alert alert-danger">
+                                <p><strong>Warning</strong> : If you remove one submission. All the data for the student in this
+                                    submission will be removed.
                             </div>
                         </div>
                     </div>

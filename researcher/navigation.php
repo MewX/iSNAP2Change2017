@@ -48,6 +48,15 @@ try {
             unset($comments[$key]);
         }
     }
+
+    $messages = getAllMessages($conn);
+    $unreadMessages = array();
+    foreach ($messages as $key => $value) {
+        if ($value->readOrNot == 0 && $value->isFromStudent == 1) {
+            $unreadMessages[] = $value;
+            unset($messages[$key]);
+        }
+    }
 } catch (Exception $e) {
     debug_err($e);
 }
@@ -77,11 +86,10 @@ db_close($conn);
                 <ul class="dropdown-menu dropdown-messages">
                     <?php foreach ($unreadComments as $value) { ?>
                         <li id="<?php echo $value->id ?>" class="list-group-item">
-                            <strong><?php echo $value->name ?></strong>
+                            <strong><?php echo "student name" ?></strong>
                             <span class="pull-right text-muted">
                         <em><?php echo $value->time ?></em>
                     </span>
-                            <em><?php echo $value->email ?></em>
                             <div>
                                 <?php
                                 $len = 150;
@@ -111,179 +119,50 @@ db_close($conn);
                 </ul>
                 <!-- /.dropdown-messages -->
             </li>
-            <!-- /.dropdown -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-tasks">
-                    <li>
-                        <a href="#">
-                            <div>
-                                <p>
-                                    <strong>Task 1</strong>
-                                    <span class="pull-right text-muted">40% Complete</span>
-                                </p>
-                                <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                        <span class="sr-only">40% Complete (success)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <p>
-                                    <strong>Task 2</strong>
-                                    <span class="pull-right text-muted">20% Complete</span>
-                                </p>
-                                <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                        <span class="sr-only">20% Complete</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <p>
-                                    <strong>Task 3</strong>
-                                    <span class="pull-right text-muted">60% Complete</span>
-                                </p>
-                                <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                        <span class="sr-only">60% Complete (warning)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <p>
-                                    <strong>Task 4</strong>
-                                    <span class="pull-right text-muted">80% Complete</span>
-                                </p>
-                                <div class="progress progress-striped active">
-                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80"
-                                         aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                        <span class="sr-only">80% Complete (danger)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a class="text-center" href="#">
-                            <strong>See All Tasks</strong>
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /.dropdown-tasks -->
-            </li>
-            <!-- /.dropdown -->
-            <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-alerts">
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-comment fa-fw"></i> Researchers have replied to your question!
-                                <span class="pull-right text-muted small">View it</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-check fa-fw"></i> Your short answer quiz has been graded!
-                                <span class="pull-right text-muted small">View it</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-check fa-fw"></i> Your infograph quiz has been graded!
-                                <span class="pull-right text-muted small">View it</span>
-                            </div>
-                        </a>
-                    </li>
 
-                    <!--
-                    <li>
-                        <a href="#">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <?php if (count($unreadMessages) > 0) { ?>
+                        <span class="badge"> <?php echo count($unreadMessages) ?></span>
+                    <?php } ?>
+                    <i class="fa fa-comments"></i>
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-messages">
+                    <?php foreach ($unreadMessages as $value) { ?>
+                        <li id="<?php echo $value->id ?>" class="list-group-item">
+                            <strong><?php echo $value->Username ?></strong>
+                            <span class="pull-right text-muted">
+                        <em><?php echo $value->time ?></em>
+                    </span>
+                            <em><?php echo $value->email ?></em>
                             <div>
-                                <i class="fa fa-comment fa-fw"></i> New Comment
-                                <span class="pull-right text-muted small">4 minutes ago</span>
+                                <?php
+                                $len = 150;
+                                if (strlen($value->content) < $len) {
+                                    echo $value->content;
+                                } else {
+                                    echo mb_strcut($value->content, 0, $len) . "...";
+                                }
+                                ?>
                             </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
+
+                            <a style="text-align:right" href="messages.php#<?php echo $value->StudentID?>">
+                                Reply
+                            </a>
+                            <div class="divider"></div>
+                        </li>
+                    <?php } ?>
                     <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                <span class="pull-right text-muted small">12 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-tasks fa-fw"></i> New Task
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a class="text-center" href="#">
-                            <strong>See All Alerts</strong>
+                        <a class="text-center" href="comments.php">
+                            <strong>Read All Messages</strong>
                             <i class="fa fa-angle-right"></i>
                         </a>
                     </li>
-                    -->
                 </ul>
-                <!-- /.dropdown-alerts -->
+                <!-- /.dropdown-messages -->
             </li>
-            <!-- /.dropdown -->
+
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>

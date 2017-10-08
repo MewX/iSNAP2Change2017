@@ -34,18 +34,21 @@ define("EXCLUDED_FALSE", 0);
 define("EXCLUDED_VIDEO", -1);
 define("EXCLUDED_IMAGE", -2);
 /* const */
-
+$serverName = "127.0.0.1";
+$username = "root";
+$password = "";
+$database = "isnap2changedb";
 /* db connection*/
 function db_connect($logger = null)
 {
     date_default_timezone_set('Australia/Adelaide');
     $conn = null;
-
     $serverName = "127.0.0.1";
     $username = "root";
-    $password = "root";
+    $password = "";
+    $database = "isnap2changedb";
     if ($logger == null) {
-        $conn = new PDO("mysql:host=$serverName; dbname=isnap2changedb; charset=utf8", $username, $password);
+        $conn = new PDO("mysql:host=$serverName; dbname=$database; charset=utf8", $username, $password);
     } else {
         $conn = new PDO("mysql:host=$serverName; dbname=$logger; charset=utf8", $username, $password);
     }
@@ -2590,7 +2593,16 @@ function markAllCommentRead(PDO $conn) {
 
 /* Messages */
 function getAllMessages(PDO $conn) {
-    return getRecords($conn, "Messages");
+    $joinTables = array("Student");
+    return getRecords($conn, "Messages", $joinTables);
+}
+
+function getAllMessagesWithOneStu(PDO $conn, $studentId) {
+    $sql = "SELECT * FROM Messages NATURAL JOIN Student WHERE StudentID = ?";
+    $sql = $conn->prepare($sql);
+    $sql->execute(array($studentId));
+    $tableResult = $sql->fetchAll(PDO::FETCH_OBJ);
+    return $tableResult;
 }
 
 function addNewMessage(PDO $conn, $studentId, $title, $content, $isFromStudent) {
@@ -2603,6 +2615,12 @@ function deleteMessage(PDO $conn, $messageId) {
     $sql = "delete from Messages where id = ?";
     $sql = $conn->prepare($sql);
     return $sql->execute(array($messageId)); // true on success
+}
+
+function deleteMessagesByRes(PDO $conn, $studentID) {
+    $sql = "UPDATE Messages SET deleteByRes = 1 where StudentID = ?";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(array($studentID)); // true on success
 }
 
 function markMessageAsRead(PDO $conn, $messageId){
@@ -2618,9 +2636,15 @@ function markMessageAsUnread(PDO $conn, $messageId) {
 
 }
 
-function markAllMessageAsUnread(PDO $conn) {
+function markAllMessageRead(PDO $conn) {
     $sql = "UPDATE Messages SET readOrNot = true";
     $sql = $conn->prepare($sql);
     return $sql->execute(); // true on success
+}
+
+function markMessageAsReadForRes(PDO $conn, $studentId){
+    $sql = "UPDATE Messages SET readOrNot = true WHERE StudentID = ? AND readOrNot = FALSE";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(array($studentId)); // true on success
 }
 

@@ -223,7 +223,7 @@ db_close($conn);
                     <br>
                     <label for="Explanation">Explanation <?php echo $mcqQuesResult->MCQID; ?></label>
                     <input type="text" class="form-control dialoginput" id="Explanation" name="explanation"
-                           placeholder="Input Explanation" required>
+                           placeholder="Input Explanation" >
                     <br>
                     <label for="MCQID" style="display:none">MCQID</label>
                     <input type="text" class="form-control dialoginput" id="MCQID" name="mcqID" style="display:none"
