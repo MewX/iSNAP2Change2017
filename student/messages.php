@@ -380,6 +380,7 @@ db_close($conn);
     resetChat();
 
     //-- Print Messages
+    // TODO: fetch message from server
     insertChat("me", "Hello Tom...", 0);
     insertChat("you", "Hi, Pablo", 1500);
     insertChat("me", "What would you like to talk about today?", 3500);

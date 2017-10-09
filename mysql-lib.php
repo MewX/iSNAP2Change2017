@@ -2605,22 +2605,40 @@ function getAllMessagesWithOneStu(PDO $conn, $studentId) {
     return $tableResult;
 }
 
-function addNewMessage(PDO $conn, $studentId, $title, $content, $isFromStudent) {
-    $sql = "INSERT INTO Messages(StudentId, title, content, isFromStudent) VALUES (?,?,?,?);";
+function addNewMessage(PDO $conn, $studentId, $content, $isFromStudent) {
+    $sql = "INSERT INTO Messages(StudentId, content, isFromStudent) VALUES (?,?,?,?);";
     $sql = $conn->prepare($sql);
-    return $sql->execute(array($studentId, $title, $content, $isFromStudent)); // true on success
+    return $sql->execute(array($studentId, $content, $isFromStudent)); // true on success
 }
 
-function deleteMessage(PDO $conn, $messageId) {
+function deleteMessageWithoutSafeCheck(PDO $conn, $messageId) {
     $sql = "delete from Messages where id = ?";
     $sql = $conn->prepare($sql);
     return $sql->execute(array($messageId)); // true on success
 }
 
 function deleteMessagesByRes(PDO $conn, $studentID) {
-    $sql = "UPDATE Messages SET deleteByRes = 1 where StudentID = ?";
+    $sql = "UPDATE Messages SET deleteByRes = true where StudentID = ?";
     $sql = $conn->prepare($sql);
-    return $sql->execute(array($studentID)); // true on success
+    $ret = $sql->execute(array($studentID)); // true on success
+
+    // safe delete message
+    $sql = "delete from Messages where StudentID = ? and deleteByRes = true and deleteByStu = true";
+    $sql = $conn->prepare($sql);
+    $sql->execute(array($studentID));
+    return $ret;
+}
+
+function deleteMessagesByStu(PDO $conn, $messageId) {
+    $sql = "UPDATE Messages SET deleteByStu = 1 where id = ?";
+    $sql = $conn->prepare($sql);
+    $ret = $sql->execute(array($messageId)); // true on success
+
+    // safe delete message
+    $sql = "delete from Messages where id = ? and deleteByRes = true and deleteByStu = true";
+    $sql = $conn->prepare($sql);
+    $sql->execute(array($messageId));
+    return $ret;
 }
 
 function markMessageAsRead(PDO $conn, $messageId){
@@ -2633,7 +2651,6 @@ function markMessageAsUnread(PDO $conn, $messageId) {
     $sql = "UPDATE Messages SET readOrNot = false WHERE id = ?";
     $sql = $conn->prepare($sql);
     return $sql->execute(array($messageId)); // true on success
-
 }
 
 function markAllMessageRead(PDO $conn) {
@@ -2643,7 +2660,14 @@ function markAllMessageRead(PDO $conn) {
 }
 
 function markMessageAsReadForRes(PDO $conn, $studentId){
-    $sql = "UPDATE Messages SET readOrNot = true WHERE StudentID = ? AND readOrNot = FALSE";
+    // for researcher, the message must be from student
+    $sql = "UPDATE Messages SET readOrNot = true WHERE StudentID = ? AND readOrNot = FALSE and isFromStudnet = true";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(array($studentId)); // true on success
+}
+
+function markMessageAsReadForStu(PDO $conn, $studentId) {
+    $sql = "UPDATE Messages SET readOrNot = true WHERE StudentID = ? AND readOrNot = FALSE and isFromStudnet = false";
     $sql = $conn->prepare($sql);
     return $sql->execute(array($studentId)); // true on success
 }
