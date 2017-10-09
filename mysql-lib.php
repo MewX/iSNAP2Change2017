@@ -2606,7 +2606,7 @@ function getAllMessagesWithOneStu(PDO $conn, $studentId) {
 }
 
 function addNewMessage(PDO $conn, $studentId, $content, $isFromStudent) {
-    $sql = "INSERT INTO Messages(StudentId, content, isFromStudent) VALUES (?,?,?,?);";
+    $sql = "INSERT INTO Messages(StudentId, content, isFromStudent) VALUES (?,?,?);";
     $sql = $conn->prepare($sql);
     return $sql->execute(array($studentId, $content, $isFromStudent)); // true on success
 }
@@ -2661,13 +2661,13 @@ function markAllMessageRead(PDO $conn) {
 
 function markMessageAsReadForRes(PDO $conn, $studentId){
     // for researcher, the message must be from student
-    $sql = "UPDATE Messages SET readOrNot = true WHERE StudentID = ? AND readOrNot = FALSE and isFromStudnet = true";
+    $sql = "UPDATE Messages SET readOrNot = true WHERE StudentID = ? AND readOrNot = FALSE and isFromStudent = true";
     $sql = $conn->prepare($sql);
     return $sql->execute(array($studentId)); // true on success
 }
 
 function markMessageAsReadForStu(PDO $conn, $studentId) {
-    $sql = "UPDATE Messages SET readOrNot = true WHERE StudentID = ? AND readOrNot = FALSE and isFromStudnet = false";
+    $sql = "UPDATE Messages SET readOrNot = true WHERE StudentID = ? AND readOrNot = FALSE and isFromStudent = false";
     $sql = $conn->prepare($sql);
     return $sql->execute(array($studentId)); // true on success
 }
