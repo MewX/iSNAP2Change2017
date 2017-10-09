@@ -404,7 +404,10 @@
                     }
                         echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID; ?>
                             </div>
-                            <span class="fact"><?php echo $factRes[$i]->Content; ?></span>
+                            <p class="fact"><?php echo $factRes[$i]->Content; ?></p>
+                                <p class="recource">
+                                    <strong>Source: </strong><? echo $factRes[$i]->Recource; ?>
+                                </p>
                         </div>
                     </div>
                   <?php   }   ?>

@@ -172,11 +172,11 @@
         }
         .week-facts-intro {
             color: #fff;
-            font-size: 20px;
+            font-size: 25px;
         }
         .week-facts-recource {
-            color: #e6e6e6;
-            font-size: 20px;
+            color: #dfdfdf;
+            font-size: 12px;
         }
 
     </style>
@@ -354,12 +354,12 @@
                                         break;
                                 }?>"></span>
                                 <span class="week-facts-name"><? echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID ?></span>
-                                    <span class="week-facts-intro">
+                                    <p class="week-facts-intro">
                                         <? echo $factRes[$i]->Content; ?>
-                                    </span>
-                                    <span class="week-facts-intro">
-                                        <? echo $factRes[$i]->Recource; ?>
-                                    </span>
+                                    </p>
+                                    <p class="week-facts-recource">
+                                        <strong>Source: </strong><? echo $factRes[$i]->Recource; ?>
+                                    </p>
                             </a>
                         </div>
                         <? } ?>
