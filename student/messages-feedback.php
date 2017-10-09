@@ -28,6 +28,7 @@
     $feedback = array();
     $conn = null;
 
+    // TODO: rewrite the following parts
     try {
         $conn = db_connect();
 
@@ -64,4 +65,3 @@
     db_close($conn);
     $feedback["message"] = "success";
     echo json_encode($feedback);
-?>

@@ -29,7 +29,7 @@
         $quizViewedAttrs = getQuizViewdAttr($conn, $studentID);
 
         //get student question viewed attribute
-        $studentQuesViewedAttrs = getStudentQuesViewedAttr($conn, $studentID);
+        $studentQuesViewedAttrs = getUnreadMessages($conn, $studentID);
 
         //get due time for this week
 //        $dueTime = getStuWeekRecord($conn, $studentID, $week);

@@ -136,7 +136,7 @@ function renderOneMessage($value)
             } else if ($update == 3) {
                 $content = $_POST['content'];
                 $studentID = $_POST['studentId'];
-                if (addNewMessage($conn, $studentID, "", $content, 0)) {
+                if (addNewMessage($conn, $studentID, $content, 0)) {
                     markMessageAsReadForRes($conn, $studentID);
                     $messagesForStu = array();
                     $messagesForStu = getAllMessagesWithOneStu($conn, $studentID);

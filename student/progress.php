@@ -23,7 +23,7 @@
         $quizViewedAttrs = getQuizViewdAttr($conn, $studentID);
 
         //get student question viewed attribute
-        $studentQuesViewedAttrs = getStudentQuesViewedAttr($conn, $studentID);
+        $studentQuesViewedAttrs = getUnreadMessages($conn, $studentID);
 
         //get student information
         $student = getStudent($conn, $studentID);

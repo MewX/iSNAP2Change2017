@@ -14,7 +14,7 @@
         $quizViewedAttrs = getQuizViewdAttr($conn, $studentID);
 
         //get student question viewed attribute
-        $studentQuesViewedAttrs = getStudentQuesViewedAttr($conn, $studentID);
+        $studentQuesViewedAttrs = getUnreadMessages($conn, $studentID);
 
         //get student week
         $studentWeek = getStudentWeek($conn, $studentID);

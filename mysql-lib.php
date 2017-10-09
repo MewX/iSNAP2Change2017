@@ -45,7 +45,7 @@ function db_connect($logger = null)
     $conn = null;
     $serverName = "127.0.0.1";
     $username = "root";
-    $password = "";
+    $password = "root";
     $database = "isnap2changedb";
     if ($logger == null) {
         $conn = new PDO("mysql:host=$serverName; dbname=$database; charset=utf8", $username, $password);
@@ -2351,17 +2351,7 @@ function deleteStudentQuestion(PDO $conn, $QuestionID)
     deleteRecord($conn, $QuestionID, "Student_Question");
 }
 
-function getStudentQuestion(PDO $conn, $studentID)
-{
-    $studentQuesSql = "SELECT * FROM Student_Question WHERE StudentID = ?";
-    $studentQuesQuery = $conn->prepare($studentQuesSql);
-    $studentQuesQuery->execute(array($studentID));
-    $studentQuesRes = $studentQuesQuery->fetchAll(PDO::FETCH_OBJ);
-
-    return $studentQuesRes;
-}
-
-function getStudentQuesViewedAttr(PDO $conn, $studentID)
+function getUnreadMessages(PDO $conn, $studentID)
 {
     $studentQuesSql = "SELECT * FROM Student_Question WHERE StudentID = ? AND Viewed = ? AND Replied = ?";
     $studentQuesQuery = $conn->prepare($studentQuesSql);
@@ -2615,22 +2605,40 @@ function getAllMessagesWithOneStu(PDO $conn, $studentId) {
     return $tableResult;
 }
 
-function addNewMessage(PDO $conn, $studentId, $title, $content, $isFromStudent) {
-    $sql = "INSERT INTO Messages(StudentId, title, content, isFromStudent) VALUES (?,?,?,?);";
+function addNewMessage(PDO $conn, $studentId, $content, $isFromStudent) {
+    $sql = "INSERT INTO Messages(StudentId, content, isFromStudent) VALUES (?,?,?);";
     $sql = $conn->prepare($sql);
-    return $sql->execute(array($studentId, $title, $content, $isFromStudent)); // true on success
+    return $sql->execute(array($studentId, $content, $isFromStudent)); // true on success
 }
 
-function deleteMessage(PDO $conn, $messageId) {
+function deleteMessageWithoutSafeCheck(PDO $conn, $messageId) {
     $sql = "delete from Messages where id = ?";
     $sql = $conn->prepare($sql);
     return $sql->execute(array($messageId)); // true on success
 }
 
 function deleteMessagesByRes(PDO $conn, $studentID) {
-    $sql = "UPDATE Messages SET deleteByRes = 1 where StudentID = ?";
+    $sql = "UPDATE Messages SET deleteByRes = true where StudentID = ?";
     $sql = $conn->prepare($sql);
-    return $sql->execute(array($studentID)); // true on success
+    $ret = $sql->execute(array($studentID)); // true on success
+
+    // safe delete message
+    $sql = "delete from Messages where StudentID = ? and deleteByRes = true and deleteByStu = true";
+    $sql = $conn->prepare($sql);
+    $sql->execute(array($studentID));
+    return $ret;
+}
+
+function deleteMessagesByStu(PDO $conn, $messageId) {
+    $sql = "UPDATE Messages SET deleteByStu = 1 where id = ?";
+    $sql = $conn->prepare($sql);
+    $ret = $sql->execute(array($messageId)); // true on success
+
+    // safe delete message
+    $sql = "delete from Messages where id = ? and deleteByRes = true and deleteByStu = true";
+    $sql = $conn->prepare($sql);
+    $sql->execute(array($messageId));
+    return $ret;
 }
 
 function markMessageAsRead(PDO $conn, $messageId){
@@ -2643,7 +2651,6 @@ function markMessageAsUnread(PDO $conn, $messageId) {
     $sql = "UPDATE Messages SET readOrNot = false WHERE id = ?";
     $sql = $conn->prepare($sql);
     return $sql->execute(array($messageId)); // true on success
-
 }
 
 function markAllMessageRead(PDO $conn) {
@@ -2653,7 +2660,14 @@ function markAllMessageRead(PDO $conn) {
 }
 
 function markMessageAsReadForRes(PDO $conn, $studentId){
-    $sql = "UPDATE Messages SET readOrNot = true WHERE StudentID = ? AND readOrNot = FALSE";
+    // for researcher, the message must be from student
+    $sql = "UPDATE Messages SET readOrNot = true WHERE StudentID = ? AND readOrNot = FALSE and isFromStudent = true";
+    $sql = $conn->prepare($sql);
+    return $sql->execute(array($studentId)); // true on success
+}
+
+function markMessageAsReadForStu(PDO $conn, $studentId) {
+    $sql = "UPDATE Messages SET readOrNot = true WHERE StudentID = ? AND readOrNot = FALSE and isFromStudent = false";
     $sql = $conn->prepare($sql);
     return $sql->execute(array($studentId)); // true on success
 }
