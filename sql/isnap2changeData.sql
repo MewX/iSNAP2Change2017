@@ -498,10 +498,9 @@ CREATE TABLE `messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `StudentID` mediumint(9) DEFAULT NULL,
   `isFromStudent` tinyint(1) DEFAULT 1,
-  `title` text NOT NULL,
   `content` longtext NOT NULL,
   `readOrNot` tinyint(1) DEFAULT 0,
-  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `time` timestamp NOT NULL DEFAULT current_timestamp(),
   `deleteByStu` tinyint(1) NOT NULL DEFAULT 0,
   `deleteByRes` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
@@ -516,7 +515,7 @@ CREATE TABLE `messages` (
 
 LOCK TABLES `messages` WRITE;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
-INSERT INTO `messages` VALUES (1,1,1,'Welcome','This is an initial message for testing propose',0,'2017-10-03 14:56:20',0,0);
+INSERT INTO `messages` VALUES (1,1,1,'This is an initial message for testing propose',0,'2017-10-03 14:56:20',0,0);
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
