@@ -45,7 +45,7 @@ function db_connect($logger = null)
     $conn = null;
     $serverName = "127.0.0.1";
     $username = "root";
-    $password = "";
+    $password = "root";
     $database = "isnap2changedb";
     if ($logger == null) {
         $conn = new PDO("mysql:host=$serverName; dbname=$database; charset=utf8", $username, $password);

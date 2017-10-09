@@ -42,13 +42,13 @@ db_close($conn);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
-            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-            crossorigin="anonymous"></script>
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="./js/snap.js"></script>
 
     <style>
         .inbox-header {
             text-align: center;
+            margin-bottom: 16px;
         }
 
         .inbox-icon {
@@ -63,22 +63,16 @@ db_close($conn);
             border: 0;
             padding: 10px;
             background: whitesmoke;
+            width: auto;
         }
 
         .text {
-            width: 75%;
+            width: 88%;
             display: flex;
             flex-direction: column;
         }
 
-        .text > p:first-of-type {
-            width: 100%;
-            margin-top: 0;
-            margin-bottom: auto;
-            line-height: 13px;
-            font-size: 12px;
-        }
-
+        /* for date time */
         .text > p:last-of-type {
             width: 100%;
             text-align: right;
@@ -108,7 +102,7 @@ db_close($conn);
 
         .macro {
             margin-top: 5px;
-            width: 85%;
+            width: 90%;
             border-radius: 5px;
             padding: 5px;
             display: flex;
@@ -158,18 +152,6 @@ db_close($conn);
             border-style: solid;
             border-width: 0 13px 13px 0;
             border-color: transparent #ffffff transparent transparent;
-        }
-
-        .msj-rta:after {
-            width: 0;
-            height: 0;
-            content: "";
-            top: -5px;
-            left: 14px;
-            position: relative;
-            border-style: solid;
-            border-width: 13px 13px 0 0;
-            border-color: whitesmoke transparent transparent transparent;
         }
 
         input:focus {
@@ -291,8 +273,10 @@ db_close($conn);
             <div class="msgframe">
                 <div class="msj-rta macro" style="margin:auto">
                     <div class="text text-r" style="background:whitesmoke !important">
-                        <input class="mytext" placeholder="Type a message"/>
+<!--                        <input class="mytext" placeholder="Type a message"/>-->
+                        <textarea class="scrollabletextbox mytext" name="note" placeholder="Input your message here" id="msgtext"></textarea>
                     </div>
+                    <button type="button" class="btn btn-default" style="width: 10%" onclick="sendMessage()">Send</button>
                 </div>
             </div>
         </div>
@@ -300,12 +284,9 @@ db_close($conn);
 
     <ul class="sitenav">
         <li class="sitenav-item sitenav-game-home"><a href="games.php" data-toggle="tooltip" title="Game Home"></a></li>
-        <li class="sitenav-item sitenav-extra-activities"><a href="extra-activities.php" data-toggle="tooltip"
-                                                             title="Extra Activities"></a></li>
-        <li class="sitenav-item sitenav-progress"><a href="progress.php" data-toggle="tooltip" title="Progress"></a>
-        </li>
-        <li class="sitenav-item sitenav-reading-material"><a href="reading-material.php" data-toggle="tooltip"
-                                                             title="Reading Materials"></a></li>
+        <li class="sitenav-item sitenav-extra-activities"><a href="extra-activities.php" data-toggle="tooltip" title="Extra Activities"></a></li>
+        <li class="sitenav-item sitenav-progress"><a href="progress.php" data-toggle="tooltip" title="Progress"></a></li>
+        <li class="sitenav-item sitenav-reading-material"><a href="reading-material.php" data-toggle="tooltip" title="Reading Materials"></a></li>
     </ul>
 
     <div class="footer-wrapper">
@@ -343,48 +324,57 @@ db_close($conn);
         var control = "";
         var date = formatAMPM(new Date());
 
-        if (who !== "me") {
+        // parse message content
+        var paragraphs = text.split("\n");
+        console.log(paragraphs);
+        var content = [];
+        for (var i = 0; i < paragraphs.length; i ++) {
+            content.push("<p>",
+                paragraphs[i],
+                "</p>");
+        }
+
+        if (who === "me") {
+            control = '<li style="width:100%;">' +
+                '<div class="msj-rta macro">' +
+                '<div class="text text-r">' +
+                content.join("") +
+                '<p><small>' + date + '</small></p>' +
+                '</div>' +
+                '<div class="avatar" style="padding:0px 0px 0px 10px !important"><img class="img-circle" style="width:100%;" src="' + you.avatar + '" /></div>' +
+                '</li>';
+        } else {
             control = '<li style="width:100%">' +
                 '<div class="msj macro">' +
                 '<div class="avatar"><img class="img-circle" style="width:100%;" src="' + me.avatar + '" /></div>' +
                 '<div class="text text-l">' +
-                '<p>' + text + '</p>' +
+                content.join("") +
                 '<p><small>' + date + '</small></p>' +
                 '</div>' +
                 '</div>' +
-                '</li>';
-        } else {
-            control = '<li style="width:100%;">' +
-                '<div class="msj-rta macro">' +
-                '<div class="text text-r">' +
-                '<p>' + text + '</p>' +
-                '<p><small>' + date + '</small></p>' +
-                '</div>' +
-                '<div class="avatar" style="padding:0px 0px 0px 10px !important"><img class="img-circle" style="width:100%;" src="' + you.avatar + '" /></div>' +
                 '</li>';
         }
         setTimeout(
             function () {
                 $("#msgall").append(control);
-
             }, time);
-
     }
 
     function resetChat() {
         $("#msgall").empty();
     }
 
-    // TODO; remove enter sending message
-    $(".mytext").on("keyup", function (e) {
-        if (e.which === 13) {
-            var text = $(this).val();
-            if (text !== "") {
-                insertChat("me", text);
-                $(this).val('');
-            }
+    function sendMessage() {
+        var text = $("#msgtext").val().trim();
+        if (text !== "") {
+            // TODO: send message to server
+
+            // then decide to add to context and remove or not
+            insertChat("me", text);
+            $(this).val('');
         }
-    });
+        $("#msgtext").val(""); // clear box
+    }
 
     //-- Clear Chat
     resetChat();
