@@ -33,20 +33,18 @@ define("EXCLUDED_TRUE", 1);
 define("EXCLUDED_FALSE", 0);
 define("EXCLUDED_VIDEO", -1);
 define("EXCLUDED_IMAGE", -2);
+require_once ("config.php");
 /* const */
-$serverName = "127.0.0.1";
-$username = "root";
-$password = "";
-$database = "isnap2changedb";
+
 /* db connection*/
 function db_connect($logger = null)
 {
     date_default_timezone_set('Australia/Adelaide');
     $conn = null;
-    $serverName = "127.0.0.1";
-    $username = "root";
-    $password = "root";
-    $database = "isnap2changedb";
+    $serverName = SERVER;
+    $username = USERNAME;
+    $password = PASSWORD;
+    $database = DB;
     if ($logger == null) {
         $conn = new PDO("mysql:host=$serverName; dbname=$database; charset=utf8", $username, $password);
     } else {
@@ -931,22 +929,22 @@ function getTopics(PDO $conn)
 /* Topic */
 
 /* SnapFact */
-function createSnapFact(PDO $conn, $topicID, $content)
+function createSnapFact(PDO $conn, $topicID, $content, $recource)
 {
-    $updateSql = "INSERT INTO Snap_Fact(Content, TopicID)
-             VALUES (?,?)";
+    $updateSql = "INSERT INTO Snap_Fact(Content, TopicID, Recource)
+             VALUES (?,?,?)";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($content, $topicID));
+    $updateSql->execute(array($content, $topicID, $recource));
     return $conn->lastInsertId();
 }
 
-function updateSnapFact(PDO $conn, $snapFactID, $topicID, $content)
+function updateSnapFact(PDO $conn, $snapFactID, $topicID, $content, $recource)
 {
     $updateSql = "UPDATE Snap_Fact 
-                SET Content = ?, TopicID = ?
+                SET Content = ?, TopicID = ?, Recource = ?
                 WHERE SnapFactID = ?";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($content, $topicID, $snapFactID));
+    $updateSql->execute(array($content, $topicID, $recource, $snapFactID));
 }
 
 function deleteSnapFact(PDO $conn, $snapFactID)

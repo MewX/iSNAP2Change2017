@@ -14,22 +14,13 @@
         //get fact topics
         $topicRes = getFactTopics($conn);
 
-        //randomly select three topics to show
-        $topicArr = array();
-
-        foreach($topicRes as $singleTopic) {
-            array_push($topicArr, $singleTopic->TopicID);
-        }
-
-        $randKeys = array_rand($topicArr, 3);
-
-        //randomly select one fact from each topic
+        //randomly select three facts from smoking
         $factRes = array();
 
+        $factsRes = getFactsByTopicID($conn, 1);
+        $randFactKey = array_rand($factsRes, 3);
         for($i = 0; $i < 3; $i++) {
-            $factsRes = getFactsByTopicID($conn, $topicArr[$randKeys[$i]]);
-            $randFactKey = array_rand($factsRes, 1);
-            $factRes[$i] = $factsRes[$randFactKey];
+            $factRes[$i] = $factsRes[$randFactKey[$i]];
         }
     } catch(Exception $e) {
         if($conn != null) {
@@ -181,6 +172,10 @@
         }
         .week-facts-intro {
             color: #fff;
+            font-size: 20px;
+        }
+        .week-facts-recource {
+            color: #e6e6e6;
             font-size: 20px;
         }
 
@@ -361,6 +356,9 @@
                                 <span class="week-facts-name"><? echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID ?></span>
                                     <span class="week-facts-intro">
                                         <? echo $factRes[$i]->Content; ?>
+                                    </span>
+                                    <span class="week-facts-intro">
+                                        <? echo $factRes[$i]->Recource; ?>
                                     </span>
                             </a>
                         </div>

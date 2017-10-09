@@ -27,9 +27,7 @@
             array_push($topicArr, $singleTopic->TopicID);
         }
 
-        //$randKeys = array_rand($topicArr, 3);
-
-        //randomly select one fact from each topic
+        //randomly select three facts from smoking
         $factRes = array();
 
         $factsRes = getFactsByTopicID($conn, 1);

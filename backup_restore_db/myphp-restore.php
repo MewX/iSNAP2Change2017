@@ -1,5 +1,9 @@
 <?php
-require_once ("../mysql-lib.php");
+require_once ("../config.php");
+$serverName = SERVER;
+$username = USERNAME;
+$password = PASSWORD;
+$database = DB;
 $uploadfile = basename($_FILES['userfile']['name']);
 
 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {

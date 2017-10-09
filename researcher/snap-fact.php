@@ -5,7 +5,7 @@ require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
 
-$columnName = array('SnapFactID', 'Content', 'Edit');
+$columnName = array('SnapFactID', 'Content','Recource', 'Edit');
 
 try {
     $conn = db_connect();
@@ -16,13 +16,15 @@ try {
                 $topicName = $_POST['topicName'];
                 $topicID = getTopicByName($conn, $topicName)->TopicID;
                 $content = $_POST['content'];
-                createSnapFact($conn, $topicID, $content);
+                $recource = $_POST['recource'];
+                createSnapFact($conn, $topicID, $content,$recource);
             } else if ($update == 0) {
                 $snapFactID = $_POST['snapFactID'];
                 $topicName = $_POST['topicName'];
                 $topicID = getTopicByName($conn, $topicName)->TopicID;
                 $content = $_POST['content'];
-                updateSnapFact($conn, $snapFactID, $topicID, $content);
+                $recource = $_POST['recource'];
+                updateSnapFact($conn, $snapFactID, $topicID, $content, $recource);
             } else if ($update == -1) {
                 $snapFactID = $_POST['snapFactID'];
                 deleteSnapFact($conn, $snapFactID);
@@ -84,8 +86,8 @@ db_close($conn);
                                     } ?>">
                                         <?php for ($j = 0; $j < count($columnName); $j++) { ?>
                                             <td <?php if ($j == 0) echo 'style="display:none"'; ?>>
-                                                <?php if ($j != 2) echo $snapFactResult[$i]->$columnName[$j]; ?>
-                                                <?php if ($j == 2) echo '<span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;</span><span class="glyphicon glyphicon-edit pull-right" data-toggle="modal" data-target="#dialog" aria-hidden="true"></span>'; ?>
+                                                <?php if ($j != 3) echo $snapFactResult[$i]->$columnName[$j]; ?>
+                                                <?php if ($j == 3) echo '<span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;</span><span class="glyphicon glyphicon-edit pull-right" data-toggle="modal" data-target="#dialog" aria-hidden="true"></span>'; ?>
                                             </td>
                                         <?php } ?>
                                     </tr>
@@ -130,6 +132,9 @@ db_close($conn);
 
                     <label for="content">Content</label>
                     <textarea class="form-control dialoginput" id="content" name="content" rows="8" required></textarea>
+
+                    <label for="recource">Recource</label>
+                    <textarea class="form-control dialoginput" id="recource" name="recource" rows="8" required></textarea>
                     <br>
                 </form>
             </div>

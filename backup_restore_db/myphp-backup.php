@@ -1,5 +1,9 @@
 <?php
-require_once ("../mysql-lib.php");
+require_once ("../config.php");
+$serverName = SERVER;
+$username = USERNAME;
+$password = PASSWORD;
+$database = DB;
 date_default_timezone_set('Australia/Adelaide');
 $currentDate = date('_d_m_Y');
 $file = $database. $currentDate. ".sql";

@@ -200,7 +200,7 @@ function renderOneMessage($value)
         margin: 10px;
         display: inline-block;
         position: relative;
-        width: 400px;
+        width: 51%;
         height: auto;
         background-color: lightgrey;
     }
