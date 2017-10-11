@@ -2203,11 +2203,10 @@ function getFactsByTopicID(PDO $conn, $topicID)
 
     return $factRes;
 }
-
 /* Fact */
 
-/* Misc Quiz */
 
+/* Misc Quiz */
 function createMiscSection(PDO $conn, $quizID, $points, $quizType)
 {
     $updateSql = "INSERT INTO misc_section(QuizID, QuizSubType, Points)
@@ -2325,21 +2324,7 @@ ORDER BY game_record.Score DESC LIMIT $numberOfRecords;";
     $retrieveScoreQuery->execute(array($gameID, $level));
     return $retrieveScoreQuery->fetchAll();
 }
-
 /* Game */
-
-
-/* Student Question */
-function getUnreadMessages(PDO $conn, $studentID)
-{
-    $studentQuesSql = "SELECT * FROM Student_Question WHERE StudentID = ? AND Viewed = ? AND Replied = ?";
-    $studentQuesQuery = $conn->prepare($studentQuesSql);
-    $studentQuesQuery->execute(array($studentID, 0, 1));
-    $studentQuesRes = $studentQuesQuery->fetchAll(PDO::FETCH_OBJ);
-
-    return $studentQuesRes;
-}
-/* Student Question*/
 
 
 /* Log */
@@ -2658,4 +2643,3 @@ function markMessageAsReadForStu(PDO $conn, $studentId) {
     $sql = $conn->prepare($sql);
     return $sql->execute(array($studentId)); // true on success
 }
-

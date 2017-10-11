@@ -28,9 +28,11 @@ $studentQuesViewedAttrs = getAllUnreadMessagesForStu($conn, $studentID);
         </ul>
         <div class="settings">
             <div class="info-item info-notification">
-                <a class="info-icon" href="javascript:;"></a>
-                <?php if (count($quizViewedAttrs) != 0) { ?>
-                    <span class="info-number"><?php echo count($quizViewedAttrs) ?></span>
+                <a class="info-icon" href="#"></a>
+                <?php
+                $quizFeedbackCount = count($quizViewedAttrs);
+                if ($quizFeedbackCount != 0) { ?>
+                    <span class="info-number"><?php echo $quizFeedbackCount > 9 ? "9+" : $quizFeedbackCount; ?></span>
                 <?php } ?>
                 <ul class="info-message-list">
                     <?php for ($i = 0; $i < count($quizViewedAttrs); $i++) {
@@ -69,8 +71,10 @@ $studentQuesViewedAttrs = getAllUnreadMessagesForStu($conn, $studentID);
             </div>
             <div class="info-item info-message">
                 <a class="info-icon" href="./messages.php"></a>
-                <?php if (count($studentQuesViewedAttrs) != 0) { ?>
-                    <span class="info-number"><?php echo count($studentQuesViewedAttrs) ?></span>
+                <?php
+                $messageCount = count($studentQuesViewedAttrs);
+                if ($messageCount != 0) { ?>
+                    <span class="info-number"><?php echo $messageCount > 9 ? "9+" : $messageCount; ?></span>
                 <?php } ?>
             </div>
 

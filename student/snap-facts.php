@@ -16,20 +16,18 @@
 
         //randomly select three topics to show
         $topicArr = array();
-
         foreach($topicRes as $singleTopic) {
             array_push($topicArr, $singleTopic->TopicID);
         }
 
-        $randKeys = array_rand($topicArr, 3);
-
         //randomly select one fact from each topic
         $factRes = array();
-
-        for($i = 0; $i < 3; $i++) {
-            $factsRes = getFactsByTopicID($conn, $topicArr[$randKeys[$i]]);
-            $randFactKey = array_rand($factsRes, 1);
-            $factRes[$i] = $factsRes[$randFactKey];
+        if (count($topicArr) != 0) {
+            $factsRes = getFactsByTopicID($conn, $topicArr[0]);
+            $selectedRes = array_rand($factsRes, 3 > count($factsRes) ? count($factsRes) : 3);
+            for ($i = 0; $i < count($selectedRes); $i ++) {
+                array_push($factRes, $factsRes[$selectedRes[$i]]);
+            }
         }
     } catch(Exception $e) {
         if($conn != null) {
@@ -330,38 +328,12 @@
                 <div class="week-facts-list">
                     <div class="clearfix">
 
-                        <? for ($i = 0; $i < 3; $i ++) { ?>
-                        <div class="week-facts-item <?
-                        switch ($factRes[$i]->TopicID) {
-//                            TODO: this should be adjusted into smoking
-                            case 1:
-                                echo "week-facts-item-drugs";
-                                break;
-                            case 2:
-                                echo "week-facts-item-health";
-                                break;
-                            default:
-                                echo "week-facts-item-smoking";
-                                break;
-                        }?>">
+                        <? for ($i = 0; $i < count($factRes); $i ++) { ?>
+                        <div class="week-facts-item week-facts-item-smoking">
                             <a class="week-facts-divnk">
-                                <span class="week-facts-icon <?
-                                switch ($factRes[$i]->TopicID) {
-//                            TODO: this should be adjusted into smoking
-                                    case 1:
-                                        echo "image-icon-drugs";
-                                        break;
-                                    case 2:
-                                        echo "image-icon-health";
-                                        break;
-                                    default:
-                                        echo "image-icon-smoking";
-                                        break;
-                                }?>"></span>
-                                <span class="week-facts-name"><? echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID ?></span>
-                                    <span class="week-facts-intro">
-                                        <? echo $factRes[$i]->Content; ?>
-                                    </span>
+                                <span class="week-facts-icon image-icon-smoking"></span>
+                                <span class="week-facts-name"><? echo strtoupper($factRes[$i]->TopicName) . " FACT #" . $factRes[$i]->SnapFactID ?></span>
+                                <span class="week-facts-intro"><? echo $factRes[$i]->Content; ?></span>
                             </a>
                         </div>
                         <? } ?>
