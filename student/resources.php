@@ -264,19 +264,7 @@
         </div>
     </div>
 
-    <div class="footer-wrapper">
-        <div class="footer">
-            <div class="footer-content">
-                <a href="#" class="footer-logo"></a>
-                <ul class="footer-nav">
-                    <li class="footer-nav-item"><a href="#">Any Legal Stuff</a></li>
-                    <li class="footer-nav-item"><a href="#">Acknowledgements</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-
+<? require("./footer-bar.php") ?>
 <script>
     $(document).ready(function () {
 

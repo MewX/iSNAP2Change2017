@@ -759,23 +759,12 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="footer-wrapper">
-                    <div class="footer">
-                        <div class="footer-content">
-                            <a href="#" class="footer-logo"></a>
-                            <ul class="footer-nav">
-                                <li class="footer-nav-item"><a href="#">Any Legal Stuff</a></li>
-                                <li class="footer-nav-item"><a href="#">Acknowledgements</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
     <? require("./left-nav-bar.php") ?>
+    <? require("./footer-bar.php") ?>
 </div>
 
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
