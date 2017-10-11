@@ -136,20 +136,10 @@
 <body>
 
 <div class="page-wrapper">
-    <div class="header-wrapper">
-        <div class="header">
-            <a class="home-link" href="welcome.php">SNAP²</a>
-            <div class="settings">
-                <div class="setting-icon dropdown">
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="settings.php">Setting</a></li>
-                        <li class="dropdown-item"><a href="logout.php">Log out</a></li>
-                    </ul>
-                </div>
-                <a class="setting-text"><?php echo $studentUsername?></a>
-            </div>
-        </div>
-    </div>
+    <?php
+    $INEXAM = true;
+    require("./top-nav-bar.php");
+    ?>
 
     <div class="content-wrapper">
 

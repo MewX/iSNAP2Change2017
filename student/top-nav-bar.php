@@ -8,25 +8,32 @@
 require_once('./student-validation.php');
 require_once("../mysql-lib.php");
 
-$conn = db_connect();
+if (!isset($INEXAM)) {
+    $conn = db_connect();
 
-// get quiz viewed attribute
-$quizViewedAttrs = getQuizViewdAttr($conn, $studentID);
+    // get quiz viewed attribute
+    $quizViewedAttrs = getQuizViewdAttr($conn, $studentID);
 
-// get student question viewed attribute
-$studentQuesViewedAttrs = getAllUnreadMessagesForStu($conn, $studentID);
+    // get student question viewed attribute
+    $studentQuesViewedAttrs = getAllUnreadMessagesForStu($conn, $studentID);
+}
 
 ?>
 
 <div class="header-wrapper">
     <div class="header">
-        <a class="home-link" href="welcome.php">SNAP²</a>
+        <a class="home-link" href="<? echo isset($INEXAM) ? '#' : 'welcome.php' ?>">SNAP²</a>
+
+        <? if (!isset($INEXAM)) { ?>
         <ul class="nav-list">
             <li class="nav-item"><a class="nav-link" href="game-home.php">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="snap-facts.php">SNAP² Facts</a></li>
             <li class="nav-item"><a class="nav-link" href="resources.php">Resources</a></li>
         </ul>
+        <? } ?>
+
         <div class="settings">
+            <? if (!isset($INEXAM)) { ?>
             <div class="info-item info-notification">
                 <a class="info-icon" href="#"></a>
                 <?php
@@ -84,6 +91,8 @@ $studentQuesViewedAttrs = getAllUnreadMessagesForStu($conn, $studentID);
                     <li class="dropdown-item"><a href="logout.php">Log out</a></li>
                 </ul>
             </div>
+            <? } ?>
+
             <a class="setting-text"><?php echo $_SESSION["studentUsername"] ?></a>
         </div>
     </div>
