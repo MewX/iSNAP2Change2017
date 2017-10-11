@@ -166,7 +166,7 @@ require_once('./student-validation.php');
         <div class="inbox-header">
             <div class="inbox-icon"></div>
             <h2 class="h2 inbox-title" style="color: white">Messages</h2>
-            <div class="p1 inbox-prompt" style="color: white">View your messages and replies.</div>
+            <div class="p1 inbox-prompt" style="color: white">View messages and replies between you and researchers.</div>
         </div>
         <div class="col-4 col-sm-offset-4 frame" style="float: none">
             <ul id="msgall" class="msgframe"></ul>
@@ -186,20 +186,18 @@ require_once('./student-validation.php');
 </div>
 
 <script>
-    var me = {};
-    me.avatar = "https://lh6.googleusercontent.com/-lr2nyjhhjXw/AAAAAAAAAAI/AAAAAAAARmE/MdtfUmC0M4s/photo.jpg?sz=48";
-
-    var you = {};
-    you.avatar = "https://a11.t26.net/taringa/avatares/9/1/2/F/7/8/Demon_King1/48x48_5C5.jpg";
-
     function formatAMPM(date) {
+        var d = date.getDate();
+        var m = date.getMonth() + 1;
+        var y = date.getFullYear();
+
         var hours = date.getHours();
         var minutes = date.getMinutes();
         var ampm = hours >= 12 ? 'PM' : 'AM';
         hours = hours % 12;
         hours = hours ? hours : 12; // the hour '0' should be '12'
         minutes = minutes < 10 ? '0' + minutes : minutes;
-        return hours + ':' + minutes + ' ' + ampm;
+        return hours + ':' + minutes + ' ' + ampm + " " + d + "/" + m + "/" + y;
     }
 
     //-- No use time. It is a javaScript effect.
@@ -224,12 +222,12 @@ require_once('./student-validation.php');
                 content.join("") +
                 '<p><small>' + date + '</small></p>' +
                 '</div>' +
-                '<div class="avatar" style="padding:0px 0px 0px 10px !important"><img class="img-circle" style="width:100%;" src="' + you.avatar + '" /></div>' +
+                '<div class="avatar" style="padding:0px 0px 0px 10px !important"></div>' +
                 '</li>';
         } else {
             control = '<li style="width:100%">' +
                 '<div class="msj macro">' +
-                '<div class="avatar"><img class="img-circle" style="width:100%;" src="' + me.avatar + '" /></div>' +
+                '<div class="avatar"><img class="img-circle" style="width:100%;" src="./img/footer-logo.png" /></div>' +
                 '<div class="text text-l">' +
                 content.join("") +
                 '<p><small>' + date + '</small></p>' +
