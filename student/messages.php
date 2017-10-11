@@ -201,7 +201,7 @@ require_once('./student-validation.php');
     }
 
     //-- No use time. It is a javaScript effect.
-    function insertChat(who, text, messageId = 0, inputDate = new Date()) {
+    function insertChat(who, text, messageId, inputDate = new Date()) {
         var control = "";
         var date = formatAMPM(inputDate);
 
@@ -281,21 +281,17 @@ require_once('./student-validation.php');
         }
     }
 
-    //-- Clear Chat
+    // fetch message from server to write as these commands
     resetChat();
-
-    //-- Print Messages
-    // TODO: fetch message from server to write as these commands
-    insertChat("me", "Hello Tom...", 1);
-    insertChat("you", "Hi, Pablo", 2);
-    insertChat("me", "What would you like to talk about today?", 3);
-
-    //--------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------------------
+    <?php
+        $conn = db_connect();
+        $allMessage = getAllMessagesWithOneStu($conn, $studentID);
+        for ($i = 0; $i < count($allMessage); $i ++) {
+            $sender = $allMessage[$i]['isFromStudent'] ? "me" : "researcher";
+            echo 'insertChat("' . $sender . '", "' . addslashes($allMessage[$i]['content']) . '", '. $allMessage[$i]['id'] .
+                ', new Date(' . strtotime($allMessage[$i]['time']) . '*1000));';
+        }
+    ?>
 
     function deleteMessage(messageId) {
         snap.confirm({
@@ -334,15 +330,15 @@ require_once('./student-validation.php');
         })
     }
 
-    // TODO: mark current message as read
-//    $.ajax({
-//        url: "messages-feedback.php",
-//        data: {
-//            action: "VIEW"
-//        },
-//        type: "POST",
-//        dataType: "json"
-//    });
+    // mark current message as read at the end of the file
+    $.ajax({
+        url: "messages-feedback.php",
+        data: {
+            action: "VIEW"
+        },
+        type: "POST",
+        dataType: "json"
+    });
 
 </script>
 </body>

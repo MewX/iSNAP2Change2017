@@ -93,7 +93,7 @@ if (!isset($INEXAM)) {
             </div>
             <? } ?>
 
-            <a class="setting-text"><?php echo $_SESSION["studentUsername"] ?></a>
+            <a class="setting-text"><?php echo $studentUsername ?></a>
         </div>
     </div>
 </div>
