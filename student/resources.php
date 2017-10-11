@@ -43,19 +43,15 @@
 
         .post .post-img-content
         {
-            height: 230px;
             position: relative;
-        }
-        .post .post-img-content img
-        {
-            position: absolute;
+            margin-bottom: 8px;
         }
         .post .post-title
         {
             display: table-cell;
             vertical-align: bottom;
             z-index: 2;
-            position: relative;
+            position: absolute;
         }
         .post .post-title b
         {
@@ -68,7 +64,7 @@
         }
 
         .extra-activities-intro {
-            width: 300px;
+            width: 600px;
             font-family: "Maitree", serif;
             font-size: 18px;
             margin: 0 auto;
@@ -169,10 +165,10 @@
                     <div class="col-sm-6">
                         <div class="post">
                             <div class="post-img-content">
+                                <span class="post-title"><b>Truth</b><br /></span>
                                 <a href="https://www.thetruth.com/" target="_blank">
                                     <img src="img/websites/thetruth.jpg" class="img-responsive" />
                                 </a>
-                                <span class="post-title"><b>Truth</b><br /></span>
                             </div>
                         </div>
                     </div>
@@ -180,10 +176,10 @@
                     <div class="col-sm-6">
                         <div class="post">
                             <div class="post-img-content">
+                                <span class="post-title"><b>No Smokes</b><br /></span>
                                 <a href="http://nosmokes.com.au/" target="_blank">
                                     <img src="img/websites/nosmokes.jpg" class="img-responsive" />
                                 </a>
-                                <span class="post-title"><b>No Smokes</b><br /></span>
                             </div>
                         </div>
                     </div>
@@ -195,10 +191,10 @@
                     <div class="col-sm-6">
                         <div class="post">
                             <div class="post-img-content">
+                                <span class="post-title"><b>Smarter than Smoking</b><br /></span>
                                 <a href="http://www.smarterthansmoking.org.au/" target="_blank">
                                     <img src="img/websites/smarterthansmoking.jpg" class="img-responsive" />
                                 </a>
-                                <span class="post-title"><b>Smarter than Smoking</b><br /></span>
                             </div>
                         </div>
                     </div>
@@ -206,10 +202,10 @@
                     <div class="col-sm-6">
                         <div class="post">
                             <div class="post-img-content">
+                                <span class="post-title"><b>Quit Now</b><br /></span>
                                 <a href="http://www.quitnow.gov.au/" target="_blank">
                                     <img src="img/websites/quitnow.jpg" class="img-responsive" />
                                 </a>
-                                <span class="post-title"><b>Quit Now</b><br /></span>
                             </div>
                         </div>
                     </div>
@@ -221,10 +217,10 @@
                     <div class="col-sm-6">
                         <div class="post">
                             <div class="post-img-content">
+                                <span class="post-title"><b>Reachout</b><br /></span>
                                 <a href="http://www.cyh.com/HealthTopics/HealthTopicDetails.aspx?p=243&np=163&id=2326" target="_blank">
                                     <img src="img/websites/cyh.jpg" class="img-responsive" />
                                 </a>
-                                <span class="post-title"><b>Reachout</b><br /></span>
                             </div>
                         </div>
                     </div>
@@ -232,10 +228,10 @@
                     <div class="col-sm-6">
                         <div class="post">
                             <div class="post-img-content">
+                                <span class="post-title"><b>Cancer Council SA</b><br /></span>
                                 <a href="https://www.cancersa.org.au/quitline" target="_blank">
                                     <img src="img/websites/cancersa.jpg" class="img-responsive" />
                                 </a>
-                                <span class="post-title"><b>Cancer Council SA</b><br /></span>
                             </div>
                         </div>
                     </div>
@@ -247,10 +243,10 @@
                     <div class="col-sm-6">
                         <div class="post">
                             <div class="post-img-content">
+                                <span class="post-title"><b>Centres for Disease Control and Prevention</b><br /></span>
                                 <a href="https://www.cdc.gov/tobacco/basic_information/youth/index.htm" target="_blank">
                                     <img src="img/websites/cdc.jpg" class="img-responsive" />
                                 </a>
-                                <span class="post-title"><b>Centres for Disease Control and Prevention</b><br /></span>
                             </div>
                         </div>
                     </div>
@@ -258,8 +254,8 @@
                     <div class="col-sm-6">
                         <div class="post">
                             <div class="post-img-content">
-                                <img src="img/websites/sahealth.jpg" class="img-responsive" />
                                 <span class="post-title"><b>QUIT Helpline: 137 848</b><br /></span>
+                                <img src="img/websites/sahealth.jpg" class="img-responsive" />
                             </div>
                         </div>
                     </div>
