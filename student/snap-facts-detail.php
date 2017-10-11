@@ -317,19 +317,9 @@ switch ($topicID) {
 <?php        } ?>
             </div>
         </div>
-
-
     </div>
 
-    <ul class="sitenav">
-        <li class="sitenav-item sitenav-smoking"><a href="snap-facts-detail.php?topic_id=1"></a></li>
-        <li class="sitenav-item sitenav-nutrition"><a href="snap-facts-detail.php?topic_id=2"></a></li>
-        <li class="sitenav-item sitenav-alcohol"><a href="snap-facts-detail.php?topic_id=3"></a></li>
-        <li class="sitenav-item sitenav-physical"><a href="snap-facts-detail.php?topic_id=4"></a></li>
-        <li class="sitenav-item sitenav-health"><a href="snap-facts-detail.php?topic_id=7"></a></li>
-        <li class="sitenav-item sitenav-sexual"><a href="snap-facts-detail.php?topic_id=6"></a></li>
-        <li class="sitenav-item sitenav-drgus"><a href="snap-facts-detail.php?topic_id=5"></a></li>
-    </ul>
+    <!-- category buttons are removed -->
     <div class="footer-wrapper">
         <div class="footer">
             <div class="footer-content">
