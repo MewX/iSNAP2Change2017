@@ -1,31 +1,7 @@
 <?php
 //check login status
 require_once('./student-validation.php');
-require_once("../mysql-lib.php");
-require_once("../debug.php");
 
-$conn = null;
-
-try {
-    $conn = db_connect();
-
-    //get quiz viewed attribute
-    $quizViewedAttrs = getQuizViewdAttr($conn, $studentID);
-
-    //get student question viewed attribute
-    $studentQuesViewedAttrs = getUnreadMessages($conn, $studentID);
-
-    //get student week
-    $studentWeek = getStudentWeek($conn, $studentID);
-
-} catch (Exception $e) {
-    if ($conn != null) {
-        db_close($conn);
-    }
-    debug_err($e);
-}
-
-db_close($conn);
 ?>
 
 <!DOCTYPE html>
@@ -182,83 +158,7 @@ db_close($conn);
 <body>
 
 <div class="page-wrapper">
-    <div class="header-wrapper">
-        <div class="header">
-            <a class="home-link" href="welcome.php">SNAP²</a>
-            <ul class="nav-list">
-                <li class="nav-item"><a class="nav-link" href="game-home.php">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="snap-facts.php">SNAP² Facts</a></li>
-                <li class="nav-item"><a class="nav-link" href="resources.php">Resources</a></li>
-            </ul>
-            <div class="settings">
-                <div class="info-item info-notification">
-                    <a class="info-icon" href="javascript:;"></a>
-                    <?php if (count($quizViewedAttrs) != 0) { ?>
-                        <span class="info-number"><?php echo count($quizViewedAttrs) ?></span>
-                    <?php } ?>
-                    <ul class="info-message-list">
-                        <?php for ($i = 0; $i < count($quizViewedAttrs); $i++) {
-                            if ($quizViewedAttrs[$i]["extraQuiz"] == 0) {
-                                $url = "weekly-task.php?week=" . $quizViewedAttrs[$i]["week"];
-                            } else {
-                                $url = "extra-activities.php?week=" . $quizViewedAttrs[$i]["week"];
-                            } ?>
-                            <li class="info-message-item">
-                                <a href="<?php echo $url ?>">
-                                    <?php
-                                    $message = "A ";
-
-                                    switch ($quizViewedAttrs[$i]["quizType"]) {
-                                        case "Video":
-                                            $message = $message . "Video task";
-                                            break;
-                                        case "Image":
-                                            $message = $message . "Image task";
-                                            break;
-                                        case "SAQ":
-                                            $message = $message . "Short Answer Question task";
-                                            break;
-                                        case "Poster":
-                                            $message = $message . "Poster task";
-                                            break;
-                                    }
-
-                                    $message = $message . " in Week " . $quizViewedAttrs[$i]["week"] . " has feedback for you.";
-                                    echo $message;
-                                    ?>
-                                </a>
-                            </li>
-                        <?php } ?>
-                    </ul>
-                </div>
-                <div class="info-item info-message">
-                    <a class="info-icon" href="javascript:;"></a>
-                    <?php if (count($studentQuesViewedAttrs) != 0) { ?>
-                        <span class="info-number"><?php echo count($studentQuesViewedAttrs) ?></span>
-                    <?php } ?>
-                    <ul class="info-message-list">
-                        <li class="info-message-item">
-                            <?php
-                            for ($i = 0; $i < count($studentQuesViewedAttrs); $i++) { ?>
-                                <a href="messages.php">
-                                    You message about <?php echo $studentQuesViewedAttrs[$i]->Subject ?> has been
-                                    replied.
-                                </a>
-                            <?php } ?>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="setting-icon dropdown">
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="settings.php">Settings</a></li>
-                        <li class="dropdown-item"><a href="logout.php">Log out</a></li>
-                    </ul>
-                </div>
-                <a class="setting-text"><?php echo $_SESSION["studentUsername"] ?></a>
-            </div>
-        </div>
-    </div>
+    <? require('./top-nav-bar.php') ?>
 
     <!-- Real messages -->
     <!-- Codes from: https://bootsnipp.com/snippets/featured/simple-chat -->
@@ -273,10 +173,9 @@ db_close($conn);
             <div class="msgframe">
                 <div class="msj-rta macro" style="margin:auto">
                     <div class="text text-r" style="background:whitesmoke !important">
-<!--                        <input class="mytext" placeholder="Type a message"/>-->
                         <textarea class="scrollabletextbox mytext" name="note" placeholder="Input your message here" id="msgtext"></textarea>
                     </div>
-                    <button type="button" class="btn btn-default" style="width: 10%" onclick="sendMessage()">Send</button>
+                    <button type="button" class="btn btn-default" style="width: 100px" onclick="sendMessage()">Send</button>
                 </div>
             </div>
         </div>
@@ -320,9 +219,9 @@ db_close($conn);
     }
 
     //-- No use time. It is a javaScript effect.
-    function insertChat(who, text, time = 0) {
+    function insertChat(who, text, inputDate = new Date()) {
         var control = "";
-        var date = formatAMPM(new Date());
+        var date = formatAMPM(inputDate);
 
         // parse message content
         var paragraphs = text.split("\n");
@@ -357,7 +256,7 @@ db_close($conn);
         setTimeout(
             function () {
                 $("#msgall").append(control);
-            }, time);
+            }, 0);
     }
 
     function resetChat() {
@@ -380,14 +279,10 @@ db_close($conn);
     resetChat();
 
     //-- Print Messages
-    // TODO: fetch message from server
-    insertChat("me", "Hello Tom...", 0);
-    insertChat("you", "Hi, Pablo", 1500);
-    insertChat("me", "What would you like to talk about today?", 3500);
-    //    insertChat("you", "Tell me a joke",7000);
-    //    insertChat("me", "Spaceman: Computer! Computer! Do we bring battery?!", 9500);
-    //    insertChat("you", "LOL", 12000);
-
+    // TODO: fetch message from server to write as these commands
+    insertChat("me", "Hello Tom...");
+    insertChat("you", "Hi, Pablo");
+    insertChat("me", "What would you like to talk about today?");
 
     //--------------------------------------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------------------------------------

@@ -2330,27 +2330,6 @@ ORDER BY game_record.Score DESC LIMIT $numberOfRecords;";
 
 
 /* Student Question */
-function updateStudentQuestion(PDO $conn, $studentID, $subject, $content, $sendTime)
-{
-    $updateSql = "INSERT INTO Student_Question(StudentID, Subject, Content, SendTime) VALUES (?,?,?,?)";
-    $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($studentID, htmlspecialchars($subject), htmlspecialchars($content), $sendTime));
-}
-
-function updateStudentQuesViewedStatus(PDO $conn, $questionID)
-{
-    $updateSql = "UPDATE Student_Question
-                  SET Viewed = ?
-                  WHERE QuestionID = ? ";
-    $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array(1, $questionID));
-}
-
-function deleteStudentQuestion(PDO $conn, $QuestionID)
-{
-    deleteRecord($conn, $QuestionID, "Student_Question");
-}
-
 function getUnreadMessages(PDO $conn, $studentID)
 {
     $studentQuesSql = "SELECT * FROM Student_Question WHERE StudentID = ? AND Viewed = ? AND Replied = ?";
@@ -2599,6 +2578,14 @@ function getAllMessages(PDO $conn) {
 
 function getAllMessagesWithOneStu(PDO $conn, $studentId) {
     $sql = "SELECT * FROM Messages NATURAL JOIN Student WHERE StudentID = ?";
+    $sql = $conn->prepare($sql);
+    $sql->execute(array($studentId));
+    $tableResult = $sql->fetchAll(PDO::FETCH_OBJ);
+    return $tableResult;
+}
+
+function getAllUnreadMessagesForStu(PDO $conn, $studentId) {
+    $sql = "SELECT * FROM Messages WHERE StudentID = ? and readOrNot = false and isFromStudent = false";
     $sql = $conn->prepare($sql);
     $sql->execute(array($studentId));
     $tableResult = $sql->fetchAll(PDO::FETCH_OBJ);
