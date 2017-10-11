@@ -201,7 +201,7 @@ require_once('./student-validation.php');
     }
 
     //-- No use time. It is a javaScript effect.
-    function insertChat(who, text, inputDate = new Date()) {
+    function insertChat(who, text, messageId = 0, inputDate = new Date()) {
         var control = "";
         var date = formatAMPM(inputDate);
 
@@ -216,7 +216,7 @@ require_once('./student-validation.php');
         }
 
         if (who === "me") {
-            control = '<li style="width:100%;">' +
+            control = '<li style="width:100%;" id="msg' + messageId + '">' +
                 '<div class="msj-rta macro">' +
                 '<div class="text text-r">' +
                 content.join("") +
@@ -224,8 +224,9 @@ require_once('./student-validation.php');
                 '</div>' +
                 '<div class="avatar" style="padding:0px 0px 0px 10px !important"></div>' +
                 '</li>';
+            // TODO: add delete button with message id inside
         } else {
-            control = '<li style="width:100%">' +
+            control = '<li style="width:100%" id="msg' + messageId + '">' +
                 '<div class="msj macro">' +
                 '<div class="avatar"><img class="img-circle" style="width:100%;" src="./img/footer-logo.png" /></div>' +
                 '<div class="text text-l">' +
@@ -246,121 +247,32 @@ require_once('./student-validation.php');
     }
 
     function sendMessage() {
-        var text = $("#msgtext").val().trim();
-        if (text !== "") {
-            // TODO: send message to server
-
-            // then decide to add to context and remove or not
-            insertChat("me", text);
-            $(this).val('');
-        }
-        $("#msgtext").val(""); // clear box
-    }
-
-    //-- Clear Chat
-    resetChat();
-
-    //-- Print Messages
-    // TODO: fetch message from server to write as these commands
-    insertChat("me", "Hello Tom...");
-    insertChat("you", "Hi, Pablo");
-    insertChat("me", "What would you like to talk about today?");
-
-    //--------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------------------
-
-
-    function onItemDelete(itemId) {
-        $.ajax({
-            url: "messages-feedback.php",
-            data: {
-                question_id: itemId,
-                action: 'DELETE'
-            },
-            type: "POST",
-            dataType: "json"
-        })
-
-            .done(function (feedback) {
-                parseDeleteFeedback(feedback);
-            })
-
-            .fail(function (xhr, status, errorThrown) {
-                alert("Sorry, there was a problem!");
-                console.log("Error: " + errorThrown);
-                console.log("Status: " + status);
-                console.dir(xhr);
-            });
-    }
-
-    var $body = $('body');
-
-    $body.on('click', '.inbox-subject', function (e) {
-        var $item = $(e.currentTarget).closest('.inbox-item')
-        DetailCtrl.show($item.data('id'))
-    })
-    $body.on('click', '.inbox-delete', function (e) {
-        var $item = $(e.currentTarget).closest('.inbox-item')
-        var itemId = $item.data('id')
-        snap.confirm({
-            title: 'Delete this message?',
-            content: 'are you sure you want to delete this message? This action cannot be undo!',
-            confirm: 'Delete',
-            cancel: 'Cancel',
-            onConfirm: function () {
-                onItemDelete(itemId)
-            }
-        })
-    })
-
-    var DetailCtrl = {
-        init: function () {
-            this.cacheElements()
-            this.addListeners()
-        },
-
-        cacheElements: function () {
-            var $main = $('.detail-container')
-            this.$main = $main
-            this.$detailBoxes = $main.find('.detail-box')
-
-        },
-        addListeners: function () {
-            var that = this
-            this.$main.on('click', '.detail-close', function () {
-                that.hide()
-            })
-        },
-        hide: function () {
-            this.$main.hide()
-        },
-        show: function (targetId) {
-            this.$detailBoxes
-                .removeClass('detail-box-active')
-                .filter('[data-id=' + targetId + ']')
-                .addClass('detail-box-active')
-
-            this.$main.show();
-
+        var content = $("#msgtext").val().trim();
+        if (content !== "") {
+            // send message to server
             $.ajax({
                 url: "messages-feedback.php",
                 data: {
-                    question_id: targetId,
-                    action: 'VIEW'
+                    content: content,
+                    action: 'UPDATE'
                 },
                 type: "POST",
                 dataType: "json"
             })
-
                 .done(function (feedback) {
-                    parseViewFeedback(feedback);
+                    if (feedback.message !== "success") {
+                        snap.alert({
+                            content: 'Sorry, failed. Please try again',
+                            onClose: function () {
+                            }
+                        });
+                    } else {
+                        insertChat("me", content, feedback.messageId);
+                        $("#msgtext").val(""); // clear box
+                    }
                 })
-
                 .fail(function (xhr, status, errorThrown) {
+                    // TODO: popup a dialog
                     alert("Sorry, there was a problem!");
                     console.log("Error: " + errorThrown);
                     console.log("Status: " + status);
@@ -368,100 +280,70 @@ require_once('./student-validation.php');
                 });
         }
     }
-    DetailCtrl.init();
 
+    //-- Clear Chat
+    resetChat();
 
-    function onMessageSend(data) {
-        console.log(data);
+    //-- Print Messages
+    // TODO: fetch message from server to write as these commands
+    insertChat("me", "Hello Tom...", 1);
+    insertChat("you", "Hi, Pablo", 2);
+    insertChat("me", "What would you like to talk about today?", 3);
 
-        var sendTime = new Date();
+    //--------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------
 
-        var dd = sendTime.getDate();
-        var mm = sendTime.getMonth() + 1;
-        var yyyy = sendTime.getFullYear();
-
-        if (dd < 10) {
-            dd = "0" + dd;
-        }
-
-        if (mm < 10) {
-            mm = "0" + mm;
-        }
-
-        sendTime = yyyy + "-" + mm + "-" + dd + " " + sendTime.getHours() + ":" + sendTime.getMinutes() + ":" + sendTime.getSeconds();
-
-        $.ajax({
-            url: "messages-feedback.php",
-            data: {
-                student_id: <?php echo $studentID?>,
-                subject: data.title,
-                content: data.content,
-                action: 'UPDATE'
-            },
-            type: "POST",
-            dataType: "json"
+    function deleteMessage(messageId) {
+        snap.confirm({
+            title: 'Delete this message?',
+            content: 'are you sure you want to delete this message? This action cannot be undo!',
+            confirm: 'Delete',
+            cancel: 'Cancel',
+            onConfirm: function () {
+                $.ajax({
+                    url: "messages-feedback.php",
+                    data: {
+                        message_id: messageId,
+                        action: 'DELETE'
+                    },
+                    type: "POST",
+                    dataType: "json"
+                })
+                    .done(function (feedback) {
+                        if (feedback.message !== "success") {
+                            snap.alert({
+                                content: 'Sorry. Please try again',
+                                onClose: function () {
+                                }
+                            });
+                        } else {
+                            $('#msg' + messageId).remove();
+                        }
+                    })
+                    .fail(function (xhr, status, errorThrown) {
+                        alert("Sorry, there was a problem!");
+                        console.log("Error: " + errorThrown);
+                        console.log("Status: " + status);
+                        console.dir(xhr);
+                    });
+            }
         })
-
-            .done(function (feedback) {
-                parseUpdateFeedback(feedback);
-            })
-
-            .fail(function (xhr, status, errorThrown) {
-                alert("Sorry, there was a problem!");
-                console.log("Error: " + errorThrown);
-                console.log("Status: " + status);
-                console.dir(xhr);
-            });
     }
 
-    function parseDeleteFeedback(feedback) {
-        if (feedback.message != "success") {
-            snap.alert({
-                content: 'Sorry. Please try again',
-                onClose: function () {
-                }
-            });
-        } else if (feedback.message == "success") {
-            snap.alert({
-                content: 'You have deleted this message',
-                onClose: function () {
-                    deleteMessage(feedback.questionID)
-                }
-            });
-        }
-    }
+    // TODO: mark current message as read
+//    $.ajax({
+//        url: "messages-feedback.php",
+//        data: {
+//            action: "VIEW"
+//        },
+//        type: "POST",
+//        dataType: "json"
+//    });
 
-    function parseUpdateFeedback(feedback) {
-        if (feedback.message != "success") {
-            snap.alert({
-                content: 'Sorry. Please try again',
-                onClose: function () {
-                }
-            });
-        } else if (feedback.message == "success") {
-            snap.alert({
-                content: 'You have sent a message to the researcher. Please wait for reply',
-                onClose: function () {
-                    window.location.href = "messages.php";
-                }
-            });
-        }
-    }
-
-    function parseViewFeedback(feedback) {
-        if (feedback.message != "success") {
-            snap.alert({
-                content: 'Sorry. Please try again',
-                onClose: function () {
-                }
-            });
-        }
-    }
-
-    function deleteMessage(id) {
-        $('.inbox-item').filter('[data-id=' + id + ']')
-            .remove()
-    }
 </script>
 </body>
 </html>

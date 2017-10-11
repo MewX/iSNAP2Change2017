@@ -2580,7 +2580,13 @@ function getAllUnreadMessagesForStu(PDO $conn, $studentId) {
 function addNewMessage(PDO $conn, $studentId, $content, $isFromStudent) {
     $sql = "INSERT INTO Messages(StudentId, content, isFromStudent) VALUES (?,?,?);";
     $sql = $conn->prepare($sql);
-    return $sql->execute(array($studentId, $content, $isFromStudent)); // true on success
+    if ($sql->execute(array($studentId, $content, $isFromStudent))){
+        // true on success
+        return $conn->lastInsertId();
+    } else {
+        return -1; // unknown
+    }
+
 }
 
 function deleteMessageWithoutSafeCheck(PDO $conn, $messageId) {

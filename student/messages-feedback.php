@@ -34,13 +34,21 @@
 
         if ($action == "UPDATE") {
             // new message to researcher
-            addNewMessage($conn, $studentID, $content, true);
+            $ret = addNewMessage($conn, $studentID, $content, true);
+            if ($ret != -1) {
+                $feedback["message"] = "success";
+                $feedback["messageId"] = $ret;
+            } else {
+                $feedback["message"] = "Failed to send new message.";
+            }
         } else if ($action == "DELETE") {
             // delete student message
             deleteMessagesByStu($conn, $messageId);
+            $feedback["message"] = "success";
         } else if ($action == "VIEW") {
             // mark a message as read from student
             markMessageAsReadForStu($conn, $studentID);
+            $feedback["message"] = "success";
         }
 
         $conn->commit();
@@ -57,5 +65,4 @@
     }
 
     db_close($conn);
-    $feedback["message"] = "success";
     echo json_encode($feedback);

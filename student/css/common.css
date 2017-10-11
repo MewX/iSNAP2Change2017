@@ -550,10 +550,12 @@ body {
     background-image: url("../img/snap_single_wordform_white.png");
 }
 .snap-alert-title {
+    color: white;
     font-size: 22px;
     margin-top: 17px;
 }
 .snap-alert-content {
+    color: white;
     padding-top: 20px;
     height: 125px;
     font-family: Maitree, serif;
@@ -583,6 +585,7 @@ body {
     text-align: center;
 }
 .snap-alert-btn {
+    color: white;
     margin: 0 10px;
     display: inline-block;
     width: 110px;
