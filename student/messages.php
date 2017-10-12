@@ -200,7 +200,6 @@ require_once('./student-validation.php');
         return hours + ':' + minutes + ' ' + ampm + " " + d + "/" + m + "/" + y;
     }
 
-    //-- No use time. It is a javaScript effect.
     function insertChat(who, text, messageId, inputDate = new Date()) {
         var control = "";
         var date = formatAMPM(inputDate);
@@ -220,7 +219,7 @@ require_once('./student-validation.php');
                 '<div class="msj-rta macro">' +
                 '<div class="text text-r">' +
                 content.join("") +
-                '<p><small>' + date + '</small></p>' +
+                '<p><small>' + date + '</small> <a onclick="deleteMessage(' + messageId + ')" style="color: silver; cursor: pointer">[delete]</a></p>' +
                 '</div>' +
                 '<div class="avatar" style="padding:0px 0px 0px 10px !important"></div>' +
                 '</li>';
@@ -231,15 +230,12 @@ require_once('./student-validation.php');
                 '<div class="avatar"><img class="img-circle" style="width:100%;" src="./img/footer-logo.png" /></div>' +
                 '<div class="text text-l">' +
                 content.join("") +
-                '<p><small>' + date + '</small></p>' +
+                '<p><small>' + date + '</small> <a onclick="deleteMessage(' + messageId + ')" style="color: silver; cursor: pointer">[delete]</a></p>' +
                 '</div>' +
                 '</div>' +
                 '</li>';
         }
-        setTimeout(
-            function () {
-                $("#msgall").append(control);
-            }, 0);
+        $("#msgall").append(control);
     }
 
     function resetChat() {
@@ -272,8 +268,7 @@ require_once('./student-validation.php');
                     }
                 })
                 .fail(function (xhr, status, errorThrown) {
-                    // TODO: popup a dialog
-                    alert("Sorry, there was a problem!");
+                    alert("Sorry, there was a problem! Please try again later.");
                     console.log("Error: " + errorThrown);
                     console.log("Status: " + status);
                     console.dir(xhr);
@@ -287,10 +282,12 @@ require_once('./student-validation.php');
         $conn = db_connect();
         $allMessage = getAllMessagesWithOneStu($conn, $studentID);
         for ($i = 0; $i < count($allMessage); $i ++) {
+            if ($allMessage[$i]['deleteByStu']) continue;
             $sender = $allMessage[$i]['isFromStudent'] ? "me" : "researcher";
-            echo 'insertChat("' . $sender . '", "' . addslashes($allMessage[$i]['content']) . '", '. $allMessage[$i]['id'] .
+            echo 'insertChat("' . $sender . '", ' . json_encode($allMessage[$i]['content']) . ', '. $allMessage[$i]['id'] .
                 ', new Date(' . strtotime($allMessage[$i]['time']) . '*1000));';
         }
+        db_close($conn);
     ?>
 
     function deleteMessage(messageId) {
