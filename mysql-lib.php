@@ -2565,7 +2565,7 @@ function getAllMessagesWithOneStu(PDO $conn, $studentId) {
     $sql = "SELECT * FROM Messages NATURAL JOIN Student WHERE StudentID = ? ORDER BY `time` ASC";
     $sql = $conn->prepare($sql);
     $sql->execute(array($studentId));
-    $tableResult = $sql->fetchAll();
+    $tableResult = $sql->fetchAll(PDO::FETCH_OBJ);
     return $tableResult;
 }
 
