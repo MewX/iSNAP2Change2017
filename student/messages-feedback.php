@@ -1,19 +1,19 @@
 <?php
+    require_once('./student-validation.php');
     require_once("../mysql-lib.php");
     require_once("../debug.php");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action'])) {
         $action = $_POST['action'];
-        // TODO: write this
-        // TODO: but lots of changes will be required
-        if ($action == "UPDATE" && isset($_POST['student_id']) && isset($_POST['subject']) && isset($_POST['content'])) {
-            $studentID = $_POST['student_id'];
-            $subject = $_POST['subject'];
+        if ($action == "UPDATE" && isset($_POST['content'])) {
+            // new message
             $content = $_POST['content'];
-        } else if ($action == "DELETE" && isset($_POST['question_id'])) {
-            $questionID = $_POST['question_id'];
-        } else if ($action == "VIEW" && isset($_POST['question_id'])) {
-            $questionID = $_POST['question_id'];
+        } else if ($action == "DELETE" && isset($_POST['message_id'])) {
+            // delete message
+            $messageId = $_POST['message_id'];
+        } else if ($action == "VIEW") {
+            // mark as read
+            // nothing to do
         } else {
             debug_log("Illegal state!");
             header("location:welcome.php");
@@ -28,25 +28,27 @@
     $feedback = array();
     $conn = null;
 
-    // TODO: rewrite the following parts
     try {
         $conn = db_connect();
-
         $conn->beginTransaction();
 
         if ($action == "UPDATE") {
-            //update Student Question
-            updateStudentQuestion($conn, $studentID, $subject, $content, $sendTime);
-        }
-
-        if ($action == "DELETE") {
-            //delete Student Question
-            deleteStudentQuestion($conn, $questionID);
-            $feedback["questionID"] = $questionID;
-        }
-
-        if ($action == "VIEW") {
-            updateStudentQuesViewedStatus($conn, $questionID);
+            // new message to researcher
+            $ret = addNewMessage($conn, $studentID, $content, true);
+            if ($ret != -1) {
+                $feedback["message"] = "success";
+                $feedback["messageId"] = $ret;
+            } else {
+                $feedback["message"] = "Failed to send new message.";
+            }
+        } else if ($action == "DELETE") {
+            // delete student message
+            deleteMessagesByStu($conn, $messageId);
+            $feedback["message"] = "success";
+        } else if ($action == "VIEW") {
+            // mark a message as read from student
+            markMessageAsReadForStu($conn, $studentID);
+            $feedback["message"] = "success";
         }
 
         $conn->commit();
@@ -63,5 +65,4 @@
     }
 
     db_close($conn);
-    $feedback["message"] = "success";
     echo json_encode($feedback);

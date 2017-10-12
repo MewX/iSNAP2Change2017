@@ -19,13 +19,6 @@
 
         //get max week
         $maxWeek = getMaxWeek($conn)->WeekNum;
-
-        //get quiz viewed attribute
-        $quizViewedAttrs = getQuizViewdAttr($conn, $studentID);
-
-        //get student question viewed attribute
-        $studentQuesViewedAttrs = getUnreadMessages($conn, $studentID);
-
     } catch(Exception $e) {
         if($conn != null) {
             db_close($conn);
@@ -212,7 +205,6 @@
             height: 16px;
             background-color: #a0a09f;
             border-radius: 50%;
-            text-align: -999rem;
         }
         .week-content .slick-dots button:before {
             display: none;
@@ -243,82 +235,7 @@
 <body>
 
 <div class="page-wrapper">
-    <div class="header-wrapper">
-        <div class="header">
-            <a class="home-link" href="welcome.php">SNAP²</a>
-            <ul class="nav-list">
-                <li class="nav-item"><a  class="nav-link" href="game-home.php">Dashboard</a></li>
-                <li class="nav-item"><a  class="nav-link" href="snap-facts.php">SNAP² Facts</a></li>
-                <li class="nav-item"><a  class="nav-link" href="./resources.php">Resources</a></li>
-            </ul>
-            <div class="settings">
-                <div class="info-item info-notification">
-                    <a class="info-icon" href="javascript:;"></a>
-<?php           if (count($quizViewedAttrs) != 0) { ?>
-                    <span class="info-number"><?php echo count($quizViewedAttrs) ?></span>
-<?php           } ?>
-                    <ul class="info-message-list">
-<?php           for ($i = 0; $i < count($quizViewedAttrs); $i++) {
-                    if ($quizViewedAttrs[$i]["extraQuiz"] == 0) {
-                        $url = "weekly-task.php?week=".$quizViewedAttrs[$i]["week"];
-                    } else {
-                        $url = "extra-activities.php?week=".$quizViewedAttrs[$i]["week"];
-                    }?>
-                        <li class="info-message-item">
-                            <a href="<?php echo $url ?>">
-<?php
-                            $message = "A ";
-
-                            switch($quizViewedAttrs[$i]["quizType"]) {
-                                case "Video":
-                                    $message = $message."Video task";
-                                    break;
-                                case "Image":
-                                    $message = $message."Image task";
-                                    break;
-                                case "SAQ":
-                                    $message = $message."Short Answer Question task";
-                                    break;
-                                case "Poster":
-                                    $message = $message."Poster task";
-                                    break;
-                            }
-
-                            $message = $message." in Week ".$quizViewedAttrs[$i]["week"]." has feedback for you.";
-                            echo $message;
-?>
-                            </a>
-                        </li>
-<?php           } ?>
-                    </ul>
-                </div>
-                <div class="info-item info-message">
-                    <a class="info-icon" href="javascript:;"></a>
-<?php           if (count($studentQuesViewedAttrs) != 0) { ?>
-                        <span class="info-number"><?php echo count($studentQuesViewedAttrs) ?></span>
-<?php           } ?>
-                    <ul class="info-message-list">
-                        <li class="info-message-item">
-<?php
-                    for ($i = 0; $i < count($studentQuesViewedAttrs); $i++) { ?>
-                            <a href="messages.php">
-                                You message about <?php echo $studentQuesViewedAttrs[$i]->Subject ?> has been replied.
-                            </a>
-<?php               } ?>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="setting-icon dropdown">
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="settings.php">Settings</a></li>
-                        <li class="dropdown-item"><a href="logout.php">Log out</a></li>
-                    </ul>
-                </div>
-                <a class="setting-text"><?php echo $_SESSION["studentUsername"]?></a>
-            </div>
-        </div>
-    </div>
+    <? require('./top-nav-bar.php') ?>
 
     <div class="content-wrapper" style="min-height: calc(100% - 80px)">
         <div class="week-content">
@@ -336,7 +253,6 @@
                     </a>
                 </div>
 <?php    }
-
              for($i = $studentWeek; $i < $maxWeek; $i++) {  ?>
                  <div class="week-item week-locked">
                     <a class="week-link">
@@ -346,7 +262,6 @@
                 </div>
 
 <?php        } ?>
-
             </div>
         </div>
 
@@ -379,22 +294,10 @@
                 <div class="report-icon"></div>
             </div>
         </div>
-
     </div>
 
-    <div class="footer-wrapper">
-        <div class="footer">
-            <div class="footer-content">
-                <a href="#" class="footer-logo"></a>
-                <ul class="footer-nav">
-                    <li class="footer-nav-item"><a href="#">Any Legal Stuff</a></li>
-                    <li class="footer-nav-item"><a href="#">Acknowledgements</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    </div>
+    <? require("./footer-bar.php") ?>
+</div>
 
 <script src="./js/snap.js"></script>
 <script>

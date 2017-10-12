@@ -13,7 +13,6 @@
 
         //get fact topics
         $topicRes = getFactTopics($conn);
-
         //randomly select three facts from smoking
         $factRes = array();
 
@@ -325,21 +324,10 @@
                 <div class="week-facts-list">
                     <div class="clearfix">
 
-                        <? for ($i = 0; $i < 3; $i ++) { ?>
-                        <div class="week-facts-item <?
-                        switch ($factRes[$i]->TopicID) {
-//                            TODO: this should be adjusted into smoking
-                            case 1:
-                                echo "week-facts-item-drugs";
-                                break;
-                            case 2:
-                                echo "week-facts-item-health";
-                                break;
-                            default:
-                                echo "week-facts-item-smoking";
-                                break;
-                        }?>">
+                        <? for ($i = 0; $i < count($factRes); $i ++) { ?>
+                        <div class="week-facts-item week-facts-item-smoking">
                             <a class="week-facts-divnk">
+<<<<<<< HEAD
                                 <span class="week-facts-icon <?
                                 switch ($factRes[$i]->TopicID) {
 //                            TODO: this should be adjusted into smoking
@@ -360,6 +348,11 @@
                                     <p class="week-facts-recource">
                                         <strong>Source: </strong><? echo $factRes[$i]->Recource; ?>
                                     </p>
+=======
+                                <span class="week-facts-icon image-icon-smoking"></span>
+                                <span class="week-facts-name"><? echo strtoupper($factRes[$i]->TopicName) . " FACT #" . $factRes[$i]->SnapFactID ?></span>
+                                <span class="week-facts-intro"><? echo $factRes[$i]->Content; ?></span>
+>>>>>>> master
                             </a>
                         </div>
                         <? } ?>
@@ -369,18 +362,7 @@
     </div>
 </div>
 
-<div class="footer-wrapper">
-    <div class="footer">
-        <div class="footer-content">
-            <a href="#" class="footer-logo"></a>
-            <ul class="footer-nav">
-                <li class="footer-nav-item"><a href="#">Any Legal Stuff</a></li>
-                <li class="footer-nav-item"><a href="#">Acknowledgements</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
-
+<? require("./footer-bar.php") ?>
 <script>
     $(document).ready(function () {
 

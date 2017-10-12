@@ -114,23 +114,12 @@
 <body>
 
 <div class="page-wrapper">
-    <div class="header-wrapper">
-        <div class="header">
-            <a class="home-link" href="welcome.php">SNAP²</a>
-            <div class="settings">
-                <div class="setting-icon dropdown">
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="logout.php">Log out</a></li>
-                    </ul>
-                </div>
-                <a href="#" class="setting-text">NoButSrsly</a>
-            </div>
-        </div>
-    </div>
-
+    <?php
+    $INEXAM = true;
+    require("./top-nav-bar.php");
+    ?>
 
     <div class="content-wrapper">
-
         <div class="video-container">
             <div class="video-header">
                 <h2 class="h2 video-title">Video</h2>
@@ -201,17 +190,7 @@
         </li>
     </ul>
 
-    <div class="footer-wrapper">
-        <div class="footer">
-            <div class="footer-content">
-                <a href="#" class="footer-logo"></a>
-                <ul class="footer-nav">
-                    <li class="footer-nav-item"><a href="#">Any Legal Stuff</a></li>
-                    <li class="footer-nav-item"><a href="#">Acknowledgements</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <? require("./footer-bar.php") ?>
 </div>
 
 <script src="./js/snap.js"></script>

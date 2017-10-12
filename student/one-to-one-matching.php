@@ -110,26 +110,13 @@
 <body>
 
 <div class="page-wrapper">
-    <div class="header-wrapper">
-        <div class="header">
-            <a class="home-link" href="welcome.php">SNAP²</a>
-
-            <div class="settings">
-                <div class="setting-icon dropdown">
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="setting.php">Setting</a></li>
-                        <li class="dropdown-item"><a href="logout.php">Log out</a></li>
-                    </ul>
-                </div>
-                <a class="setting-text"><?php echo $studentUsername?></a>
-            </div>
-        </div>
-    </div>
+    <?php
+    $INEXAM = true;
+    require("./top-nav-bar.php");
+    ?>
 
     <div class="content-wrapper">
-
         <div class="match-container">
-
             <div class="match-header">
                 <div class="match-title h2">Matching Activity</div>
                 <div class="p1 match-intro"><?php echo $matchingQuestions[0]->Description ?></div>
@@ -148,7 +135,6 @@
 <?php       } ?>
                     </div>
                 </div>
-
             </div>
 
             <form class="question-form">
@@ -161,27 +147,13 @@
 
     </div>
 
-
-
-
     <ul class="task-operation">
         <li class="cancel-task">
             <a href="<?php echo $backPage?>" title="Cancel Task"></a>
         </li>
     </ul>
 
-
-    <div class="footer-wrapper">
-        <div class="footer">
-            <div class="footer-content">
-                <a href="#" class="footer-logo"></a>
-                <ul class="footer-nav">
-                    <li class="footer-nav-item"><a href="#">Any Legal Stuff</a></li>
-                    <li class="footer-nav-item"><a href="#">Acknowledgements</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <? require("./footer-bar.php") ?>
 </div>
 
 

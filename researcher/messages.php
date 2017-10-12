@@ -273,13 +273,13 @@ function renderOneMessage($value)
                             <?php if($oneMessage->isFromStudent) {?>
                                 <div class="talk-bubble round">
                                     <div class="talktext">
-                                        <p><?php echo $oneMessage->content ?></p>
+                                        <p><?php echo htmlspecialchars($oneMessage->content, ENT_QUOTES); ?></p>
                                     </div>
                                 </div>
                             <?php }else{ ?>
                                 <div class="talk-bubble round pull-right">
                                     <div class="talktext">
-                                        <p><?php echo $oneMessage->content ?></p>
+                                        <p><?php echo htmlspecialchars($oneMessage->content, ENT_QUOTES); ?></p>
                                     </div>
                                 </div>
                             <?php } ?>

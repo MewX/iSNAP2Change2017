@@ -88,8 +88,6 @@
         }
 
         debug_err($pageName, $e);
-        //to do: handle sql error
-        //...
         exit;
     }
 
@@ -115,25 +113,12 @@
 <body>
 
 <div class="page-wrapper">
-    <div class="header-wrapper">
-        <div class="header">
-            <a class="home-link" href="welcome.php">SNAP²</a>
-
-            <div class="settings">
-                <div class="setting-icon dropdown">
-                    <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="setting.php">Setting</a></li>
-                        <li class="dropdown-item"><a href="logout.php">Log out</a></li>
-                    </ul>
-                </div>
-                <a class="setting-text"><?php echo $studentUsername?></a>
-            </div>
-        </div>
-    </div>
-
+    <?php
+    $INEXAM = true;
+    require("./top-nav-bar.php");
+    ?>
 
     <div class="content-wrapper">
-
         <ul class="quiz-nav-list">
 <?php
         for ($i = 0; $i < count($mcqQuestions); $i++) { ?>
@@ -238,17 +223,7 @@
         </ul>
     </div>
 
-    <div class="footer-wrapper">
-        <div class="footer">
-            <div class="footer-content">
-                <a href="#" class="footer-logo"></a>
-                <ul class="footer-nav">
-                    <li class="footer-nav-item"><a href="#">Any Legal Stuff</a></li>
-                    <li class="footer-nav-item"><a href="#">Acknowledgements</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <? require("./footer-bar.php") ?>
 </div>
 
 <script src="./js/snap.js"></script>
