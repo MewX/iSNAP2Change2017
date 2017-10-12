@@ -21,16 +21,16 @@ if (isset($_SESSION['researcherID'])) {
 // sidebar
 $userAdminPageArr = array('School', 'Class', 'Student', 'Statistics');
 $userAdminIconArr = array('mortar-board', 'users', 'child', 'bar-chart');
-$contentAdminPageArr = array('Week', 'Quiz', 'Snap Fact', 'Verbose Fact', 'MCQ', 'SAQ', 'Matching', 'Poster', 'Video', 'Image', 'Misc');
+$contentAdminPageArr = array('Week', 'Quiz', 'Snap Fact', 'Verbose Fact', 'MCQ', 'SAQ', 'Matching', 'Poster', 'Video', 'Misc');
 $quizTypeArr = array('Matching', 'Poster', 'Video', 'Image', 'Misc');
-$contentAdminIconArr = array('calendar', 'book', 'lightbulb-o', 'folder-open', 'spoon', 'check', 'pencil', 'th-list', 'paint-brush', 'video-camera', 'picture-o', 'magic');
-$gradingPageArr = array('SAQ Grading', 'Video Grading', 'Image Grading', 'Poster Grading');
-$gradingIconArr = array('pencil', 'video-camera', 'picture-o', 'magic');
+$contentAdminIconArr = array('calendar', 'book', 'lightbulb-o', 'folder-open', 'check', 'pencil', 'th-list', 'paint-brush', 'video-camera', 'magic');
+$gradingPageArr = array('SAQ Grading', 'Video Grading', 'Poster Grading');
+$gradingIconArr = array('pencil', 'video-camera', 'paint-brush');
 
 // php quiz type classification
-$editableQuizTypeArr = array('MCQ', 'SAQ', 'Matching', 'Poster', 'Video', 'Image');
+$editableQuizTypeArr = array('MCQ', 'SAQ', 'Matching', 'Poster', 'Video');
 $miscQuizTypeArr = array('Calculator');
-$saqLikeQuizTypeArr = array('SAQ', 'Video', 'Image');
+$saqLikeQuizTypeArr = array('SAQ', 'Video');
 
 /* Array Definition */
 
@@ -39,10 +39,10 @@ $saqLikeQuizTypeArr = array('SAQ', 'Video', 'Image');
 $pageName = basename($_SERVER['SCRIPT_FILENAME'], '.php');
 
 // deal with saq-like pages
-if (in_array($pageName, array('saq', 'saq-editor', 'video', 'video-editor', 'image', 'image-editor'
+if (in_array($pageName, array('saq', 'saq-editor', 'video', 'video-editor'
 )))
     define('SAQ_LIKE_QUIZ_TYPE', explode('-', $pageName, 2)[0]);
-else if (in_array($pageName, array('saq-grading', 'saq-grader', 'video-grading', 'video-grader', 'image-grading', 'image-grader'
+else if (in_array($pageName, array('saq-grading', 'saq-grader', 'video-grading', 'video-grader'
 )))
     define('SAQ_LIKE_SUBMISSION_TYPE', explode('-', $pageName, 2)[0]);
 

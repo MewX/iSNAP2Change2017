@@ -196,34 +196,14 @@
                                     <ol class="carousel-indicators">
                                         <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                                         <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                                        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
                                     </ol>
 
 
-                                    <div class="carousel-inner" role="listbox"> 
+                                    <div class="carousel-inner" role="listbox">
                                         <div class="item active">
-                                            <img src="./img/Temple.jpg" alt="..." style="border-radius:30px;">
-                                            <div class="carousel-caption">
-                                                <div style="font-size: 2.5vh; color:rgb(54,232,197); border: 0px solid rgb(54,232,197); border-bottom-color: rgb(54,232,197); border-bottom-width: 2px; ">TEMPLE HIGH SCORE </div>
-                                                <p style="font-size: 50px;">
-                                                    34556
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="item">
                                             <img src="./img/Fruit.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
-                                                <div style="font-size: 2.5vh; color:rgb(54,232,197); border: 0px solid rgb(54,232,197); border-bottom-color: rgb(54,232,197); border-bottom-width: 2px; ">FRUIT NINJA HIGH SCORE </div>
-                                                <p style="font-size: 50px;">
-                                                    34556
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <img src="./img/Angry.jpg" alt="..." style="border-radius:30px;">
-                                            <div class="carousel-caption">
-                                                <div style="font-size: 2.5vh; color:rgb(54,232,197); border: 0px solid rgb(54,232,197); border-bottom-color: rgb(54,232,197); border-bottom-width: 2px; ">ANGRY BIRDS HIGH SCORE </div>
+                                                <a href="games.php" style="font-size: 3vh; color:rgb(255,255,255); border: 0px solid rgb(255,255,255); border-bottom-color: rgb(255,255,255); border-bottom-width: 2px; ">FRUIT NINJA</a>
                                                 <p style="font-size: 50px;">
                                                     34556
                                                 </p>
@@ -232,7 +212,7 @@
                                         <div class="item">
                                             <img src="./img/Candy.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
-                                                <div style="font-size: 2.5vh; color:rgb(54,232,197); border: 0px solid rgb(54,232,197); border-bottom-color: rgb(54,232,197); border-bottom-width: 2px; ">CANDY CRUSH HIGH SCORE </div>
+                                                <a href="games.php" style="font-size: 3vh; color:rgb(255,255,255); border: 0px solid rgb(255,255,255); border-bottom-color: rgb(255,255,255); border-bottom-width: 2px; ">CANDY CRUSH</a>
                                                 <p style="font-size: 50px;">
                                                     34556
                                                 </p>
