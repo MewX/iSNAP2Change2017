@@ -403,7 +403,6 @@
                                 </div>
                             </a>
 <?php                   }
-
                         if ($quizzesRes[$i]['Status'] == "UNSUBMITTED") { ?>
                             <a href="poster.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID'] ?>">
                                 <div class="game-nav-item game-poster">
