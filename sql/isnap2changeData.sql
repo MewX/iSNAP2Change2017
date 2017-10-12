@@ -605,26 +605,6 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `public_question`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `public_question` (
-  `QuestionID` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `Name` text NOT NULL,
-  `Email` text NOT NULL,
-  `Content` mediumint(9) NOT NULL,
-  `Solved` tinyint(1) DEFAULT 0,
-  PRIMARY KEY (`QuestionID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `public_question`
---
-
-LOCK TABLES `public_question` WRITE;
-/*!40000 ALTER TABLE `public_question` DISABLE KEYS */;
-/*!40000 ALTER TABLE `public_question` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `quiz`
@@ -890,30 +870,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `student_question`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `student_question` (
-  `QuestionID` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `Subject` text NOT NULL,
-  `Content` text DEFAULT NULL,
-  `SendTime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `Feedback` text DEFAULT NULL,
-  `Viewed` tinyint(1) DEFAULT 0,
-  `Replied` tinyint(1) DEFAULT 0,
-  `StudentID` mediumint(9) NOT NULL,
-  PRIMARY KEY (`QuestionID`),
-  KEY `Student_Question_StudentID_FK` (`StudentID`),
-  CONSTRAINT `Student_Question_StudentID_FK` FOREIGN KEY (`StudentID`) REFERENCES `student` (`StudentID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `student_question`
---
-
-LOCK TABLES `student_question` WRITE;
-/*!40000 ALTER TABLE `student_question` DISABLE KEYS */;
-/*!40000 ALTER TABLE `student_question` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `student_week_record`

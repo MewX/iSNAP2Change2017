@@ -42,7 +42,7 @@ function renderOneMessage($value)
     foreach ($messagesForStu as $value) {
         ?>
         <div class="panel <?php echo ($value[0]->readOrNot == 0) ? "panel-info" : "panel-default" ?>"
-             id="<?php echo $value[0]->id ?>"
+             id="<?php echo $value[0]->StudentID ?>"
              studentID="<?php echo $value[0]->StudentID ?>">
             <div class="panel-heading clearfix">
                 <h3 class="panel-title">
@@ -136,9 +136,8 @@ function renderOneMessage($value)
                 $studentID = $_POST['studentId'];
                 if (markMessageAsReadForRes($conn, $studentID)) {
                     $messagesForStu = array();
-                    $messagesForStu = buildMessages($conn);
-                    renderMessages($messagesForStu);
-                    //echo json_encode($response);
+                    $messagesForStu = getAllMessagesWithOneStu($conn, $studentID);
+                    renderOneMessage($messagesForStu);
                     exit();
                 } else {
                     $response['status'] = 'fail';
@@ -280,6 +279,7 @@ function renderOneMessage($value)
             }
         })
             .done(function(feedback) {
+                $("#collapse"+studentID).html(feedback);
                 $("#"+studentID).removeClass("panel-info").addClass("panel-default");
             })
             .fail(function(arg){
