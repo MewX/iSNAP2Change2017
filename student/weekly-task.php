@@ -364,135 +364,21 @@
     <div class="content-wrapper">
         <div class="week-detail">
 <?php
-    switch ($week) {
-        case 1: ?>
-            <div class="week-item week-1">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 1</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 2: ?>
-            <div class="week-item week-2">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 2</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 3: ?>
-            <div class="week-item week-3">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 3</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 4: ?>
-            <div class="week-item week-4">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 4</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 5: ?>
-            <div class="week-item week-5">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 5</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 6: ?>
-            <div class="week-item week-6">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 6</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 7: ?>
-            <div class="week-item week-7">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 7</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 8: ?>
-            <div class="week-item week-8">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 8</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 9: ?>
-            <div class="week-item week-9">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 9</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 10: ?>
-            <div class="week-item week-10">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 10</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 11: ?>
-            <div class="week-item week-11">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 11</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 12: ?>
-            <div class="week-item week-12">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 12</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 13: ?>
-            <div class="week-item week-13">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 13</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 14: ?>
-            <div class="week-item week-14">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 14</span>
-                </a>
-            </div> <?php ;
-            break;
-        case 15: ?>
-            <div class="week-item week-15">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Week 15</span>
-                </a>
-            </div> <?php ;
-            break;
-        default: ?>
-            <div class="week-item week-more">
-                <a class="week-link">
-                    <span class="week-img"></span>
-                    <span class="week-text">Extra Week</span>
-                </a>
-            </div> <?php
-    }   ?>
+    if ($week <= 15 && $week >= 1) { ?>
+        <div class="week-item week-<? echo $week ?>">
+            <a class="week-link">
+                <span class="week-img"></span>
+                <span class="week-text">Week <? echo $week ?></span>
+            </a>
+        </div>
+<?  } else { ?>
+        <div class="week-item week-more">
+            <a class="week-link">
+                <span class="week-img"></span>
+                <span class="week-text">Extra Week</span>
+            </a>
+        </div>
+<?  }?>
             <div class="time-remain">
                 <h2 class="time-remain-title">Time remaining:</h2>
 

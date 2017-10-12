@@ -282,10 +282,10 @@ require_once('./student-validation.php');
         $conn = db_connect();
         $allMessage = getAllMessagesWithOneStu($conn, $studentID);
         for ($i = 0; $i < count($allMessage); $i ++) {
-            if ($allMessage[$i]['deleteByStu']) continue;
-            $sender = $allMessage[$i]['isFromStudent'] ? "me" : "researcher";
-            echo 'insertChat("' . $sender . '", ' . json_encode($allMessage[$i]['content']) . ', '. $allMessage[$i]['id'] .
-                ', new Date(' . strtotime($allMessage[$i]['time']) . '*1000));';
+            if ($allMessage[$i]->deleteByStu) continue;
+            $sender = $allMessage[$i]->isFromStudent ? "me" : "researcher";
+            echo 'insertChat("' . $sender . '", ' . json_encode($allMessage[$i]->content) . ', '. $allMessage[$i]->id .
+                ', new Date(' . strtotime($allMessage[$i]->time) . '*1000));';
         }
         db_close($conn);
     ?>
