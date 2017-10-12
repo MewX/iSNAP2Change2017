@@ -12,13 +12,13 @@ function renderOneMessage($value)
     <?php if ($oneMessage->isFromStudent) { ?>
         <div class="talk-bubble round">
             <div class="talktext">
-                <p><?php echo htmlspecialchars($oneMessage->content, ENT_QUOTES); ?></p>
+                <p><?php echo nl2br(htmlspecialchars($oneMessage->content, ENT_QUOTES)); ?></p>
             </div>
         </div>
     <?php } else { ?>
         <div class="talk-bubble round pull-right">
             <div class="talktext">
-                <p><?php echo htmlspecialchars($oneMessage->content, ENT_QUOTES); ?></p>
+                <p><?php echo nl2br(htmlspecialchars($oneMessage->content, ENT_QUOTES)); ?></p>
             </div>
         </div>
     <?php } ?>
@@ -42,7 +42,7 @@ function renderOneMessage($value)
     foreach ($messagesForStu as $value) {
         ?>
         <div class="panel <?php echo ($value[0]->readOrNot == 0) ? "panel-info" : "panel-default" ?>"
-             id="<?php echo $value[0]->StudentID ?>"
+             id="Stu<?php echo $value[0]->StudentID ?>"
              studentID="<?php echo $value[0]->StudentID ?>">
             <div class="panel-heading clearfix">
                 <h3 class="panel-title">
@@ -280,7 +280,7 @@ function renderOneMessage($value)
         })
             .done(function(feedback) {
                 $("#collapse"+studentID).html(feedback);
-                $("#"+studentID).removeClass("panel-info").addClass("panel-default");
+                $("#Stu"+studentID).removeClass("panel-info").addClass("panel-default");
             })
             .fail(function(arg){
                 console.log(arg);
@@ -304,7 +304,7 @@ function renderOneMessage($value)
         })
             .done(function(feedback) {
                 $("#collapse"+studentID).html(feedback);
-                $("#"+studentID).removeClass("panel-info").addClass("panel-default");
+                $("#Stu"+studentID).removeClass("panel-info").addClass("panel-default");
             })
             .fail(function(arg){
                 console.log(arg);
