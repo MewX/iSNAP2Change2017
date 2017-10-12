@@ -154,7 +154,7 @@ db_close($conn);
                         </li>
                     <?php } ?>
                     <li>
-                        <a class="text-center" href="comments.php">
+                        <a class="text-center" href="messages.php">
                             <strong>Read All Messages</strong>
                             <i class="fa fa-angle-right"></i>
                         </a>
