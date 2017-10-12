@@ -200,7 +200,7 @@ $currentTime = new DateTime();
             }, function() {
                 console.log("Time out.");
                 snap.alert({
-                    content: 'You\'re out of time! Your progress will be automatically submitted. After that, you will not be able to submit again.',
+                    content: 'You\'re out of time! Please submit your answers ASAP. After that, you will not be able to edit or submit any more.',
                     onClose: function () {
                         console.log('alert close')
                     }

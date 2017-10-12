@@ -259,20 +259,18 @@ var AttachmentCtrl = {
       this.$navItems = $main.find('.attachment-nav-item')
     },
     addListeners: function () {
-      var that = this
       this.$main.on('click', '.attachment-nav-item', function (e) {
-        var itemIndex = that.$navItems.index(e.currentTarget)
-        that.activeItem(itemIndex)
+          var win = window.open('./snap-facts.php', '_blank');
+          if (win) {
+              //Browser has allowed it to be opened
+              win.focus();
+          } else {
+              //Browser has blocked it
+              alert('Please allow popups for this website');
+          }
       })
-
-    },
-    activeItem: function (index) {
-      window.open(this.$navItems.eq(index).data('url'), null, 'width=800,height=600,toolbar=no,location=no')
-
-    },
-    resetItem: function () {
     }
-}
+};
 
 
 snap.Form = function (opt) {
