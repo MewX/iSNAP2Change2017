@@ -327,7 +327,6 @@
                         <? for ($i = 0; $i < count($factRes); $i ++) { ?>
                         <div class="week-facts-item week-facts-item-smoking">
                             <a class="week-facts-divnk">
-<<<<<<< HEAD
                                 <span class="week-facts-icon <?
                                 switch ($factRes[$i]->TopicID) {
 //                            TODO: this should be adjusted into smoking
@@ -348,11 +347,6 @@
                                     <p class="week-facts-recource">
                                         <strong>Source: </strong><? echo $factRes[$i]->Recource; ?>
                                     </p>
-=======
-                                <span class="week-facts-icon image-icon-smoking"></span>
-                                <span class="week-facts-name"><? echo strtoupper($factRes[$i]->TopicName) . " FACT #" . $factRes[$i]->SnapFactID ?></span>
-                                <span class="week-facts-intro"><? echo $factRes[$i]->Content; ?></span>
->>>>>>> master
                             </a>
                         </div>
                         <? } ?>

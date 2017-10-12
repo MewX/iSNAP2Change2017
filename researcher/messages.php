@@ -12,17 +12,28 @@ function renderOneMessage($value)
     <?php if ($oneMessage->isFromStudent) { ?>
         <div class="talk-bubble round">
             <div class="talktext">
-                <p><?php echo $oneMessage->content ?></p>
+                <p><?php echo htmlspecialchars($oneMessage->content, ENT_QUOTES); ?></p>
             </div>
         </div>
     <?php } else { ?>
         <div class="talk-bubble round pull-right">
             <div class="talktext">
-                <p><?php echo $oneMessage->content ?></p>
+                <p><?php echo htmlspecialchars($oneMessage->content, ENT_QUOTES); ?></p>
             </div>
         </div>
     <?php } ?>
 <?php } ?>
+    </div>
+    <div class="panel-footer">
+        <textarea type="text" value="enter your message here"></textarea>
+        <button type="button" class="btn btn-default text-muted" aria-label="Right Align"
+                onclick = "reply(this)">
+            Reply
+        </button>
+        <button type="button" class="btn btn-default text-muted" aria-label="Right Align"
+                onclick = "markAsRead(this)">
+            Mark as read
+        </button>
     </div>
 <?php } ?>
 
@@ -50,34 +61,7 @@ function renderOneMessage($value)
                 </h3>
             </div>
             <div id="collapse<?php echo $value[0]->StudentID ?>" class="panel-collapse collapse in">
-                <div class="panel-body">
-                    <?php foreach ($value as $oneMessage) { ?>
-                        <?php if ($oneMessage->isFromStudent) { ?>
-                            <div class="talk-bubble round">
-                                <div class="talktext">
-                                    <p><?php echo $oneMessage->content ?></p>
-                                </div>
-                            </div>
-                        <?php } else { ?>
-                            <div class="talk-bubble round pull-right">
-                                <div class="talktext">
-                                    <p><?php echo $oneMessage->content ?></p>
-                                </div>
-                            </div>
-                        <?php } ?>
-                    <?php } ?>
-                </div>
-                <div class="panel-footer">
-                    <textarea type="text" value="enter your message here"></textarea>
-                    <button type="button" class="btn btn-default text-muted" aria-label="Right Align"
-                            onclick="reply(this)">
-                        Reply
-                    </button>
-                    <button type="button" class="btn btn-default text-muted" aria-label="Right Align"
-                            onclick = "markAsRead(this)">
-                        Mark as read
-                    </button>
-                </div>
+                <?php  renderOneMessage($value) ?>
             </div>
 
         </div>
@@ -141,8 +125,6 @@ function renderOneMessage($value)
                     $messagesForStu = array();
                     $messagesForStu = getAllMessagesWithOneStu($conn, $studentID);
                     renderOneMessage($messagesForStu);
-                    //renderMessages($messagesForStu);
-                    //echo json_encode($response);
                     exit();
                 } else {
                     $response['status'] = 'fail';
@@ -153,9 +135,9 @@ function renderOneMessage($value)
             } else if ($update == 4) {
                 $studentID = $_POST['studentId'];
                 if (markMessageAsReadForRes($conn, $studentID)) {
-//                    $messagesForStu = array();
-//                    $messagesForStu = buildMessages($conn);
-//                    renderMessages($messagesForStu);
+                    $messagesForStu = array();
+                    $messagesForStu = buildMessages($conn);
+                    renderMessages($messagesForStu);
                     //echo json_encode($response);
                     exit();
                 } else {
@@ -247,59 +229,7 @@ function renderOneMessage($value)
         <!-- /.col-lg-12 -->
     </div>
     <div id = "messages">
-        <?php foreach($messagesForStu as $value){?>
-            <div class="panel <?php echo ($value[0]->readOrNot==0)?"panel-info" : "panel-default"?>"
-                 id = "<?php echo $value[0]->StudentID ?>"
-                 studentID = "<?php echo $value[0]->StudentID ?>">
-                <div class="panel-heading clearfix">
-                    <h3 class="panel-title">
-                        <a data-toggle = "collapse" href="#collapse<?php echo $value[0]->StudentID?>">
-                            <?php
-                            echo $value[0]->Username
-                            ?>
-                        </a>
-                        <span class="text-muted">
-                        <em><?php echo $value[count($value)-1]->time ?></em>
-                    </span>
-                        <button type="button" class="btn btn-default text-muted pull-right"
-                                onclick = "deleteMessages(this)" studentID = "<?php echo $value[0]->StudentID ?>">
-                            X
-                        </button>
-                    </h3>
-                </div>
-                <div id="collapse<?php echo $value[0]->StudentID?>" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        <?php foreach ($value as $oneMessage){?>
-                            <?php if($oneMessage->isFromStudent) {?>
-                                <div class="talk-bubble round">
-                                    <div class="talktext">
-                                        <p><?php echo htmlspecialchars($oneMessage->content, ENT_QUOTES); ?></p>
-                                    </div>
-                                </div>
-                            <?php }else{ ?>
-                                <div class="talk-bubble round pull-right">
-                                    <div class="talktext">
-                                        <p><?php echo htmlspecialchars($oneMessage->content, ENT_QUOTES); ?></p>
-                                    </div>
-                                </div>
-                            <?php } ?>
-                        <?php } ?>
-                    </div>
-                    <div class="panel-footer">
-                        <textarea type="text" value="enter your message here"></textarea>
-                        <button type="button" class="btn btn-default text-muted" aria-label="Right Align"
-                                onclick = "reply(this)">
-                            Reply
-                        </button>
-                        <button type="button" class="btn btn-default text-muted" aria-label="Right Align"
-                                onclick = "markAsRead(this)">
-                            Mark as read
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        <?php } ?>
+        <?php renderMessages($messagesForStu)?>
     </div>
 
 
