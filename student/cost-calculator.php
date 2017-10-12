@@ -32,7 +32,6 @@
         //check quiz status
         $status = getQuizStatus($conn, $quizID, $studentID);
 
-
     } catch(Exception $e) {
         if($conn != null) {
             db_close($conn);

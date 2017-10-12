@@ -290,7 +290,7 @@
             </div>
 
             <div class="report-container">
-                <div class="h5 report-title">Do you have a question? Send us a message.</div>
+                <div class="h5 report-title">Do you have any questions? Simply send us a message.</div>
                 <div class="report-icon"></div>
             </div>
         </div>

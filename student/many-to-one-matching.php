@@ -184,9 +184,8 @@
                         </button>
                 </form>
             </div>
-
         </div>
-
+        <? require("./quiz-timer.php") ?>
     </div>
 
     <ul class="task-operation">

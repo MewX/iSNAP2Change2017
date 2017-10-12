@@ -190,6 +190,7 @@
                 <span class="question-submit-icon u-submit-icon"></span>
             </button>
         </div>
+        <? require("./quiz-timer.php") ?>
     </div>
 
     <ul class="task-operation">

@@ -335,6 +335,7 @@
                 </form>
             </div>
         </div>
+        <? require("./quiz-timer.php") ?>
     </div>
 
     <? require("./footer-bar.php") ?>

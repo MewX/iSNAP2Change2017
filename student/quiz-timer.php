@@ -17,6 +17,7 @@ if (!isset($conn) || $conn == null)
 //get due time for this week
 $dueTime = DateTime::createFromFormat('Y-m-d H:i:s', getStuWeekRecord($conn, $studentID, $week));
 $currentTime = new DateTime();
+
 ?>
     <style>
         /**
@@ -67,7 +68,7 @@ $currentTime = new DateTime();
             position: relative;
         }
         .clock-item .inner {
-            height: 0px;
+            height: 0;
             padding-bottom: 100%;
             position: relative;
             width: 100%;
@@ -75,7 +76,7 @@ $currentTime = new DateTime();
         .clock-canvas {
             background-color: rgba(255, 255, 255, .1);
             border-radius: 50%;
-            height: 0px;
+            height: 0;
             padding-bottom: 100%;
         }
         .text {
@@ -104,7 +105,7 @@ $currentTime = new DateTime();
         }
         @media (max-width: 767px) {
             .clock-item {
-                margin: 0px 30px 30px 30px;
+                margin: 0 30px 30px 30px;
             }
         }
 
@@ -121,7 +122,7 @@ $currentTime = new DateTime();
 
     </style>
 <div class="time-remain">
-    <h2 class="time-remain-title">Time remaining:</h2>
+    <h2 class="time-remain-title">Please complete this week's quiz ASAP. Time remaining:</h2>
     <div class="countdown countdown-container ">
         <div class="clock clock-row">
 
