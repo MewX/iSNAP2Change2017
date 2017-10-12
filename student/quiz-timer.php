@@ -9,7 +9,10 @@
  */
 
 // $week and $studentID should be pre-set
-if (!isset($week) || !isset($studentID)) exit();
+if (!isset($week) || !isset($studentID)) return;
+
+// if it's graded already, no need to submit again
+if (isset($status) && $status == "GRADED") return;
 
 if (!isset($conn) || $conn == null)
     $conn = db_connect();

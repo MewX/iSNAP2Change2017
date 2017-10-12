@@ -390,7 +390,7 @@
                         </a>
 <?php               }
                     break;
-                case "Poster":
+                    case "Poster":
                     if (isset($quizzesRes[$i]['Status'])) {
                         if ($quizzesRes[$i]['Status'] == "UNGRADED" || $quizzesRes[$i]['Status'] == "GRADED") { ?>
                             <a href="poster.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID'] ?>">
@@ -400,6 +400,14 @@
                                     <div class="game-nav-divider"></div>
                                     <div class="game-nav-desc">Complete Poster on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                                     <div class="game-nav-status">Completed</div>
+
+<?php                       if ($quizzesRes[$i]['Status'] == "GRADED") {
+                                if ($quizzesRes[$i]['Viewed'] == 0) { ?>
+                                    <div class="game-nav-feedback game-nav-feedback-animate">Teacher's Feedback Available</div>
+<?php                           } else { ?>
+                                    <div class="game-nav-feedback">Feedback Viewed</div>
+<?php                           }
+                              } ?>
                                 </div>
                             </a>
 <?php                   }

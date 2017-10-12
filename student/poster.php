@@ -32,9 +32,15 @@
 
         //check quiz status
         $status = getQuizStatus($conn, $quizID, $studentID);
+
         //if quiz is answered, saved poster will be read from database.
         if($status != "UNANSWERED"){
             $posterRes = getPosterRecord($conn, $quizID, $studentID);
+        }
+
+        //if graded, use the same function to set the view state
+        if ($status == "GRADED") {
+            updateSAQViewedStatus($conn, $quizID, $studentID);
         }
     }catch(Exception $e){
         if($conn != null){
@@ -138,7 +144,7 @@
         }
 
         .canvas-footer {
-            clear: all;
+            clear: both;
         }
         .task-operation {
             top: 70px; !important;
@@ -184,7 +190,13 @@
                 <input type="file" name="file" id="file-input" accept="image/*">
                 <input type="hidden" name="studentID" value=<?php echo $studentID;?>>
             </form>
+
+        <? if ($status == "GRADED") { ?>
+            <div class="feedback-title feedback-title-hilight" style="text-align: center">Teacher's Feedback</div>
+            <div class="feedback-content" style="text-align: center">You obtained <?php echo $posterRes->Grading ?> points for ths answer.</div>
+        <? } ?>
         </div>
+
         <div class="canvas-footer">
             <button class="question-submit u-submit" type="button">
                 <span class="question-submit-icon u-submit-icon"></span>
