@@ -330,39 +330,18 @@
         snap.showSendDialog({
             onConfirm: function (data) {
                 console.log(data);
-
-                var sendTime = new Date();
-
-                var dd = sendTime.getDate();
-                var mm = sendTime.getMonth() + 1;
-                var yyyy = sendTime.getFullYear();
-
-                if(dd<10) {
-                    dd="0"+dd;
-                }
-
-                if(mm<10) {
-                    mm="0"+mm;
-                }
-
-                sendTime = yyyy+"-"+mm+"-"+dd+ " " +sendTime.getHours() + ":" + sendTime.getMinutes()+":" + sendTime.getSeconds();
-
                 $.ajax({
                     url: "messages-feedback.php",
                     data: {
-                        student_id: <?php echo $studentID?>,
-                        subject: data.title,
-                        content: data.content,
+                        content: data.content.trim(),
                         action: 'UPDATE'
                     },
                     type: "POST",
                     dataType : "json"
                 })
-
                     .done(function(feedback) {
                         parseFeedback(feedback);
                     })
-
                     .fail(function( xhr, status, errorThrown ) {
                         alert( "Sorry, there was a problem!" );
                         console.log( "Error: " + errorThrown );

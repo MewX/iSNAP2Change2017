@@ -96,8 +96,7 @@ var snap = {
 '    <div class="snap-alert-container">' +
 '        <a href="#" class="snap-alert-logo"></a>' +
 '        <div class="snap-alert-content">' +
-'            Send us a message.' +
-'            <input type="text" name="title" class="message-title">' +
+'            Send researches a message:' +
 '            <textarea cols="20" rows="5" class="message-content"></textarea>' +
 '        </div>' +
 '        <div class="snap-alert-operation">' +
@@ -106,8 +105,6 @@ var snap = {
 '        </div>' +
 '    </div>' +
 '</div>';
-
-
 
         if (!this.$sendDialog) {
             this.$sendDialog = $(confirmTpl)
@@ -134,7 +131,6 @@ var snap = {
     },
 
     showMessageDialog: function (opt) {
-
         opt = $.extend({
             content: 'Missing title!',
             title: 'Missing Title',
@@ -142,7 +138,7 @@ var snap = {
             cancel: 'Cancel',
             onConfirm: $.noop,
             onCancel: $.noop
-        }, opt)
+        }, opt);
         var confirmTpl =
 '<div class="snap-alert">' +
 '    <div class="snap-alert-mask"></div>' +
