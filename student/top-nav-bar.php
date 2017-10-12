@@ -9,7 +9,8 @@ require_once('./student-validation.php');
 require_once("../mysql-lib.php");
 
 if (!isset($INEXAM)) {
-    $conn = db_connect();
+    if (!isset($conn) || $conn == null)
+        $conn = db_connect();
 
     // get quiz viewed attribute
     $quizViewedAttrs = getQuizViewdAttr($conn, $studentID);
@@ -49,7 +50,7 @@ if (!isset($INEXAM)) {
                             $url = "extra-activities.php?week=" . $quizViewedAttrs[$i]["week"];
                         } ?>
                         <li class="info-message-item">
-                            <a href="<?php echo $url ?>">
+                            <a href="<?php echo $url ?>" style="color: white;">
                                 <?php
                                 $message = "A ";
 

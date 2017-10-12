@@ -820,7 +820,6 @@ body {
     position: fixed;
     top: 100px;
     right: 200px;
-    background-color: #000;
     z-index: 1024;
 }
 .task-operation li {
@@ -831,8 +830,8 @@ body {
 }
 .task-operation a {
     display: block;
-    width: 24px;
-    height: 24px;
+    width: 36px;
+    height: 36px;
     margin: 0 auto 10px;
     background-size: 100% 100%;
     background-image: url("../img/cancel_icon.png");

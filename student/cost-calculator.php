@@ -315,8 +315,8 @@
             <?php   } ?>
                 </form>
             </div>
-
             </div>
+            <? require("./quiz-timer.php") ?>
         </div>
     </div>
 
@@ -535,7 +535,6 @@
         }
     }
 </script>
-
 </body>
 </html>
 

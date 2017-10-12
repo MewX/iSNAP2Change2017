@@ -57,10 +57,6 @@
         if($conn != null) {
             db_close($conn);
         }
-
-       // debug_err($pageName, $e);
-        //to do: handle sql error
-        //...
         exit;
     }
 
