@@ -413,7 +413,6 @@
             wow.init();
 
             $(document).ready(function () {
-
                 $('.scrollToTop').click(function(){
                     $('html, body').animate({scrollTop : 0},800);
                     return false;
@@ -421,13 +420,6 @@
 
                 $('.scroll-top').click(function () {
                     $('body,html').animate({scrollTop: 0}, 1000);
-                });
-
-                /* smooth scrolling for nav sections */
-                $('#login-close-btn').click(function () {
-                    $('#login-fail-text').text("");
-                    $('#username').val("");
-                    $('#password').val("");
                 });
             });
 
