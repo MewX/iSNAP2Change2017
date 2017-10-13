@@ -182,84 +182,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse navbar-static-top" id="nav">
-    <div class="container">
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="glyphicon glyphicon-bar"></span>
-            <span class="glyphicon glyphicon-bar"></span>
-            <span class="glyphicon glyphicon-bar"></span>
-        </a>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active">
-                    <a class="navbar-brand" href="./welcome.php">
-                        <img alt="Brand" src="./img/Snap_Single_Wordform_White.png" style="height: 100%;">
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <? if (isset($studentID)) { ?>
-                    <li><a href="game-home.php">Dashboard</a></li>
-                <? } ?>
-                <li><a>SNAP² Facts</a></li>
-                <li><a href="./resources.php">Resources</a></li>
-            </ul>
-            <ul class="nav pull-right navbar-nav">
-                <? if (isset($studentID)) { ?>
-                    <li>
-                        <div class="setting-icon dropdown" style="margin-right: 0">
-                            <ul class="dropdown-menu" style="margin-top: 0">
-                                <li class="dropdown-item"><a href="settings.php">Settings</a></li>
-                                <li class="dropdown-item"><a href="logout.php">Log out</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li><a class="setting-text"><?php echo $_SESSION["studentUsername"] ?></a></li>
-                <? } else { ?>
-                    <li><a href="#" data-toggle="modal" data-target="#myModal"><i
-                                class="glyphicon glyphicon-off"></i> LOGIN</a></li>
-                <? } ?>
-            </ul>
-        </div>
-    </div>
-</nav>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="width:100%;">
-    <div class="modal-dialog" role="document" style="height:450px;">
-        <div class="modal-content" style="height:90%;">
-            <div class="modal-body">
-                <button id="login-close-btn" type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:white;"><span aria-hidden="true">&times;</span></button>
-                <div class="col-xs-6 col-xs-offset-3">
-                    <img src="./img/Snap_Logo_Inverted.png" style="height:20%; width: 100%;">
-                    <div style="text-align: center; margin-top: 15%">
-                        <span id="login-fail-text" style="color:red"></span>
-                    </div>
-                    <div class="input-group input-group-lg" style="margin-top:5%; text-align: center;">
-                        <input id="username" type="text" style="text-align: center; border-radius: 10px; color:white; border: none; background-color: black;" class="form-control" placeholder="Username" onfocus="this.placeholder=''" onblur="this.placeholder='Username'" aria-describedby="sizing-addon1" autocomplete="off">
-                    </div>
-                    <div class="input-group input-group-lg" style="margin-top:5%; text-align: center;">
-                        <input id="password" type="password" style="text-align: center; border-radius: 10px; border: none; color:white; background-color: black;" class="form-control" placeholder="Password" onfocus="this.placeholder=''" onblur="this.placeholder='Password'" aria-describedby="sizing-addon1">
-                    </div>
-                    <button type="button" class="btn btn-primary btn-lg btn-block" style="margin-top:5%; border-radius: 10px; border-color: #FCEE2D !important; color:#FCEE2D; background-color: black; opacity: 0.7;" onclick="validStudent()">Log In</button>
-                    <div style="text-align: center; margin-top: 5%">
-                        <span style="color: white;"> Don't have an account?</span>
-                        <a href='#' onclick="location.href = 'valid-token.php';" style='color:#FCEE2D;'>Sign Up</a>
-                    </div>
-
-                    <script>
-                        $(function(){
-                            $('.modal-body').keypress(function(e){
-                                if(e.which === 13) {
-                                    validStudent();
-                                }
-                            })
-                        })
-                    </script>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+<? require("./top-nav-bar.php") ?>
 
     <div class="content-wrapper" style="padding-top: 60px; min-height: calc(100vh - 127px);">
         <div class="snap-facts-container">
@@ -359,77 +282,15 @@
 <? require("./footer-bar.php") ?>
 <script>
     $(document).ready(function () {
-
         $('.scrollToTop').click(function(){
             $('html, body').animate({scrollTop : 0},800);
             return false;
         });
 
-        $('#nav').affix({
-            offset: {
-                top: 0 - $('#nav').height()
-            }
-        });
-
-        $('body').scrollspy({target: '#nav'});
-
         $('.scroll-top').click(function () {
             $('body,html').animate({scrollTop: 0}, 1000);
         });
-
-        /* smooth scrolling for nav sections */
-        $('#nav .navbar-nav li>a').click(function () {
-            var link = $(this).attr('href');
-            var posi = $(link).offset();
-            $('body,html').animate({scrollTop: posi}, 700);
-        });
-
-        $('#login-close-btn').click(function () {
-            $('#login-fail-text').text("");
-            $('#username').val("");
-            $('#password').val("");
-        });
-    })
-
-    function validStudent() {
-        var username = $('#username').val();
-        var password = $('#password').val();
-
-        $.ajax({
-                url: "login.php",
-                data: {
-                    username: username,
-                    password: password
-                },
-                type: "POST",
-                dataType : "json"
-            })
-
-            .done(function(feedback) {
-                parseFeedback(feedback);
-            })
-
-            .fail(function( xhr, status, errorThrown ) {
-                alert( "Sorry, there was a problem!" );
-                console.log( "Error: " + errorThrown );
-                console.log( "Status: " + status );
-                console.dir( xhr );
-            });
-    }
-
-    function parseFeedback(feedback) {
-        if(feedback.message !== "success"){
-            alert(feedback.message + ". Please try again!");
-            return;
-        }
-
-        if(feedback.result === "valid"){
-            location.href = 'game-home.php';
-        } else {
-            $('#login-fail-text').text("Invalid username and/or password!");
-            $('#password').val("");
-        }
-    }
+    });
 </script>
 </body>
 </html>
