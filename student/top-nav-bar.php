@@ -5,6 +5,7 @@
  * Date: 10/11/2017
  * Time: 11:13 PM
  */
+$NOJUMP = true;
 require_once('./student-validation.php');
 require_once("../mysql-lib.php");
 
@@ -27,14 +28,16 @@ if (!isset($INEXAM)) {
 
         <? if (!isset($INEXAM)) { ?>
         <ul class="nav-list">
+            <? if (isset($studentID)) { ?>
             <li class="nav-item"><a class="nav-link" href="game-home.php">Dashboard</a></li>
+            <? } ?>
             <li class="nav-item"><a class="nav-link" href="snap-facts.php">SNAP² Facts</a></li>
             <li class="nav-item"><a class="nav-link" href="resources.php">Resources</a></li>
         </ul>
         <? } ?>
 
         <div class="settings">
-            <? if (!isset($INEXAM)) { ?>
+            <? if (!isset($INEXAM) && isset($studentID)) { ?>
             <div class="info-item info-notification">
                 <a class="info-icon" href="#"></a>
                 <?php
@@ -94,7 +97,97 @@ if (!isset($INEXAM)) {
             </div>
             <? } ?>
 
-            <a class="setting-text"><?php echo $studentUsername ?></a>
+            <? if (isset($studentID)) { ?>
+            <a class="setting-text" style="color: white"><?php echo $studentUsername ?></a>
+            <? } else { ?>
+            <a class="setting-text" style="color: white; cursor: pointer;" href="#" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-off"></i> LOGIN</a>
+            <? } ?>
         </div>
     </div>
 </div>
+
+<? if (!isset($studentID)) { ?>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="width:100%;">
+        <div class="modal-dialog" role="document" style="height:450px;">
+            <div class="modal-content" style="height:90%;">
+                <div class="modal-body">
+                    <button id="login-close-btn" type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            style="color:white;"><span aria-hidden="true">&times;</span></button>
+                    <div class="col-xs-6 col-xs-offset-3">
+                        <img src="./img/Snap_Logo_Inverted.png" style="height:20%; width: 100%;">
+                        <div style="text-align: center; margin-top: 15%">
+                            <span id="login-fail-text" style="color:red"></span>
+                        </div>
+                        <div class="input-group input-group-lg" style="margin-top:5%; text-align: center;">
+                            <input id="username" type="text"
+                                   style="text-align: center; border-radius: 10px; color:white; border: none; background-color: black;"
+                                   class="form-control" placeholder="Username" onfocus="this.placeholder=''"
+                                   onblur="this.placeholder='Username'" aria-describedby="sizing-addon1"
+                                   autocomplete="off">
+                        </div>
+                        <div class="input-group input-group-lg" style="margin-top:5%; text-align: center;">
+                            <input id="password" type="password"
+                                   style="text-align: center; border-radius: 10px; border: none; color:white; background-color: black;"
+                                   class="form-control" placeholder="Password" onfocus="this.placeholder=''"
+                                   onblur="this.placeholder='Password'" aria-describedby="sizing-addon1">
+                        </div>
+                        <button type="button" class="btn btn-primary btn-lg btn-block"
+                                style="margin-top:5%; border-radius: 10px; border-color: #FCEE2D !important; color:#FCEE2D; background-color: black; opacity: 0.7;"
+                                onclick="validStudent()">Log In
+                        </button>
+                        <div style="text-align: center; margin-top: 5%">
+                            <span style="color: white;"> Don't have an account?</span>
+                            <a href='#' onclick="location.href = 'valid-token.php';" style='color:#FCEE2D;'>Sign Up</a>
+                        </div>
+
+                        <script>
+                            $(function () {
+                                $('.modal-body').keypress(function (e) {
+                                    if (e.which === 13) {
+                                        validStudent();
+                                    }
+                                })
+                            })
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script language="JavaScript">
+        function validStudent() {
+            var username = $('#username').val();
+            var password = $('#password').val();
+
+            $.ajax({
+                url: "login.php",
+                data: {
+                    username: username,
+                    password: password
+                },
+                type: "POST",
+                dataType: "json"
+            })
+                .done(function (feedback) {
+                    if (feedback.message !== "success") {
+                        alert(feedback.message + ". Please try again!");
+                        return;
+                    }
+
+                    if (feedback.result === "valid") {
+                        location.href = 'game-home.php';
+                    } else {
+                        $('#login-fail-text').text("Invalid username and/or password!");
+                        $('#password').val("");
+                    }
+                })
+                .fail(function (xhr, status, errorThrown) {
+                    alert("Sorry, there was a problem!");
+                    console.log("Error: " + errorThrown);
+                    console.log("Status: " + status);
+                    console.dir(xhr);
+                });
+        }
+    </script>
+<? } ?>
