@@ -1780,7 +1780,7 @@ function getStudentScore(PDO $conn, $studentID)
 
 function getStudentScoreForQuiz(PDO $conn, $studentID, $quizID)
 {
-    $scoreSql = "SELECT Grade FROM quiz_record WHERE StudentID = ? AND QuizID = ?";
+    $scoreSql = "SELECT Grade, Status FROM quiz_record WHERE StudentID = ? AND QuizID = ?";
     $scoreQuery = $conn->prepare($scoreSql);
     $scoreQuery->execute(array($studentID, $quizID));
     $score = $scoreQuery->fetch(PDO::FETCH_OBJ);
@@ -1878,7 +1878,12 @@ function getQuizzesStatusByWeek(PDO $conn, $studentID, $week, $extraQuiz)
         $quizzesRes[$i]['TopicName'] = $quizzesStatusRes[$i]->TopicName;
         $quizzesRes[$i]['QuizType'] = getQuizType($conn, $quizzesStatusRes[$i]->QuizID);
         $quizzesRes[$i]['Points'] = getQuizPoints($conn, $quizzesStatusRes[$i]->QuizID);
-        $quizzesRes[$i]['Grade'] = getStudentScoreForQuiz($conn, $studentID, $quizzesStatusRes[$i]->QuizID)->Grade;
+        $feedback = getStudentScoreForQuiz($conn, $studentID, $quizzesStatusRes[$i]->QuizID);
+        if($feedback->Status == "GRADED"){
+            $quizzesRes[$i]['Grade'] = $feedback->Grade;
+        }else{
+            $quizzesRes[$i]['Grade'] = "Ungraded";
+        }
     }
 
     return $quizzesRes;
