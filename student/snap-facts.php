@@ -250,19 +250,8 @@
                         <? for ($i = 0; $i < count($factRes); $i ++) { ?>
                         <div class="week-facts-item week-facts-item-smoking">
                             <a class="week-facts-divnk">
-                                <span class="week-facts-icon <?
-                                switch ($factRes[$i]->TopicID) {
-//                            TODO: this should be adjusted into smoking
-                                    case 1:
-                                        echo "image-icon-drugs";
-                                        break;
-                                    case 2:
-                                        echo "image-icon-health";
-                                        break;
-                                    default:
-                                        echo "image-icon-smoking";
-                                        break;
-                                }?>"></span>
+                                <span class="week-facts-icon image-icon-smoking"></span>
+
                                 <span class="week-facts-name"><? echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID ?></span>
                                     <p class="week-facts-intro">
                                         <? echo $factRes[$i]->Content; ?>
