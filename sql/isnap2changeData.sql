@@ -977,6 +977,19 @@ INSERT INTO `week` VALUES (1,2,1),(2,3,2),(3,1,3),(4,10,4),(5,5,6),(6,4,7),(7,1,
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+DROP TABLE IF EXISTS `competition`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `competition` (
+  `CompetitionID` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `DueWeek` mediumint(9) DEFAULT 1,
+  `Title` text DEFAULT NULL,
+  `Content` longtext DEFAULT NULL,
+  `Excluded` mediumint(9) DEFAULT 0,
+    PRIMARY KEY (`CompetitionID`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

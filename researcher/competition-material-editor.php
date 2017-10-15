@@ -11,8 +11,8 @@ try {
         if (isset($_POST['richContentTextArea'])) {
             $conn = db_connect();
             $content = $_POST['richContentTextArea'];
-            $quizID = $_POST['quizID'];
-            updateLearningMaterial($conn, $quizID, $content);
+            $competitionID = $_POST['CompetitionID'];
+            updateCompetitionMaterial($conn, $competitionID, $content);
         }
     }
 } catch (Exception $e) {
@@ -20,14 +20,10 @@ try {
 }
 
 try {
-    if (isset($_GET['quizID'])) {
-        $quizID = $_GET['quizID'];
-        $materialRes = getLearningMaterial($conn, $quizID);
-        $phpSelf = $pageName . '.php?quizID=' . $quizID;
-    }else if(isset($_GET['competitionID'])){
-        $quizID = $_GET['competitionID'];
-        $materialRes = getCompetition($conn, $quizID);
-        $phpSelf = $pageName . '.php?competitionID=' . $quizID;
+if(isset($_GET['competitionID'])){
+        $competitionID = $_GET['competitionID'];
+        $materialRes = getCompetition($conn, $competitionID);
+        $phpSelf = $pageName . '.php?competitionID=' . $competitionID;
 
     }
 } catch (Exception $e) {
@@ -79,8 +75,8 @@ try {
 <body>
 <form method="post" action="<?php echo $phpSelf ?>">
     <label for="QuizID" style="display:none">QuizID</label>
-    <input type="text" class="form-control" id="QuizID" name="quizID" style="display:none"
-           value="<?php echo $quizID; ?>" required>
+    <input type="text" class="form-control" id="CompetitionID" name="CompetitionID" style="display:none"
+           value="<?php echo $competitionID; ?>" required>
     <textarea name="richContentTextArea">
         <?php echo $materialRes->Content; ?>
     </textarea>
@@ -88,17 +84,6 @@ try {
         class="glyphicon glyphicon-info-sign"></span><b> Ctrl + S</b><br>
 </form>
 
-<?php
-$quizType = getQuizType($conn, $quizID);
-if ($quizType == "Video" || $quizType == "Image") { ?>
-    <div class="alert alert-info">
-        <p><strong>Reminder</strong> : This is <?php echo strtolower($quizType); ?> quiz. You should only insert one
-            <?php echo strtolower($quizType); ?> by "Insert/edit <?php echo strtolower($quizType); ?>" button, other
-            content is not expected.
-    </div>
-<?php }
-db_close($conn);
-?>
 
 </body>
 </html>

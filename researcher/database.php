@@ -116,20 +116,49 @@ db_close($conn);
                                 <a href="../backup_restore_db/myphp-backup.php">backup</a>
                             </div>
                         </div>
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Download Data
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
                         <div>
-                            <h4>Get CSV File</h4>
+                            <h4>Student Demography</h4>
                             <div class="alert alert-info">
                                 <p>
                                     You can download a .csv file for database by clicking the <b>Generate</b> link below.
                                 </p>
                                 <br>
-                                <a href="../backup_restore_db/generateCSV.php">Generate</a>
+                                <a href="../backup_restore_db/generateCSV.php?fileName=student demography">Generate</a>
+                            </div>
+                        </div>
+                        <hr noshade>
+                        <div>
+                            <h4>Quiz Process</h4>
+                            <div class="alert alert-info">
+                                <p>
+                                    You can download a .csv file for database by clicking the <b>Generate</b> link below.
+                                </p>
+                                <br>
+                                <a href="../backup_restore_db/generateCSV.php?fileName=quiz process">Generate</a>
+                            </div>
+                        </div>
+                        <hr noshade>
+                        <div>
+                            <h4>Survey Result</h4>
+                            <div class="alert alert-info">
+                                <p>
+                                    You can download a .csv file for database by clicking the <b>Generate</b> link below.
+                                </p>
+                                <br>
+                                <a href="../backup_restore_db/generateCSV.php?fileName=survey result">Generate</a>
                             </div>
                         </div>
                     </div>
-                    <!-- /.panel-body -->
                 </div>
-                <!-- /.panel -->
             </div>
             <!-- /.col-lg-12 -->
         </div>

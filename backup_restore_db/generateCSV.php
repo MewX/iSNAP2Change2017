@@ -1,73 +1,83 @@
 <?php
 require_once ("../mysql-lib.php");
 $conn = db_connect();
-$sql = "SELECT * FROM Student;";
-$Query = $conn->prepare($sql);
-$Query->execute();
-$result = $Query->fetchAll();
+$csvFileName = $_GET['fileName'].".csv";
+$sql = "";
 $header = "";
 $data = "";
-$total_column = $Query->columnCount();
+if($csvFileName == "student demography.csv"){
+    $sql = "SELECT StudentID, Gender, DOB, Identity, Score as QuizScore, ClassName FROM Student NATURAL JOIN Class;";
+    $Query = $conn->prepare($sql);
+    $Query->execute();
+    $result = $Query->fetchAll();
+    $total_column = $Query->columnCount();
 
-for ($counter = 0; $counter < $total_column; $counter ++) {
-    $meta = $Query->getColumnMeta($counter);
-    $header .= '"' . $meta['name'] . '",';
-}
-$header .= "\n";
-for($i = 0; $i < count($result); $i++){
-    for($j = 0; $j<count($result[$i])/2; $j++){
-            $data .= '"' . $result[$i][$j] . '",';
+    for ($counter = 0; $counter < $total_column; $counter ++) {
+        $meta = $Query->getColumnMeta($counter);
+        $header .= '"' . $meta['name'] . '",';
     }
-    $data .= "\t\n";
+    $header .= "\n";
+    for($i = 0; $i < count($result); $i++){
+        for($j = 0; $j<count($result[$i])/2; $j++){
+            $data .= '"' . $result[$i][$j] . '",';
+        }
+        $data .= "\t\n";
+    }
+}else if($csvFileName == "quiz process.csv"){
+    $columnName = array('ClassName', 'FirstName', 'LastName');
+    $colspanName = array('');
+    $quizList = array('ClassName', 'FirstName', 'LastName');
+    $getQuizWithWeek = getQuizWithWeek($conn);
+    $getQuizInfo = getQuizInfo($conn);
+    $studentStatistic = getStudentsStatistic($conn);
+    $startColumn = 3;
+    for ($i = 0; $i < count($getQuizWithWeek); $i++){
+        $j = $i+1;
+        array_push($colspanName, "Week$j");
+    }
+    for ($i = 1; $i <= count($getQuizInfo); $i++){
+        array_push($columnName,"Quiz$i");
+    }
+    for ($i = 0; $i < count($getQuizInfo); $i++){
+        $j = $getQuizInfo[$i]->QuizID;
+        array_push($quizList,"Quiz$j");
+    }
+    $header .= ",";
+    for ($i = 1; $i< count($colspanName); $i++){
+        for($j = 0; $j<$getQuizWithWeek[$i-1]->QuizNum; $j++){
+            $header .= '"Week-' . $getQuizWithWeek[$i-1]->Week . '",';
+        }
+    }
+    $header .= "\n";
+    $header .= ",";
+    for ($i = 3; $i < count($columnName); $i++){
+        $header .= '"' . $columnName[$i] . '-' . $getQuizInfo[$i-3]->QuizType . '",';
+    }
+    $header .= "\n";
+    for ($i = 0; $i < count($studentStatistic); $i++) {
+        $data .= '"' . $studentStatistic[$i]->StudentID . '",';
+        for ($j = 3; $j < count($quizList); $j++) {
+            if($studentStatistic[$i]->$quizList[$j] == "GRADED"){
+                $grading = str_replace("Quiz","Grading", $quizList[$j]);
+                $data .= '"' . $studentStatistic[$i]->$grading . '",';
+            }else if($studentStatistic[$i]->$quizList[$j] == "UNGRADED"){
+                $data .= '"' . 'UNGRADED' . '",';
+            }else if($studentStatistic[$i]->$quizList[$j] == "UNSUBMITTED" || $studentStatistic[$i]->$quizList[$j]==""){
+                $data .= '"' . 'UNSUBMITTED' . '",';
+            }else{
+                $data .= '"' . $studentStatistic[$i]->$quizList[$j] . '",';
+            }
+        }
+        $data .= "\t\n";
+    }
+}else if($csvFileName == "survey result.csv"){
+
 }
-$filename = "myFile.csv";
+
+
 header('Content-type: application/csv');
-header('Content-Disposition: attachment; filename='.$filename);
+header('Content-Disposition: attachment; filename='.$csvFileName);
 $output = $header . $data;
 echo $output;
 exit;
-?>
-//
-//$select = "SELECT * FROM table_name";
-//
-//$export = mysql_query ( $select ) or die ( "Sql error : " . mysql_error( ) );
-//
-//$fields = mysql_num_fields ( $export );
-//
-//for ( $i = 0; $i < $fields; $i++ )
-//{
-//    $header .= mysql_field_name( $export , $i ) . "\t";
-//}
-//
-//while( $row = mysql_fetch_row( $export ) )
-//{
-//    $line = '';
-//    foreach( $row as $value )
-//    {
-//        if ( ( !isset( $value ) ) || ( $value == "" ) )
-//        {
-//            $value = "\t";
-//        }
-//        else
-//        {
-//            $value = str_replace( '"' , '""' , $value );
-//            $value = '"' . $value . '"' . "\t";
-//        }
-//        $line .= $value;
-//    }
-//    $data .= trim( $line ) . "\n";
-//}
-//$data = str_replace( "\r" , "" , $data );
-//
-//if ( $data == "" )
-//{
-//    $data = "\n(0) Records Found!\n";
-//}
-//
-//header("Content-type: application/octet-stream");
-//header("Content-Disposition: attachment; filename=your_desired_name.xls");
-//header("Pragma: no-cache");
-//header("Expires: 0");
-//print "$header\n$data";
-
 ?>
