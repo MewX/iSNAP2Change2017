@@ -279,10 +279,10 @@
                             <div style="color:rgb(252,238,045); border: 0px solid rgb(252,238,045); border-bottom-color: rgb(252,238,045); border-bottom-width: 2px; font-size:3vh; width: 100%;margin-bottom: 20pt;padding-bottom:10pt; ">
                         <?php echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID; ?>
                             </div>
-                            <p class="fact"><?php echo $factRes[$i]->Content; ?></p>
-                                <p class="recource">
-                                    <strong>Source: </strong><? echo $factRes[$i]->Recource; ?>
-                                </p>
+                            <p class="fact" onclick="showSource(this)"><?php echo $factRes[$i]->Content; ?></p>
+                            <p class="recource" style="display: none">
+                                <strong>Source: </strong><? echo $factRes[$i]->Recource; ?>
+                            </p>
                         </div>
                     </div>
                   <?php   }   ?>
@@ -394,6 +394,14 @@
                     $('body,html').animate({scrollTop: 0}, 1000);
                 });
             });
+
+            function showSource(e){
+                if(e.parentElement.childNodes[5].style.display == 'none'){
+                    e.parentElement.childNodes[5].style.display = 'block';
+                }else{
+                    e.parentElement.childNodes[5].style.display = 'none';
+                }
+            }
 
             function leaveComment() {
                 var name = $('#myName').val();
