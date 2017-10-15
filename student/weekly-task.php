@@ -293,8 +293,8 @@
                                     <div class="game-nav-logo"></div>
                                     <div class="game-nav-title">Multiple Choice Question</div>
                                     <div class="game-nav-divider"></div>
-                                    <div class="game-nav-desc">Complete Multiple Choice Question on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
-                                    <div class="game-nav-status">Completed</div>
+                                    <div class="game-nav-desc">Complete Multiple Choice Question on <?php echo $quizzesRes[$i]['TopicName']?>?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
+                                    <div class="game-nav-status">Completed <?php echo $quizzesRes[$i]['Grade']?>/<?php echo $quizzesRes[$i]['Points']?></div>
                                 </div>
                             </a>
 <?php                       } else {?>
@@ -327,7 +327,7 @@
                                     <div class="game-nav-title">Short Answer Question</div>
                                     <div class="game-nav-divider"></div>
                                     <div class="game-nav-desc">Complete Short Answer Question on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
-                                    <div class="game-nav-status">Completed</div>
+                                    <div class="game-nav-status">Completed<?php echo $quizzesRes[$i]['Grade']?>/<?php echo $quizzesRes[$i]['Points']?></div>
 <?php                           if ($quizzesRes[$i]['Status'] == "GRADED") {
                                     if ($quizzesRes[$i]['Viewed'] == 0) { ?>
                                     <div class="game-nav-feedback game-nav-feedback-animate">Teacher's Feedback Available</div>
@@ -376,7 +376,7 @@
                                 <div class="game-nav-title">Matching</div>
                                 <div class="game-nav-divider"></div>
                                 <div class="game-nav-desc">Complete Matching on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
-                                <div class="game-nav-status">Completed</div>
+                                <div class="game-nav-status">Completed<?php echo $quizzesRes[$i]['Grade']?>/<?php echo $quizzesRes[$i]['Points']?></div>
                             </div>
                         </a>
 <?php               } else { ?>
@@ -399,7 +399,7 @@
                                     <div class="game-nav-title">Poster</div>
                                     <div class="game-nav-divider"></div>
                                     <div class="game-nav-desc">Complete Poster on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
-                                    <div class="game-nav-status">Completed</div>
+                                    <div class="game-nav-status">Completed<?php echo $quizzesRes[$i]['Grade']?>/<?php echo $quizzesRes[$i]['Points']?></div>
 
 <?php                       if ($quizzesRes[$i]['Status'] == "GRADED") {
                                 if ($quizzesRes[$i]['Viewed'] == 0) { ?>
@@ -440,7 +440,7 @@
                                 <div class="game-nav-title">Cost Calculator</div>
                                 <div class="game-nav-divider"></div>
                                 <div class="game-nav-desc">Complete Cost Calculator on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
-                                <div class="game-nav-status">Completed</div>
+                                <div class="game-nav-status">Completed<?php echo $quizzesRes[$i]['Grade']?>/<?php echo $quizzesRes[$i]['Points']?></div>
                             </div>
                         </a>
 <?php               } else { ?>
@@ -463,7 +463,7 @@
                                 <div class="game-nav-title">Video</div>
                                 <div class="game-nav-divider"></div>
                                 <div class="game-nav-desc">Complete Video on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
-                                <div class="game-nav-status">Completed</div>
+                                <div class="game-nav-status">Completed<?php echo $quizzesRes[$i]['Grade']?>/<?php echo $quizzesRes[$i]['Points']?></div>
 <?php                       if ($quizzesRes[$i]['Status'] == "GRADED") {
                                 if ($quizzesRes[$i]['Viewed'] == 0) { ?>
                                 <div class="game-nav-feedback game-nav-feedback-animate">Teacher's Feedback Available</div>
