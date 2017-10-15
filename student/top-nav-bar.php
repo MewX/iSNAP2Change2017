@@ -30,6 +30,7 @@ if (!isset($INEXAM)) {
         <ul class="nav-list">
             <? if (isset($studentID)) { ?>
             <li class="nav-item"><a class="nav-link" href="game-home.php">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="competition.php">Competitions</a></li>
             <? } ?>
             <li class="nav-item"><a class="nav-link" href="snap-facts.php">SNAP² Facts</a></li>
             <li class="nav-item"><a class="nav-link" href="resources.php">Resources</a></li>
