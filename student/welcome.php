@@ -273,44 +273,16 @@
 <?php   } ?>
 
                         <div class="col-xs-4 col-xs-offset-4" style="height: 25%;">
-        <?php
-            switch($factRes[$i]->TopicID) {
-                case 1: ?>
-                    <img src="./img/smoking_icon.png" style="height: 100%; width: 90%;"> <?php ;
-                    break;
-                case 2: ?>
-                    <img src="./img/nutrition_icon.png" style="height: 100%; width: 90%;"> <?php ;
-                    break;
-                case 3: ?>
-                    <img src="./img/alcohol_icon.png" style="height: 100%; width: 90%;"> <?php ;
-                    break;
-                case 4: ?>
-                    <img src="./img/physical_activity_icon.png" style="height: 100%; width: 90%;"> <?php ;
-                    break;
-            } ?>
+                            <img src="./img/smoking_icon.png" style="height: 100%; width: 90%;">
                         </div>
                         <div class="col-xs-12" style="height: 75%;">
-                            <?php
-                    switch($factRes[$i]->TopicID) {
-                        case 1: ?>
-                            <div style="color:rgb(252,238,045); border: 0px solid rgb(252,238,045); border-bottom-color: rgb(252,238,045); border-bottom-width: 2px; font-size:3vh; width: 100%;margin-bottom: 20pt;padding-bottom:10pt; "> <?php ;
-                            break;
-                        case 2: ?>
-                            <div style="color:rgb(247,117,030); border: 0px solid rgb(247,117,030); border-bottom-color: rgb(247,117,030); border-bottom-width: 2px; font-size:3vh; width: 100%;margin-bottom: 20pt;padding-bottom:10pt;"> <?php ;
-                            break;
-                        case 3: ?>
-                            <div style="color:rgb(175,36,209); border: 0px solid rgb(175,36,209); border-bottom-color: rgb(175,36,209); border-bottom-width: 2px; font-size:3vh; width: 100%;margin-bottom: 20pt;padding-bottom:10pt;"> <?php ;
-                            break;
-                        case 4: ?>
-                            <div style="color:rgb(219,27,27); border: 0px solid rgb(219,27,27); border-bottom-color: rgb(219,27,27); border-bottom-width: 2px; font-size:3vh; width: 100%;margin-bottom: 20pt;padding-bottom:10pt;"> <?php ;
-                            break;
-                    }
-                        echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID; ?>
+                            <div style="color:rgb(252,238,045); border: 0px solid rgb(252,238,045); border-bottom-color: rgb(252,238,045); border-bottom-width: 2px; font-size:3vh; width: 100%;margin-bottom: 20pt;padding-bottom:10pt; ">
+                        <?php echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID; ?>
                             </div>
-                            <p class="fact"><?php echo $factRes[$i]->Content; ?></p>
-                                <p class="recource">
-                                    <strong>Source: </strong><? echo $factRes[$i]->Recource; ?>
-                                </p>
+                            <p class="fact" onclick="showSource(this)"><?php echo $factRes[$i]->Content; ?></p>
+                            <p class="recource" style="display: none">
+                                <strong>Source: </strong><? echo $factRes[$i]->Recource; ?>
+                            </p>
                         </div>
                     </div>
                   <?php   }   ?>
@@ -422,6 +394,14 @@
                     $('body,html').animate({scrollTop: 0}, 1000);
                 });
             });
+
+            function showSource(e){
+                if(e.parentElement.childNodes[5].style.display == 'none'){
+                    e.parentElement.childNodes[5].style.display = 'block';
+                }else{
+                    e.parentElement.childNodes[5].style.display = 'none';
+                }
+            }
 
             function leaveComment() {
                 var name = $('#myName').val();

@@ -68,7 +68,7 @@
         .snap-facts-all {
             width: 800px;
             margin: 0 auto;
-            padding-bottom: 20px;
+            padding-bottom: 0px;
             text-align: center;
         }
         .snap-facts-list {
@@ -77,7 +77,7 @@
             justify-content: center;
         }
         .snap-facts-item {
-            margin: 0 10px 20px;
+            margin: 0 10px 00px;
             /*float: left;*/
         }
         .snap-facts-link {
@@ -87,7 +87,7 @@
         }
         .snap-facts-item-name {
             display: block;
-            height: 60px;
+            height: 10px;
         }
         .snap-facts-item-logo {
             display: block;
@@ -201,42 +201,6 @@
                             <span class="snap-facts-item-name h4">Smoking</span>
                         </a>
                     </li>
-                    <li class="snap-facts-item snap-facts-item-nutrition">
-                        <a href="snap-facts-detail.php?topic_id=2" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-nutrition"></span>
-                            <span class="snap-facts-item-name h4" >Nutirtion</span>
-                        </a>
-                    </li>
-                    <li class="snap-facts-item snap-facts-item-alcohol">
-                        <a href="snap-facts-detail.php?topic_id=3" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-alcohol"></span>
-                            <span class="snap-facts-item-name h4" >Alcohol</span>
-                        </a>
-                    </li>
-                    <li class="snap-facts-item snap-facts-item-physical">
-                        <a href="snap-facts-detail.php?topic_id=4" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-physical"></span>
-                            <span class="snap-facts-item-name h4" >Physical</span>
-                        </a>
-                    </li>
-                    <li class="snap-facts-item snap-facts-item-health">
-                        <a href="snap-facts-detail.php?topic_id=8" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-health"></span>
-                            <span class="snap-facts-item-name h4" >Health and Wellbeing</span>
-                        </a>
-                    </li>
-                    <li class="snap-facts-item snap-facts-item-sexual">
-                        <a href="snap-facts-detail.php?topic_id=7" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-sexual"></span>
-                            <span class="snap-facts-item-name h4" >Sexual Health</span>
-                        </a>
-                    </li>
-                    <li class="snap-facts-item snap-facts-item-drugs">
-                        <a href="snap-facts-detail.php?topic_id=6" class="snap-facts-link">
-                            <span class="snap-facts-item-logo image-icon-drugs"></span>
-                            <span class="snap-facts-item-name h4" >Drugs</span>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -246,30 +210,18 @@
             <div class="week-facts-content">
                 <div class="week-facts-list">
                     <div class="clearfix">
-
                         <? for ($i = 0; $i < count($factRes); $i ++) { ?>
                         <div class="week-facts-item week-facts-item-smoking">
                             <a class="week-facts-divnk">
-                                <span class="week-facts-icon <?
-                                switch ($factRes[$i]->TopicID) {
-//                            TODO: this should be adjusted into smoking
-                                    case 1:
-                                        echo "image-icon-drugs";
-                                        break;
-                                    case 2:
-                                        echo "image-icon-health";
-                                        break;
-                                    default:
-                                        echo "image-icon-smoking";
-                                        break;
-                                }?>"></span>
+                                <br>
+                                <br>
                                 <span class="week-facts-name"><? echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID ?></span>
-                                    <p class="week-facts-intro">
-                                        <? echo $factRes[$i]->Content; ?>
-                                    </p>
-                                    <p class="week-facts-recource">
-                                        <strong>Source: </strong><? echo $factRes[$i]->Recource; ?>
-                                    </p>
+                                <p class="week-facts-intro" onclick="showSource(this)">
+                                    <? echo $factRes[$i]->Content; ?>
+                                </p>
+                                <p class="week-facts-recource" style="display: none">
+                                    <strong>Source: </strong><? echo $factRes[$i]->Recource; ?>
+                                </p>
                             </a>
                         </div>
                         <? } ?>
@@ -281,6 +233,14 @@
 
 <? require("./footer-bar.php") ?>
 <script>
+    function showSource(e){
+        if(e.parentElement.childNodes[9].style.display == 'none'){
+            e.parentElement.childNodes[9].style.display = 'block';
+        }else{
+            e.parentElement.childNodes[9].style.display = 'none';
+        }
+    }
+
     $(document).ready(function () {
         $('.scrollToTop').click(function(){
             $('html, body').animate({scrollTop : 0},800);
@@ -291,6 +251,8 @@
             $('body,html').animate({scrollTop: 0}, 1000);
         });
     });
+
+
 </script>
 </body>
 </html>

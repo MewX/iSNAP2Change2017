@@ -1778,6 +1778,15 @@ function getStudentScore(PDO $conn, $studentID)
     return $score;
 }
 
+function getStudentScoreForQuiz(PDO $conn, $studentID, $quizID)
+{
+    $scoreSql = "SELECT Grade, Status FROM quiz_record WHERE StudentID = ? AND QuizID = ?";
+    $scoreQuery = $conn->prepare($scoreSql);
+    $scoreQuery->execute(array($studentID, $quizID));
+    $score = $scoreQuery->fetch(PDO::FETCH_OBJ);
+    return $score;
+}
+
 function updateStudentScore(PDO $conn, $studentID)
 {
     $updateSql = "UPDATE Student 
@@ -1869,6 +1878,12 @@ function getQuizzesStatusByWeek(PDO $conn, $studentID, $week, $extraQuiz)
         $quizzesRes[$i]['TopicName'] = $quizzesStatusRes[$i]->TopicName;
         $quizzesRes[$i]['QuizType'] = getQuizType($conn, $quizzesStatusRes[$i]->QuizID);
         $quizzesRes[$i]['Points'] = getQuizPoints($conn, $quizzesStatusRes[$i]->QuizID);
+        $feedback = getStudentScoreForQuiz($conn, $studentID, $quizzesStatusRes[$i]->QuizID);
+        if($feedback->Status == "GRADED"){
+            $quizzesRes[$i]['Grade'] = $feedback->Grade;
+        }else{
+            $quizzesRes[$i]['Grade'] = "Ungraded";
+        }
     }
 
     return $quizzesRes;
@@ -2646,4 +2661,58 @@ function markMessageAsReadForStu(PDO $conn, $studentId) {
     $sql = "UPDATE Messages SET readOrNot = true WHERE StudentID = ? AND readOrNot = FALSE and isFromStudent = false";
     $sql = $conn->prepare($sql);
     return $sql->execute(array($studentId)); // true on success
+}
+
+function createCompetition(PDO $conn, $dueWeek, $title) {
+    $updateSql = "INSERT INTO Competition(DueWeek, Title)
+         VALUES (?,?)";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($dueWeek, $title));
+    return $conn->lastInsertId();
+}
+
+function getCompetitions(PDO $conn) {
+    return getRecords($conn, "Competition");
+}
+
+function getCompetition(PDO $conn, $competitionID)
+{
+    $sql = "SELECT * FROM Competition WHERE CompetitionID = ?";
+    $query = $conn->prepare($sql);
+    $query->execute(array($competitionID));
+    $result = $query->fetch(PDO::FETCH_OBJ);
+    return $result;
+}
+
+function deleteCompetition(PDO $conn, $competitionID)
+{
+    deleteRecord($conn, $competitionID, "Competition");
+}
+
+function updateCompetition(PDO $conn, $competitionID, $dueWeek, $title)
+{
+    $updateSql = "UPDATE Competition 
+                SET DueWeek = ?, Title = ?
+                WHERE CompetitionID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($dueWeek, $title, $competitionID));
+}
+
+function updateCompetitionMaterial(PDO $conn, $competitionID, $content)
+{
+    // it is video/image quiz, retain excluded flag
+    if (getCompetition($conn, $competitionID)->Excluded == EXCLUDED_VIDEO || getCompetition($conn, $competitionID)->Excluded == EXCLUDED_IMAGE) {
+        $excluded = getCompetition($conn, $competitionID)->Excluded;
+    } // the learning material is updated and should not be excluded anymore
+    else if (strcmp(htmlspecialchars($content), htmlspecialchars(EMPTY_LEARNING_MATERIAL)) !== 0) {
+        $excluded = EXCLUDED_FALSE;
+    } // the content is identical to default empty learning material and should be excluded
+    else {
+        $excluded = EXCLUDED_TRUE;
+    }
+    $updateSql = "UPDATE Competition 
+            SET Content = ?, Excluded = ?
+            WHERE CompetitionID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($content, $excluded, $competitionID));
 }
