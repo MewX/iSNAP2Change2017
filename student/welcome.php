@@ -15,8 +15,8 @@
         $conn = db_connect();
 
         //get students' rank
-        $leaderboardRes = getStudentsRank($conn);
-
+        $quizLeaderboardRes = getStudentsRank($conn);
+        $gameLeaderboardRes = getStudentGameRank($conn);
         //get fact topics
         $topicRes = getFactTopics($conn);
 
@@ -84,7 +84,7 @@
         <!-- Page 2 -->
         <div class="pg2" id="2">
             <div class="pg2_div" style="margin-top:4%; height: 100%; width: 100%;">
-                <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-1" style="height: 100%;">
+                <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0" style="height: 100%;">
                     <div class="panel" style="background-color:black; border-radius:30px; height: 40%; width: 100%;">
                         <div class="panel-body" style="padding: 0px; height: 100%; width: 100%;">
                             <div class="col-xs-8 col-xs-offset-2" style="text-align: center; height: 55%;">
@@ -109,36 +109,23 @@
 
                                 <img src="./img/game_icon.png" style="height:65%; width: 20%;">
                                 <br>
-                                <span style="color: white; font-size: 3.2vh;"> Gaming High Scores </span>
+                                <span style="color: white; font-size: 3.2vh;"> Download Games </span>
 
                             </div>
 
-                            <div class="col-xs-8 col-xs-offset-2" style="text-align: center; height: 65%;">                            
+                            <div class="col-xs-8 col-xs-offset-2" style="text-align: center; height: 65%;">
                                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                    </ol>
-
-
                                     <div class="carousel-inner" role="listbox">
                                         <div class="item active">
                                             <img src="./img/Fruit.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
                                                 <a href="games.php" style="font-size: 3vh; color:rgb(255,255,255); border: 0px solid rgb(255,255,255); border-bottom-color: rgb(255,255,255); border-bottom-width: 2px; ">FRUIT NINJA</a>
-                                                <p style="font-size: 50px;">
-                                                    34556
-                                                </p>
                                             </div>
                                         </div>
                                         <div class="item">
                                             <img src="./img/Candy.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
                                                 <a href="games.php" style="font-size: 3vh; color:rgb(255,255,255); border: 0px solid rgb(255,255,255); border-bottom-color: rgb(255,255,255); border-bottom-width: 2px; ">CANDY CRUSH</a>
-                                                <p style="font-size: 50px;">
-                                                    34556
-                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -151,18 +138,22 @@
                                         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
                                     </a>
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                    </ol>
                                 </div> 
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-0" style="background-color: black; padding-right:0px; padding-left:0px; padding-bottom:0px; height: 100%;">
+                <div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-0" style="background-color: black; padding-right:0px; padding-left:0px; padding-bottom:0px; height: 100%;">
                     <div class="scoreboard" style="height: 100%;">
                         <div class="scoreboard_header" style="height: 15%; text-align: center;">
                             <img src="./img/leader_board_icon.png" alt="..." style="width: 17%; height: 70%;">
                             <br>
-                            <span style="text-align:center; color:white; font-size: 3.2vh;">Leaderboard</span>
+                            <span style="text-align:center; color:white; font-size: 3.2vh;">Quiz Leaderboard</span>
                         </div>
                         <div class="table-res" style="height: 85%;">
                             <table class="table" style="background-color:black; text-align:center; color: white; vertical-align: middle !important;">
@@ -177,7 +168,7 @@
                                     <span class="header4">Score</span>
                                 </td>
                                 </thead>
-                                <?php  for($i = 0; $i < count($leaderboardRes); $i++) {
+                                <?php  for($i = 0; $i < count($quizLeaderboardRes); $i++) {
                 switch ($i) {
                     case 0: ?>
                         <tr style="font-size: 2.9vh;">
@@ -240,11 +231,103 @@
                             </td> <?php ;
                         break;
                 }   ?>
-                            <td class="header5"> <?php echo $leaderboardRes[$i]->Username ?> </td>
-                            <td class="header5"> <?php echo $leaderboardRes[$i]->Score ?> </td>
+                            <td class="header5"> <?php echo $quizLeaderboardRes[$i]->Username ?> </td>
+                            <td class="header5"> <?php echo $quizLeaderboardRes[$i]->Score ?> </td>
                         </tr>
 <?php   } ?>
                     </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1" style="background-color: black; padding-right:0px; padding-left:0px; padding-bottom:0px; height: 100%;">
+                    <div class="scoreboard" style="height: 100%;">
+                        <div class="scoreboard_header" style="height: 15%; text-align: center;">
+                            <img src="./img/start_flag_icon.png" alt="..." style="width: 17%; height: 70%;">
+                            <br>
+                            <span style="text-align:center; color:white; font-size: 3.2vh;">Game Leaderboard</span>
+                        </div>
+                        <div class="table-res" style="height: 85%;">
+                            <table class="table" style="background-color:black; text-align:center; color: white; vertical-align: middle !important;">
+                                <thead style="color:#FCEE2D;">
+                                <td>
+                                    <span class="header4">Rank</span>
+                                </td>
+                                <td>
+                                    <span class="header4">Username</span>
+                                </td>
+                                <td>
+                                    <span class="header4">Score</span>
+                                </td>
+                                </thead>
+                                <?php  for($i = 0; $i < count($gameLeaderboardRes); $i++) {
+                                    switch ($i) {
+                                        case 0: ?>
+                                            <tr style="font-size: 2.9vh;">
+                                            <td style="width: 35%;">
+                                                <img src="./img/first_place_icon.png" alt="..." style="width: 34%;">
+                                            </td> <?php ;
+                                            break;
+                                        case 1: ?>
+                                            <tr style="font-size: 2.7vh;">
+                                            <td style="width: 30%;">
+                                                <img src="./img/second_place_icon.png" alt="..." style="width: 30%;">
+                                            </td> <?php ;
+                                            break;
+                                        case 2: ?>
+                                            <tr style="font-size: 2.5vh;">
+                                            <td style="width: 40%;">
+                                                <img src="./img/third_place_icon.png" alt="..."  style="width: 28%;">
+                                            </td> <?php ;
+                                            break;
+                                        case 3: ?>
+                                            <tr style="font-size: 2.3vh;">
+                                            <td style="width: 40%;">
+                                                <img src="./img/fourth_place_icon.png" alt="..."  style="width: 25%;">
+                                            </td> <?php ;
+                                            break;
+                                        case 4: ?>
+                                            <tr style="font-size: 2.2vh;">
+                                            <td>
+                                                5th
+                                            </td> <?php ;
+                                            break;
+                                        case 5: ?>
+                                            <tr style="font-size: 2.2vh;">
+                                            <td>
+                                                6th
+                                            </td> <?php ;
+                                            break;
+                                        case 6: ?>
+                                            <tr style="font-size: 2.2vh;">
+                                            <td>
+                                                7th
+                                            </td> <?php ;
+                                            break;
+                                        case 7: ?>
+                                            <tr style="font-size: 2.2vh;">
+                                            <td>
+                                                8th
+                                            </td> <?php ;
+                                            break;
+                                        case 8: ?>
+                                            <tr style="font-size: 2.2vh;">
+                                            <td>
+                                                9th
+                                            </td> <?php ;
+                                            break;
+                                        case 9: ?>
+                                            <tr style="font-size: 2.2vh;">
+                                            <td>
+                                                10th
+                                            </td> <?php ;
+                                            break;
+                                    }   ?>
+                                    <td class="header5"> <?php echo $gameLeaderboardRes[$i]->Username ?> </td>
+                                    <td class="header5"> <?php echo $gameLeaderboardRes[$i]->Score ?> </td>
+                                    </tr>
+                                <?php   } ?>
+                            </table>
                         </div>
                     </div>
                 </div>

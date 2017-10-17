@@ -2323,6 +2323,8 @@ function updateStudentGameScores(PDO $conn, $gameID, $studentID, $level, $score)
     $historyHighScore = getStudentGameScores($conn, $gameID, $studentID);
     if (isset($historyHighScore[$level]) && $historyHighScore[$level] >= $score) return true;
 
+    calculateStudentGameTotalScore($conn, $studentID, $historyHighScore[$level], $score);
+
     $updateSql = "INSERT INTO Game_Record(GameID,StudentID,`Level`,Score)
                      VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE Score = ?";
     $updateSql = $conn->prepare($updateSql);
@@ -2336,6 +2338,40 @@ ORDER BY game_record.Score DESC LIMIT $numberOfRecords;";
     $retrieveScoreQuery = $conn->prepare($retrieveScoreSql);
     $retrieveScoreQuery->execute(array($gameID, $level));
     return $retrieveScoreQuery->fetchAll();
+}
+
+function calculateStudentGameTotalScore(PDO $conn, $studentID, $historyHighScore, $score){
+    $updateSql = "SELECT Score FROM game_total_record WHERE StudentID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($studentID));
+    $result = $updateSql->fetch(PDO::FETCH_OBJ);
+    $currentScore = $result->Score;
+    $newScore = 0;
+    if(!isset($historyHighScore)){
+        $historyHighScore = 0;
+    }
+    if(isset($currentScore)){
+        $newScore = $currentScore - $historyHighScore + $score;
+    }else{
+        $newScore = $currentScore + $score;
+    }
+    $updateSql = "INSERT INTO game_total_record(StudentID, Score)
+                     VALUES (?,?) ON DUPLICATE KEY UPDATE Score = ?";
+    $updateSql = $conn->prepare($updateSql);
+    return $updateSql->execute(array($studentID, $newScore, $newScore));
+}
+
+function getStudentGameRank(PDO $conn){
+    $leaderBoardSql = "SELECT Username, game_total_record.Score
+					   FROM student JOIN game_total_record ON student.StudentID = game_total_record.StudentID
+					   ORDER BY game_total_record.Score DESC
+					   LIMIT 10;";
+
+    $leaderBoardQuery = $conn->prepare($leaderBoardSql);
+    $leaderBoardQuery->execute(array());
+    $leaderBoardRes = $leaderBoardQuery->fetchAll(PDO::FETCH_OBJ);
+
+    return $leaderBoardRes;
 }
 /* Game */
 
