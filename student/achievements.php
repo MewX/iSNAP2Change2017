@@ -10,6 +10,55 @@ require_once('./student-validation.php');
 
 require_once("../mysql-lib.php");
 
+// TODO: get achievement unlocking progress
+
+// assign variables to corresponding variables
+$aQuizMaster = false; // get all other achievements on weekly quiz
+
+$aAllSnapFacts = false; // visit every snap fact category
+$aResourcePage = false; // visit the resources page
+$aQuizLeaderBoardTopTenOnce = false; // be in the top ten on the leader board once
+$aLearningFromMistakes = false; // check teacher's feedback once
+$aHeadOfClass = false; // get full marks on everything
+$aWeeklyGenius = false; // get full marks on every task for any week
+$aGotItRight = false; // get full marks for every multiple choice task
+$aAced = false; // get full marks for any task
+$aHatTrick = false; // get full marks on 'one' task for three weeks in a row
+$aMasterExtraContent = false; // play every after school quiz
+
+
+$aLoginMaster = false; // unlock every log in achievement
+
+$aLoginWeek1 = false;
+$aLoginWeek2 = false;
+$aLoginWeek3 = false;
+$aLoginWeek4 = false;
+$aLoginWeek5 = false;
+$aLoginWeek6 = false;
+$aLoginWeek7 = false;
+$aLoginWeek8 = false;
+$aLoginWeek9 = false;
+$aLoginWeek10 = false;
+
+
+$aMasterGaming = false; // unlock every gaming achievement
+
+$aLaunchSportsNinja = false; // launch sports ninja once
+$aPlayEveryGameModeSn = false;
+$aBeatScoreSnA = false; // beat xxx score
+$aBeatScoreSnB = false; // beat xxxx score
+$aBeatScoreSnC = false; // beat xxxxx score
+
+$aLaunchMealCrusher = false; // launch meal crusher once
+$aPlayEveryGameModeMc = false;
+$aBeatScoreMcA = false; // beat xxx score
+$aBeatScoreMcB = false; // beat xxxx score
+$aBeatScoreMcC = false; // beat xxxxx score
+
+
+// TODO: do we still need smoking specific achievements?
+// TODO: because the theme is smoking already.
+
 ?>
 
 <!DOCTYPE html>
@@ -32,12 +81,19 @@ require_once("../mysql-lib.php");
         .reading-header {
             text-align: center;
         }
-        .reading-logo {
+        .achievement-logo {
             width: 128px;
             height: 128px;
             margin: 0 auto;
             background-size: 100% 100%;
             background-image: url("./img/achievement_logo.png");
+        }
+        .achievement-logo-locked {
+            width: 128px;
+            height: 128px;
+            margin: 0 auto;
+            background-size: 100% 100%;
+            background-image: url("./img/locked_icon.png");
         }
         .reading-title {
             font-size: 28px;
@@ -52,6 +108,11 @@ require_once("../mysql-lib.php");
             margin-bottom: 20px;
             font-size: 18px;
         }
+        .achievement-name {
+            font-family: "Maitree", serif;
+            margin-top: 12px;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -62,14 +123,29 @@ require_once("../mysql-lib.php");
     <div class="content-wrapper">
         <div class="reading-detail">
             <div class="reading-header">
-                <div class="reading-logo"></div>
+                <div class="achievement-logo"></div>
                 <div class="reading-title">Achievements</div>
                 <div class="reading-intro">Unlock achievements by completing the requirements while you're playing SNAP².</div>
+                <div class="reading-intro"><i>(Hint: Move your mouse upon the achievement icons to view how to achieve them!)</i></div>
             </div>
         </div>
 
-        <div class="col-8 col-xs-offset-2" style="margin-top: 120px">
-            <div class="col-4 col-xs-offset-4" style="text-align: center">master achievement</div>
+        <div class="col-4 col-xs-offset-4" style="margin-top: 60px; padding: 40px; border-radius: 30px; background-color: black">
+            <div class="col-4" style="text-align: center">
+                <div class="achievement-logo<? echo $aQuizMaster ? "" : "-locked" ?>"
+                     title="Unlock this achievement by unlocking all other quiz achievements."></div>
+                <div class="achievement-name">Quiz Master</div>
+            </div>
+            <div class="col-4" style="text-align: center">
+                <div class="achievement-logo<? echo $aLoginMaster ? "" : "-locked" ?>"
+                     title="Unlock this achievement by unlocking all other log-in achievements."></div>
+                <div class="achievement-name">Log-in Master</div>
+            </div>
+            <div class="col-4" style="text-align: center">
+                <div class="achievement-logo<? echo $aMasterGaming ? "" : "-locked" ?>"
+                     title="Unlock this achievement by unlocking all other game achievements."></div>
+                <div class="achievement-name">Game Master</div>
+            </div>
         </div>
 
         <div class="col-8 col-xs-offset-2" style="margin-top: 120px">
