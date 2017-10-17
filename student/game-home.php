@@ -279,6 +279,10 @@
                     <img src="./img/extra_activites_icon.png" alt="" class="operation-logo">
                     <span>Extra Activities</span>
                 </a>
+                <a href="achievements.php" class="operation-item operation-extra-activities">
+                    <img src="./img/achievement_logo.png" alt="" class="operation-logo">
+                    <span>Achievements</span>
+                </a>
                 <a href="progress.php" class="operation-item operation-progress">
                     <img src="./img/progress_icon.png" alt="" class="operation-logo">
                     <span>Progress</span>
