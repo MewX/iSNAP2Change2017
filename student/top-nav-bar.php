@@ -40,7 +40,7 @@ if (!isset($INEXAM)) {
         <div class="settings">
             <? if (!isset($INEXAM) && isset($studentID)) { ?>
             <div class="info-item info-notification">
-                <a class="info-icon" href="#"></a>
+                <a class="info-icon" href="#" title="Marking notifications"></a>
                 <?php
                 $quizFeedbackCount = count($quizViewedAttrs);
                 if ($quizFeedbackCount != 0) { ?>
@@ -82,7 +82,7 @@ if (!isset($INEXAM)) {
                 </ul>
             </div>
             <div class="info-item info-message">
-                <a class="info-icon" href="./messages.php"></a>
+                <a class="info-icon" href="./messages.php" title="Click to view all messages."></a>
                 <?php
                 $messageCount = count($studentQuesViewedAttrs);
                 if ($messageCount != 0) { ?>

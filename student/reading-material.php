@@ -51,7 +51,7 @@
         .reading-header {
             text-align: center;
         }
-        .reading-logo {
+        .achievement-logo {
             width: 128px;
             height: 128px;
             margin: 0 auto;
