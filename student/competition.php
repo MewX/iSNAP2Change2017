@@ -53,36 +53,12 @@ db_close($conn);
             border-radius: 10px;
             color: #000;
             min-height: 350px;
+            margin-bottom: 50px;
         }
         .material-content-included p {
             margin: 0 0 30px 0;
         }
-        .material-content-excluded {
-            padding: 14px 190px;
-            text-align: center;
-        }
-        .material-start {
-            display: block;
-            width: 60px;
-            text-align: center;
-            margin: 20px auto;
-            color: #fcec1b;
-            background-color: transparent;
-            cursor: pointer;
-            font-size: 20px;
-            border: 0;
-        }
-        .material-start-icon {
-            display: block;
-            width: 60px;
-            height: 60px;
-            background-size: 100% 100%;
-            background-image: url("./img/start_flag_icon.png");
-            margin-bottom: 10px;
-        }
-        .task-operation {
-            right: 350px;
-        }
+
     </style>
 </head>
 <body>
@@ -95,7 +71,7 @@ db_close($conn);
     <div class="content-wrapper">
         <div class="material">
             <?php for($i=0; $i<count($competitionResults); $i++){?>
-                <h2 class="material-title"> <?php echo $competitionResults[$i]->Title ?> - Due at Week <?php echo $competitionResults[$i]->DueWeek ?></h2>
+                <h2 class="material-title"> <?php echo $competitionResults[$i]->Title ?> | Due at Week <?php echo $competitionResults[$i]->DueWeek ?></h2>
                 <div class="material-content-included p1">
                     <?php echo $competitionResults[$i]->Content; ?>
                 </div>

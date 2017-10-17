@@ -187,6 +187,33 @@ INSERT INTO `comments` VALUES (1,'Amos','i@mewx.org','This is an initial message
 UNLOCK TABLES;
 
 --
+-- Table structure for table `competition`
+--
+
+DROP TABLE IF EXISTS `competition`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `competition` (
+  `CompetitionID` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `DueWeek` mediumint(9) DEFAULT 1,
+  `Title` text DEFAULT NULL,
+  `Content` longtext DEFAULT NULL,
+  `Excluded` mediumint(9) DEFAULT 0,
+  PRIMARY KEY (`CompetitionID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `competition`
+--
+
+LOCK TABLES `competition` WRITE;
+/*!40000 ALTER TABLE `competition` DISABLE KEYS */;
+INSERT INTO `competition` VALUES (1,2,'Weeks 1-2','<p>2 Double passes to Hoyts Cinemas to be won!</p>\r\n<p><img src=\"https://www.spendless.net.au/media/product_brands/h/o/hoyts.png\" alt=\"\" width=\"500\" height=\"165\" /></p>\r\n<p>Entry Requirements/Conditions:</p>\r\n<p>&nbsp;</p>',0),(2,4,'Weeks 3-4','<p>2 Personalised phone cases from The Daily Edited to be won! &nbsp;</p>\r\n<p><img src=\"https://www.thedailyedited.com/pub/media/wysiwyg/summer-phonecase.jpg\" width=\"640\" height=\"200\" /></p>\r\n<p>Entry Requirements/Conditions</p>',0),(3,6,'Week 5-6','<p>2 Vouchers to Dymocks valued at $50 each to be won!</p>\r\n<p><img src=\"http://is3.mzstatic.com/image/thumb/Purple69/v4/cc/ea/e6/cceae632-d79e-70ec-c8d1-9f00996d768b/source/1200x630bb.jpg\" width=\"315\" height=\"315\" /></p>\r\n<p>Entry Requirements/Conditions</p>',0),(4,8,'Weeks 7-8','<p>2 $50 vouchers to Adidas Shop or Lorna Jane to be won!</p>\r\n<p><img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/1200px-Adidas_Logo.svg.png\" width=\"300\" height=\"203\" /></p>\r\n<p><img src=\"https://res-1.cloudinary.com/wlabs/image/fetch/c_pad,f_auto,q_auto/http://res.cloudinary.com/wlabs/image/upload/mjyvsapt8harrjfuekdq.png\" width=\"300\" height=\"300\" /></p>\r\n<p>Entry Requirements/Conditions</p>\r\n<p>&nbsp;</p>',0),(5,10,'Weeks 9-10','<p>1 iPad mini to be won!</p>\r\n<p><img src=\"https://lh3.googleusercontent.com/SQU8KaFY5-G9DedkLbxMUWKcXap1vUWfnATlBu2rEa5P1yDdqpHe-sjxLiLtlZKIZN1_MCtEbwEJJOcpg-M9WQXN2iGNkmIKgBBTQvURkx5H5B5d8k6mp6YTm5yoL9W_x1SgaSkilT-N8qctZuYaJ7NSShPG6hZOYs1hkK72Mmlz1lg5GKSWHN7u80zsgTnSKN9r8G0EeL43J5J4XLXvffaZhKYje2vUwt3SOSddIFBVI3BXZIKpc9AqEg-bRxXeAO2OQvwnkhuIixA3Y5Kj90eI9MRwtDdjeHmVmaEFmFYZEBJjzCbUkp-QtrzRVpMWeoaqP04eHsjQdOEx8ws15022XfbnkIavWJtPlcAfbxWahiSRV9Gs6cH6PcfYGLhUcSEJX90gYbGp4ZXk7KX2QPc_xZUvB2ZprMEn9i0pxjJUm9mGp7NXedp8TNvlwEZUcVGSEVVoJCgYQMpQhnDp8s2DjltIFIUekJRcdNaF4yokJQkHYLoDIgwSo4cTbD3LElbJXqGOv1Kc5x4Ehakjs521lDvF0rXKe_yGDWXXKIyvf2rOu7jrIHxAiRBIo3CfHytcYh9_BnItHE1W5YLDUOmjuGc3De8FXzf8jAOn=w845-h443-no?.jpg\" width=\"624\" height=\"350\" /></p>\r\n<p>Entry Requirements/Conditions</p>',0);
+/*!40000 ALTER TABLE `competition` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `game`
 --
 
@@ -239,6 +266,33 @@ LOCK TABLES `game_record` WRITE;
 /*!40000 ALTER TABLE `game_record` DISABLE KEYS */;
 INSERT INTO `game_record` VALUES (1,1,1,5,'2017-10-03 14:56:20'),(1,1,2,40,'2017-10-03 14:56:20'),(1,2,1,30,'2017-10-03 14:56:20'),(1,3,1,30,'2017-10-03 14:56:20'),(1,4,1,30,'2017-10-03 14:56:20'),(2,2,1,35,'2017-10-03 14:56:20'),(2,3,1,30,'2017-10-03 14:56:20'),(2,4,1,30,'2017-10-03 14:56:20'),(2,5,1,40,'2017-10-03 14:56:20');
 /*!40000 ALTER TABLE `game_record` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `game_total_record`
+--
+
+DROP TABLE IF EXISTS `game_total_record`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_total_record` (
+  `GameID` mediumint(9) NOT NULL DEFAULT 0,
+  `StudentID` mediumint(9) NOT NULL DEFAULT 0,
+  `Score` int(11) DEFAULT NULL,
+  PRIMARY KEY (`GameID`,`StudentID`),
+  KEY `Game_Total_Record_StudentID_FK` (`StudentID`),
+  CONSTRAINT `Game_Total_Record_GameID_FK` FOREIGN KEY (`GameID`) REFERENCES `game` (`GameID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Game_Total_Record_StudentID_FK` FOREIGN KEY (`StudentID`) REFERENCES `student` (`StudentID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `game_total_record`
+--
+
+LOCK TABLES `game_total_record` WRITE;
+/*!40000 ALTER TABLE `game_total_record` DISABLE KEYS */;
+/*!40000 ALTER TABLE `game_total_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -601,12 +655,6 @@ INSERT INTO `poster_section` VALUES (9,'Create a Future Board','What would you l
 UNLOCK TABLES;
 
 --
--- Table structure for table `public_question`
---
-
-DROP TABLE IF EXISTS `public_question`;
-
---
 -- Table structure for table `quiz`
 --
 
@@ -865,14 +913,6 @@ INSERT INTO `student` VALUES (1,'Fernando',NULL,'Fernando','Trump','d59324e4d5ac
 UNLOCK TABLES;
 
 --
--- Table structure for table `student_question`
---
-
-DROP TABLE IF EXISTS `student_question`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-
-
---
 -- Table structure for table `student_week_record`
 --
 
@@ -977,19 +1017,6 @@ INSERT INTO `week` VALUES (1,2,1),(2,3,2),(3,1,3),(4,10,4),(5,5,6),(6,4,7),(7,1,
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-DROP TABLE IF EXISTS `competition`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `competition` (
-  `CompetitionID` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `DueWeek` mediumint(9) DEFAULT 1,
-  `Title` text DEFAULT NULL,
-  `Content` longtext DEFAULT NULL,
-  `Excluded` mediumint(9) DEFAULT 0,
-    PRIMARY KEY (`CompetitionID`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
@@ -998,4 +1025,4 @@ CREATE TABLE `competition` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-09  0:20:03
+-- Dump completed on 2017-10-17 23:00:55

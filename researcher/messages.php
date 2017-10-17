@@ -237,19 +237,21 @@ function renderOneMessage($value)
 
 <script>
     function deleteMessages(value){
-        studentID = $(value).attr("studentID");
-        $.ajax({
-            type: "POST",
-            dataType: "html",
-            url: "messages.php",
-            data: {
-                studentID: studentID,
-                update: -1
-            }
-        })
-            .done(function(feedback) {
-                $("#messages").html(feedback);
+        if(confirm("Do you want to close these messages? You can not open it again.")){
+            studentID = $(value).attr("studentID");
+            $.ajax({
+                type: "POST",
+                dataType: "html",
+                url: "messages.php",
+                data: {
+                    studentID: studentID,
+                    update: -1
+                }
             })
+                .done(function(feedback) {
+                    $("#messages").html(feedback);
+                })
+        }
     }
 
     function markAllRead(){

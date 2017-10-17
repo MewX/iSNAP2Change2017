@@ -6,7 +6,14 @@ $sql = "";
 $header = "";
 $data = "";
 if($csvFileName == "student demography.csv"){
-    $sql = "SELECT StudentID, Gender, DOB, Identity, Score as QuizScore, ClassName FROM Student NATURAL JOIN Class;";
+    //$sql = "SELECT StudentID, Gender, DOB, Identity, Score as QuizScore, ClassName FROM Student NATURAL JOIN Class;";
+    $sql = "SELECT StudentID, Gender, DOB, Identity as Country, QuizScore, ClassName, 
+            MAX(IF(gameID=1,gameScore,null)) as FruitNinja, 
+            MAX(IF(gameID=2,gameScore,null)) as CandyCrush from 
+            (SELECT student.StudentID, Gender, DOB, Identity, student.Score as QuizScore, ClassName, sum(game_record.score) as gameScore, gameID 
+              FROM student NATURAL JOIN Class LEFT JOIN game_record on student.StudentID = game_record.StudentID 
+              group BY gameID, student.StudentID order BY student.StudentID
+            ) as temp GROUP BY StudentID;";
     $Query = $conn->prepare($sql);
     $Query->execute();
     $result = $Query->fetchAll();
