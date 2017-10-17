@@ -67,9 +67,7 @@
             margin-bottom: 20px;
             font-size: 20px;
         }
-        .operation-health-recipes {
-            color: #a90505;
-        }
+
         .operation-game {
             color: #00f8cd;
         }

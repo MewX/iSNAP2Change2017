@@ -441,11 +441,11 @@ body {
 .sitenav-game-home a {
     background-image: url("../img/game_icon.png");
 }
-.sitenav-healthy-recipes a {
-    background-image: url("../img/recipe_icon.png");
-}
 .sitenav-extra-activities a {
     background-image: url("../img/extra_activites_icon.png");
+}
+.sitenav-achievements a {
+    background-image: url("../img/achievement_logo.png");
 }
 .sitenav-progress a {
     background-image: url("../img/progress_icon.png");
