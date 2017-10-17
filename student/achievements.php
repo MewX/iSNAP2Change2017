@@ -15,6 +15,10 @@ require_once("../mysql-lib.php");
 // assign variables to corresponding variables
 $aQuizMaster = false; // get all other achievements on weekly quiz
 
+$aCompleteOneQuiz = false;
+$aCompleteHalfQuiz = false;
+$aCompleteAllQuiz = false;
+
 $aAllSnapFacts = false; // visit every snap fact category
 $aResourcePage = false; // visit the resources page
 $aQuizLeaderBoardTopTenOnce = false; // be in the top ten on the leader board once
@@ -113,6 +117,12 @@ $aBeatScoreMcC = false; // beat xxxxx score
             margin-top: 12px;
             font-size: 18px;
         }
+        .myrow {
+            margin-top: 48px;
+        }
+        .mybox {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -130,30 +140,97 @@ $aBeatScoreMcC = false; // beat xxxxx score
             </div>
         </div>
 
-        <div class="col-4 col-xs-offset-4" style="margin-top: 60px; padding: 40px; border-radius: 30px; background-color: black">
-            <div class="col-4" style="text-align: center">
-                <div class="achievement-logo<? echo $aQuizMaster ? "" : "-locked" ?>"
-                     title="Unlock this achievement by unlocking all other quiz achievements."></div>
-                <div class="achievement-name">Quiz Master</div>
+        <div class="row">
+            <div class="col-4 col-xs-offset-4" style="margin-top: 60px; margin-bottom: 60px; padding: 40px; border-radius: 30px; background-color: black">
+                <div class="col-4 mybox">
+                    <div class="achievement-logo<? echo $aQuizMaster ? "" : "-locked" ?>"
+                         title="Unlock this achievement by unlocking all other quiz achievements."></div>
+                    <div class="achievement-name">Quiz Master</div>
+                </div>
+                <div class="col-4 mybox">
+                    <div class="achievement-logo<? echo $aLoginMaster ? "" : "-locked" ?>"
+                         title="Unlock this achievement by unlocking all other log-in achievements."></div>
+                    <div class="achievement-name">Log-in Master</div>
+                </div>
+                <div class="col-4 mybox">
+                    <div class="achievement-logo<? echo $aMasterGaming ? "" : "-locked" ?>"
+                         title="Unlock this achievement by unlocking all other game achievements."></div>
+                    <div class="achievement-name">Game Master</div>
+                </div>
             </div>
-            <div class="col-4" style="text-align: center">
-                <div class="achievement-logo<? echo $aLoginMaster ? "" : "-locked" ?>"
-                     title="Unlock this achievement by unlocking all other log-in achievements."></div>
-                <div class="achievement-name">Log-in Master</div>
-            </div>
-            <div class="col-4" style="text-align: center">
-                <div class="achievement-logo<? echo $aMasterGaming ? "" : "-locked" ?>"
-                     title="Unlock this achievement by unlocking all other game achievements."></div>
-                <div class="achievement-name">Game Master</div>
-            </div>
-        </div>
 
-        <div class="col-8 col-xs-offset-2" style="margin-top: 120px">
-            <div class="col-2 col-xs-offset-1">1</div>
-            <div class="col-2">1</div>
-            <div class="col-2">1</div>
-            <div class="col-2">1</div>
-            <div class="col-2">1</div>
+            <div class="col-8 col-xs-offset-2 myrow">
+                <div class="col-2 col-xs-offset-3 mybox">
+                    <div class="achievement-logo<? echo $aCompleteOneQuiz ? "" : "-locked" ?>"
+                         title="Unlock this achievement by completing at least one quiz."></div>
+                    <div class="achievement-name">Well Begun</div>
+                </div>
+                <div class="col-2 mybox">
+                    <div class="achievement-logo<? echo $aCompleteHalfQuiz ? "" : "-locked" ?>"
+                         title="Unlock this achievement by completing half of the quizzes."></div>
+                    <div class="achievement-name">Half Done</div>
+                </div>
+                <div class="col-2 mybox">
+                    <div class="achievement-logo<? echo $aCompleteAllQuiz ? "" : "-locked" ?>"
+                         title="Unlock this achievement by completing all quizzes."></div>
+                    <div class="achievement-name">Big Success</div>
+                </div>
+            </div>
+
+            <div class="col-8 col-xs-offset-2 myrow">
+                <div class="col-2 col-xs-offset-1 mybox">
+                    <div class="achievement-logo<? echo $aLoginWeek1 ? "" : "-locked" ?>"
+                         title="Unlock this achievement by logging in in week 1."></div>
+                    <div class="achievement-name">Week 1 Logged in</div>
+                </div>
+                <div class="col-2 mybox">
+                    <div class="achievement-logo<? echo $aLoginWeek2 ? "" : "-locked" ?>"
+                         title="Unlock this achievement by logging in in week 2."></div>
+                    <div class="achievement-name">Week 2 Logged in</div>
+                </div>
+                <div class="col-2 mybox">
+                    <div class="achievement-logo<? echo $aLoginWeek3 ? "" : "-locked" ?>"
+                         title="Unlock this achievement by logging in in week 3."></div>
+                    <div class="achievement-name">Week 3 Logged in</div>
+                </div>
+                <div class="col-2 mybox">
+                    <div class="achievement-logo<? echo $aLoginWeek4 ? "" : "-locked" ?>"
+                         title="Unlock this achievement by logging in in week 4."></div>
+                    <div class="achievement-name">Week 4 Logged in</div>
+                </div>
+                <div class="col-2 mybox">
+                    <div class="achievement-logo<? echo $aLoginWeek5 ? "" : "-locked" ?>"
+                         title="Unlock this achievement by logging in in week 5."></div>
+                    <div class="achievement-name">Week 5 Logged in</div>
+                </div>
+            </div>
+            <div class="col-8 col-xs-offset-2 myrow">
+                <div class="col-2 col-xs-offset-1 mybox">
+                    <div class="achievement-logo<? echo $aLoginWeek6 ? "" : "-locked" ?>"
+                         title="Unlock this achievement by logging in in week 6."></div>
+                    <div class="achievement-name">Week 6 Logged in</div>
+                </div>
+                <div class="col-2 mybox">
+                    <div class="achievement-logo<? echo $aLoginWeek7 ? "" : "-locked" ?>"
+                         title="Unlock this achievement by logging in in week 7."></div>
+                    <div class="achievement-name">Week 7 Logged in</div>
+                </div>
+                <div class="col-2 mybox">
+                    <div class="achievement-logo<? echo $aLoginWeek8 ? "" : "-locked" ?>"
+                         title="Unlock this achievement by logging in in week 8."></div>
+                    <div class="achievement-name">Week 8 Logged in</div>
+                </div>
+                <div class="col-2 mybox">
+                    <div class="achievement-logo<? echo $aLoginWeek9 ? "" : "-locked" ?>"
+                         title="Unlock this achievement by logging in in week 9."></div>
+                    <div class="achievement-name">Week 9 Logged in</div>
+                </div>
+                <div class="col-2 mybox">
+                    <div class="achievement-logo<? echo $aLoginWeek10 ? "" : "-locked" ?>"
+                         title="Unlock this achievement by logging in in week 10."></div>
+                    <div class="achievement-name">Week 10 Logged in</div>
+                </div>
+            </div>
         </div>
 
     </div>
