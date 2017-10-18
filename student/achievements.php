@@ -134,6 +134,7 @@ $aBeatScoreMcC = false; // beat xxxxx score
         </div>
 
         <div class="row" style="margin-top: 60px; margin-bottom: 60px">
+            <!-- Master achievements -->
             <div class="col-4 col-xs-offset-4" style="padding: 24px; border-radius: 30px; background-color: black">
                 <div class="col-4 mybox">
                     <img class="achievement-logo" src="<? echo $aQuizMaster ? IMG_ACHIEVED : IMG_LOCKED ?>"
@@ -152,6 +153,7 @@ $aBeatScoreMcC = false; // beat xxxxx score
                 </div>
             </div>
 
+            <!-- Login related achievements -->
             <div class="col-8 col-xs-offset-2 myrow">
                 <div class="col-2 col-xs-offset-1 mybox">
                     <img class="achievement-logo" src="<? echo $aLoginWeek1 ? IMG_ACHIEVED : IMG_LOCKED ?>"
@@ -205,6 +207,119 @@ $aBeatScoreMcC = false; // beat xxxxx score
                          title="Unlock this achievement by logging in in week 10."/>
                     <div class="achievement-name">Week 10 Logged in</div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Quiz related achievements -->
+        <div class="col-8 col-xs-offset-2 myrow">
+            <div class="col-2 col-xs-offset-1 mybox">
+<!--                TODO: finish from here-->
+                <img class="achievement-logo" src="<? echo $aLoginWeek6 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 6."/>
+                <div class="achievement-name">Week 6 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek7 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 7."/>
+                <div class="achievement-name">Week 7 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek8 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 8."/>
+                <div class="achievement-name">Week 8 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek9 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 9."/>
+                <div class="achievement-name">Week 9 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek10 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 10."/>
+                <div class="achievement-name">Week 10 Logged in</div>
+            </div>
+        </div>
+        <div class="col-8 col-xs-offset-2 myrow">
+            <div class="col-2 col-xs-offset-1 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek6 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 6."/>
+                <div class="achievement-name">Week 6 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek7 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 7."/>
+                <div class="achievement-name">Week 7 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek8 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 8."/>
+                <div class="achievement-name">Week 8 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek9 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 9."/>
+                <div class="achievement-name">Week 9 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek10 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 10."/>
+                <div class="achievement-name">Week 10 Logged in</div>
+            </div>
+        </div>
+
+        <!-- Game related achievements -->
+        <div class="col-8 col-xs-offset-2 myrow">
+            <div class="col-2 col-xs-offset-1 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek6 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 6."/>
+                <div class="achievement-name">Week 6 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek7 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 7."/>
+                <div class="achievement-name">Week 7 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek8 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 8."/>
+                <div class="achievement-name">Week 8 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek9 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 9."/>
+                <div class="achievement-name">Week 9 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek10 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 10."/>
+                <div class="achievement-name">Week 10 Logged in</div>
+            </div>
+        </div>
+        <div class="col-8 col-xs-offset-2 myrow">
+            <div class="col-2 col-xs-offset-1 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek6 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 6."/>
+                <div class="achievement-name">Week 6 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek7 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 7."/>
+                <div class="achievement-name">Week 7 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek8 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 8."/>
+                <div class="achievement-name">Week 8 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek9 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 9."/>
+                <div class="achievement-name">Week 9 Logged in</div>
+            </div>
+            <div class="col-2 mybox">
+                <img class="achievement-logo" src="<? echo $aLoginWeek10 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by logging in in week 10."/>
+                <div class="achievement-name">Week 10 Logged in</div>
             </div>
         </div>
 
