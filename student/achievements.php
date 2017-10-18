@@ -15,10 +15,6 @@ require_once("../mysql-lib.php");
 // assign variables to corresponding variables
 $aQuizMaster = false; // get all other achievements on weekly quiz
 
-$aCompleteOneQuiz = false;
-$aCompleteHalfQuiz = false;
-$aCompleteAllQuiz = false;
-
 $aAllSnapFacts = false; // visit every snap fact category
 $aResourcePage = false; // visit the resources page
 $aQuizLeaderBoardTopTenOnce = false; // be in the top ten on the leader board once
@@ -31,7 +27,7 @@ $aHatTrick = false; // get full marks on 'one' task for three weeks in a row
 $aMasterExtraContent = false; // play every after school quiz
 
 
-$aLoginMaster = false; // unlock every log in achievement
+$aLoginMaster = true; // unlock every log in achievement
 
 $aLoginWeek1 = false;
 $aLoginWeek2 = false;
@@ -86,18 +82,14 @@ $aBeatScoreMcC = false; // beat xxxxx score
             text-align: center;
         }
         .achievement-logo {
-            width: 128px;
-            height: 128px;
-            margin: 0 auto;
-            background-size: 100% 100%;
-            background-image: url("./img/achievement_logo.png");
-        }
-        .achievement-logo-locked {
-            width: 128px;
-            height: 128px;
-            margin: 0 auto;
-            background-size: 100% 100%;
-            background-image: url("./img/locked_icon.png");
+            width: 100%;
+            height: auto;
+            max-width: 128px;
+            max-height: 128px;
+        <?
+            $imgAchieved = "img/achievement_logo.png";
+            $imgLocked = "img/locked_icon.png";
+        ?>
         }
         .reading-title {
             font-size: 28px;
@@ -123,6 +115,7 @@ $aBeatScoreMcC = false; // beat xxxxx score
         .mybox {
             text-align: center;
         }
+
     </style>
 </head>
 <body>
@@ -140,40 +133,22 @@ $aBeatScoreMcC = false; // beat xxxxx score
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-4 col-xs-offset-4" style="margin-top: 60px; margin-bottom: 60px; padding: 40px; border-radius: 30px; background-color: black">
+        <div class="row" style="margin-top: 60px; margin-bottom: 60px">
+            <div class="col-4 col-xs-offset-4" style="padding: 24px; border-radius: 30px; background-color: black">
                 <div class="col-4 mybox">
-                    <div class="achievement-logo<? echo $aQuizMaster ? "" : "-locked" ?>"
-                         title="Unlock this achievement by unlocking all other quiz achievements."></div>
+                    <img class="achievement-logo" src="<? echo $aQuizMaster ? $imgAchieved : $imgLocked ?>"
+                         title="Unlock this achievement by unlocking all other quiz achievements."/>
                     <div class="achievement-name">Quiz Master</div>
                 </div>
                 <div class="col-4 mybox">
-                    <div class="achievement-logo<? echo $aLoginMaster ? "" : "-locked" ?>"
-                         title="Unlock this achievement by unlocking all other log-in achievements."></div>
+                    <img class="achievement-logo" src="<? echo $aLoginMaster ? $imgAchieved : $imgLocked ?>"
+                         title="Unlock this achievement by unlocking all other log-in achievements."/>
                     <div class="achievement-name">Log-in Master</div>
                 </div>
                 <div class="col-4 mybox">
-                    <div class="achievement-logo<? echo $aMasterGaming ? "" : "-locked" ?>"
-                         title="Unlock this achievement by unlocking all other game achievements."></div>
+                    <img class="achievement-logo" src="<? echo $aMasterGaming ? $imgAchieved : $imgLocked ?>"
+                         title="Unlock this achievement by unlocking all other game achievements."/>
                     <div class="achievement-name">Game Master</div>
-                </div>
-            </div>
-
-            <div class="col-8 col-xs-offset-2 myrow">
-                <div class="col-2 col-xs-offset-3 mybox">
-                    <div class="achievement-logo<? echo $aCompleteOneQuiz ? "" : "-locked" ?>"
-                         title="Unlock this achievement by completing at least one quiz."></div>
-                    <div class="achievement-name">Well Begun</div>
-                </div>
-                <div class="col-2 mybox">
-                    <div class="achievement-logo<? echo $aCompleteHalfQuiz ? "" : "-locked" ?>"
-                         title="Unlock this achievement by completing half of the quizzes."></div>
-                    <div class="achievement-name">Half Done</div>
-                </div>
-                <div class="col-2 mybox">
-                    <div class="achievement-logo<? echo $aCompleteAllQuiz ? "" : "-locked" ?>"
-                         title="Unlock this achievement by completing all quizzes."></div>
-                    <div class="achievement-name">Big Success</div>
                 </div>
             </div>
 
