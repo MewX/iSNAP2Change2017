@@ -87,8 +87,8 @@ $aBeatScoreMcC = false; // beat xxxxx score
             max-width: 128px;
             max-height: 128px;
         <?
-            $imgAchieved = "img/achievement_logo.png";
-            $imgLocked = "img/locked_icon.png";
+            define("IMG_ACHIEVED", "img/achievement_logo.png");
+            define("IMG_LOCKED", "img/locked_icon.png");
         ?>
         }
         .reading-title {
@@ -136,17 +136,17 @@ $aBeatScoreMcC = false; // beat xxxxx score
         <div class="row" style="margin-top: 60px; margin-bottom: 60px">
             <div class="col-4 col-xs-offset-4" style="padding: 24px; border-radius: 30px; background-color: black">
                 <div class="col-4 mybox">
-                    <img class="achievement-logo" src="<? echo $aQuizMaster ? $imgAchieved : $imgLocked ?>"
+                    <img class="achievement-logo" src="<? echo $aQuizMaster ? IMG_ACHIEVED : IMG_LOCKED ?>"
                          title="Unlock this achievement by unlocking all other quiz achievements."/>
                     <div class="achievement-name">Quiz Master</div>
                 </div>
                 <div class="col-4 mybox">
-                    <img class="achievement-logo" src="<? echo $aLoginMaster ? $imgAchieved : $imgLocked ?>"
+                    <img class="achievement-logo" src="<? echo $aLoginMaster ? IMG_ACHIEVED : IMG_LOCKED ?>"
                          title="Unlock this achievement by unlocking all other log-in achievements."/>
                     <div class="achievement-name">Log-in Master</div>
                 </div>
                 <div class="col-4 mybox">
-                    <img class="achievement-logo" src="<? echo $aMasterGaming ? $imgAchieved : $imgLocked ?>"
+                    <img class="achievement-logo" src="<? echo $aMasterGaming ? IMG_ACHIEVED : IMG_LOCKED ?>"
                          title="Unlock this achievement by unlocking all other game achievements."/>
                     <div class="achievement-name">Game Master</div>
                 </div>
@@ -154,55 +154,55 @@ $aBeatScoreMcC = false; // beat xxxxx score
 
             <div class="col-8 col-xs-offset-2 myrow">
                 <div class="col-2 col-xs-offset-1 mybox">
-                    <div class="achievement-logo<? echo $aLoginWeek1 ? "" : "-locked" ?>"
-                         title="Unlock this achievement by logging in in week 1."></div>
+                    <img class="achievement-logo" src="<? echo $aLoginWeek1 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                         title="Unlock this achievement by logging in in week 1."/>
                     <div class="achievement-name">Week 1 Logged in</div>
                 </div>
                 <div class="col-2 mybox">
-                    <div class="achievement-logo<? echo $aLoginWeek2 ? "" : "-locked" ?>"
-                         title="Unlock this achievement by logging in in week 2."></div>
+                    <img class="achievement-logo" src="<? echo $aLoginWeek2 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                         title="Unlock this achievement by logging in in week 2."/>
                     <div class="achievement-name">Week 2 Logged in</div>
                 </div>
                 <div class="col-2 mybox">
-                    <div class="achievement-logo<? echo $aLoginWeek3 ? "" : "-locked" ?>"
-                         title="Unlock this achievement by logging in in week 3."></div>
+                    <img class="achievement-logo" src="<? echo $aLoginWeek3 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                         title="Unlock this achievement by logging in in week 3."/>
                     <div class="achievement-name">Week 3 Logged in</div>
                 </div>
                 <div class="col-2 mybox">
-                    <div class="achievement-logo<? echo $aLoginWeek4 ? "" : "-locked" ?>"
-                         title="Unlock this achievement by logging in in week 4."></div>
+                    <img class="achievement-logo" src="<? echo $aLoginWeek4 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                         title="Unlock this achievement by logging in in week 4."/>
                     <div class="achievement-name">Week 4 Logged in</div>
                 </div>
                 <div class="col-2 mybox">
-                    <div class="achievement-logo<? echo $aLoginWeek5 ? "" : "-locked" ?>"
-                         title="Unlock this achievement by logging in in week 5."></div>
+                    <img class="achievement-logo" src="<? echo $aLoginWeek5 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                         title="Unlock this achievement by logging in in week 5."/>
                     <div class="achievement-name">Week 5 Logged in</div>
                 </div>
             </div>
             <div class="col-8 col-xs-offset-2 myrow">
                 <div class="col-2 col-xs-offset-1 mybox">
-                    <div class="achievement-logo<? echo $aLoginWeek6 ? "" : "-locked" ?>"
-                         title="Unlock this achievement by logging in in week 6."></div>
+                    <img class="achievement-logo" src="<? echo $aLoginWeek6 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                         title="Unlock this achievement by logging in in week 6."/>
                     <div class="achievement-name">Week 6 Logged in</div>
                 </div>
                 <div class="col-2 mybox">
-                    <div class="achievement-logo<? echo $aLoginWeek7 ? "" : "-locked" ?>"
-                         title="Unlock this achievement by logging in in week 7."></div>
+                    <img class="achievement-logo" src="<? echo $aLoginWeek7 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                         title="Unlock this achievement by logging in in week 7."/>
                     <div class="achievement-name">Week 7 Logged in</div>
                 </div>
                 <div class="col-2 mybox">
-                    <div class="achievement-logo<? echo $aLoginWeek8 ? "" : "-locked" ?>"
-                         title="Unlock this achievement by logging in in week 8."></div>
+                    <img class="achievement-logo" src="<? echo $aLoginWeek8 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                         title="Unlock this achievement by logging in in week 8."/>
                     <div class="achievement-name">Week 8 Logged in</div>
                 </div>
                 <div class="col-2 mybox">
-                    <div class="achievement-logo<? echo $aLoginWeek9 ? "" : "-locked" ?>"
-                         title="Unlock this achievement by logging in in week 9."></div>
+                    <img class="achievement-logo" src="<? echo $aLoginWeek9 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                         title="Unlock this achievement by logging in in week 9."/>
                     <div class="achievement-name">Week 9 Logged in</div>
                 </div>
                 <div class="col-2 mybox">
-                    <div class="achievement-logo<? echo $aLoginWeek10 ? "" : "-locked" ?>"
-                         title="Unlock this achievement by logging in in week 10."></div>
+                    <img class="achievement-logo" src="<? echo $aLoginWeek10 ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                         title="Unlock this achievement by logging in in week 10."/>
                     <div class="achievement-name">Week 10 Logged in</div>
                 </div>
             </div>
