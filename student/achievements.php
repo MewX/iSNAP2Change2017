@@ -213,57 +213,56 @@ $aBeatScoreMcC = false; // beat xxxxx score
         <!-- Quiz related achievements -->
         <div class="col-8 col-xs-offset-2 myrow">
             <div class="col-2 col-xs-offset-1 mybox">
-<!--                TODO: finish from here-->
-                <img class="achievement-logo" src="<? echo $aLoginWeek6 ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                     title="Unlock this achievement by logging in in week 6."/>
-                <div class="achievement-name">Week 6 Logged in</div>
+                <img class="achievement-logo" src="<? echo $aAllSnapFacts ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by visiting every snap fact category."/>
+                <div class="achievement-name">Viewed Snap Facts</div>
             </div>
             <div class="col-2 mybox">
-                <img class="achievement-logo" src="<? echo $aLoginWeek7 ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                     title="Unlock this achievement by logging in in week 7."/>
-                <div class="achievement-name">Week 7 Logged in</div>
+                <img class="achievement-logo" src="<? echo $aResourcePage ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by visiting resources page."/>
+                <div class="achievement-name">Viewed Resource</div>
             </div>
             <div class="col-2 mybox">
-                <img class="achievement-logo" src="<? echo $aLoginWeek8 ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                     title="Unlock this achievement by logging in in week 8."/>
-                <div class="achievement-name">Week 8 Logged in</div>
+                <img class="achievement-logo" src="<? echo $aQuizLeaderBoardTopTenOnce ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by being in Top 10 on the leader board once."/>
+                <div class="achievement-name">Once in Top 10</div>
             </div>
             <div class="col-2 mybox">
-                <img class="achievement-logo" src="<? echo $aLoginWeek9 ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                     title="Unlock this achievement by logging in in week 9."/>
-                <div class="achievement-name">Week 9 Logged in</div>
+                <img class="achievement-logo" src="<? echo $aLearningFromMistakes ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by checking teacher's feedback once."/>
+                <div class="achievement-name">Learned from mistakes</div>
             </div>
             <div class="col-2 mybox">
-                <img class="achievement-logo" src="<? echo $aLoginWeek10 ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                     title="Unlock this achievement by logging in in week 10."/>
-                <div class="achievement-name">Week 10 Logged in</div>
+                <img class="achievement-logo" src="<? echo $aHeadOfClass ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by getting full marks on everything."/>
+                <div class="achievement-name">Head of class</div>
             </div>
         </div>
         <div class="col-8 col-xs-offset-2 myrow">
             <div class="col-2 col-xs-offset-1 mybox">
-                <img class="achievement-logo" src="<? echo $aLoginWeek6 ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                     title="Unlock this achievement by logging in in week 6."/>
-                <div class="achievement-name">Week 6 Logged in</div>
+                <img class="achievement-logo" src="<? echo $aWeeklyGenius ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by getting full marks on every task for any week."/>
+                <div class="achievement-name">Weekly Genius</div>
             </div>
             <div class="col-2 mybox">
-                <img class="achievement-logo" src="<? echo $aLoginWeek7 ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                     title="Unlock this achievement by logging in in week 7."/>
-                <div class="achievement-name">Week 7 Logged in</div>
+                <img class="achievement-logo" src="<? echo $aGotItRight ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by getting full marks for every multiple choice task."/>
+                <div class="achievement-name">Got it Right</div>
             </div>
             <div class="col-2 mybox">
-                <img class="achievement-logo" src="<? echo $aLoginWeek8 ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                     title="Unlock this achievement by logging in in week 8."/>
-                <div class="achievement-name">Week 8 Logged in</div>
+                <img class="achievement-logo" src="<? echo $aAced ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by getting full marks for any task."/>
+                <div class="achievement-name">Aced</div>
             </div>
             <div class="col-2 mybox">
-                <img class="achievement-logo" src="<? echo $aLoginWeek9 ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                     title="Unlock this achievement by logging in in week 9."/>
-                <div class="achievement-name">Week 9 Logged in</div>
+                <img class="achievement-logo" src="<? echo $aHatTrick ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by getting full marks on at least ONE task for three weeks in a row.."/>
+                <div class="achievement-name">Hat Trick</div>
             </div>
             <div class="col-2 mybox">
-                <img class="achievement-logo" src="<? echo $aLoginWeek10 ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                     title="Unlock this achievement by logging in in week 10."/>
-                <div class="achievement-name">Week 10 Logged in</div>
+                <img class="achievement-logo" src="<? echo $aMasterExtraContent ? IMG_ACHIEVED : IMG_LOCKED ?>"
+                     title="Unlock this achievement by playing every after school quiz."/>
+                <div class="achievement-name">Master of Extra Content</div>
             </div>
         </div>
 
