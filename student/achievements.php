@@ -27,7 +27,7 @@ $aHatTrick = false; // get full marks on 'one' task for three weeks in a row
 $aMasterExtraContent = false; // play every after school quiz
 
 
-$aLoginMaster = true; // unlock every log in achievement
+$aLoginMaster = false; // unlock every log in achievement
 
 $aLoginWeek1 = false;
 $aLoginWeek2 = false;
@@ -126,7 +126,8 @@ $aBeatScoreMcC = false; // beat xxxxx score
     <div class="content-wrapper">
         <div class="reading-detail">
             <div class="reading-header">
-                <div class="achievement-logo"></div>
+                <img class="achievement-logo" src="<? echo IMG_ACHIEVED ?>"
+                     title="Unlock this achievement by unlocking all other quiz achievements."/>
                 <div class="reading-title">Achievements</div>
                 <div class="reading-intro">Unlock achievements by completing the requirements while you're playing SNAP².</div>
                 <div class="reading-intro"><i>(Hint: Move your mouse upon the achievement icons to view how to achieve them!)</i></div>
