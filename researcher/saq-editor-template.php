@@ -17,10 +17,11 @@ try {
                     $quizID = $_POST['quizID'];
                     $week = $_POST['week'];
                     $topicName = $_POST['topicName'];
+                    $quizName = $_POST['QuizName'];
                     $conn->beginTransaction();
                     $extraQuiz = $_POST['ExtraQuiz'];
                     $topicID = getTopicByName($conn, $topicName)->TopicID;
-                    updateQuiz($conn, $quizID, $topicID, $week, $extraQuiz);
+                    updateQuiz($conn, $quizID, $quizName, $topicID, $week, $extraQuiz);
 
                     if (isset($_POST['mediaTitle']) && isset($_POST['mediaSource'])) {
                         $mediaTitle = $_POST['mediaTitle'];
@@ -121,6 +122,10 @@ db_close($conn);
                             <label for="Week">Week</label>
                             <input type="text" class="form-control" id="Week" name="week"
                                    placeholder="Input Week Number" value="<?php echo $quizResult->Week; ?>">
+                            <br>
+                            <label for="QuizName">Quiz Name</label>
+                            <input type="text" class="form-control" id="QuizName" name="QuizName"
+                                   placeholder="Input Quiz Name" value="<?php echo $quizResult->QuizName; ?>">
                             <br>
                             <input type=hidden name="topicName" id="TopicName" value="Smoking" required>
                             <label for='ExtraQuiz'>Extra Quiz</label>
@@ -338,16 +343,17 @@ db_close($conn);
 
     function goBack() {
         var week = document.getElementById("Week");
-        var topicName = document.getElementById("TopicName");
+        var quizName = document.getElementById("QuizName");
         var extraQuiz = document.getElementById("ExtraQuiz");
         var mediaTitle = document.getElementById("mediaTitle");
         var mediaSource = document.getElementById("mediaSource");
         var weekIsChanged = week.value != week.defaultValue;
+        var quizNameIsChanged = quizName.value != quizName.defaultValue;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
         if(mediaTitle!=null && mediaSource!=null){
             var mediaTitleIsChanged = mediaTitle.value != mediaTitle.defaultValue;
             var mediaSourceIsChanged = mediaSource.value != mediaSource.defaultValue;
-            if(weekIsChanged||extraQuizIsChanged||mediaTitleIsChanged || mediaSourceIsChanged){
+            if(weekIsChanged||extraQuizIsChanged||mediaTitleIsChanged || mediaSourceIsChanged || quizNameIsChanged){
                 if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                     location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
                 }
@@ -355,7 +361,7 @@ db_close($conn);
                 location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
             }
         }else{
-            if(weekIsChanged||extraQuizIsChanged){
+            if(weekIsChanged||extraQuizIsChanged ||quizNameIsChanged){
                 if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                     location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
                 }

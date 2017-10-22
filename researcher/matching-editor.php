@@ -19,12 +19,13 @@ try {
                     $quizID = $_POST['quizID'];
                     $week = $_POST['week'];
                     $topicName = $_POST['topicName'];
+                    $quizName = $_POST['QuizName'];
                     $description = $_POST['description'];
                     $points = $_POST['points'];
                     $conn->beginTransaction();
                     $extraQuiz = $_POST['ExtraQuiz'];
                     $topicID = getTopicByName($conn, $topicName)->TopicID;
-                    updateQuiz($conn, $quizID, $topicID, $week, $extraQuiz);
+                    updateQuiz($conn, $quizID, $quizName, $topicID, $week, $extraQuiz);
                     updateMatchingSection($conn, $quizID, $description, $points);
 
                     $conn->commit();
@@ -137,6 +138,10 @@ db_close($conn);
                                    placeholder="Input Week Number" value="<?php echo $quizResult->Week; ?>">
                             <br>
                             <input type=hidden name="topicName" id="TopicName" value="Smoking" required>
+                            <label for="QuizName">Quiz Name</label>
+                            <input type="text" class="form-control" id="QuizName" name="QuizName"
+                                   placeholder="Input Quiz Name" value="<?php echo $quizResult->QuizName; ?>">
+                            <br>
                             <label for="Description">Description</label>
                             <input type="text" class="form-control" id="Description" name="description"
                                    placeholder="Input Description" value="<?php echo $quizResult->Description; ?>"
@@ -432,14 +437,14 @@ db_close($conn);
         var week = document.getElementById("Week");
         var discription = document.getElementById("Description");
         var points = document.getElementById("Points");
-        var topicName = document.getElementById("TopicName");
+        var quizName = document.getElementById("QuizName");
         var extraQuiz = document.getElementById("ExtraQuiz");
         var weekIsChanged = week.value != week.defaultValue;
+        var quizNameIsChanged = quizName.value != quizName.defaultValue;
         var discriptionIsChanged = discription.value != discription.defaultValue;
         var pointsIsChanged = points.value != points.defaultValue;
-        var topicNameIsChanged = !topicName.options[topicName.selectedIndex].defaultSelected;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
-        if(weekIsChanged||topicNameIsChanged||extraQuizIsChanged || discriptionIsChanged || pointsIsChanged){
+        if(weekIsChanged||extraQuizIsChanged || discriptionIsChanged || pointsIsChanged || quizNameIsChanged){
             if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                 location.href='<?php echo "matching.php" ?>'
             }

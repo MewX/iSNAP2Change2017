@@ -654,7 +654,7 @@ function getStuWeekRecord(PDO $conn, $studentID, $week)
 /* Student Week Record*/
 
 /* Quiz */
-function createQuiz(PDO $conn, $topicID, $quizType, $week, $extraQuiz="0")
+function createQuiz(PDO $conn, $topicID, $quizName, $quizType, $week, $extraQuiz="0")
 {
     if ($quizType == "Video" || $quizType == "Image")
         $quizType = 'SAQ';
@@ -664,22 +664,22 @@ function createQuiz(PDO $conn, $topicID, $quizType, $week, $extraQuiz="0")
                 WHERE WeekNum = ?)";
     $updateSql = $conn->prepare($updateSql);
     $updateSql->execute(array($week, $week, $week));
-    $updateSql = "INSERT INTO Quiz(Week, QuizType, TopicID, ExtraQuiz)
-             VALUES (?,?,?,?)";
+    $updateSql = "INSERT INTO Quiz(Week, QuizName, QuizType, TopicID, ExtraQuiz)
+             VALUES (?,?,?,?,?)";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($week, $quizType, $topicID,$extraQuiz));
+    $updateSql->execute(array($week, $quizName, $quizType, $topicID,$extraQuiz));
 
 
     return $conn->lastInsertId();
 }
 
-function updateQuiz(PDO $conn, $quizID, $topicID, $week, $extraQuiz)
+function updateQuiz(PDO $conn, $quizID, $quizName, $topicID, $week, $extraQuiz)
 {
     $updateSql = "UPDATE Quiz 
-                SET Week = ?, TopicID = ?, ExtraQuiz = ?
+                SET Week = ?, QuizName = ?, TopicID = ?, ExtraQuiz = ?
                 WHERE QuizID = ?";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($week, $topicID, $extraQuiz, $quizID));
+    $updateSql->execute(array($week, $quizName, $topicID, $extraQuiz, $quizID));
 }
 
 function deleteQuiz(PDO $conn, $quizID)
@@ -1420,7 +1420,7 @@ function getSAQQuiz(PDO $conn, $quizID)
 
 function getSAQLikeQuizzes(PDO $conn, $typeIndicator)
 {
-    $quizSql = "SELECT QuizID, TopicID, Week, QuizType, ExtraQuiz, TopicName, SAQID, SUM(Points) AS Points, COUNT(SAQID) AS Questions
+    $quizSql = "SELECT QuizID, TopicID, Week, QuizName, QuizType, ExtraQuiz, TopicName, SAQID, SUM(Points) AS Points, COUNT(SAQID) AS Questions
                    FROM Quiz NATURAL JOIN Topic NATURAL JOIN Learning_Material NATURAL JOIN SAQ_Section LEFT JOIN SAQ_Question USING (QuizID) WHERE QuizType = 'SAQ' AND $typeIndicator GROUP BY QuizID";
     $quizQuery = $conn->prepare($quizSql);
     $quizQuery->execute();

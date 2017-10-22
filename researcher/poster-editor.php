@@ -16,6 +16,7 @@ try {
                     $quizID = $_POST['quizID'];
                     $week = $_POST['week'];
                     $topicName = $_POST['topicName'];
+                    $quizName = $_POST['QuizName'];
                     $points = $_POST['points'];
                     $title = $_POST['title'];
                     $description = $_POST['description'];
@@ -23,7 +24,7 @@ try {
                     $conn->beginTransaction();
 
                     $topicID = getTopicByName($conn, $topicName)->TopicID;
-                    updateQuiz($conn, $quizID, $topicID, $week, $extraQuiz);
+                    updateQuiz($conn, $quizID, $quizName, $topicID, $week, $extraQuiz);
                     updatePosterSection($conn, $quizID, $description, $points, $title);
 
                     $conn->commit();
@@ -101,6 +102,10 @@ db_close($conn);
                             <label for="week">Week</label>
                             <input type="text" class="form-control" id="week" name="week"
                                    placeholder="Input Week Number" value="<?php echo $quizResult->Week; ?>">
+                            <br>
+                            <label for="QuizName">Quiz Name</label>
+                            <input type="text" class="form-control" id="QuizName" name="QuizName"
+                                   placeholder="Input Quiz Name" value="<?php echo $quizResult->QuizName; ?>">
                             <br>
                             <input type=hidden name="topicName" id="TopicName" value="Smoking" required>
                             <label for="title">Title</label>
@@ -182,17 +187,18 @@ db_close($conn);
     });
     function goBack() {
         var week = document.getElementById("week");
-        var topicName = document.getElementById("TopicName");
+        var quizName = document.getElementById("QuizName");
         var title = document.getElementById("title");
         var discription = document.getElementById("description");
         var extraQuiz = document.getElementById("ExtraQuiz");
         var points = document.getElementById("points");
         var titleIsChanged = title.value != title.defaultValue;
         var weekIsChanged = week.value != week.defaultValue;
+        var quizNameIsChanged = quizName.value != quizName.defaultValue;
         var discriptionIsChanged = discription.value != discription.defaultValue;
         var pointsIsChanged = points.value != points.defaultValue;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
-        if(weekIsChanged||extraQuizIsChanged || discriptionIsChanged || pointsIsChanged || titleIsChanged){
+        if(weekIsChanged||extraQuizIsChanged || discriptionIsChanged || pointsIsChanged || titleIsChanged || quizNameIsChanged){
             if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                 location.href='<?php echo "poster.php" ?>'
             }
