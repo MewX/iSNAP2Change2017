@@ -249,7 +249,10 @@ function createStudent(PDO $conn, $username, $password, $firstName, $lastName, $
     $insertStudentSql = "INSERT INTO Student(Username, `Password`, FirstName, LastName, Email, Gender, DOB, Identity, Score, ClassID)
 						 VALUES (?,?,?,?,?,?,?,?,?,?)";
     $insertStudentSql = $conn->prepare($insertStudentSql);
-    return $insertStudentSql->execute(array($username, md5($password), $firstName, $lastName, $email, $gender, $dob, $identity, 0, $classID));
+    $result =  $insertStudentSql->execute(array($username, md5($password), $firstName, $lastName, $email, $gender, $dob, $identity, 0, $classID));
+    $studentID = $conn->lastInsertId();
+    createGameTotalRecord($conn, $studentID);
+    return $result;
 }
 
 function updateStudent(PDO $conn, $id, $firstName, $lastName, $email, $gender, $dob, $identity, $password = null)
@@ -2363,6 +2366,13 @@ ORDER BY game_record.Score DESC LIMIT $numberOfRecords;";
     $retrieveScoreQuery = $conn->prepare($retrieveScoreSql);
     $retrieveScoreQuery->execute(array($gameID, $level));
     return $retrieveScoreQuery->fetchAll();
+}
+
+function createGameTotalRecord(PDO $conn, $studentID){
+    $updateSql = "INSERT INTO game_total_record( StudentID, Score )
+         VALUES (?,0)";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($studentID));
 }
 
 function calculateStudentGameTotalScore(PDO $conn, $studentID, $historyHighScore, $score){
