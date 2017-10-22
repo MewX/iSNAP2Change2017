@@ -29,11 +29,14 @@
 
         //get student rank in total
         $totalRank = getStudentRank($conn, $studentID);
+        $gameRank = getStudentRankByGame($conn, $studentID);
         $totalStuNum = getStudentsNum($conn);
         $totalRankIndicator = convertIndicator($totalRank);
+        //$gameRankIndicator = convertIndicator($gameRank);
 
         //get students' rank
         $leaderboardRes = getStudentsRank($conn);
+        $gameLeaderboardRes = getStudentGameRank($conn);
 
         //get
         $taskProgress = array();
@@ -414,6 +417,10 @@
             </div>
             <div class="section">
                 <div class="progress-container">
+                    <div class="activities-header">
+                        <div class="activities-title">Quiz</div>
+                        <br>
+                    </div>
                     <div class="mini-row">
                         <div class="col-6">
                             <div class="class-rank">
@@ -471,67 +478,67 @@
                     </div>
                 </div>
             </div>
-            <div class="section ">
-                <div class="progress-title h3">Task Progress</div>
+            <div class="section">
                 <div class="progress-container">
-                    <div class="mini-row">
-                        <div class="progress-category">
-                            <div class="h5">Category</div>
-                        </div>
-                        <div class="progress-detail">
-                            Tasks Completed
-                        </div>
-                        <div class="progress-points">Points</div>
+                    <div class="activities-header">
+                        <div class="activities-title">Game</div>
+                        <br>
                     </div>
-<?php           for ($i = 0; $i < count($taskProgress); $i++) {
-                    switch ($i) {
-                        case 0:
-                            $className = "smoking";
-                            $topicName = "Smoking";
-                            break;
-                        case 1:
-                            $className = "nutrition";
-                            $topicName = "Nutrition";
-                            break;
-                        case 2:
-                            $className = "alcohol";
-                            $topicName = "Alcohol";
-                            break;
-                        case 3:
-                            $className = "physical";
-                            $topicName = "Physical Activity";
-                            break;
-                        case 4:
-                            $className = "drugs";
-                            $topicName = "Drugs";
-                            break;
-                        case 5:
-                            $className = "sexual";
-                            $topicName = "Sexual Health";
-                            break;
-                        case 6:
-                            $className = "health";
-                            $topicName = "Health And Wellbeing";
-                            break;
-                    } ?>
-
                     <div class="mini-row">
-                        <div class="progress-category">
-                            <span class="progress-category-icon image-icon-<?php echo $className ?>"></span>
-                            <span class="progress-category-name"><?php echo $topicName ?></span>
-                        </div>
-                        <div class="progress-detail">
-                            <div class="progress-bar-container">
-                                <div class="progress-bar bg-<?php echo $className ?>" style="width: <?php if ($taskProgress[$i]["totalTaskNum"] == 0) echo "0%"; else echo 100*$taskProgress[$i]["compltdTaskNum"]/$taskProgress[$i]["totalTaskNum"]."%" ?>;"></div>
+                        <div class="col-6">
+                            <div class="class-rank">
+                                <div class="h3 class-rank-title">Class Game Rank</div>
+                                <div class="p1 class-rank-sub-title">Your are ranked</div>
+                                <div class="h1 class-rank-number">
+                                    <?php echo $classRank ?>
+                                    <span class="class-rank-number-label"><?php echo $classRanIndicator ?></span>
+                                </div>
+                                <div class="p1 class-rank-summary">
+                                    In your class out of <?php echo $stuNumInClass ?> students.
+                                </div>
                             </div>
-                            <div class="progress-accurate"><?php echo $taskProgress[$i]["compltdTaskNum"] ?> / <?php echo $taskProgress[$i]["totalTaskNum"] ?></div>
+                            <div class="class-rank">
+                                <div class="h3 class-rank-title">Overall Game Rank</div>
+                                <div class="p1 class-rank-sub-title">Your are ranked</div>
+                                <div class="h1 class-rank-number">
+                                    <?php echo $gameRank ?>
+                                    <span class="class-rank-number-label"><?php echo $gameRankIndicator ?></span>
+                                </div>
+                                <div class="p1 class-rank-summary">
+                                    overall out of <?php echo $totalStuNum ?> students.
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="progress-points">
-                            <?php echo $taskProgress[$i]["totalTaskScore"] ?>
+                        <div class="col-6">
+                            <div class="leaderboard">
+                                <div class="h3 leaderboard-title">Game Leaderboard</div>
+                                <table class="p1">
+                                    <thead>
+                                    <tr>
+                                        <td>Rank</td>
+                                        <td>Username</td>
+                                        <td>Score</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php  for($i = 0; $i < count($gameLeaderboardRes); $i++) { ?>
+                                        <tr>
+                                            <td>
+                                            <span class="leaderboard-number">
+                                                <?php echo $i+1 ?>
+                                                <span class="leaderboard-number-label">th</span>
+                                            </span>
+                                            </td>
+                                            <td><?php echo $gameLeaderboardRes[$i]->Username ?></td>
+                                            <td><?php echo $gameLeaderboardRes[$i]->Score ?></td>
+                                        </tr>
+                                    <?php   } ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-<?php               } ?>
-
                 </div>
             </div>
             <div class="section">

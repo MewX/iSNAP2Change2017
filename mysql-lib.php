@@ -411,6 +411,31 @@ function getStudentRank(PDO $conn, $studentID)
     return $rankRes->Rank;
 }
 
+function getStudentRankByGame(PDO $conn, $studentID)
+{
+    $rankSql = "SELECT COUNT(*) FROM (SELECT game_total_record.StudentID, Username, game_total_record.Score, @curRank := @curRank + 1 AS Rank
+                FROM Student LEFT JOIN game_total_record ON Student.StudentID = game_total_record.StudentID, (SELECT @curRank := 0) R
+                ORDER BY Score DESC, SubmissionTime) Class_Rank
+                WHERE StudentID = ?";
+
+    $rankQuery = $conn->prepare($rankSql);
+    $rankQuery->execute(array($studentID));
+
+    if ($rankQuery->fetchColumn() != 1) {
+        throw new Exception("Fail to get student rank in a class.");
+    }
+
+    $rankSql = "SELECT Rank FROM (SELECT game_total_record.StudentID, Username, game_total_record.Score, @curRank := @curRank + 1 AS Rank
+                FROM Student LEFT JOIN game_total_record ON Student.StudentID = game_total_record.StudentID, (SELECT @curRank := 0) R
+                ORDER BY Score DESC, SubmissionTime) Class_Rank
+                WHERE StudentID = ?";
+
+    $rankQuery = $conn->prepare($rankSql);
+    $rankQuery->execute(array($studentID));
+    $rankRes = $rankQuery->fetch(PDO::FETCH_OBJ);
+    return $rankRes->Rank;
+}
+
 function getStudentRankByClass(PDO $conn, $studentID)
 {
     $rankSql = "SELECT COUNT(*) FROM (SELECT StudentID, Username, Score, @curRank := @curRank + 1 AS Rank
