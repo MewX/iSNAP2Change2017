@@ -135,7 +135,7 @@ db_close($conn);
                                     <tr>
                                         <?php for ($i = 0; $i < count($columnName); $i++) { ?>
                                             <?php if($i>2):?>
-                                                <th QuizID= <?php echo $getQuizInfo[$i-3]->QuizID;?> ><?php echo $columnName[$i]?>
+                                                <th QuizID= <?php echo $getQuizInfo[$i-3]->QuizID;?> ><?php echo $getQuizInfo[$i-3]->QuizName?>
                                                 <span> - <?php echo $getQuizInfo[$i-3]->QuizType ?> </span>
                                                 <?php if($getQuizInfo[$i-3]->ExtraQuiz==1):?>
                                                     <span class="fa fa-check-circle" aria-hidden="true"></span>
@@ -152,6 +152,7 @@ db_close($conn);
                                         <?php } ?>
                                     </tr>
                                 </thead>
+
                                 <tbody id="tableResults">
                                 <?php for ($i = 0; $i < count($studentStatistic); $i++) { ?>
                                     <tr class="<?php if ($i % 2 == 0) {

@@ -403,23 +403,25 @@ function getStudentRank(PDO $conn, $studentID)
         throw new Exception("Fail to get student rank in a class.");
     }
 
-    $rankSql = "SELECT Rank FROM (SELECT StudentID, Username, Score, @curRank := @curRank + 1 AS Rank
-                FROM Student, (SELECT @curRank := 0) R
-                ORDER BY Score DESC, SubmissionTime) Class_Rank
-                WHERE StudentID = ?";
-
+    $rankSql = "SELECT ranking 
+                  FROM (
+                      SELECT StudentID , Score, RANK() OVER (ORDER BY Score DESC) AS ranking
+                    FROM Student
+                  ) total_rank 
+                  WHERE StudentID = ?";
     $rankQuery = $conn->prepare($rankSql);
     $rankQuery->execute(array($studentID));
     $rankRes = $rankQuery->fetch(PDO::FETCH_OBJ);
-    return $rankRes->Rank;
+    return $rankRes->ranking;
 }
 
 function getStudentRankByGame(PDO $conn, $studentID)
 {
-    $rankSql = "SELECT COUNT(*) FROM (SELECT game_total_record.StudentID, Username, game_total_record.Score, @curRank := @curRank + 1 AS Rank
-                FROM Student LEFT JOIN game_total_record ON Student.StudentID = game_total_record.StudentID, (SELECT @curRank := 0) R
-                ORDER BY Score DESC, SubmissionTime) Class_Rank
-                WHERE StudentID = ?";
+    $rankSql = "SELECT COUNT(*) FROM (
+                  SELECT game_total_record.StudentID , game_total_record.Score, RANK() OVER (ORDER BY game_total_record.Score DESC) AS ranking
+                    FROM Student LEFT JOIN game_total_record ON student.StudentID = game_total_record.StudentID
+                  ) total_rank 
+                  WHERE StudentID = ?";
 
     $rankQuery = $conn->prepare($rankSql);
     $rankQuery->execute(array($studentID));
@@ -428,25 +430,28 @@ function getStudentRankByGame(PDO $conn, $studentID)
         throw new Exception("Fail to get student rank in a class.");
     }
 
-    $rankSql = "SELECT Rank FROM (SELECT game_total_record.StudentID, Username, game_total_record.Score, @curRank := @curRank + 1 AS Rank
-                FROM Student LEFT JOIN game_total_record ON Student.StudentID = game_total_record.StudentID, (SELECT @curRank := 0) R
-                ORDER BY Score DESC, SubmissionTime) Class_Rank
-                WHERE StudentID = ?";
+    $rankSql = "SELECT ranking 
+                  FROM (
+                    SELECT game_total_record.StudentID , game_total_record.Score, RANK() OVER (ORDER BY game_total_record.Score DESC) AS ranking
+                    FROM Student LEFT JOIN game_total_record ON student.StudentID = game_total_record.StudentID
+                  ) total_rank 
+                  WHERE StudentID = ?";
 
     $rankQuery = $conn->prepare($rankSql);
     $rankQuery->execute(array($studentID));
     $rankRes = $rankQuery->fetch(PDO::FETCH_OBJ);
-    return $rankRes->Rank;
+    return $rankRes->ranking;
 }
 
 function getStudentRankByClass(PDO $conn, $studentID)
 {
-    $rankSql = "SELECT COUNT(*) FROM (SELECT StudentID, Username, Score, @curRank := @curRank + 1 AS Rank
-                FROM Student, (SELECT @curRank := 0) R
-			    WHERE ClassID = (SELECT ClassID FROM Student
-			                     WHERE StudentID = ?)
-                ORDER BY Score DESC, SubmissionTime) Class_Rank
-                WHERE StudentID = ?";
+    $rankSql = "SELECT COUNT(*) 
+                  FROM (
+                    SELECT ClassID, StudentID , Score, RANK() OVER (ORDER BY Score DESC) AS ranking
+                    FROM Student 
+                    WHERE ClassID = (SELECT ClassID FROM Student WHERE StudentID = ?)
+                  ) total_rank 
+                  WHERE StudentID = ?";
 
     $rankQuery = $conn->prepare($rankSql);
     $rankQuery->execute(array($studentID, $studentID));
@@ -455,17 +460,50 @@ function getStudentRankByClass(PDO $conn, $studentID)
         throw new Exception("Fail to get student rank in a class.");
     }
 
-    $rankSql = "SELECT Rank FROM (SELECT StudentID, Username, Score, @curRank := @curRank + 1 AS Rank
-                FROM Student, (SELECT @curRank := 0) R
-			    WHERE ClassID = (SELECT ClassID FROM Student
-			                     WHERE StudentID = ?)
-                ORDER BY Score DESC, SubmissionTime) Class_Rank
-                WHERE StudentID = ?";
+    $rankSql = "SELECT ranking 
+                  FROM (
+                    SELECT ClassID, StudentID , Score, RANK() OVER (ORDER BY Score DESC) AS ranking
+                    FROM Student 
+                    WHERE ClassID = (SELECT ClassID FROM Student WHERE StudentID = ?)
+                  ) total_rank 
+                  WHERE StudentID = ?";
 
     $rankQuery = $conn->prepare($rankSql);
     $rankQuery->execute(array($studentID, $studentID));
     $rankRes = $rankQuery->fetch(PDO::FETCH_OBJ);
-    return $rankRes->Rank;
+    return $rankRes->ranking;
+}
+
+
+function getStudentGameRankByClass(PDO $conn, $studentID)
+{
+    $rankSql = "SELECT ranking 
+                  FROM (
+                    SELECT ClassID, game_total_record.StudentID , game_total_record.Score, RANK() OVER (ORDER BY game_total_record.Score DESC) AS ranking
+                    FROM Student LEFT JOIN game_total_record ON student.StudentID = game_total_record.StudentID 
+                    WHERE ClassID = (SELECT ClassID FROM Student WHERE StudentID = ?)
+                  ) total_rank 
+                  WHERE StudentID = ?";
+
+    $rankQuery = $conn->prepare($rankSql);
+    $rankQuery->execute(array($studentID, $studentID));
+
+    if ($rankQuery->fetchColumn() != 1) {
+        throw new Exception("Fail to get student rank in a class.");
+    }
+
+    $rankSql = "SELECT ranking 
+                  FROM (
+                    SELECT ClassID, game_total_record.StudentID , game_total_record.Score, RANK() OVER (ORDER BY game_total_record.Score DESC) AS ranking
+                    FROM Student LEFT JOIN game_total_record ON student.StudentID = game_total_record.StudentID 
+                    WHERE ClassID = (SELECT ClassID FROM Student WHERE StudentID = ?)
+                  ) total_rank 
+                  WHERE StudentID = ?";
+
+    $rankQuery = $conn->prepare($rankSql);
+    $rankQuery->execute(array($studentID, $studentID));
+    $rankRes = $rankQuery->fetch(PDO::FETCH_OBJ);
+    return $rankRes->ranking;
 }
 
 function resetPassword(PDO $conn, $studentID)
@@ -770,7 +808,7 @@ function getQuizWithWeek(PDO $conn)
 
 function getQuizInfo(PDO $conn)
 {
-    $quizSql = "SELECT QuizID, Week, QuizType, ExtraQuiz FROM `Quiz` ORDER by Week";
+    $quizSql = "SELECT QuizID, Week, QuizType, QuizName, ExtraQuiz FROM `Quiz` ORDER by Week";
     $quizQuery = $conn->prepare($quizSql);
     $quizQuery->execute();
     $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);

@@ -58,7 +58,7 @@ if($csvFileName == "student demography.csv"){
     $header .= "\n";
     $header .= "StudentID,Class Name,";
     for ($i = 3; $i < count($columnName); $i++){
-        $header .= '"' . $columnName[$i] . '-' . $getQuizInfo[$i-3]->QuizType . '",';
+        $header .= '"' . $getQuizInfo[$i-3]->QuizName . '-' . $getQuizInfo[$i-3]->QuizType . '",';
     }
     $header .= "\n";
     for ($i = 0; $i < count($studentStatistic); $i++) {

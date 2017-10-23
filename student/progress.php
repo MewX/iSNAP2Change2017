@@ -26,13 +26,15 @@
         $classRank = getStudentRankByClass($conn, $studentID);
         $stuNumInClass = getStudentsNumByClass($conn, $studentID);
         $classRanIndicator = convertIndicator($classRank);
+        $classGameRank = getStudentGameRankByClass($conn, $studentID);
+        $classGameIndicator = convertIndicator($classGameRank);
 
         //get student rank in total
         $totalRank = getStudentRank($conn, $studentID);
         $gameRank = getStudentRankByGame($conn, $studentID);
         $totalStuNum = getStudentsNum($conn);
         $totalRankIndicator = convertIndicator($totalRank);
-        //$gameRankIndicator = convertIndicator($gameRank);
+        $gameRankIndicator = convertIndicator($gameRank);
 
         //get students' rank
         $leaderboardRes = getStudentsRank($conn);
@@ -164,6 +166,7 @@
             background-size: 100% 100%;
             text-indent: -999em;
         }
+
         tbody tr:nth-child(1) .leaderboard-number {
             background-image: url("./img/first_place_icon.png");
         }
@@ -424,7 +427,7 @@
                     <div class="mini-row">
                         <div class="col-6">
                             <div class="class-rank">
-                                <div class="h3 class-rank-title">Class Rank</div>
+                                <div class="h3 class-rank-title">Class Quiz Rank</div>
                                 <div class="p1 class-rank-sub-title">Your are ranked</div>
                                 <div class="h1 class-rank-number">
                                     <?php echo $classRank ?>
@@ -435,7 +438,7 @@
                                 </div>
                             </div>
                             <div class="class-rank">
-                                <div class="h3 class-rank-title">Overall Rank</div>
+                                <div class="h3 class-rank-title">Overall Quiz Rank</div>
                                 <div class="p1 class-rank-sub-title">Your are ranked</div>
                                 <div class="h1 class-rank-number">
                                     <?php echo $totalRank ?>
@@ -449,7 +452,7 @@
                         </div>
                         <div class="col-6">
                             <div class="leaderboard">
-                                <div class="h3 leaderboard-title">Leaderboard</div>
+                                <div class="h3 leaderboard-title">Quiz Leaderboard</div>
                                 <table class="p1">
                                     <thead>
                                     <tr>
@@ -490,8 +493,8 @@
                                 <div class="h3 class-rank-title">Class Game Rank</div>
                                 <div class="p1 class-rank-sub-title">Your are ranked</div>
                                 <div class="h1 class-rank-number">
-                                    <?php echo $classRank ?>
-                                    <span class="class-rank-number-label"><?php echo $classRanIndicator ?></span>
+                                    <?php echo $classGameRank ?>
+                                    <span class="class-rank-number-label"><?php echo $classGameIndicator ?></span>
                                 </div>
                                 <div class="p1 class-rank-summary">
                                     In your class out of <?php echo $stuNumInClass ?> students.
