@@ -1893,7 +1893,7 @@ function getQuizzesStatusByWeek(PDO $conn, $studentID, $week, $extraQuiz)
 {
     $quizzesRes = array();
 
-    $quizzesStatusSql = "SELECT Quiz.QuizID, QuizType, `Status`, Viewed, TopicName FROM Quiz LEFT JOIN (SELECT * FROM Quiz_Record WHERE StudentID = ?) Student_Quiz_Record ON Quiz.QuizID = Student_Quiz_Record.QuizID 
+    $quizzesStatusSql = "SELECT Quiz.QuizID, QuizType, QuizName, `Status`, Viewed, TopicName FROM Quiz LEFT JOIN (SELECT * FROM Quiz_Record WHERE StudentID = ?) Student_Quiz_Record ON Quiz.QuizID = Student_Quiz_Record.QuizID 
                                                                           NATURAL JOIN Topic WHERE Week = ? AND ExtraQuiz = ? ORDER BY Quiz.QuizID";
     $quizzesStatusQuery = $conn->prepare($quizzesStatusSql);
     $quizzesStatusQuery->execute(array($studentID, $week, $extraQuiz));
@@ -1904,6 +1904,7 @@ function getQuizzesStatusByWeek(PDO $conn, $studentID, $week, $extraQuiz)
         $quizzesRes[$i]['Status'] = $quizzesStatusRes[$i]->Status;
         $quizzesRes[$i]['Viewed'] = $quizzesStatusRes[$i]->Viewed;
         $quizzesRes[$i]['TopicName'] = $quizzesStatusRes[$i]->TopicName;
+        $quizzesRes[$i]['QuizName'] = $quizzesStatusRes[$i]->QuizName;
         $quizzesRes[$i]['QuizType'] = getQuizType($conn, $quizzesStatusRes[$i]->QuizID);
         $quizzesRes[$i]['Points'] = getQuizPoints($conn, $quizzesStatusRes[$i]->QuizID);
         $feedback = getStudentScoreForQuiz($conn, $studentID, $quizzesStatusRes[$i]->QuizID);

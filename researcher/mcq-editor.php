@@ -17,14 +17,11 @@ try {
                     $quizID = $_POST['quizID'];
                     $week = $_POST['week'];
                     $topicName = $_POST['topicName'];
-                    $points = $_POST['points'];
                     $extraQuiz = $_POST['ExtraQuiz'];
                     $quizName = $_POST['QuizName'];
                     $conn->beginTransaction();
                     $topicID = getTopicByName($conn, $topicName)->TopicID;
                     updateQuiz($conn, $quizID, $quizName, $topicID, $week, $extraQuiz);
-                    updateMCQSection($conn, $quizID, $points);
-
                     $conn->commit();
                 } catch (Exception $e) {
                     debug_err($e);
@@ -122,7 +119,7 @@ db_close($conn);
                             <input type="text" class="form-control" id="Week" name="week"
                                    placeholder="Input Week Number" value="<?php echo $quizResult->Week; ?>">
                             <br>
-                            <label for="Week">Quiz Name</label>
+                            <label for="QuizName">Quiz Name</label>
                             <input type="text" class="form-control" id="QuizName" name="QuizName"
                                    placeholder="Input Quiz Name" value="<?php echo $quizResult->QuizName; ?>">
                             <br>
@@ -310,6 +307,9 @@ db_close($conn);
                     points: {
                         required: true,
                         digits: true
+                    },
+                    QuizName: {
+                        required: true
                     }
                 }
             });

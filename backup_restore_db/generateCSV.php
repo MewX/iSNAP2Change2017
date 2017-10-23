@@ -49,20 +49,21 @@ if($csvFileName == "student demography.csv"){
         $j = $getQuizInfo[$i]->QuizID;
         array_push($quizList,"Quiz$j");
     }
-    $header .= ",";
+    $header .= ", ,";
     for ($i = 1; $i< count($colspanName); $i++){
         for($j = 0; $j<$getQuizWithWeek[$i-1]->QuizNum; $j++){
             $header .= '"Week-' . $getQuizWithWeek[$i-1]->Week . '",';
         }
     }
     $header .= "\n";
-    $header .= ",";
+    $header .= "StudentID,Class Name,";
     for ($i = 3; $i < count($columnName); $i++){
         $header .= '"' . $columnName[$i] . '-' . $getQuizInfo[$i-3]->QuizType . '",';
     }
     $header .= "\n";
     for ($i = 0; $i < count($studentStatistic); $i++) {
         $data .= '"' . $studentStatistic[$i]->StudentID . '",';
+        $data .= '"' . $studentStatistic[$i]->ClassName . '",';
         for ($j = 3; $j < count($quizList); $j++) {
             if($studentStatistic[$i]->$quizList[$j] == "GRADED"){
                 $grading = str_replace("Quiz","Grading", $quizList[$j]);

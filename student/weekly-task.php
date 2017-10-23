@@ -291,7 +291,7 @@
                             <a href="multiple-choice-question.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
                                 <div class="game-nav-item game-nav-item-completed game-multiple-choice-quiz" >
                                     <div class="game-nav-logo"></div>
-                                    <div class="game-nav-title">Multiple Choice Question</div>
+                                    <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Multiple Choice Question</div>
                                     <div class="game-nav-divider"></div>
                                     <div class="game-nav-desc">Complete Multiple Choice Question on <?php echo $quizzesRes[$i]['TopicName']?>?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                                     <div class="game-nav-status">Completed
@@ -309,7 +309,7 @@
                                 <a href="pre-task-material.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID'] ?>">
                                     <div class="game-nav-item game-multiple-choice-quiz">
                                         <div class="game-nav-logo"></div>
-                                        <div class="game-nav-title">Multiple Choice Question</div>
+                                        <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Multiple Choice Question</div>
                                         <div class="game-nav-divider"></div>
                                         <div class="game-nav-desc">Complete Multiple Choice Question on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                                     </div>
@@ -319,7 +319,7 @@
                             <a href="pre-task-material.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID'] ?>">
                                 <div class="game-nav-item game-multiple-choice-quiz">
                                     <div class="game-nav-logo"></div>
-                                    <div class="game-nav-title">Multiple Choice Question</div>
+                                    <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Multiple Choice Question</div>
                                     <div class="game-nav-divider"></div>
                                     <div class="game-nav-desc">Complete Multiple Choice Question on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                                 </div>
@@ -332,7 +332,7 @@
                             <a href="short-answer-question.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID'] ?>">
                                 <div class="game-nav-item game-nav-item-completed game-short-answer-question">
                                     <div class="game-nav-logo"></div>
-                                    <div class="game-nav-title">Short Answer Question</div>
+                                    <div class="game-nav-title">S<?php echo $quizzesRes[$i]['QuizName']?>-Short Answer Question</div>
                                     <div class="game-nav-divider"></div>
                                     <div class="game-nav-desc">Complete Short Answer Question on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                                     <div class="game-nav-status">Completed
@@ -358,7 +358,7 @@
                             <a href="short-answer-question.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID'] ?>">
                                 <div class="game-nav-item game-short-answer-question">
                                     <div class="game-nav-logo"></div>
-                                    <div class="game-nav-title">Short Answer Question</div>
+                                    <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Short Answer Question</div>
                                     <div class="game-nav-divider"></div>
                                     <div class="game-nav-desc">Complete Short Answer Question on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                                 </div>
@@ -368,7 +368,7 @@
                             <a href="pre-task-material.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
                                 <div class="game-nav-item game-short-answer-question">
                                     <div class="game-nav-logo"></div>
-                                    <div class="game-nav-title">Short Answer Question</div>
+                                    <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Short Answer Question</div>
                                     <div class="game-nav-divider"></div>
                                     <div class="game-nav-desc">Complete Short Answer Question on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                                 </div>
@@ -388,7 +388,7 @@
                         <a href="<?php echo $matchingUrl ?>">
                             <div class="game-nav-item game-nav-item-completed game-matching">
                                 <div class="game-nav-logo"></div>
-                                <div class="game-nav-title">Matching</div>
+                                <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Matching</div>
                                 <div class="game-nav-divider"></div>
                                 <div class="game-nav-desc">Complete Matching on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                                 <div class="game-nav-status">Completed
@@ -405,7 +405,7 @@
                         <a href="pre-task-material.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
                             <div class="game-nav-item game-matching">
                                 <div class="game-nav-logo"></div>
-                                <div class="game-nav-title">Matching</div>
+                                <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Matching</div>
                                 <div class="game-nav-divider"></div>
                                 <div class="game-nav-desc">Complete Matching on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                             </div>
@@ -418,7 +418,7 @@
                             <a href="poster.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID'] ?>">
                                 <div class="game-nav-item game-nav-item-completed game-poster">
                                     <div class="game-nav-logo"></div>
-                                    <div class="game-nav-title">Poster</div>
+                                    <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Poster</div>
                                     <div class="game-nav-divider"></div>
                                     <div class="game-nav-desc">Complete Poster on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                                     <div class="game-nav-status">Completed
@@ -444,7 +444,7 @@
                             <a href="poster.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID'] ?>">
                                 <div class="game-nav-item game-poster">
                                     <div class="game-nav-logo"></div>
-                                    <div class="game-nav-title">Poster</div>
+                                    <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Poster</div>
                                     <div class="game-nav-divider"></div>
                                     <div class="game-nav-desc">Complete Poster on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                                 </div>
@@ -454,7 +454,7 @@
                         <a href="pre-task-material.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
                             <div class="game-nav-item game-poster">
                                 <div class="game-nav-logo"></div>
-                                <div class="game-nav-title">Poster</div>
+                                <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Poster</div>
                                 <div class="game-nav-divider"></div>
                                 <div class="game-nav-desc">Complete Poster on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                             </div>
@@ -466,7 +466,7 @@
                         <a href="cost-calculator.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
                             <div class="game-nav-item game-nav-item-completed game-cost-calculator">
                                 <div class="game-nav-logo"></div>
-                                <div class="game-nav-title">Cost Calculator</div>
+                                <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Cost Calculator</div>
                                 <div class="game-nav-divider"></div>
                                 <div class="game-nav-desc">Complete Cost Calculator on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                                 <div class="game-nav-status">Completed
@@ -483,7 +483,7 @@
                         <a href="pre-task-material.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
                             <div class="game-nav-item game-cost-calculator">
                                 <div class="game-nav-logo"></div>
-                                <div class="game-nav-title">Cost Calculator</div>
+                                <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Cost Calculator</div>
                                 <div class="game-nav-divider"></div>
                                 <div class="game-nav-desc">Complete Cost Calculator on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                             </div>
@@ -496,7 +496,7 @@
                         <a href="video.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
                             <div class="game-nav-item game-nav-item-completed game-video">
                                 <div class="game-nav-logo"></div>
-                                <div class="game-nav-title">Video</div>
+                                <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Video</div>
                                 <div class="game-nav-divider"></div>
                                 <div class="game-nav-desc">Complete Video on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                                 <div class="game-nav-status">Completed
@@ -522,7 +522,7 @@
                         <a href="video.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
                             <div class="game-nav-item game-video">
                                 <div class="game-nav-logo"></div>
-                                <div class="game-nav-title">Video</div>
+                                <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Video</div>
                                 <div class="game-nav-divider"></div>
                                 <div class="game-nav-desc">Complete Video on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                             </div>
@@ -532,7 +532,7 @@
                         <a href="pre-task-material.php?quiz_id=<?php echo $quizzesRes[$i]['QuizID']?>">
                             <div class="game-nav-item game-video">
                                 <div class="game-nav-logo"></div>
-                                <div class="game-nav-title">Video</div>
+                                <div class="game-nav-title"><?php echo $quizzesRes[$i]['QuizName']?>-Video</div>
                                 <div class="game-nav-divider"></div>
                                 <div class="game-nav-desc">Complete Video on <?php echo $quizzesRes[$i]['TopicName']?> to receive <?php echo $quizzesRes[$i]['Points']?> points.</div>
                             </div>
