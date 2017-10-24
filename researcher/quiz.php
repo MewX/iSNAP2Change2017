@@ -4,7 +4,7 @@ require_once('researcher-validation.php');
 require_once("../mysql-lib.php");
 require_once("../debug.php");
 require_once("researcher-lib.php");
-$columnName = array('QuizID', 'Week', 'QuizType', 'ExtraQuiz', 'Points');
+$columnName = array('QuizID', 'Week', 'QuizName', 'QuizType', 'ExtraQuiz', 'Points');
 
 
 try {
@@ -16,6 +16,7 @@ try {
                 try {
                     $week = $_POST['week'];
                     $quizType = $_POST['quizType'];
+                    $quizName = $_POST['QuizName'];
                     $topicName = $_POST['topicName'];
                     $topicID = getTopicByName($conn, $topicName)->TopicID;
 
@@ -28,22 +29,22 @@ try {
                         //create quiz section
                         switch ($quizType) {
                             case "MCQ":
-                                $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
+                                $quizID = createQuiz($conn, $topicID, $quizName, $quizType, $week, $extraQuiz);
                                 createMCQSection($conn, $quizID, $points);
                                 break;
                             case "SAQ":
                             case "Video":
                             case "Image":
-                                $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
+                                $quizID = createQuiz($conn, $topicID, $quizName, $quizType, $week, $extraQuiz);
                                 createSAQLikeSection($conn, $quizID);
                                 break;
                             case "Matching":
-                                $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
+                                $quizID = createQuiz($conn, $topicID, $quizName, $quizType, $week, $extraQuiz);
                                 $description = '';
                                 createMatchingSection($conn, $quizID, $description, $points);
                                 break;
                             case "Poster":
-                                $quizID = createQuiz($conn, $topicID, $quizType, $week, $extraQuiz);
+                                $quizID = createQuiz($conn, $topicID, $quizName, $quizType, $week, $extraQuiz);
                                 $question = '';
                                 createPosterSection($conn, $quizID, $question, $points);
                                 break;
@@ -60,7 +61,7 @@ try {
                     }
                     else {
                         // it's misc
-                        $quizID = createQuiz($conn, $topicID, 'Misc', $week, $extraQuiz);
+                        $quizID = createQuiz($conn, $topicID, $quizName, 'Misc', $week, $extraQuiz);
                         createMiscSection($conn, $quizID, $points, $quizType);
                         createEmptyLearningMaterial($conn, $quizID);
                     }
@@ -163,6 +164,7 @@ db_close($conn);
                                     } ?>">
                                         <td style="display:none"><?php echo $quizID ?></td>
                                         <td><?php echo $quizResult[$i]->Week ?></td>
+                                        <td><?php echo $quizResult[$i]->QuizName ?></td>
                                         <td><?php echo $quizType ?></td>
                                         <td><?php if($quizResult[$i]->ExtraQuiz==1) echo "Yes"; else echo "No"; ?></td>
                                         <td><?php echo $points ?>
@@ -221,6 +223,10 @@ db_close($conn);
                         $w = $_GET['week'];
                         echo "value='" . $w . "'";
                     } ?> required>
+                    <br>
+                    <label for="QuizName">Quiz Name</label>
+                    <input type="text" class="form-control dialoginput" id="QuizName" name="QuizName"
+                           placeholder="Input Quiz Name">
                     <br>
                     <label for='QuizType'>Quiz Type</label>
                     <select class="form-control dialoginput" id="QuizType" form="submission" name="quizType" required>

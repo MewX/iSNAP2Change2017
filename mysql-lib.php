@@ -654,7 +654,7 @@ function getStuWeekRecord(PDO $conn, $studentID, $week)
 /* Student Week Record*/
 
 /* Quiz */
-function createQuiz(PDO $conn, $topicID, $quizType, $week, $extraQuiz="0")
+function createQuiz(PDO $conn, $topicID, $quizName, $quizType, $week, $extraQuiz="0")
 {
     if ($quizType == "Video" || $quizType == "Image")
         $quizType = 'SAQ';
@@ -664,22 +664,22 @@ function createQuiz(PDO $conn, $topicID, $quizType, $week, $extraQuiz="0")
                 WHERE WeekNum = ?)";
     $updateSql = $conn->prepare($updateSql);
     $updateSql->execute(array($week, $week, $week));
-    $updateSql = "INSERT INTO Quiz(Week, QuizType, TopicID, ExtraQuiz)
-             VALUES (?,?,?,?)";
+    $updateSql = "INSERT INTO Quiz(Week, QuizName, QuizType, TopicID, ExtraQuiz)
+             VALUES (?,?,?,?,?)";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($week, $quizType, $topicID,$extraQuiz));
+    $updateSql->execute(array($week, $quizName, $quizType, $topicID,$extraQuiz));
 
 
     return $conn->lastInsertId();
 }
 
-function updateQuiz(PDO $conn, $quizID, $topicID, $week, $extraQuiz)
+function updateQuiz(PDO $conn, $quizID, $quizName, $topicID, $week, $extraQuiz)
 {
     $updateSql = "UPDATE Quiz 
-                SET Week = ?, TopicID = ?, ExtraQuiz = ?
+                SET Week = ?, QuizName = ?, TopicID = ?, ExtraQuiz = ?
                 WHERE QuizID = ?";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($week, $topicID, $extraQuiz, $quizID));
+    $updateSql->execute(array($week, $quizName, $topicID, $extraQuiz, $quizID));
 }
 
 function deleteQuiz(PDO $conn, $quizID)
@@ -1420,7 +1420,7 @@ function getSAQQuiz(PDO $conn, $quizID)
 
 function getSAQLikeQuizzes(PDO $conn, $typeIndicator)
 {
-    $quizSql = "SELECT QuizID, TopicID, Week, QuizType, ExtraQuiz, TopicName, SAQID, SUM(Points) AS Points, COUNT(SAQID) AS Questions
+    $quizSql = "SELECT QuizID, TopicID, Week, QuizName, QuizType, ExtraQuiz, TopicName, SAQID, SUM(Points) AS Points, COUNT(SAQID) AS Questions
                    FROM Quiz NATURAL JOIN Topic NATURAL JOIN Learning_Material NATURAL JOIN SAQ_Section LEFT JOIN SAQ_Question USING (QuizID) WHERE QuizType = 'SAQ' AND $typeIndicator GROUP BY QuizID";
     $quizQuery = $conn->prepare($quizSql);
     $quizQuery->execute();
@@ -2323,6 +2323,8 @@ function updateStudentGameScores(PDO $conn, $gameID, $studentID, $level, $score)
     $historyHighScore = getStudentGameScores($conn, $gameID, $studentID);
     if (isset($historyHighScore[$level]) && $historyHighScore[$level] >= $score) return true;
 
+    calculateStudentGameTotalScore($conn, $studentID, $historyHighScore[$level], $score);
+
     $updateSql = "INSERT INTO Game_Record(GameID,StudentID,`Level`,Score)
                      VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE Score = ?";
     $updateSql = $conn->prepare($updateSql);
@@ -2336,6 +2338,40 @@ ORDER BY game_record.Score DESC LIMIT $numberOfRecords;";
     $retrieveScoreQuery = $conn->prepare($retrieveScoreSql);
     $retrieveScoreQuery->execute(array($gameID, $level));
     return $retrieveScoreQuery->fetchAll();
+}
+
+function calculateStudentGameTotalScore(PDO $conn, $studentID, $historyHighScore, $score){
+    $updateSql = "SELECT Score FROM game_total_record WHERE StudentID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($studentID));
+    $result = $updateSql->fetch(PDO::FETCH_OBJ);
+    $currentScore = $result->Score;
+    $newScore = 0;
+    if(!isset($historyHighScore)){
+        $historyHighScore = 0;
+    }
+    if(isset($currentScore)){
+        $newScore = $currentScore - $historyHighScore + $score;
+    }else{
+        $newScore = $currentScore + $score;
+    }
+    $updateSql = "INSERT INTO game_total_record(StudentID, Score)
+                     VALUES (?,?) ON DUPLICATE KEY UPDATE Score = ?";
+    $updateSql = $conn->prepare($updateSql);
+    return $updateSql->execute(array($studentID, $newScore, $newScore));
+}
+
+function getStudentGameRank(PDO $conn){
+    $leaderBoardSql = "SELECT Username, game_total_record.Score
+					   FROM student JOIN game_total_record ON student.StudentID = game_total_record.StudentID
+					   ORDER BY game_total_record.Score DESC
+					   LIMIT 10;";
+
+    $leaderBoardQuery = $conn->prepare($leaderBoardSql);
+    $leaderBoardQuery->execute(array());
+    $leaderBoardRes = $leaderBoardQuery->fetchAll(PDO::FETCH_OBJ);
+
+    return $leaderBoardRes;
 }
 /* Game */
 

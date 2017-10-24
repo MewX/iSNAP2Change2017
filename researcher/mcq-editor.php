@@ -19,9 +19,10 @@ try {
                     $topicName = $_POST['topicName'];
                     $points = $_POST['points'];
                     $extraQuiz = $_POST['ExtraQuiz'];
+                    $quizName = $_POST['QuizName'];
                     $conn->beginTransaction();
                     $topicID = getTopicByName($conn, $topicName)->TopicID;
-                    updateQuiz($conn, $quizID, $topicID, $week, $extraQuiz);
+                    updateQuiz($conn, $quizID, $quizName, $topicID, $week, $extraQuiz);
                     updateMCQSection($conn, $quizID, $points);
 
                     $conn->commit();
@@ -120,6 +121,10 @@ db_close($conn);
                             <label for="Week">Week</label>
                             <input type="text" class="form-control" id="Week" name="week"
                                    placeholder="Input Week Number" value="<?php echo $quizResult->Week; ?>">
+                            <br>
+                            <label for="Week">Quiz Name</label>
+                            <input type="text" class="form-control" id="QuizName" name="QuizName"
+                                   placeholder="Input Quiz Name" value="<?php echo $quizResult->QuizName; ?>">
                             <br>
                             <input type=hidden name="topicName" id="TopicName" value="Smoking" required>
                             <label for="Points">Points</label>
@@ -314,11 +319,12 @@ db_close($conn);
 
     function goBack() {
         var week = document.getElementById("Week");
-        var topicName = document.getElementById("TopicName");
+        var quizName = document.getElementById("QuizName");
         var extraQuiz = document.getElementById("ExtraQuiz");
         var weekIsChanged = week.value != week.defaultValue;
+        var quizNameIsChanged = quizName.value != quizName.defaultValue;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
-        if(weekIsChanged||extraQuizIsChanged){
+        if(weekIsChanged||extraQuizIsChanged || quizNameIsChanged){
             if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                 location.href='<?php echo "mcq.php" ?>'            }
         }else{

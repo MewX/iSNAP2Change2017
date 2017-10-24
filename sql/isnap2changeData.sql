@@ -264,7 +264,7 @@ CREATE TABLE `game_record` (
 
 LOCK TABLES `game_record` WRITE;
 /*!40000 ALTER TABLE `game_record` DISABLE KEYS */;
-INSERT INTO `game_record` VALUES (1,1,1,5,'2017-10-03 14:56:20'),(1,1,2,40,'2017-10-03 14:56:20'),(1,2,1,30,'2017-10-03 14:56:20'),(1,3,1,30,'2017-10-03 14:56:20'),(1,4,1,30,'2017-10-03 14:56:20'),(2,2,1,35,'2017-10-03 14:56:20'),(2,3,1,30,'2017-10-03 14:56:20'),(2,4,1,30,'2017-10-03 14:56:20'),(2,5,1,40,'2017-10-03 14:56:20');
+INSERT INTO `game_record` VALUES (1,1,2,300,'2017-10-17 14:36:39'),(1,2,1,400,'2017-10-17 14:36:39'),(1,2,2,400,'2017-10-17 14:36:39'),(2,1,2,320,'2017-10-17 14:36:39');
 /*!40000 ALTER TABLE `game_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -276,12 +276,10 @@ DROP TABLE IF EXISTS `game_total_record`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `game_total_record` (
-  `GameID` mediumint(9) NOT NULL DEFAULT 0,
   `StudentID` mediumint(9) NOT NULL DEFAULT 0,
   `Score` int(11) DEFAULT NULL,
-  PRIMARY KEY (`GameID`,`StudentID`),
+  PRIMARY KEY (`StudentID`),
   KEY `Game_Total_Record_StudentID_FK` (`StudentID`),
-  CONSTRAINT `Game_Total_Record_GameID_FK` FOREIGN KEY (`GameID`) REFERENCES `game` (`GameID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Game_Total_Record_StudentID_FK` FOREIGN KEY (`StudentID`) REFERENCES `student` (`StudentID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -292,6 +290,7 @@ CREATE TABLE `game_total_record` (
 
 LOCK TABLES `game_total_record` WRITE;
 /*!40000 ALTER TABLE `game_total_record` DISABLE KEYS */;
+INSERT INTO `game_total_record` VALUES (1,620),(2,800);
 /*!40000 ALTER TABLE `game_total_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -667,6 +666,7 @@ CREATE TABLE `quiz` (
   `QuizType` enum('SAQ','MCQ','Matching','Poster','Misc') DEFAULT NULL,
   `ExtraQuiz` tinyint(1) DEFAULT 0,
   `TopicID` mediumint(9) DEFAULT NULL,
+  `QuizName` text DEFAULT NULL,
   PRIMARY KEY (`QuizID`),
   KEY `Quiz_TopicID_FK` (`TopicID`),
   CONSTRAINT `Quiz_TopicID_FK` FOREIGN KEY (`TopicID`) REFERENCES `topic` (`TopicID`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -679,7 +679,7 @@ CREATE TABLE `quiz` (
 
 LOCK TABLES `quiz` WRITE;
 /*!40000 ALTER TABLE `quiz` DISABLE KEYS */;
-INSERT INTO `quiz` VALUES (1,1,'MCQ',0,2),(2,1,'MCQ',0,5),(3,1,'SAQ',1,1),(5,6,'Misc',0,3),(8,7,'Matching',0,2),(9,2,'Poster',0,3),(10,1,'MCQ',1,5),(11,4,'Poster',0,3),(12,1,'SAQ',0,1),(13,2,'MCQ',0,1),(15,3,'MCQ',0,1),(16,5,'SAQ',0,1),(17,6,'MCQ',0,1),(18,7,'SAQ',0,1),(19,8,'SAQ',0,1),(20,8,'SAQ',0,1),(21,9,'SAQ',0,1),(22,9,'Poster',0,1);
+INSERT INTO `quiz` VALUES (1,1,'MCQ',0,2,NULL),(2,1,'MCQ',0,5,NULL),(3,1,'SAQ',1,1,NULL),(5,6,'Misc',0,3,NULL),(8,7,'Matching',0,2,NULL),(9,2,'Poster',0,3,NULL),(10,1,'MCQ',1,5,NULL),(11,4,'Poster',0,3,NULL),(12,1,'SAQ',0,1,NULL),(13,2,'MCQ',0,1,NULL),(15,3,'MCQ',0,1,NULL),(16,5,'SAQ',0,1,NULL),(17,6,'MCQ',0,1,NULL),(18,7,'SAQ',0,1,NULL),(19,8,'SAQ',0,1,NULL),(20,8,'SAQ',0,1,NULL),(21,9,'SAQ',0,1,NULL),(22,9,'Poster',0,1,NULL);
 /*!40000 ALTER TABLE `quiz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1025,4 +1025,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-17 23:00:55
+-- Dump completed on 2017-10-22  9:27:39
