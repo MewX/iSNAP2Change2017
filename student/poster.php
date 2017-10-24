@@ -4,6 +4,7 @@
     require_once('student-validation.php');
 
     require_once("../mysql-lib.php");
+    require_once("../achievement-lib.php");
     require_once("../debug.php");
 
     $pageName = "poster";
@@ -40,6 +41,8 @@
 
         //if graded, use the same function to set the view state
         if ($status == "GRADED") {
+            achSetLearningFromMistakes($conn, $studentID);
+            achCheckAndSetQuizMaster($conn, $studentID);
             updateSAQViewedStatus($conn, $quizID, $studentID);
         }
     }catch(Exception $e){

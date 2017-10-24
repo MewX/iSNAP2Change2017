@@ -1,10 +1,19 @@
 <?php
     require_once("../mysql-lib.php");
+    require_once("../achievement-lib.php");
     require_once("../debug.php");
     $pageName = "resources";
 
     $NOJUMP = true;
     require('student-validation.php');
+
+    $conn = db_connect();
+    // logged in
+    if (isset($studentID)) {
+        achSetResourcePage($conn, $studentID);
+        achCheckAndSetQuizMaster($conn, $studentID);
+    }
+    db_close($conn);
 ?>
 
 <!DOCTYPE html>

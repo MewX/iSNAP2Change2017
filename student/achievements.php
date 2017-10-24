@@ -13,6 +13,7 @@ require_once("../achievement-lib.php");
 
 // get achievement unlocking progress
 $conn = db_connect();
+markUnviewedAchievementsAsViewed($conn, $studentID);
 $allAch = achGetAllAchievementsByStudentId($conn, $studentID)[0];
 
 // assign variables to corresponding variables

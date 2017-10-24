@@ -33,10 +33,49 @@ function achGetAllAchievements(PDO $c) {
 }
 
 function achGetAllAchievementsByStudentId(PDO $c, $studentId) {
-    $sql = "select StudentID,QuizMaster,AllSnapFacts,ResourcePage,QuizLeaderBoardTopTenOnce,LearningFromMistakes,HeadOfClass,WeeklyGenius,GotItRight,Aced,HatTrick,MasterExtraContent,LoginMaster,LoginWeek1,LoginWeek2,LoginWeek3,LoginWeek4,LoginWeek5,LoginWeek6,LoginWeek7,LoginWeek8,LoginWeek9,LoginWeek10,MasterGaming,LaunchSportsNinja,PlayEveryGameModeSn,BeatScoreSnA,BeatScoreSnB,BeatScoreSnC,LaunchMealCrusher,PlayEveryGameModeMc,BeatScoreMcA,BeatScoreMcB,BeatScoreMcC from achievements where StudentID = ?;";
+    $sql = "select * from achievements where StudentID = ?;";
     $sql = $c->prepare($sql);
     $sql->execute(array($studentId));
     return $sql->fetchAll(PDO::FETCH_OBJ);
+}
+
+function markUnviewedAchievementsAsViewed(PDO $c, $studentId) {
+    $obj = achGetAllAchievementsByStudentId($c, $studentId)[0];
+    $sql = "update achievements set QuizMasterViewed={$obj->QuizMaster},
+AllSnapFactsViewed={$obj->AllSnapFacts},
+ResourcePageViewed={$obj->ResourcePage},
+QuizLeaderBoardTopTenOnceViewed={$obj->QuizLeaderBoardTopTenOnce},
+LearningFromMistakesViewed={$obj->LearningFromMistakes},
+HeadOfClassViewed={$obj->HeadOfClass},
+WeeklyGeniusViewed={$obj->WeeklyGenius},
+GotItRightViewed={$obj->GotItRight},
+AcedViewed={$obj->Aced},
+HatTrickViewed={$obj->HatTrick},
+MasterExtraContentViewed={$obj->MasterExtraContent},
+LoginMasterViewed={$obj->LoginMaster},
+LoginWeek1Viewed={$obj->LoginWeek1},
+LoginWeek2Viewed={$obj->LoginWeek2},
+LoginWeek3Viewed={$obj->LoginWeek3},
+LoginWeek4Viewed={$obj->LoginWeek4},
+LoginWeek5Viewed={$obj->LoginWeek5},
+LoginWeek6Viewed={$obj->LoginWeek6},
+LoginWeek7Viewed={$obj->LoginWeek7},
+LoginWeek8Viewed={$obj->LoginWeek8},
+LoginWeek9Viewed={$obj->LoginWeek9},
+LoginWeek10Viewed={$obj->LoginWeek10},
+MasterGamingViewed={$obj->MasterGaming},
+LaunchSportsNinjaViewed={$obj->LaunchSportsNinja},
+PlayEveryGameModeSnViewed={$obj->PlayEveryGameModeSn},
+BeatScoreSnAViewed={$obj->BeatScoreSnA},
+BeatScoreSnBViewed={$obj->BeatScoreSnB},
+BeatScoreSnCViewed={$obj->BeatScoreSnC},
+LaunchMealCrusherViewed={$obj->LaunchMealCrusher},
+PlayEveryGameModeMcViewed={$obj->PlayEveryGameModeMc},
+BeatScoreMcAViewed={$obj->BeatScoreMcA},
+BeatScoreMcBViewed={$obj->BeatScoreMcB},
+BeatScoreMcCViewed={$obj->BeatScoreMcC} where StudentID = ?";
+    $sql = $c->prepare($sql);
+    $sql->execute(array($studentId));
 }
 
 // achieve "QuizMaster"
@@ -67,7 +106,7 @@ function achSetResourcePage(PDO $c, $studentId) {
 }
 
 // achieve "QuizLeaderBoardTopTenOnce"
-// need to check outside
+// TODO: need to check outside
 function achSetQuizLeaderBoardTopTenOnce(PDO $c, $studentId) {
     $sql = "update achievements set QuizLeaderBoardTopTenOnce = 1 where StudentID = ?";
     $sql = $c->prepare($sql);
@@ -99,18 +138,22 @@ function achCheckAndSetWeeklyGenius(PDO $c, $studentId) {
 
 // achieve "GotItRight"
 function achCheckAndSetGotItRight(PDO $c, $studentId) {
+    // TODO:
 }
 
 // achieve "Aced"
 function achCheckAndSetAced(PDO $c, $studentId) {
+    // TODO:
 }
 
 // achieve "HatTrick"
 function achCheckAndSetHatTrick(PDO $c, $studentId) {
+    // TODO:
 }
 
 // achieve "MasterExtraContent"
 function achCheckAndSetMasterExtraContent(PDO $c, $studentId) {
+    // TODO:
 }
 
 
@@ -160,8 +203,9 @@ function achLoginAutoChecker(PDO $c, $studentId, $week) {
 
     // check master works
     if ($obj->LoginMaster == 0 // not achieved
-        && $obj->LoginWeek1 && $obj->LoginWeek2 && $obj->LoginWeek3 && $obj->LoginWeek4 && $obj->LoginWeek5
-        && $obj->LoginWeek6 && $obj->LoginWeek7 && $obj->LoginWeek8 && $obj->LoginWeek9 && $obj->LoginWeek10) {
+        // put week 10 at the beginning to reduce the length of ands
+        && $obj->LoginWeek10 && $obj->LoginWeek2 && $obj->LoginWeek3 && $obj->LoginWeek4 && $obj->LoginWeek5
+        && $obj->LoginWeek6 && $obj->LoginWeek7 && $obj->LoginWeek8 && $obj->LoginWeek9 && $obj->LoginWeek1) {
         $sql = "UPDATE achievements SET LoginMaster = 1 WHERE StudentID = ?";
     }
     if (isset($sql)) {

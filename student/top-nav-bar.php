@@ -8,6 +8,7 @@
 $NOJUMP = true;
 require_once('./student-validation.php');
 require_once("../mysql-lib.php");
+require_once("../achievement-lib.php");
 
 if (!isset($INEXAM)) {
     if (!isset($conn) || $conn == null)
@@ -18,6 +19,44 @@ if (!isset($INEXAM)) {
 
     // get student question viewed attribute
     $studentQuesViewedAttrs = getAllUnreadMessagesForStu($conn, $studentID);
+
+    // get student achievements notifications
+    $allAch = achGetAllAchievementsByStudentId($conn, $studentID)[0];
+    $newAchievements = array();
+    if ($allAch->QuizMasterViewed != $allAch->QuizMaster) array_push($newAchievements, "QuizMaster");
+    if ($allAch->AllSnapFactsViewed != $allAch->AllSnapFacts) array_push($newAchievements, "AllSnapFacts");
+    if ($allAch->ResourcePageViewed != $allAch->ResourcePage) array_push($newAchievements, "ResourcePage");
+    if ($allAch->QuizLeaderBoardTopTenOnceViewed != $allAch->QuizLeaderBoardTopTenOnce) array_push($newAchievements, "QuizLeaderBoardTopTenOnce");
+    if ($allAch->LearningFromMistakesViewed != $allAch->LearningFromMistakes) array_push($newAchievements, "LearningFromMistakes");
+    if ($allAch->HeadOfClassViewed != $allAch->HeadOfClass) array_push($newAchievements, "HeadOfClass");
+    if ($allAch->WeeklyGeniusViewed != $allAch->WeeklyGenius) array_push($newAchievements, "WeeklyGenius");
+    if ($allAch->GotItRightViewed != $allAch->GotItRight) array_push($newAchievements, "GotItRight");
+    if ($allAch->AcedViewed != $allAch->Aced) array_push($newAchievements, "Aced");
+    if ($allAch->HatTrickViewed != $allAch->HatTrick) array_push($newAchievements, "HatTrick");
+    if ($allAch->MasterExtraContentViewed != $allAch->MasterExtraContent) array_push($newAchievements, "MasterExtraContent");
+    if ($allAch->LoginMasterViewed != $allAch->LoginMaster) array_push($newAchievements, "LoginMaster");
+    if ($allAch->LoginWeek1Viewed != $allAch->LoginWeek1) array_push($newAchievements, "LoginWeek1");
+    if ($allAch->LoginWeek2Viewed != $allAch->LoginWeek2) array_push($newAchievements, "LoginWeek2");
+    if ($allAch->LoginWeek3Viewed != $allAch->LoginWeek3) array_push($newAchievements, "LoginWeek3");
+    if ($allAch->LoginWeek4Viewed != $allAch->LoginWeek4) array_push($newAchievements, "LoginWeek4");
+    if ($allAch->LoginWeek5Viewed != $allAch->LoginWeek5) array_push($newAchievements, "LoginWeek5");
+    if ($allAch->LoginWeek6Viewed != $allAch->LoginWeek6) array_push($newAchievements, "LoginWeek6");
+    if ($allAch->LoginWeek7Viewed != $allAch->LoginWeek7) array_push($newAchievements, "LoginWeek7");
+    if ($allAch->LoginWeek8Viewed != $allAch->LoginWeek8) array_push($newAchievements, "LoginWeek8");
+    if ($allAch->LoginWeek9Viewed != $allAch->LoginWeek9) array_push($newAchievements, "LoginWeek9");
+    if ($allAch->LoginWeek10Viewed != $allAch->LoginWeek10) array_push($newAchievements, "LoginWeek10");
+    if ($allAch->MasterGamingViewed != $allAch->MasterGaming) array_push($newAchievements, "MasterGaming");
+    if ($allAch->LaunchSportsNinjaViewed != $allAch->LaunchSportsNinja) array_push($newAchievements, "LaunchSportsNinja");
+    if ($allAch->PlayEveryGameModeSnViewed != $allAch->PlayEveryGameModeSn) array_push($newAchievements, "PlayEveryGameModeSn");
+    if ($allAch->BeatScoreSnAViewed != $allAch->BeatScoreSnA) array_push($newAchievements, "BeatScoreSnA");
+    if ($allAch->BeatScoreSnBViewed != $allAch->BeatScoreSnB) array_push($newAchievements, "BeatScoreSnB");
+    if ($allAch->BeatScoreSnCViewed != $allAch->BeatScoreSnC) array_push($newAchievements, "BeatScoreSnC");
+    if ($allAch->LaunchMealCrusherViewed != $allAch->LaunchMealCrusher) array_push($newAchievements, "LaunchMealCrusher");
+    if ($allAch->PlayEveryGameModeMcViewed != $allAch->PlayEveryGameModeMc) array_push($newAchievements, "PlayEveryGameModeMc");
+    if ($allAch->BeatScoreMcAViewed != $allAch->BeatScoreMcA) array_push($newAchievements, "BeatScoreMcA");
+    if ($allAch->BeatScoreMcBViewed != $allAch->BeatScoreMcB) array_push($newAchievements, "BeatScoreMcB");
+    if ($allAch->BeatScoreMcCViewed != $allAch->BeatScoreMcC) array_push($newAchievements, "BeatScoreMcC");
+
 }
 
 ?>
@@ -42,11 +81,12 @@ if (!isset($INEXAM)) {
             <div class="info-item info-notification">
                 <a class="info-icon" href="#" title="Marking notifications"></a>
                 <?php
-                $quizFeedbackCount = count($quizViewedAttrs);
+                $quizFeedbackCount = count($quizViewedAttrs) + count($newAchievements);
                 if ($quizFeedbackCount != 0) { ?>
                     <span class="info-number"><?php echo $quizFeedbackCount > 9 ? "9+" : $quizFeedbackCount; ?></span>
                 <?php } ?>
                 <ul class="info-message-list">
+                    <!-- Feedback notifications -->
                     <?php for ($i = 0; $i < count($quizViewedAttrs); $i++) {
                         if ($quizViewedAttrs[$i]["extraQuiz"] == 0) {
                             $url = "weekly-task.php?week=" . $quizViewedAttrs[$i]["week"];
@@ -79,6 +119,16 @@ if (!isset($INEXAM)) {
                             </a>
                         </li>
                     <?php } ?>
+
+                    <!-- Achievement notifications -->
+                    <?php for ($i = 0; $i < count($newAchievements); $i++) { ?>
+                        <li class="info-message-item">
+                            <a href="./achievements.php" style="color: white;">
+                                 You've earned a new achievement - <? echo $newAchievements[$i] ?>!
+                            </a>
+                        </li>
+                    <? } ?>
+
                 </ul>
             </div>
             <div class="info-item info-message">

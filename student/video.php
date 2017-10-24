@@ -2,6 +2,7 @@
     //check login status
     require_once('student-validation.php');
     require_once("../mysql-lib.php");
+    require_once("../achievement-lib.php");
     require_once("../debug.php");
 
     //check whether a request is GET or POST
@@ -49,6 +50,8 @@
 
         //if graded
         if ($status == "GRADED") {
+            achSetLearningFromMistakes($conn, $studentID);
+            achCheckAndSetQuizMaster($conn, $studentID);
             updateSAQViewedStatus($conn, $quizID, $studentID);
         }
 
