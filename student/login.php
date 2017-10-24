@@ -20,6 +20,10 @@
 		//valid student
 		$validRes = validStudent($conn, $username, $password);
 
+		// TODO: ensure that the student has a record in achievement table
+
+		// TODO: add achievement manager here
+
 		if($validRes != null) {
 			$feedback["result"] = "valid";
 			$_SESSION["studentID"] = $validRes['StudentID'];

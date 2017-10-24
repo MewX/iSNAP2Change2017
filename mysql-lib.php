@@ -2699,6 +2699,8 @@ function markMessageAsReadForStu(PDO $conn, $studentId) {
     return $sql->execute(array($studentId)); // true on success
 }
 
+
+/* Competitions */
 function createCompetition(PDO $conn, $dueWeek, $title) {
     $updateSql = "INSERT INTO Competition(DueWeek, Title)
          VALUES (?,?)";
