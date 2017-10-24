@@ -19,16 +19,18 @@
 
 		//valid student
 		$validRes = validStudent($conn, $username, $password);
-
-		// TODO: ensure that the student has a record in achievement table
-
-		// TODO: add achievement manager here
-
 		if($validRes != null) {
 			$feedback["result"] = "valid";
 			$_SESSION["studentID"] = $validRes['StudentID'];
 			$_SESSION["studentUsername"] = $validRes['Username'];
             $feedback["message"] = "success";
+
+            // ensure that the student has a record in achievement table
+            if (!achCheckRecordExistence($conn, $_SESSION["studentID"]))
+                var_dump(achCreateNewRecord($conn, $_SESSION["studentID"]));
+
+            // TODO: add log-in achievement managing here
+
 		} else {
 			$feedback["result"] = "invalid";
             $feedback["message"] = "Failed";

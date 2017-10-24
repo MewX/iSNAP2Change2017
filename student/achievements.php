@@ -9,56 +9,57 @@
 require_once('./student-validation.php');
 
 require_once("../mysql-lib.php");
+require_once("../achievement-lib.php");
 
-// TODO: get achievement unlocking progress
+// get achievement unlocking progress
+$conn = db_connect();
+$allAch = achGetAllAchievementsByStudentId($conn, $studentID)[0];
 
 // assign variables to corresponding variables
-$aQuizMaster = false; // get all other achievements on weekly quiz
+$aQuizMaster = $allAch->QuizMaster; // get all other achievements on weekly quiz
 
-$aAllSnapFacts = false; // visit every snap fact category
-$aResourcePage = false; // visit the resources page
-$aQuizLeaderBoardTopTenOnce = false; // be in the top ten on the leader board once
-$aLearningFromMistakes = false; // check teacher's feedback once
-$aHeadOfClass = false; // get full marks on everything
-$aWeeklyGenius = false; // get full marks on every task for any week
-$aGotItRight = false; // get full marks for every multiple choice task
-$aAced = false; // get full marks for any task
-$aHatTrick = false; // get full marks on 'one' task for three weeks in a row
-$aMasterExtraContent = false; // play every after school quiz
+$aAllSnapFacts = $allAch->AllSnapFacts; // visit every snap fact category
+$aResourcePage = $allAch->ResourcePage; // visit the resources page
+$aQuizLeaderBoardTopTenOnce = $allAch->QuizLeaderBoardTopTenOnce; // be in the top ten on the leader board once
+$aLearningFromMistakes = $allAch->LearningFromMistakes; // check teacher's feedback once
+$aHeadOfClass = $allAch->HeadOfClass; // get full marks on everything
+$aWeeklyGenius = $allAch->WeeklyGenius; // get full marks on every task for any week
+$aGotItRight = $allAch->GotItRight; // get full marks for every multiple choice task
+$aAced = $allAch->Aced; // get full marks for any task
+$aHatTrick = $allAch->HatTrick; // get full marks on 'one' task for three weeks in a row
+$aMasterExtraContent = $allAch->MasterExtraContent; // play every after school quiz
 
+$aLoginMaster = $allAch->LoginMaster; // unlock every log in achievement
 
-$aLoginMaster = false; // unlock every log in achievement
+$aLoginWeek1 = $allAch->LoginWeek1;
+$aLoginWeek2 = $allAch->LoginWeek2;
+$aLoginWeek3 = $allAch->LoginWeek3;
+$aLoginWeek4 = $allAch->LoginWeek4;
+$aLoginWeek5 = $allAch->LoginWeek5;
+$aLoginWeek6 = $allAch->LoginWeek6;
+$aLoginWeek7 = $allAch->LoginWeek7;
+$aLoginWeek8 = $allAch->LoginWeek8;
+$aLoginWeek9 = $allAch->LoginWeek9;
+$aLoginWeek10 = $allAch->LoginWeek10;
 
-$aLoginWeek1 = false;
-$aLoginWeek2 = false;
-$aLoginWeek3 = false;
-$aLoginWeek4 = false;
-$aLoginWeek5 = false;
-$aLoginWeek6 = false;
-$aLoginWeek7 = false;
-$aLoginWeek8 = false;
-$aLoginWeek9 = false;
-$aLoginWeek10 = false;
+$aMasterGaming = $allAch->MasterGaming; // unlock every gaming achievement
 
+$aLaunchSportsNinja = $allAch->LaunchSportsNinja; // launch sports ninja once
+$aPlayEveryGameModeSn = $allAch->PlayEveryGameModeSn;
+$aBeatScoreSnA = $allAch->BeatScoreSnA; // beat xxx score
+$aBeatScoreSnB = $allAch->BeatScoreSnB; // beat xxxx score
+$aBeatScoreSnC = $allAch->BeatScoreSnC; // beat xxxxx score
 
-$aMasterGaming = false; // unlock every gaming achievement
-
-$aLaunchSportsNinja = false; // launch sports ninja once
-$aPlayEveryGameModeSn = false;
-$aBeatScoreSnA = false; // beat xxx score
-$aBeatScoreSnB = false; // beat xxxx score
-$aBeatScoreSnC = false; // beat xxxxx score
-
-$aLaunchMealCrusher = false; // launch meal crusher once
-$aPlayEveryGameModeMc = false;
-$aBeatScoreMcA = false; // beat xxx score
-$aBeatScoreMcB = false; // beat xxxx score
-$aBeatScoreMcC = false; // beat xxxxx score
-
+$aLaunchMealCrusher = $allAch->LaunchMealCrusher; // launch meal crusher once
+$aPlayEveryGameModeMc = $allAch->PlayEveryGameModeMc;
+$aBeatScoreMcA = $allAch->BeatScoreMcA; // beat xxx score
+$aBeatScoreMcB = $allAch->BeatScoreMcB; // beat xxxx score
+$aBeatScoreMcC = $allAch->BeatScoreMcC; // beat xxxxx score
 
 // TODO: do we still need smoking specific achievements?
 // TODO: because the theme is smoking already.
 
+db_close($conn);
 ?>
 
 <!DOCTYPE html>
