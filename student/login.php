@@ -3,6 +3,7 @@
 	session_start();
 
 	require_once('../mysql-lib.php');
+    require_once("../achievement-lib.php");
 	require_once('../debug.php');
 	$pageName = "login";
 
@@ -19,12 +20,16 @@
 
 		//valid student
 		$validRes = validStudent($conn, $username, $password);
-
 		if($validRes != null) {
 			$feedback["result"] = "valid";
 			$_SESSION["studentID"] = $validRes['StudentID'];
 			$_SESSION["studentUsername"] = $validRes['Username'];
             $feedback["message"] = "success";
+
+            // ensure that the student has a record in achievement table
+            if (!achCheckRecordExistence($conn, $_SESSION["studentID"]))
+                achCreateNewRecord($conn, $_SESSION["studentID"]);
+
 		} else {
 			$feedback["result"] = "invalid";
             $feedback["message"] = "Failed";

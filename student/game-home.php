@@ -3,6 +3,7 @@
     require_once('./student-validation.php');
 
     require_once("../mysql-lib.php");
+    require_once("../achievement-lib.php");
     require_once("../debug.php");
     $pageName = "game-home";
 
@@ -16,6 +17,9 @@
 
         //get student week
         $studentWeek = getStudentWeek($conn, $studentID);
+
+        // log-in checker
+        achLoginAutoChecker($conn, $studentID, $studentWeek);
 
         //get max week
         $maxWeek = getMaxWeek($conn)->WeekNum;

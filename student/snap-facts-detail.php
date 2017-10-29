@@ -1,9 +1,11 @@
 <?php
-    //check login status
-    require_once('student-validation.php');
-
     require_once("../mysql-lib.php");
+    require_once("../achievement-lib.php");
     require_once("../debug.php");
+
+    //check login status
+    $NOJUMP = true;
+    require_once('student-validation.php');
 
     $pageName = "snap-facts";
 
@@ -20,6 +22,12 @@
 
     try{
         $conn = db_connect();
+
+        // logged in
+        if (isset($studentID)) {
+            achSetAllSnapFacts($conn, $studentID);
+            achCheckAndSetQuizMaster($conn, $studentID);
+        }
 
         //get SNAP² Facts by topic id
         $snapFacts = getSnapFactsByTopic($conn, $topicID);
@@ -63,11 +71,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
-    <title>SNAP² Facts | SNAP²</title>
+    <title>SNAP² Fact List | SNAP²</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
-    <link rel="stylesheet" href="./css/common.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="./css/home.css"/>
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" type="text/css" href="./css/vendor/animate.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <script src="./js/vendor/wow.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="./js/snap.js"></script>
     <style>
         .facts-detail-smoking {
@@ -75,42 +89,6 @@
         }
         .facts-detail-smoking .item-trigger{
             background-image: url("./img/drop_down_icon.png");
-        }
-        .facts-detail-nutrition {
-            color: #f7751e;
-        }
-        .facts-detail-nutrition .item-trigger{
-            background-image: url("./img/drop_down_orange_icon.png");
-        }
-        .facts-detail-alcohol {
-            color: #AF24D1;
-        }
-        .facts-detail-alcohol .item-trigger{
-            background-image: url("./img/drop_down_purple_icon.png");
-        }
-        .facts-detail-physical-activity {
-            color: #DB1B1B;
-        }
-        .facts-detail-physical-activity .item-trigger{
-            background-image: url("./img/drop_down_red_icon.png");
-        }
-        .facts-detail-drugs {
-            color: #00f8cd;
-        }
-        .facts-detail-drugs .item-trigger{
-            background-image: url("./img/drop_down_blue_icon.png");
-        }
-        .facts-detail-sexual-health {
-            color: #AF24D1;
-        }
-        .facts-detail-sexual-health .item-trigger{
-            background-image: url("./img/drop_down_purple_icon.png");
-        }
-        .facts-detail-health-and-wellbeing {
-            color: #DB1B1B;
-        }
-        .facts-detail-health-and-wellbeing .item-trigger {
-            background-image: url("./img/drop_down_red_icon.png");
         }
         .facts-detail-header {
             max-width: 1000px;
@@ -173,67 +151,25 @@
         .pagination {
             margin-top: 20px;
             margin-bottom: 20px;
+            display: flex;
         }
     </style>
 </head>
 <body>
 
-<div class="page-wrapper">
     <? require("./top-nav-bar.php") ?>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="padding-top: 60px; min-height: calc(100vh - 60px);">
 <?php
 switch ($topicID) {
-    case 1: ?>
+case 1: ?>
         <div class="facts-detail facts-detail-smoking">
             <div class="facts-detail-header">
                 <span class="facts-detail-icon image-icon-smoking"></span>
                 <span class="facts-detail-name h2">Smoking</span>
             </div>
-<?php   break;
-    case 2: ?>
-        <div class="facts-detail facts-detail-nutrition">
-            <div class="facts-detail-header">
-                <span class="facts-detail-icon image-icon-nutrition"></span>
-                <span class="facts-detail-name h2">Nutrition</span>
-            </div>
-<?php   break;
-    case 3: ?>
-        <div class="facts-detail facts-detail-alcohol">
-            <div class="facts-detail-header">
-                <span class="facts-detail-icon image-icon-alcohol"></span>
-                <span class="facts-detail-name h2">Alcohol</span>
-            </div>
-<?php   break;
-    case 4: ?>
-        <div class="facts-detail facts-detail-physical-activity">
-            <div class="facts-detail-header">
-                <span class="facts-detail-icon image-icon-physical"></span>
-                <span class="facts-detail-name h2">Physical Activity</span>
-            </div>
-<?php   break;
-    case 5: ?>
-        <div class="facts-detail facts-detail-drugs">
-            <div class="facts-detail-header">
-                <span class="facts-detail-icon image-icon-drugs"></span>
-                <span class="facts-detail-name h2">Drugs</span>
-            </div>
-<?php   break;
-    case 6: ?>
-        <div class="facts-detail facts-detail-sexual-health">
-            <div class="facts-detail-header">
-                <span class="facts-detail-icon image-icon-sexual"></span>
-                <span class="facts-detail-name h2">Sexual Health</span>
-            </div>
-<?php   break;
-    case 7: ?>
-        <div class="facts-detail facts-detail-health-and-wellbeing">
-            <div class="facts-detail-header">
-                <span class="facts-detail-icon image-icon-health"></span>
-                <span class="facts-detail-name h2">Health and Wellbeing</span>
-            </div>
-<?php   break;
-    } ?>
+<?php break;
+     } ?>
             <div class="facts-detail-content">
                 <div class="facts-detail-panels">
 <?php           for($i = 0; $i < $snapFactsPageCount; $i++) { ?>
@@ -320,8 +256,6 @@ switch ($topicID) {
     </div>
 
     <? require("./footer-bar.php") ?>
-</div>
-
 
 <script>
     var $items = $('.facts-detail-item-collapsable');

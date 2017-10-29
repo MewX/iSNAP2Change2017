@@ -3,6 +3,7 @@
     require_once('student-validation.php');
 
     require_once("../mysql-lib.php");
+    require_once("../achievement-lib.php");
     require_once("../debug.php");
 
     $pageName = "short-answer-question";
@@ -42,10 +43,11 @@
 
         //if graded
         if ($status == "GRADED") {
+            achSetLearningFromMistakes($conn, $studentID);
+            achCheckAndSetQuizMaster($conn, $studentID);
             updateSAQViewedStatus($conn, $quizID, $studentID);
 
             $totalPoints = getQuizPoints($conn, $quizID);
-
             $studentPoints = getStuQuizScore($conn, $quizID, $studentID);
         }
 
