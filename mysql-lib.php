@@ -1862,16 +1862,6 @@ function updateStudentScore(PDO $conn, $studentID)
     $updateSql->execute(array(calculateStudentScore($conn, $studentID), $studentID));
 }
 
-function refreshAllStudentsScore(PDO $conn)
-{
-    $studentResult = getStudents($conn);
-    for ($i = 0; $i < count($studentResult); $i++) {
-        $studentID = $studentResult[$i]->StudentID;
-        updateStudentScore($conn, $studentID);
-    }
-}
-
-
 function updateQuizRecord(PDO $conn, $quizID, $studentID, $status, $grade=0)
 {
     $updateQuizRecordSql = "INSERT INTO Quiz_Record(QuizID, StudentID, Status, Grade)
