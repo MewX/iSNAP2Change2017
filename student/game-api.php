@@ -123,6 +123,7 @@ if (!isset($studentID)) {
                 achCheckAndSetPlayEveryGameModeMc($conn, $gameid, $studentID, $gameTotalLevel);
                 achCheckAndSetBeatScoreMc($conn, $gameid, $studentID);
             }
+            achCheckAndSetMasterGaming($conn, $studentID);
         } else {
             $output->message = "Updating score failed!";
         }

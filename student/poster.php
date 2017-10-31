@@ -414,22 +414,22 @@
         }
     }
 
-//    function uploadDone(status, result) {
-//        if (status === "ok") {
-//            if(result.message == "success"){
-//                var url = <?php //getURL("/tmp_poster_img/") ?>// + result.fileid;
-//
-//                ctx.beginTransaction();
-//                var nodeId = ctx.createNode("ImageNode", {
-//                    url: url
-//                });
-//                ctx.translateNode(nodeId, 100, 100);
-//                ctx.commitTransaction();
-//            } else{
-//                alert(result.message);
-//            }
-//        }
-//    }
+    function uploadDone(status, result) {
+        if (status === "ok") {
+            if(result.message === "success"){
+                var url = "<?php echo getURL("/tmp_poster_img/") ?>" + result.fileid;
+
+                ctx.beginTransaction();
+                var nodeId = ctx.createNode("ImageNode", {
+                    url: url
+                });
+                ctx.translateNode(nodeId, 100, 100);
+                ctx.commitTransaction();
+            } else{
+                alert(result.message);
+            }
+        }
+    }
 
     function upload(form) {
         var progress = new ProgressNotification("Reading file");

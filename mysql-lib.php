@@ -24,7 +24,6 @@ TODO: data validation!!! (another part for preventing sql injection)
 
 */
 
-
 /* const */
 define("EMPTY_LEARNING_MATERIAL", "<p>Learning material for this quiz has not been added.</p>");
 define("EMPTY_VIDEO", "<p>Video for this quiz has not been added.</p>");
@@ -33,7 +32,8 @@ define("EXCLUDED_TRUE", 1);
 define("EXCLUDED_FALSE", 0);
 define("EXCLUDED_VIDEO", -1);
 define("EXCLUDED_IMAGE", -2);
-require_once ("config.php");
+require_once("config.php");
+require_once("achievement-lib.php");
 /* const */
 
 /* db connection*/
@@ -1797,8 +1797,17 @@ function updateStudentScore(PDO $conn, $studentID, $fastRun = false)
     $updateSql->execute(array($newTotalScore, $studentID));
 
     // check ranking
-    if (!$fastRun)
+    if (!$fastRun) {
         achSetQuizLeaderBoardTopTenOnce($conn, $studentID, $newTotalScore);
+        achCheckAndSetHeadOfClass($conn, $studentID);
+        achCheckAndSetWeeklyGenius($conn, $studentID);
+        achCheckAndSetGotItRight($conn, $studentID);
+        achCheckAndSetAced($conn, $studentID);
+        achCheckAndSetHatTrick($conn, $studentID);
+        achCheckAndSetMasterExtraContent($conn, $studentID);
+        // master achievement
+        achCheckAndSetQuizMaster($conn, $studentID);
+    }
 }
 
 // TODO: toooooo slow, get rid of it

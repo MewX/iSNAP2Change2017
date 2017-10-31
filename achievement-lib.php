@@ -164,6 +164,8 @@ function achCheckAndSetHatTrick(PDO $c, $studentId) {
     // TODO:
 }
 
+// TODO: add combo counter in database
+
 // achieve "MasterExtraContent"
 function achCheckAndSetMasterExtraContent(PDO $c, $studentId) {
     // TODO:
@@ -269,11 +271,11 @@ function achCheckAndSetBeatScoreSn(PDO $c, $gameId, $studentId) {
     // have unset variables
     $totalScore = getStudentGameTotalScores($c, $gameId, $studentId);
     // TODO: update the game scores here
-    if ($totalScore > 10000) {
+    if ($totalScore >= 10000) {
         $sql = "update achievements set BeatScoreSnA = 1, BeatScoreSnB = 1, BeatScoreSnC = 1 where StudentID = ?";
-    } else if ($totalScore > 5000) {
+    } else if ($totalScore >= 5000) {
         $sql = "update achievements set BeatScoreSnA = 1, BeatScoreSnB = 1 where StudentID = ?";
-    } else if ($totalScore > 100) {
+    } else if ($totalScore >= 100) {
         $sql = "update achievements set BeatScoreSnA = 1 where StudentID = ?";
     } else {
         return;
@@ -310,11 +312,11 @@ function achCheckAndSetBeatScoreMc(PDO $c, $gameId, $studentId) {
     // have unset variables
     $totalScore = getStudentGameTotalScores($c, $gameId, $studentId);
     // TODO: update the game scores here
-    if ($totalScore > 10000) {
+    if ($totalScore >= 10000) {
         $sql = "update achievements set BeatScoreMcA = 1, BeatScoreMcB = 1, BeatScoreMcC = 1 where StudentID = ?";
-    } else if ($totalScore > 5000) {
+    } else if ($totalScore >= 5000) {
         $sql = "update achievements set BeatScoreMcA = 1, BeatScoreMcB = 1 where StudentID = ?";
-    } else if ($totalScore > 100) {
+    } else if ($totalScore >= 100) {
         $sql = "update achievements set BeatScoreMcA = 1 where StudentID = ?";
     } else {
         return;
@@ -322,5 +324,3 @@ function achCheckAndSetBeatScoreMc(PDO $c, $gameId, $studentId) {
     $sql = $c->prepare($sql);
     $sql->execute(array($studentId));
 }
-
-// TODO: create partial logs for some of the achievements
