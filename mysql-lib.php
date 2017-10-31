@@ -2317,6 +2317,27 @@ function getStudentGameScores(PDO $conn, $gameID, $studentID)
     return $scoreArray;
 }
 
+/**
+ * Get student's score in specific game
+ * @param PDO $conn PDO connection
+ * @param $gameID game id
+ * @param $studentID student id
+ * @return total score
+ */
+function getStudentGameTotalScores(PDO $conn, $gameID, $studentID) {
+    $updateSql = "SELECT Score FROM game_record WHERE StudentID = ? and GameID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($studentID, $gameID));
+    $result = $updateSql->fetchAll(PDO::FETCH_OBJ);
+
+    // loop to add them up
+    $total = 0;
+    for ($i = 0; $i < count($result); $i ++) {
+        $total += $result[$i]->Score;
+    }
+    return $total;
+}
+
 function updateStudentGameScores(PDO $conn, $gameID, $studentID, $level, $score)
 {
     // not better than history high score
@@ -2345,8 +2366,8 @@ function calculateStudentGameTotalScore(PDO $conn, $studentID, $historyHighScore
     $updateSql = $conn->prepare($updateSql);
     $updateSql->execute(array($studentID));
     $result = $updateSql->fetch(PDO::FETCH_OBJ);
-    $currentScore = $result->Score;
-    $newScore = 0;
+    $currentScore = $result == null ? 0 : $result->Score;
+
     if(!isset($historyHighScore)){
         $historyHighScore = 0;
     }
@@ -2355,6 +2376,7 @@ function calculateStudentGameTotalScore(PDO $conn, $studentID, $historyHighScore
     }else{
         $newScore = $currentScore + $score;
     }
+    // TODO: solve potential multi-threading issue
     $updateSql = "INSERT INTO game_total_record(StudentID, Score)
                      VALUES (?,?) ON DUPLICATE KEY UPDATE Score = ?";
     $updateSql = $conn->prepare($updateSql);
@@ -2483,7 +2505,8 @@ function getRecord(PDO $conn, $recordID, $tableName, array $joinTables = null)
     $tableQuery = $conn->prepare($tableSql);
     $tableQuery->execute(array($recordID));
     if ($tableQuery->fetchColumn() != 1) {
-        throw new Exception("Fail to get record from $tableName where ID = $recordID");
+        return null;
+//        throw new Exception("Fail to get record from $tableName where ID = $recordID");
     }
 
     $tableSql = "SELECT * FROM $tableName";

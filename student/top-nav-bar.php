@@ -23,7 +23,7 @@ if (!isset($INEXAM)) {
     // get student achievements notifications
     $newAchievements = array();
     if (isset($studentID)) {
-        $allAch = achGetAllAchievementsByStudentId($conn, $studentID)[0];
+        $allAch = achGetAllAchievementsByStudentId($conn, $studentID);
         if ($allAch->QuizMasterViewed != $allAch->QuizMaster) array_push($newAchievements, "QuizMaster");
         if ($allAch->AllSnapFactsViewed != $allAch->AllSnapFacts) array_push($newAchievements, "AllSnapFacts");
         if ($allAch->ResourcePageViewed != $allAch->ResourcePage) array_push($newAchievements, "ResourcePage");

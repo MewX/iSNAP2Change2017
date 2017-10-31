@@ -1,5 +1,6 @@
 <?php
 require_once("../mysql-lib.php");
+require_once("../achievement-lib.php");
 
 $NOJUMP = true;
 require('student-validation.php');
@@ -74,12 +75,27 @@ if (!isset($studentID)) {
     BAD:
     $output->message = "Request invalid! " . $data;
 } else {
+    // update game launch achievement
+    if (!isset($data["gameid"])) goto BAD;
+    $gameid = $data["gameid"];
+    $gameInfo = getGame($conn, $gameid); // the record object
+    if ($gameInfo == null) goto BAD;
+    $gameTotalLevel = $gameInfo->Levels;
+    $gameName = strtolower($gameInfo->Description);
+
+    // find which game and set achievement
+    define('NINJA_KW', 'ninja');
+    define('CRUSH_KW', 'crush');
+    if (strpos($gameName, NINJA_KW) !== false) {
+        achCheckAndSetLaunchSportsNinja($conn, $studentID);
+    } else if (strpos($gameName, CRUSH_KW) !== false) {
+        achCheckAndSetLaunchMealCrusher($conn, $studentID);
+    }
+
+    // main logic
     if ($data["type"] == "history") {
         // query user history score
-        if (!isset($data["gameid"])) goto BAD;
-        $gameid = $data["gameid"];
         $ret = getStudentGameScores($conn, $gameid, $studentID);
-
         $outHistory = array();
         foreach ($ret as $i => $score) {
             $temp = new stdClass();
@@ -92,17 +108,27 @@ if (!isset($studentID)) {
         $output->message = "success";
     } else if ($data['type'] == "submit") {
         // submit new score
-        if (!isset($data["gameid"]) || !isset($data["level"]) || !isset($data["score"])) goto BAD;
-        $gameid = $data["gameid"];
+        if (!isset($data["level"]) || !isset($data["score"])) goto BAD;
         $level = $data["level"];
         $score = $data["score"];
         $ret = updateStudentGameScores($conn, $gameid, $studentID, $level, $score);
-        if ($ret) $output->message = "success";
-        else $output->message = "Updating score failed!";
+        if ($ret) {
+            $output->message = "success";
+
+            // update achievements
+            if (strpos($gameName, NINJA_KW) !== false) {
+                achCheckAndSetPlayEveryGameModeSn($conn, $gameid, $studentID, $gameTotalLevel);
+                achCheckAndSetBeatScoreSn($conn, $gameid, $studentID);
+            } else if (strpos($gameName, CRUSH_KW) !== false) {
+                achCheckAndSetPlayEveryGameModeMc($conn, $gameid, $studentID, $gameTotalLevel);
+                achCheckAndSetBeatScoreMc($conn, $gameid, $studentID);
+            }
+        } else {
+            $output->message = "Updating score failed!";
+        }
     } else if ($data['type'] == "ranking") {
         // get ranking
-        if (!isset($data["gameid"]) || !isset($data["level"])) goto BAD;
-        $gameid = $data["gameid"];
+        if (!isset($data["level"])) goto BAD;
         $level = $data["level"];
         $num = isset($data["num"])? $data["num"] : 10; // default limit is 10
         $ret = getGameLevelRanking($conn, $gameid, $level, $num);
