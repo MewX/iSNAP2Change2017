@@ -80,8 +80,8 @@ db_close($conn);
                                 <a href="<?php echo $posterSubmissionResult[0]->ImageURL ?>"><img
                                         src="<?php echo $posterSubmissionResult[0]->ImageURL ?>"
                                         alt="Failed to load poster. Please contact developers."
-                                        width="auto"
-                                        height="400"/></a>
+                                        width="50%"
+                                        height="auto"/></a>
                                 <br>
                                 <br>
                                 <label for="grading">Grading</label>
