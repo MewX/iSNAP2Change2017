@@ -1787,24 +1787,29 @@ function getStudentScoreForQuiz(PDO $conn, $studentID, $quizID)
     return $score;
 }
 
-function updateStudentScore(PDO $conn, $studentID)
+function updateStudentScore(PDO $conn, $studentID, $fastRun = false)
 {
     $updateSql = "UPDATE Student 
                   SET Score = ?
                   WHERE StudentID = ?";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array(calculateStudentScore($conn, $studentID), $studentID));
+    $newTotalScore = calculateStudentScore($conn, $studentID);
+    $updateSql->execute(array($newTotalScore, $studentID));
+
+    // check ranking
+    if (!$fastRun)
+        achSetQuizLeaderBoardTopTenOnce($conn, $studentID, $newTotalScore);
 }
 
+// TODO: toooooo slow, get rid of it
 function refreshAllStudentsScore(PDO $conn)
 {
     $studentResult = getStudents($conn);
     for ($i = 0; $i < count($studentResult); $i++) {
         $studentID = $studentResult[$i]->StudentID;
-        updateStudentScore($conn, $studentID);
+        updateStudentScore($conn, $studentID, true);
     }
 }
-
 
 function updateQuizRecord(PDO $conn, $quizID, $studentID, $status, $grade=0)
 {

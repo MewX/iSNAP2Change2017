@@ -30,11 +30,7 @@ try {
         }
     }
 
-} catch (Exception $e) {
-    debug_err($e);
-}
-
-try {
+    // TODO: remove this, soooooooo slow
     refreshAllStudentsScore($conn);
     $studentResult = getStudents($conn);
     $classResult = getClasses($conn);

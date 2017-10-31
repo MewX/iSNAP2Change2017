@@ -107,11 +107,23 @@ function achSetResourcePage(PDO $c, $studentId) {
 }
 
 // achieve "QuizLeaderBoardTopTenOnce"
-// TODO: need to check outside
-function achSetQuizLeaderBoardTopTenOnce(PDO $c, $studentId) {
-    $sql = "update achievements set QuizLeaderBoardTopTenOnce = 1 where StudentID = ?";
+function achSetQuizLeaderBoardTopTenOnce(PDO $c, $studentId, $studentCurrentScore) {
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->QuizLeaderBoardTopTenOnce != 0) return;
+
+    // find rank
+    $sql = "SELECT COUNT(*) AS rank FROM Student WHERE Score > ?";
     $sql = $c->prepare($sql);
-    $sql->execute(array($studentId));
+    $sql->execute(array($studentCurrentScore));
+    $rank = $sql->fetch(PDO::FETCH_OBJ)->rank + 1; // get rank
+
+    // ranking less than or equals to 10
+    if ($rank <= 10) {
+        $sql = "UPDATE achievements SET QuizLeaderBoardTopTenOnce = 1 WHERE StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
 // achieve "LearningFromMistakes"
