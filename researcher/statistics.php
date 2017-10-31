@@ -31,7 +31,7 @@ try {
 }
 
 try {
-    refreshAllStudentsScore($conn);
+    //refreshAllStudentsScore($conn);
     $getQuizWithWeek = getQuizWithWeek($conn);
     $getQuizInfo = getQuizInfo($conn);
     $studentStatistic = getStudentsStatistic($conn);

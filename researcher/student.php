@@ -30,7 +30,7 @@ try {
 }
 
 try {
-    refreshAllStudentsScore($conn);
+    //refreshAllStudentsScore($conn);
     $studentResult = getStudents($conn);
     $classResult = getClasses($conn);
     $overallScore = getOverallScore($conn);

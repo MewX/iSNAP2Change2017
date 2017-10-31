@@ -1995,6 +1995,7 @@ function updatePosterGrading(PDO $conn, $quizID, $studentID, $grading)
     $conn->beginTransaction();
     updateQuizRecord($conn, $quizID, $studentID, "GRADED", $grading);
     updatePostGrading($conn, $quizID, $studentID, $grading);
+    updateStudentScore($conn,$studentID);
     $conn->commit();
 }
 
@@ -2129,6 +2130,7 @@ function updateSAQSubmissionGrading(PDO $conn, $quizID, array $saqID, $studentID
                 $grade += $grading[$i];
             }
             updateQuizRecord($conn, $quizID, $studentID, "GRADED", $grade);
+            updateStudentScore($conn,$studentID);
             $conn->commit();
         } catch (Exception $e) {
             debug_err($e);

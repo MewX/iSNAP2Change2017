@@ -76,6 +76,8 @@ db_close($conn);
                                 <input type=hidden name="quizID" value="<?php echo $quizID ?>" required>
                                 <input type=hidden name="studentID"
                                        value="<?php echo $posterSubmissionResult[0]->StudentID ?>">
+                                <input type=hidden name="totalPoints" id="totalPoints"
+                                       value="<?php echo $posterSubmissionResult[0]->Points ?>">
                                 <br>
                                 <a href="<?php echo $posterSubmissionResult[0]->ImageURL ?>"><img
                                         src="<?php echo $posterSubmissionResult[0]->ImageURL ?>"
@@ -85,6 +87,7 @@ db_close($conn);
                                 <br>
                                 <br>
                                 <label for="grading">Grading</label>
+                                <p id="errorMessage" style="color: red"></p>
                                 <input type="text"
                                        id="grading" name="grading"
                                        value="<?php echo $posterSubmissionResult[0]->Grading ?>"
@@ -119,7 +122,17 @@ db_close($conn);
 
     $(document).ready(function () {
         $('#btnSave').on('click', function () {
-            $('#submission').validate();
+            var totalPoints = $('#totalPoints').val();
+            $('#submission').validate({
+                rules: {
+                    grading: {
+                        required: true,
+                        range: [0, totalPoints]
+                    }
+                },
+                errorLabelContainer: "#errorMessage"
+            });
+
             $('#submission').submit();
         });
 

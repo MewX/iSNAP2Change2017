@@ -35,7 +35,7 @@ try {
 }
 
 try {
-    refreshAllStudentsScore($conn);
+    //refreshAllStudentsScore($conn);
     $studentResult = getStudents($conn);
     $classResult = getClasses($conn);
     $currentUsername = $_SESSION["researcherUsername"];
