@@ -30,12 +30,6 @@ try {
         }
     }
 
-} catch (Exception $e) {
-    debug_err($e);
-}
-
-try {
-    //refreshAllStudentsScore($conn);
     $studentResult = getStudents($conn);
     $classResult = getClasses($conn);
     $currentUsername = $_SESSION["researcherUsername"];

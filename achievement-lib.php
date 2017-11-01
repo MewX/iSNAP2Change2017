@@ -29,18 +29,19 @@ function achGetAllAchievements(PDO $c) {
     $sql = "select StudentID,QuizMaster,AllSnapFacts,ResourcePage,QuizLeaderBoardTopTenOnce,LearningFromMistakes,HeadOfClass,WeeklyGenius,GotItRight,Aced,HatTrick,MasterExtraContent,LoginMaster,LoginWeek1,LoginWeek2,LoginWeek3,LoginWeek4,LoginWeek5,LoginWeek6,LoginWeek7,LoginWeek8,LoginWeek9,LoginWeek10,MasterGaming,LaunchSportsNinja,PlayEveryGameModeSn,BeatScoreSnA,BeatScoreSnB,BeatScoreSnC,LaunchMealCrusher,PlayEveryGameModeMc,BeatScoreMcA,BeatScoreMcB,BeatScoreMcC from achievements;";
     $sql = $c->prepare($sql);
     $sql->execute();
-    return $sql->fetchAll(PDO::FETCH_OBJ);
+    // TODO: check invokes
+    return $sql->fetch(PDO::FETCH_OBJ);
 }
 
 function achGetAllAchievementsByStudentId(PDO $c, $studentId) {
     $sql = "select * from achievements where StudentID = ?;";
     $sql = $c->prepare($sql);
     $sql->execute(array($studentId));
-    return $sql->fetchAll(PDO::FETCH_OBJ);
+    return $sql->fetch(PDO::FETCH_OBJ);
 }
 
 function markUnviewedAchievementsAsViewed(PDO $c, $studentId) {
-    $obj = achGetAllAchievementsByStudentId($c, $studentId)[0];
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
     $sql = "update achievements set QuizMasterViewed={$obj->QuizMaster},
 AllSnapFactsViewed={$obj->AllSnapFacts},
 ResourcePageViewed={$obj->ResourcePage},
@@ -80,7 +81,7 @@ BeatScoreMcCViewed={$obj->BeatScoreMcC} where StudentID = ?";
 
 // achieve "QuizMaster"
 function achCheckAndSetQuizMaster(PDO $c, $studentId) {
-    $obj = achGetAllAchievementsByStudentId($c, $studentId)[0];
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
     if ($obj->QuizMaster == 0 // not achieved
         && $obj->AllSnapFacts && $obj->ResourcePage && $obj->QuizLeaderBoardTopTenOnce && $obj->LearningFromMistakes && $obj->HeadOfClass
         && $obj->WeeklyGenius && $obj->GotItRight && $obj->Aced && $obj->HatTrick && $obj->MasterExtraContent) {
@@ -106,11 +107,23 @@ function achSetResourcePage(PDO $c, $studentId) {
 }
 
 // achieve "QuizLeaderBoardTopTenOnce"
-// TODO: need to check outside
-function achSetQuizLeaderBoardTopTenOnce(PDO $c, $studentId) {
-    $sql = "update achievements set QuizLeaderBoardTopTenOnce = 1 where StudentID = ?";
+function achSetQuizLeaderBoardTopTenOnce(PDO $c, $studentId, $studentCurrentScore) {
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->QuizLeaderBoardTopTenOnce != 0) return;
+
+    // find rank
+    $sql = "SELECT COUNT(*) AS rank FROM Student WHERE Score > ?";
     $sql = $c->prepare($sql);
-    $sql->execute(array($studentId));
+    $sql->execute(array($studentCurrentScore));
+    $rank = $sql->fetch(PDO::FETCH_OBJ)->rank + 1; // get rank
+
+    // ranking less than or equals to 10
+    if ($rank <= 10) {
+        $sql = "UPDATE achievements SET QuizLeaderBoardTopTenOnce = 1 WHERE StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
 // achieve "LearningFromMistakes"
@@ -151,6 +164,8 @@ function achCheckAndSetHatTrick(PDO $c, $studentId) {
     // TODO:
 }
 
+// TODO: add combo counter in database
+
 // achieve "MasterExtraContent"
 function achCheckAndSetMasterExtraContent(PDO $c, $studentId) {
     // TODO:
@@ -158,7 +173,7 @@ function achCheckAndSetMasterExtraContent(PDO $c, $studentId) {
 
 
 function achLoginAutoChecker(PDO $c, $studentId, $week) {
-    $obj = achGetAllAchievementsByStudentId($c, $studentId)[0];
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
     switch ($week) {
         case 1:
             if ($obj->LoginWeek1 == 0) $sql = "UPDATE achievements SET LoginWeek1 = 1 WHERE StudentID = ?";
@@ -197,7 +212,7 @@ function achLoginAutoChecker(PDO $c, $studentId, $week) {
         $sql->execute(array($studentId));
 
         // fetch the latest version
-        $obj = achGetAllAchievementsByStudentId($c, $studentId)[0];
+        $obj = achGetAllAchievementsByStudentId($c, $studentId);
         unset($sql);
     }
 
@@ -217,7 +232,7 @@ function achLoginAutoChecker(PDO $c, $studentId, $week) {
 
 // achieve "MasterGaming"
 function achCheckAndSetMasterGaming(PDO $c, $studentId) {
-    $obj = achGetAllAchievementsByStudentId($c, $studentId)[0];
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
     if ($obj->MasterGaming == 0 // not achieved
         && $obj->LaunchSportsNinja && $obj->PlayEveryGameModeSn && $obj->BeatScoreSnA && $obj->BeatScoreSnB && $obj->BeatScoreSnC
         && $obj->LaunchMealCrusher && $obj->PlayEveryGameModeMc && $obj->BeatScoreMcA && $obj->BeatScoreMcB && $obj->BeatScoreMcC) {
@@ -230,42 +245,82 @@ function achCheckAndSetMasterGaming(PDO $c, $studentId) {
 
 // achieve "LaunchSportsNinja"
 function achCheckAndSetLaunchSportsNinja(PDO $c, $studentId) {
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->LaunchSportsNinja == 0) {
+        $sql = "UPDATE achievements SET LaunchSportsNinja = 1 WHERE StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
 // achieve "PlayEveryGameModeSn"
-function achCheckAndSetPlayEveryGameModeSn(PDO $c, $studentId) {
+function achCheckAndSetPlayEveryGameModeSn(PDO $c, $gameId, $studentId, $levelCount) {
+    // count played levels first
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->PlayEveryGameModeSn == 0 && count(getStudentGameScores($c, $gameId, $studentId)) == $levelCount) {
+        $sql = "update achievements set PlayEveryGameModeSn = 1 where StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
-// achieve "BeatScoreSnA"
-function achCheckAndSetBeatScoreSnA(PDO $c, $studentId) {
-}
+function achCheckAndSetBeatScoreSn(PDO $c, $gameId, $studentId) {
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->BeatScoreSnC != 0) return;
 
-// achieve "BeatScoreSnB"
-function achCheckAndSetBeatScoreSnB(PDO $c, $studentId) {
-}
-
-// achieve "BeatScoreSnC"
-function achCheckAndSetBeatScoreSnC(PDO $c, $studentId) {
+    // have unset variables
+    $totalScore = getStudentGameTotalScores($c, $gameId, $studentId);
+    // TODO: update the game scores here
+    if ($totalScore >= 10000) {
+        $sql = "update achievements set BeatScoreSnA = 1, BeatScoreSnB = 1, BeatScoreSnC = 1 where StudentID = ?";
+    } else if ($totalScore >= 5000) {
+        $sql = "update achievements set BeatScoreSnA = 1, BeatScoreSnB = 1 where StudentID = ?";
+    } else if ($totalScore >= 100) {
+        $sql = "update achievements set BeatScoreSnA = 1 where StudentID = ?";
+    } else {
+        return;
+    }
+    $sql = $c->prepare($sql);
+    $sql->execute(array($studentId));
 }
 
 // achieve "LaunchMealCrusher"
 function achCheckAndSetLaunchMealCrusher(PDO $c, $studentId) {
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->LaunchMealCrusher == 0) {
+        $sql = "UPDATE achievements SET LaunchMealCrusher = 1 WHERE StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
 // achieve "PlayEveryGameModeMc"
-function achCheckAndSetPlayEveryGameModeMc(PDO $c, $studentId) {
+function achCheckAndSetPlayEveryGameModeMc(PDO $c, $gameId, $studentId, $levelCount) {
+    // count played levels first
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->PlayEveryGameModeMc == 0 && count(getStudentGameScores($c, $gameId, $studentId)) == $levelCount) {
+        $sql = "update achievements set PlayEveryGameModeMc = 1 where StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
-// achieve "BeatScoreMcA"
-function achCheckAndSetBeatScoreMcA(PDO $c, $studentId) {
-}
+function achCheckAndSetBeatScoreMc(PDO $c, $gameId, $studentId) {
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->BeatScoreMcC != 0) return;
 
-// achieve "BeatScoreMcB"
-function achCheckAndSetBeatScoreMcB(PDO $c, $studentId) {
+    // have unset variables
+    $totalScore = getStudentGameTotalScores($c, $gameId, $studentId);
+    // TODO: update the game scores here
+    if ($totalScore >= 10000) {
+        $sql = "update achievements set BeatScoreMcA = 1, BeatScoreMcB = 1, BeatScoreMcC = 1 where StudentID = ?";
+    } else if ($totalScore >= 5000) {
+        $sql = "update achievements set BeatScoreMcA = 1, BeatScoreMcB = 1 where StudentID = ?";
+    } else if ($totalScore >= 100) {
+        $sql = "update achievements set BeatScoreMcA = 1 where StudentID = ?";
+    } else {
+        return;
+    }
+    $sql = $c->prepare($sql);
+    $sql->execute(array($studentId));
 }
-
-// achieve "BeatScoreMcC"
-function achCheckAndSetBeatScoreMcC(PDO $c, $studentId) {
-}
-
-// TODO: create partial logs for some of the achievements
