@@ -132,7 +132,7 @@ db_close($conn);
                                                     <span class="glyphicon glyphicon-edit pull-right" data-toggle="modal" data-target="#dialog" aria-hidden="true"></span>
 
                                                 </td>
-                                            <?php elseif ($j == 8):?>
+                                            <?php elseif ($j == 9):?>
                                                 <td>
                                                     <?php
                                                     echo $studentResult[$i]->$columnName[$j];
