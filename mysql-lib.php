@@ -377,7 +377,7 @@ function getStudentsNumByClass(PDO $conn, $studentID)
 
 function getStudentsRank(PDO $conn)
 {
-    $leaderBoardSql = "SELECT Username, Score
+    $leaderBoardSql = "SELECT Username, Score, RANK() OVER (ORDER BY Score DESC) AS ranking
 					   FROM Student
 					   ORDER BY Score DESC, SubmissionTime 
 					   LIMIT 10;";
@@ -2465,7 +2465,7 @@ function calculateStudentGameTotalScore(PDO $conn, $studentID, $historyHighScore
 }
 
 function getStudentGameRank(PDO $conn){
-    $leaderBoardSql = "SELECT Username, game_total_record.Score
+    $leaderBoardSql = "SELECT Username, game_total_record.Score, RANK() OVER (ORDER BY game_total_record.Score DESC) AS ranking
 					   FROM student JOIN game_total_record ON student.StudentID = game_total_record.StudentID
 					   ORDER BY game_total_record.Score DESC
 					   LIMIT 10;";

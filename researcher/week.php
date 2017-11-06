@@ -71,7 +71,7 @@ db_close($conn);
                                 <thead>
                                 <tr>
                                     <th>Week</th>
-                                    <th>No. Learning Activities</th>
+                                    <th>No. of Learning Activities</th>
                                     <th>Timer (Minutes)</th>
                                 </tr>
                                 </thead>
@@ -128,15 +128,13 @@ db_close($conn);
                                 <p>View weeks by filtering or searching. You can create/delete any week.</p>
                             </div>
                             <div class="alert alert-warning">
-                                <p>If you need to add another week, you don't need to explictly add it in this page. Go
-                                    to <a href="quiz.php">Quiz Overview</a> to add a new quiz with that week number can
-                                    simply work.</p>
+                                <p>If you need to add another week, you can either add it on this page or go to <a href="quiz.php">Quiz Overview</a>
+                                    with the week number you wish to add.</p>
                             </div>
                             <div class="alert alert-danger">
-                                <p><strong>Reminder</strong>: If you remove one week, all the <strong>quizzes</strong>
-                                    linked to this week will still exist, but their "week" attribute will be set to
-                                    "null" and you should assign them to another week if you need via <a
-                                        href="quiz.php">Quiz Overview</a>.</p>
+                                <p><strong>Reminder</strong>: If you remove one week, all the quizzes linked to this week will still exist,
+                                    but they will not be assigned to a week number. If you would like to assign these quizzes to another week,
+                                    you should assign them to another week via <a href="quiz.php">Quiz Overview</a>.</p>
                             </div>
                         </div>
                     </div>

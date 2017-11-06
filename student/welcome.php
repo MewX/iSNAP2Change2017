@@ -169,7 +169,7 @@
                                 </td>
                                 </thead>
                                 <?php  for($i = 0; $i < count($quizLeaderboardRes); $i++) {
-                switch ($i) {
+                switch ($quizLeaderboardRes[$i]->ranking-1) {
                     case 0: ?>
                         <tr style="font-size: 2.9vh;">
                             <td style="width: 35%;">
@@ -177,55 +177,55 @@
                             </td> <?php ;
                         break;
                     case 1: ?>
-                        <tr style="font-size: 2.7vh;">
-                            <td style="width: 30%;">
+                        <tr style="font-size: 2.9vh;">
+                            <td style="width: 35%;">
                                 <img src="./img/second_place_icon.png" alt="..." style="width: 30%;">
                             </td> <?php ;
                         break;
                     case 2: ?>
-                        <tr style="font-size: 2.5vh;">
-                            <td style="width: 40%;">
+                        <tr style="font-size: 2.9vh;">
+                            <td style="width: 50%;">
                                 <img src="./img/third_place_icon.png" alt="..."  style="width: 28%;">
                             </td> <?php ;
                         break;
                     case 3: ?>
-                        <tr style="font-size: 2.3vh;">
-                            <td style="width: 40%;">
+                        <tr style="font-size: 2.9vh;">
+                            <td style="width: 50%;">
                                 <img src="./img/fourth_place_icon.png" alt="..."  style="width: 25%;">
                             </td> <?php ;
                         break;
                     case 4: ?>
-                        <tr style="font-size: 2.2vh;">
+                        <tr style="font-size: 2.9vh;">
                             <td>
                                 5th
                             </td> <?php ;
                         break;
                     case 5: ?>
-                        <tr style="font-size: 2.2vh;">
+                        <tr style="font-size: 2.9vh;">
                             <td>
                                 6th
                             </td> <?php ;
                         break;
                     case 6: ?>
-                        <tr style="font-size: 2.2vh;">
+                        <tr style="font-size: 2.9vh;">
                             <td>
                                 7th
                             </td> <?php ;
                         break;
                     case 7: ?>
-                        <tr style="font-size: 2.2vh;">
+                        <tr style="font-size: 2.9vh;">
                             <td>
                                 8th
                             </td> <?php ;
                         break;
                     case 8: ?>
-                        <tr style="font-size: 2.2vh;">
+                        <tr style="font-size: 2.9vh;">
                             <td>
                                 9th
                             </td> <?php ;
                         break;
                     case 9: ?>
-                        <tr style="font-size: 2.2vh;">
+                        <tr style="font-size: 2.9vh;">
                             <td>
                                 10th
                             </td> <?php ;
@@ -261,7 +261,7 @@
                                 </td>
                                 </thead>
                                 <?php  for($i = 0; $i < count($gameLeaderboardRes); $i++) {
-                                    switch ($i) {
+                                    switch ($gameLeaderboardRes[$i]->ranking-1) {
                                         case 0: ?>
                                             <tr style="font-size: 2.9vh;">
                                             <td style="width: 35%;">
@@ -269,55 +269,55 @@
                                             </td> <?php ;
                                             break;
                                         case 1: ?>
-                                            <tr style="font-size: 2.7vh;">
-                                            <td style="width: 30%;">
+                                            <tr style="font-size: 2.9vh;">
+                                            <td style="width: 35%;">
                                                 <img src="./img/second_place_icon.png" alt="..." style="width: 30%;">
                                             </td> <?php ;
                                             break;
                                         case 2: ?>
-                                            <tr style="font-size: 2.5vh;">
-                                            <td style="width: 40%;">
+                                            <tr style="font-size: 2.9vh;">
+                                            <td style="width: 50%;">
                                                 <img src="./img/third_place_icon.png" alt="..."  style="width: 28%;">
                                             </td> <?php ;
                                             break;
                                         case 3: ?>
-                                            <tr style="font-size: 2.3vh;">
-                                            <td style="width: 40%;">
+                                            <tr style="font-size: 2.9vh;">
+                                            <td style="width: 50%;">
                                                 <img src="./img/fourth_place_icon.png" alt="..."  style="width: 25%;">
                                             </td> <?php ;
                                             break;
                                         case 4: ?>
-                                            <tr style="font-size: 2.2vh;">
+                                            <tr style="font-size: 2.9vh;">
                                             <td>
                                                 5th
                                             </td> <?php ;
                                             break;
                                         case 5: ?>
-                                            <tr style="font-size: 2.2vh;">
+                                            <tr style="font-size: 2.9vh;">
                                             <td>
                                                 6th
                                             </td> <?php ;
                                             break;
                                         case 6: ?>
-                                            <tr style="font-size: 2.2vh;">
+                                            <tr style="font-size: 2.9vh;">
                                             <td>
                                                 7th
                                             </td> <?php ;
                                             break;
                                         case 7: ?>
-                                            <tr style="font-size: 2.2vh;">
+                                            <tr style="font-size: 2.9vh;">
                                             <td>
                                                 8th
                                             </td> <?php ;
                                             break;
                                         case 8: ?>
-                                            <tr style="font-size: 2.2vh;">
+                                            <tr style="font-size: 2.9vh;">
                                             <td>
                                                 9th
                                             </td> <?php ;
                                             break;
                                         case 9: ?>
-                                            <tr style="font-size: 2.2vh;">
+                                            <tr style="font-size: 2.9vh;">
                                             <td>
                                                 10th
                                             </td> <?php ;
