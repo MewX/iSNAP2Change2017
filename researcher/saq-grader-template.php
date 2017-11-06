@@ -33,6 +33,7 @@ try {
     $saqSubmissionResult = getSAQSubmission($conn, $quizID, $studentID);
     $materialRes = getLearningMaterial($conn, $quizID);
     $phpSelf = $pageName . '.php?quizID=' . $quizID . '&studentID=' . $studentID;
+    $quizTypeName = getQuizType($conn, $quizID);
 } catch (Exception $e) {
     debug_err($e);
 }
@@ -54,7 +55,7 @@ db_close($conn);
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Grader</h1>
+                <h1 class="page-header"><?php echo $quizTypeName?> Grader</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -96,14 +97,11 @@ db_close($conn);
                                            value="<?php echo $saqSubmissionResult[$i]->Feedback ?>" >
                                     <br>
                                     <label for="grading[]">Grading</label>
-                                    <input type="text" class="dialoginput pull-right" id="textInput<?php echo $saqID ?>"
+                                    <p></p>
+                                    <input type="text" class="form-control dialoginput" id="grading<?php echo $i ?>" name="grading[]"
                                            value="<?php echo $saqSubmissionResult[$i]->Grading > 0 ? $saqSubmissionResult[$i]->Grading : $saqSubmissionResult[$i]->Points; ?>"
-                                           disabled>
-                                    <input type="range" class="dialoginput" min="0"
-                                           max="<?php echo $saqSubmissionResult[$i]->Points ?>"
-                                           value="<?php if (strlen($saqSubmissionResult[$i]->Grading) > 0) echo $saqSubmissionResult[$i]->Grading; else echo $saqSubmissionResult[$i]->Points ?>"
-                                           id="grading" name="grading[]"
-                                           onchange="updateTextInput(<?php echo $saqID ?>, this.value);">
+                                           total="<?php echo $saqSubmissionResult[$i]->Points ?>"> out of <?php echo $saqSubmissionResult[$i]->Points ?>
+
                                 </div>
                             <?php } ?>
                         </form>
@@ -127,15 +125,25 @@ db_close($conn);
 <?php require_once('sb-admin-lib.php'); ?>
 <!-- Page-Level Scripts -->
 <script>
-    function updateTextInput(saqID, val) {
-        document.getElementById('textInput' + saqID).value = val;
-    }
-
     $(document).ready(function () {
         $('#btnSave').on('click', function () {
-            console.log("<?php echo $phpSelf?>")
-            $('#submission').validate();
+
+            $('#submission').validate({
+            });
             $('#submission').submit();
+        });
+
+        $('[id^=grading]').on('keyup', function () {
+            console.log($(this).attr('total'));
+            console.log($(this).val());
+            if(parseInt($(this).val())>parseInt($(this).attr('total')) || parseInt($(this).val())<0){
+                $(this).prev().text("The score should be between 0 to " + $(this).attr('total') + "." ).css('color', 'red');
+                $('#btnSave').prop('disabled', true);
+            }else{
+                $(this).prev().text("");
+                $('#btnSave').prop('disabled', false);
+            }
+
         });
     });
 </script>
