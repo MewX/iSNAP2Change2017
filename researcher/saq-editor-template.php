@@ -242,7 +242,7 @@ db_close($conn);
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="dialogTitle">Edit Question</h4>
+                <h4 class="modal-title" id="dialogTitleSAQ"></h4>
             </div>
             <div class="modal-body">
                 <form id="submission" method="post" action="<?php echo $phpSelf; ?>">
@@ -279,7 +279,7 @@ db_close($conn);
     var dialogInputArr = $('.dialoginput');
     $('.glyphicon-plus').on('click', function () {
         $("label").remove(".error");
-        $('#dialogTitle').text("Add Question");
+        $('#dialogTitleSAQ').text("Add Question");
         $('#update').val(1);
         for (i = 0; i < dialogInputArr.length; i++) {
             dialogInputArr.eq(i).val('');
@@ -292,7 +292,7 @@ db_close($conn);
         }
     });
     $('td > .glyphicon-edit').on('click', function () {
-        $('#dialogTitle').text("Edit Question");
+        $('#dialogTitleSAQ').text("Edit Question");
         $('#update').val(0);
         for (i = 0; i < dialogInputArr.length; i++) {
             dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());

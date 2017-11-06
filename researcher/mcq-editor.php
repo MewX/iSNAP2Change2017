@@ -220,14 +220,15 @@ db_close($conn);
     <!-- /#page-wrapper -->
 </div>
 <!-- /#wrapper -->
-<!-- Modal -->
+
+<!-- Modal for adding questions-->
 <div class="modal fade" id="dialog" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="dialogTitle">Edit Question</h4>
+                <h4 class="modal-title" id="dialogTitleMCQ">Edit Question</h4>
             </div>
             <div class="modal-body">
                 <form id="submission" method="post" action="<?php echo $phpSelf; ?>">
@@ -259,7 +260,7 @@ db_close($conn);
     var dialogInputArr = $('.dialoginput');
     $('.glyphicon-plus').on('click', function () {
         $("label").remove(".error");
-        $('#dialogTitle').text("Add Question");
+        $('#dialogTitleMCQ').text("Add Question");
         $('#update').val(1);
         for (i = 0; i < dialogInputArr.length; i++) {
             dialogInputArr.eq(i).val('');
@@ -326,7 +327,8 @@ db_close($conn);
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
         if(weekIsChanged||extraQuizIsChanged || quizNameIsChanged){
             if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
-                location.href='<?php echo "mcq.php" ?>'            }
+                location.href='<?php echo "mcq.php" ?>'
+            }
         }else{
             location.href='<?php echo "mcq.php" ?>'
         }

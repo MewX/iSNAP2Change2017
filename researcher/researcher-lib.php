@@ -21,9 +21,9 @@ if (isset($_SESSION['researcherID'])) {
 // sidebar
 $userAdminPageArr = array('School', 'Class', 'Student', 'Statistics');
 $userAdminIconArr = array('mortar-board', 'users', 'child', 'bar-chart');
-$contentAdminPageArr = array('Week', 'Quiz', 'Snap Fact', 'Verbose Fact', 'MCQ', 'SAQ', 'Matching', 'Poster', 'Video', 'Misc');
+$contentAdminPageArr = array('Week', 'Quiz', 'Snap Fact', 'MCQ', 'SAQ', 'Matching', 'Poster', 'Video', 'Misc');
 $quizTypeArr = array('Matching', 'Poster', 'Video', 'Image', 'Misc');
-$contentAdminIconArr = array('calendar', 'book', 'lightbulb-o', 'folder-open', 'check', 'pencil', 'th-list', 'paint-brush', 'video-camera', 'magic');
+$contentAdminIconArr = array('calendar', 'book', 'lightbulb-o', 'check', 'pencil', 'th-list', 'paint-brush', 'video-camera', 'magic');
 $gradingPageArr = array('SAQ Grading', 'Video Grading', 'Poster Grading');
 $gradingIconArr = array('pencil', 'video-camera', 'paint-brush');
 
