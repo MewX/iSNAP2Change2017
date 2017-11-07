@@ -135,18 +135,56 @@ function achSetLearningFromMistakes(PDO $c, $studentId) {
 
 // achieve "HeadOfClass"
 function achCheckAndSetHeadOfClass(PDO $c, $studentId) {
-    // TODO: check
-//    $sql = "update achievements set HeadOfClass = 1 where StudentID = ?";
-//    $sql = $c->prepare($sql);
-//    $sql->execute(array($studentId));
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->HeadOfClass != 0 || $obj->WeeklyGenius == 0) return;
+
+    // get total score of the system
+    $maxScore = getOverallScore($c);
+    // get total score of the student
+    $studentScore = getRecord($c, $studentId, "Student")->Score;
+
+    // update achievement
+    if ($maxScore <= $studentScore) {
+        $sql = "UPDATE achievements SET HeadOfClass = 1 WHERE StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
 // achieve "WeeklyGenius"
 function achCheckAndSetWeeklyGenius(PDO $c, $studentId) {
-    // TODO: not achieved, and then check weekly marks
-//    $sql = "update achievements set HeadOfClass = 1 where StudentID = ?";
-//    $sql = $c->prepare($sql);
-//    $sql->execute(array($studentId));
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->WeeklyGenius != 0) return;
+
+    // check current week
+    $weekNum = getStudentWeek($c, $studentId);
+    $weekTotal = getWeekOverallScore($c, $weekNum);
+    $weekStudentScore = getStudentWeekTotalScore($c, $weekNum, $studentId);
+
+    // check history week and update record status
+    $beg = $obj->WGContWeekStart;
+    $cnt = $obj->WGContWeekCount;
+    $achieved = 0;
+    if ($beg + $cnt == $weekNum && $weekTotal <= $weekStudentScore) {
+        // add one more week
+        $cnt += 1;
+        if ($cnt >= 3) $achieved = 1;
+    } else if ($weekTotal <= $weekStudentScore) {
+        // not continuous
+        $beg = $weekNum;
+        $cnt = 1;
+    } else {
+        // reset
+        $beg = -1;
+        $cnt = 0;
+    }
+
+    // update database
+    $sql = "UPDATE achievements SET HeadOfClass = ?, WGContWeekStart = ?, WGContWeekCount = ? WHERE StudentID = ?";
+    $sql = $c->prepare($sql);
+    $sql->execute(array($achieved, $beg, $cnt, $studentId));
 }
 
 // achieve "GotItRight"

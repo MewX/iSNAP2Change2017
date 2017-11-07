@@ -142,7 +142,7 @@ if (!isset($INEXAM)) {
             </div>
 
             <div class="setting-icon dropdown">
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" style="margin-top: 0">
                     <li class="dropdown-item"><a href="settings.php">Settings</a></li>
                     <li class="dropdown-item"><a href="logout.php">Log out</a></li>
                 </ul>

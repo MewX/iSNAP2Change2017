@@ -70,6 +70,9 @@ CREATE TABLE `achievements` (
     BeatScoreMcBViewed tinyint(1) NOT NULL DEFAULT 0,
     BeatScoreMcCViewed tinyint(1) NOT NULL DEFAULT 0,
     
+    WGContWeekStart TINYINT NOT NULL DEFAULT -1,
+    WGContWeekCount TINYINT NOT NULL DEFAULT 0,
+    
     PRIMARY KEY(StudentID),
     FOREIGN KEY (StudentID) REFERENCES student(StudentID)
 ) ENGINE=INNODB;

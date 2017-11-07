@@ -1777,8 +1777,14 @@ function getLearningMaterialByWeek(PDO $conn, $week)
     $learningMaterialResult = $learningMaterialQuery->fetchAll(PDO::FETCH_OBJ);
     return $learningMaterialResult;
 }
-
 /* Learning_Material */
+
+
+/**
+ * Get total score of the whole system.
+ * @param PDO $conn PDO connection
+ * @return int total score
+ */
 function getOverallScore(PDO $conn){
     $score = 0;
     $tableName = array("Matching_Section", "Misc_Section", "Poster_Section", "SAQ_Question", "MCQ_Section");
@@ -1793,6 +1799,35 @@ function getOverallScore(PDO $conn){
         }
     }
     return $score;
+}
+
+function getWeekOverallScore(PDO $conn, $weekNum){
+    $score = 0;
+    $tableName = array("Matching_Section", "Misc_Section", "Poster_Section", "SAQ_Question", "MCQ_Section");
+
+    for($i = 0; $i < count($tableName); $i++){
+        $quizSql = "SELECT Points FROM $tableName[$i] NATURAL join quiz where quiz.Week = $weekNum;";
+        $quizQuery = $conn->prepare($quizSql);
+        $quizQuery->execute();
+        $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);
+        for ($j = 0; $j < count($quizResult); $j++) {
+            $score += $quizResult[$j]->Points;//getStuQuizScore($conn, $quizResult[$i]->QuizID, $studentID);
+        }
+    }
+    return $score;
+}
+
+function getStudentWeekTotalScore(PDO $conn, $weekNum, $studentId) {
+    $quizSql = "SELECT * FROM `quiz_record` c WHERE c.StudentID = ? and c.QuizID IN (SELECT s.QuizID FROM `quiz` s WHERE Week = ?);";
+    $quizQuery = $conn->prepare($quizSql);
+    $quizQuery->execute(array($studentId, $weekNum));
+    $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);
+
+    $total = 0;
+    for ($i = 0; $i < count($quizResult); $i ++) {
+        $total += $quizResult[$i]->Grade;
+    }
+    return $total;
 }
 
 function calculateStudentScore(PDO $conn, $studentID)
@@ -1865,8 +1900,8 @@ function updateStudentScore(PDO $conn, $studentID, $fastRun = false)
     // check ranking
     if (!$fastRun) {
         achSetQuizLeaderBoardTopTenOnce($conn, $studentID, $newTotalScore);
-        achCheckAndSetHeadOfClass($conn, $studentID);
         achCheckAndSetWeeklyGenius($conn, $studentID);
+        achCheckAndSetHeadOfClass($conn, $studentID);
         achCheckAndSetGotItRight($conn, $studentID);
         achCheckAndSetAced($conn, $studentID);
         achCheckAndSetHatTrick($conn, $studentID);
