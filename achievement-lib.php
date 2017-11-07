@@ -29,7 +29,6 @@ function achGetAllAchievements(PDO $c) {
     $sql = "select StudentID,QuizMaster,AllSnapFacts,ResourcePage,QuizLeaderBoardTopTenOnce,LearningFromMistakes,HeadOfClass,WeeklyGenius,GotItRight,Aced,HatTrick,MasterExtraContent,LoginMaster,LoginWeek1,LoginWeek2,LoginWeek3,LoginWeek4,LoginWeek5,LoginWeek6,LoginWeek7,LoginWeek8,LoginWeek9,LoginWeek10,MasterGaming,LaunchSportsNinja,PlayEveryGameModeSn,BeatScoreSnA,BeatScoreSnB,BeatScoreSnC,LaunchMealCrusher,PlayEveryGameModeMc,BeatScoreMcA,BeatScoreMcB,BeatScoreMcC from achievements;";
     $sql = $c->prepare($sql);
     $sql->execute();
-    // TODO: check invokes
     return $sql->fetch(PDO::FETCH_OBJ);
 }
 
@@ -214,35 +213,28 @@ function achCheckAndSetHatTrick(PDO $c, $studentId) {
 
     // check current week
     $weekNum = getStudentWeek($c, $studentId);
-    $thisWeek = doesStudentHaveFullMarkInWeek($c, $weekNum, $studentId);
-
-    // check history week and update record status
-    $beg = $obj->HTContWeekStart;
-    $cnt = $obj->HTContWeekCount;
-    $achieved = 0;
-    if ($beg + $cnt == $weekNum && $thisWeek) {
-        // add one more week
-        $cnt += 1;
-        if ($cnt >= 3) $achieved = 1;
-    } else if ($thisWeek) {
-        // not continuous
-        $beg = $weekNum;
-        $cnt = 1;
-    } else {
-        // reset
-        $beg = -1;
-        $cnt = 0;
+    if ($weekNum >= 3
+        && doesStudentHaveFullMarkInWeek($c, $weekNum, $studentId)
+        && doesStudentHaveFullMarkInWeek($c, $weekNum - 1, $studentId)
+        && doesStudentHaveFullMarkInWeek($c, $weekNum - 2, $studentId)
+    ) {
+        $sql = "UPDATE achievements SET HatTrick = 1 WHERE StudentID = $studentId";
+        $sql = $c->prepare($sql);
+        $sql->execute();
     }
-
-    // update database
-    $sql = "UPDATE achievements SET HatTrick = ?, HTContWeekStart = ?, HTContWeekCount = ? WHERE StudentID = ?";
-    $sql = $c->prepare($sql);
-    $sql->execute(array($achieved, $beg, $cnt, $studentId));
 }
 
 // achieve "MasterExtraContent"
 function achCheckAndSetMasterExtraContent(PDO $c, $studentId) {
-    // TODO:
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->MasterExtraContent != 0) return;
+
+    if (doesStudentFinishAllExtraActivity($c, $studentId)) {
+        $sql = "UPDATE achievements SET MasterExtraContent = 1 WHERE StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
 
