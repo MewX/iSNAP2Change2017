@@ -319,16 +319,16 @@ db_close($conn);
             //$('#learningMaterial').submit();
 
             //solution 1:
-//            var form = document.forms.quizEditor;
-//            var postData = [];
-//            for(var i=0; i<form.elements.length; i++){
-//                postData.push(form.elements[i].name + "=" + form.elements[i].value);
-//            }
-//            var xhr = new XMLHttpRequest();
-//            xhr.open("POST", "mcq-editor.php", true);
-//            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-//            xhr.send(postData.join("&"));
-//            $('#learningMaterial').submit();
+            var form = document.forms.quizEditor;
+            var postData = [];
+            for(var i=0; i<form.elements.length; i++){
+                postData.push(form.elements[i].name + "=" + form.elements[i].value);
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "mcq-editor.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send(postData.join("&"));
+            $("#learning-material-editor").contents().find("#learningMaterial").submit();
 
             //solution 2:
 //            $.post('mcq-editor.php?quizID=<?php //echo $quizID ?>//', $('#metadata-submission').serialize(), function() {
