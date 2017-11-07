@@ -77,7 +77,7 @@ try {
     </script>
 </head>
 <body>
-<form method="post" action="<?php echo $phpSelf ?>">
+<form id="learningMaterial" method="post" action="<?php echo $phpSelf ?>" name="materialEditor">
     <label for="QuizID" style="display:none">QuizID</label>
     <input type="text" class="form-control" id="QuizID" name="quizID" style="display:none"
            value="<?php echo $quizID; ?>" required>

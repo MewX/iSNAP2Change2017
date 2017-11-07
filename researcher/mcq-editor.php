@@ -108,7 +108,7 @@ db_close($conn);
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <form id="metadata-submission" method="post" action="<?php echo $phpSelf; ?>">
+                        <form id="metadata-submission" method="post" action="<?php echo $phpSelf; ?>" name="quizEditor">
                             <!--if 0 update; else if -1 delete;-->
                             <input type=hidden name="metadataUpdate" id="metadataUpdate" value="1" required>
                             <label for="QuizID" style="display:none">QuizID</label>
@@ -315,6 +315,27 @@ db_close($conn);
                 }
             });
             $('#metadata-submission').submit();
+            //console.log($('#learningMaterial'));
+            //$('#learningMaterial').submit();
+
+            //solution 1:
+//            var form = document.forms.quizEditor;
+//            var postData = [];
+//            for(var i=0; i<form.elements.length; i++){
+//                postData.push(form.elements[i].name + "=" + form.elements[i].value);
+//            }
+//            var xhr = new XMLHttpRequest();
+//            xhr.open("POST", "mcq-editor.php", true);
+//            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//            xhr.send(postData.join("&"));
+//            $('#learningMaterial').submit();
+
+            //solution 2:
+//            $.post('mcq-editor.php?quizID=<?php //echo $quizID ?>//', $('#metadata-submission').serialize(), function() {
+//                $.post('learning-material-editor.php?quizID=<?php //echo $quizID ?>//', $('#learningMaterial').serialize(), function() {
+//                    console.log('finished');
+//                });
+//            });
         });
     });
 
