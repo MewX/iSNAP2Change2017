@@ -1,12 +1,5 @@
 <?php
-require_once ("../mysql-lib.php");
-$conn = db_connect();
-$csvFileName = $_GET['fileName'].".csv";
-$sql = "";
-$header = "";
-$data = "";
-if($csvFileName == "student demography.csv"){
-    //$sql = "SELECT StudentID, Gender, DOB, Identity, Score as QuizScore, ClassName FROM Student NATURAL JOIN Class;";
+function generateStudentDemography($conn, &$header, &$data){
     $sql = "SELECT StudentID, Gender, DOB, Identity as Country, QuizScore, ClassName, 
             MAX(IF(gameID=1,gameScore,null)) as FruitNinja, 
             MAX(IF(gameID=2,gameScore,null)) as CandyCrush from 
@@ -30,7 +23,9 @@ if($csvFileName == "student demography.csv"){
         }
         $data .= "\t\n";
     }
-}else if($csvFileName == "quiz process.csv"){
+}
+
+function generateQuizProcess($conn, &$header, &$data){
     $columnName = array('ClassName', 'FirstName', 'LastName');
     $colspanName = array('');
     $quizList = array('ClassName', 'FirstName', 'LastName');
@@ -78,10 +73,43 @@ if($csvFileName == "student demography.csv"){
         }
         $data .= "\t\n";
     }
-}else if($csvFileName == "survey result.csv"){
-
 }
 
+function generateAchievements($conn, &$header, &$data){
+    $sql = "select StudentID,QuizMaster,AllSnapFacts,ResourcePage,QuizLeaderBoardTopTenOnce,LearningFromMistakes,HeadOfClass,WeeklyGenius,GotItRight,Aced,HatTrick,MasterExtraContent,LoginMaster,LoginWeek1,LoginWeek2,LoginWeek3,LoginWeek4,LoginWeek5,LoginWeek6,LoginWeek7,LoginWeek8,LoginWeek9,LoginWeek10,MasterGaming,LaunchSportsNinja,PlayEveryGameModeSn,BeatScoreSnA,BeatScoreSnB,BeatScoreSnC,LaunchMealCrusher,PlayEveryGameModeMc,BeatScoreMcA,BeatScoreMcB,BeatScoreMcC from achievements;";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+    $result = $sql->fetchAll();
+    $total_column = $sql->columnCount();
+
+    for ($counter = 0; $counter < $total_column; $counter ++) {
+        $meta = $sql->getColumnMeta($counter);
+        $header .= '"' . $meta['name'] . '",';
+    }
+    $header .= "\n";
+    for($i = 0; $i < count($result); $i++){
+        for($j = 0; $j<count($result[$i])/2; $j++){
+            $data .= '"' . $result[$i][$j] . '",';
+        }
+        $data .= "\t\n";
+    }
+}
+
+require_once ("../mysql-lib.php");
+$conn = db_connect();
+$csvFileName = $_GET['fileName'].".csv";
+$sql = "";
+$header = "";
+$data = "";
+if($csvFileName == "student demography.csv"){
+    generateStudentDemography($conn, $header, $data);
+}else if($csvFileName == "quiz process.csv"){
+    generateQuizProcess($conn, $header, $data);
+}else if($csvFileName == "survey result.csv"){
+
+}else if($csvFileName == "achievements.csv") {
+    generateAchievements($conn, $header, $data);
+}
 
 header('Content-type: application/csv');
 header('Content-Disposition: attachment; filename='.$csvFileName);

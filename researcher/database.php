@@ -157,6 +157,17 @@ db_close($conn);
                                 <a href="../backup_restore_db/generateCSV.php?fileName=survey result">Generate</a>
                             </div>
                         </div>
+                        <hr noshade>
+                        <div>
+                            <h4>Achievements Result</h4>
+                            <div class="alert alert-info">
+                                <p>
+                                    You can download a .csv file for database by clicking the <b>Generate</b> link below.
+                                </p>
+                                <br>
+                                <a href="../backup_restore_db/generateCSV.php?fileName=achievements">Generate</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
