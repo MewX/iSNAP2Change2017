@@ -413,12 +413,20 @@
                     </div>
                 </div>
                 <div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1 contact2" style="margin-top:3%; height:50%; margin-bottom: 1%;">
-                    <div class="logo" style="height:35%;">
-                        <img src="./img/Snap_Logo_Inverted.png" style="width:90%; height: 90%;">
+                    <div class="logo">
+                        <img src="./img/Snap_Logo_Inverted.png" style="width:60%; height: 60%;">
                     </div>
-                    <div style="margin-top:3%;text-align: justify">
-                        <span class="p1">Tobacco smoking is one of the largest causes of preventable illness and death in Australia. Research estimates that two in three lifetime smokers will die from a disease caused by their smoking. The most recent estimate of deaths caused by tobacco in Australia is for the financial year 2004–05.
-                        </span>
+                    <div style="margin-top:3%;text-align: justify; color: white;font-family: Maitree, serif;">
+<!--                        <span class="p1">Tobacco smoking is one of the largest causes of preventable illness and death in Australia. Research estimates that two in three lifetime smokers will die from a disease caused by their smoking. The most recent estimate of deaths caused by tobacco in Australia is for the financial year 2004–05.-->
+<!--                        </span>-->
+                        <p>Welcome to the SNAP² website. </p>
+
+                        <p>The purpose of this website is to inspire a healthier future and reduce the uptake of youth smoking.
+                            This website features an interactive 10-week course designed to be run out in schools educate youth about the harms of smoking, whilst also endeavouring to upskill youth in resistance and refusal skills to not give in to the pressure of smoking. Featured activities on the website include quizzes, videos, games, creative exercises and competitions.</p>
+
+                        <p>An evaluation of the website will occur after the course is completed through a series of focus groups with youth, parents/guardians and teachers.</p>
+
+                        <p>This website has been created for the purpose of Harshani Jayasinghe’s Doctorate of Philosophy with The University of Adelaide.</p>
                     </div>
                 </div>
                 <div class="col-xs-4 col-xs-offset-4 col-md-2 col-md-offset-5" style="padding-bottom: 72px; height: 10%; margin-top:1%; margin-bottom: 1%;">
