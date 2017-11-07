@@ -198,7 +198,12 @@ function achCheckAndSetAced(PDO $c, $studentId) {
     $obj = achGetAllAchievementsByStudentId($c, $studentId);
     if ($obj->Aced != 0) return;
 
-    // TODO:
+    // update database
+    if (doesStudentHaveFullMark($c, $studentId)) {
+        $sql = "UPDATE achievements SET Aced = 1 WHERE StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
 // achieve "HatTrick"
@@ -207,23 +212,19 @@ function achCheckAndSetHatTrick(PDO $c, $studentId) {
     $obj = achGetAllAchievementsByStudentId($c, $studentId);
     if ($obj->HatTrick != 0 || $obj->Aced == 0) return;
 
-    // TODO:
-    // TODO: check status
-
     // check current week
     $weekNum = getStudentWeek($c, $studentId);
-    $weekTotal = getWeekOverallScore($c, $weekNum);
-    $weekStudentScore = getStudentWeekTotalScore($c, $weekNum, $studentId);
+    $thisWeek = doesStudentHaveFullMarkInWeek($c, $weekNum, $studentId);
 
     // check history week and update record status
-    $beg = $obj->WGContWeekStart;
-    $cnt = $obj->WGContWeekCount;
+    $beg = $obj->HTContWeekStart;
+    $cnt = $obj->HTContWeekCount;
     $achieved = 0;
-    if ($beg + $cnt == $weekNum && $weekTotal <= $weekStudentScore) {
+    if ($beg + $cnt == $weekNum && $thisWeek) {
         // add one more week
         $cnt += 1;
         if ($cnt >= 3) $achieved = 1;
-    } else if ($weekTotal <= $weekStudentScore) {
+    } else if ($thisWeek) {
         // not continuous
         $beg = $weekNum;
         $cnt = 1;
@@ -233,14 +234,11 @@ function achCheckAndSetHatTrick(PDO $c, $studentId) {
         $cnt = 0;
     }
 
-    // TODO: hat trick
     // update database
-    $sql = "UPDATE achievements SET HeadOfClass = ?, WGContWeekStart = ?, WGContWeekCount = ? WHERE StudentID = ?";
+    $sql = "UPDATE achievements SET HatTrick = ?, HTContWeekStart = ?, HTContWeekCount = ? WHERE StudentID = ?";
     $sql = $c->prepare($sql);
     $sql->execute(array($achieved, $beg, $cnt, $studentId));
 }
-
-// TODO: add combo counter in database
 
 // achieve "MasterExtraContent"
 function achCheckAndSetMasterExtraContent(PDO $c, $studentId) {
