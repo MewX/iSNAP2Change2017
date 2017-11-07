@@ -1855,6 +1855,14 @@ function getStudentTotalMCQScore(PDO $conn, $studentId) {
     return $total;
 }
 
+function doesStudentFinishAllExtraActivity(PDO $conn, $studentId) {
+    $quizSql = "select * from quiz q where q.ExtraQuiz = 1 and q.QuizID not in (select s.QuizID from quiz_record s where s.StudentID = $studentId)";
+    $quizQuery = $conn->prepare($quizSql);
+    $quizQuery->execute();
+    $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);
+    return count($quizResult) == 0;
+}
+
 function doesStudentHaveFullMarkInWeek(PDO $conn, $weekNum, $studentId) {
     $tableName = array("Matching_Section", "Misc_Section", "Poster_Section", "SAQ_Question", "MCQ_Section");
     for($i = 0; $i < count($tableName); $i++){
