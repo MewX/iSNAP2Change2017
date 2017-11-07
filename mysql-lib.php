@@ -228,7 +228,7 @@ function validToken(PDO $conn, $token)
 {
     $tokenSql = "SELECT COUNT(*)
 				 FROM Class
-				 WHERE TokenString = BINARY ?";
+				 WHERE TokenString = BINARY ? AND isClosed = 0";
 
     $tokenQuery = $conn->prepare($tokenSql);
     $tokenQuery->execute(array($token));
