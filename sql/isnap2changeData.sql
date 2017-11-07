@@ -213,7 +213,7 @@ CREATE TABLE `achievements` (
 
 LOCK TABLES `achievements` WRITE;
 /*!40000 ALTER TABLE `achievements` DISABLE KEYS */;
-INSERT INTO `achievements` VALUES (2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+INSERT INTO `achievements` VALUES (1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `achievements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,6 +230,7 @@ CREATE TABLE `class` (
   `SchoolID` mediumint(9) NOT NULL,
   `TokenString` varchar(100) NOT NULL,
   `UnlockedProgress` mediumint(9) NOT NULL DEFAULT 10,
+  `isClosed` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`ClassID`),
   UNIQUE KEY `ClassName` (`ClassName`),
   UNIQUE KEY `TokenString` (`TokenString`),
@@ -244,7 +245,7 @@ CREATE TABLE `class` (
 
 LOCK TABLES `class` WRITE;
 /*!40000 ALTER TABLE `class` DISABLE KEYS */;
-INSERT INTO `class` VALUES (1,'Sample Class 1A',1,'TOKEN1',3),(2,'Sample Class 1B',1,'TOKEN2',10),(3,'Sample Class 1C',1,'TOKEN3',10),(4,'Sample Class 2C',2,'TOKEN4',10);
+INSERT INTO `class` VALUES (1,'Sample Class 1A',1,'TOKEN1',3,0),(2,'Sample Class 1B',1,'TOKEN2',10,0),(3,'Sample Class 1C',1,'TOKEN3',10,0),(4,'Sample Class 2C',2,'TOKEN4',10,0);
 /*!40000 ALTER TABLE `class` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -982,6 +983,7 @@ CREATE TABLE `student` (
   `Score` mediumint(9) DEFAULT 0,
   `SubmissionTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `ClassID` mediumint(9) NOT NULL,
+  `isLocked` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`StudentID`),
   KEY `Student_ClassID_FK` (`ClassID`),
   CONSTRAINT `Student_ClassID_FK` FOREIGN KEY (`ClassID`) REFERENCES `class` (`ClassID`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -994,7 +996,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (1,'Fernando',NULL,'Fernando','Trump','d59324e4d5acb950c4022cd5df834cc3','fernado@gmail.com','Male','2003-10-20','Resident',0,'2017-10-03 14:56:19',1),(2,'Todd',NULL,'Todd','Webb','d59324e4d5acb950c4022cd5df834cc3','toddyy@gmail.com','Male','2003-11-20','Aboriginal',16,'2016-06-02 18:48:43',1),(3,'Theresa',NULL,'Theresa','Rios','d59324e4d5acb950c4022cd5df834cc3','theresa03@gmail.com','Female','2003-12-20','Aboriginal',0,'2016-06-03 18:48:43',1),(4,'Hai',NULL,'Hai','Lam','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2003-10-22','Aboriginal',0,'2016-06-01 18:49:43',1),(5,'Lee',NULL,'Lee','Malone','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2003-10-24','Aboriginal',0,'2016-06-07 18:48:43',1),(6,'Tim',NULL,'Tim','Mason','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2003-10-25','Resident',0,'2016-06-11 18:48:43',1),(7,'Clinton',NULL,'Clinton','Snyder','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2003-10-28','Resident',0,'2017-10-03 14:56:19',1),(8,'Elbert',NULL,'Elbert','Chapman','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2003-10-22','Resident',0,'2016-06-05 18:48:43',1),(9,'Ervin',NULL,'Ervin','Murray','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2003-11-20','Resident',0,'2017-10-03 14:56:19',1),(10,'Sheila',NULL,'Sheila','Frank','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Aboriginal',0,'2017-10-03 14:56:19',1),(11,'Grace',NULL,'Grace','Austin','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-29','Resident',0,'2017-10-03 14:56:19',1),(12,'Ruby',NULL,'Ruby','Chavez','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Resident',0,'2016-06-05 18:48:43',1),(13,'Sonya',NULL,'Sonya','Kelly','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Resident',0,'2017-10-03 14:56:19',1),(14,'Donna',NULL,'Donna','Pratt','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Resident',0,'2017-10-03 14:56:19',1),(15,'Stacy',NULL,'Stacy','Figueroa','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Resident',0,'2017-10-03 14:56:19',1),(16,'Fannie',NULL,'Fannie','Waters','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-28','Aboriginal',0,'2016-06-01 18:48:42',1),(17,'June',NULL,'June','West','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Aboriginal',0,'2017-10-03 14:56:19',1),(18,'Melinda',NULL,'Melinda','Kelley','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Resident',0,'2017-10-03 14:56:19',1),(19,'Leo',NULL,'Leo','Potter','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2002-04-22','Resident',0,'2017-10-03 14:56:19',1),(20,'Hector',NULL,'Hector','Byrd','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2002-04-20','Resident',0,'2017-10-03 14:56:19',1),(21,'Otis',NULL,'Otis','Lawrence','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2002-04-20','Aboriginal',16,'2017-10-03 14:56:19',2),(22,'Cassandra',NULL,'Cassandra','James','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2002-04-20','Aboriginal',0,'2017-10-03 14:56:19',2),(23,'Marilyn',NULL,'Marilyn','Ryan','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2002-04-20','Aboriginal',0,'2017-10-03 14:56:19',1);
+INSERT INTO `student` VALUES (1,'Fernando',NULL,'Fernando','Trump','d59324e4d5acb950c4022cd5df834cc3','fernado@gmail.com','Male','2003-10-20','Resident',0,'2017-10-03 14:56:19',1,0),(2,'Todd',NULL,'Todd','Webb','d59324e4d5acb950c4022cd5df834cc3','toddyy@gmail.com','Male','2003-11-20','Aboriginal',16,'2016-06-02 18:48:43',1,1),(3,'Theresa',NULL,'Theresa','Rios','d59324e4d5acb950c4022cd5df834cc3','theresa03@gmail.com','Female','2003-12-20','Aboriginal',0,'2016-06-03 18:48:43',1,0),(4,'Hai',NULL,'Hai','Lam','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2003-10-22','Aboriginal',0,'2016-06-01 18:49:43',1,0),(5,'Lee',NULL,'Lee','Malone','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2003-10-24','Aboriginal',0,'2016-06-07 18:48:43',1,0),(6,'Tim',NULL,'Tim','Mason','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2003-10-25','Resident',0,'2016-06-11 18:48:43',1,0),(7,'Clinton',NULL,'Clinton','Snyder','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2003-10-28','Resident',0,'2017-10-03 14:56:19',1,0),(8,'Elbert',NULL,'Elbert','Chapman','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2003-10-22','Resident',0,'2016-06-05 18:48:43',1,0),(9,'Ervin',NULL,'Ervin','Murray','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2003-11-20','Resident',0,'2017-10-03 14:56:19',1,0),(10,'Sheila',NULL,'Sheila','Frank','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Aboriginal',0,'2017-10-03 14:56:19',1,0),(11,'Grace',NULL,'Grace','Austin','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-29','Resident',0,'2017-10-03 14:56:19',1,0),(12,'Ruby',NULL,'Ruby','Chavez','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Resident',0,'2016-06-05 18:48:43',1,0),(13,'Sonya',NULL,'Sonya','Kelly','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Resident',0,'2017-10-03 14:56:19',1,0),(14,'Donna',NULL,'Donna','Pratt','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Resident',0,'2017-10-03 14:56:19',1,0),(15,'Stacy',NULL,'Stacy','Figueroa','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Resident',0,'2017-10-03 14:56:19',1,0),(16,'Fannie',NULL,'Fannie','Waters','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-28','Aboriginal',0,'2016-06-01 18:48:42',1,0),(17,'June',NULL,'June','West','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Aboriginal',0,'2017-10-03 14:56:19',1,0),(18,'Melinda',NULL,'Melinda','Kelley','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2003-10-20','Resident',0,'2017-10-03 14:56:19',1,0),(19,'Leo',NULL,'Leo','Potter','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2002-04-22','Resident',0,'2017-10-03 14:56:19',1,0),(20,'Hector',NULL,'Hector','Byrd','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2002-04-20','Resident',0,'2017-10-03 14:56:19',1,0),(21,'Otis',NULL,'Otis','Lawrence','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Male','2002-04-20','Aboriginal',16,'2017-10-03 14:56:19',2,0),(22,'Cassandra',NULL,'Cassandra','James','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2002-04-20','Aboriginal',0,'2017-10-03 14:56:19',2,0),(23,'Marilyn',NULL,'Marilyn','Ryan','d59324e4d5acb950c4022cd5df834cc3','isnap2demo@gmail.com','Female','2002-04-20','Aboriginal',0,'2017-10-03 14:56:19',1,0);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1111,4 +1113,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-06 22:44:16
+-- Dump completed on 2017-11-07 14:32:34

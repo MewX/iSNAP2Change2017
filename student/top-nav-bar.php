@@ -222,15 +222,13 @@ if (!isset($INEXAM)) {
                 dataType: "json"
             })
                 .done(function (feedback) {
-                    if (feedback.message !== "success") {
-                        alert(feedback.message + ". Please try again!");
-                        return;
-                    }
-
                     if (feedback.result === "valid") {
                         location.href = 'game-home.php';
-                    } else {
+                    } else if(feedback.result === "invalid"){
                         $('#login-fail-text').text("Invalid username and/or password!");
+                        $('#password').val("");
+                    } else if(feedback.result === "expired"){
+                        $('#login-fail-text').text("Your account is expired!");
                         $('#password').val("");
                     }
                 })

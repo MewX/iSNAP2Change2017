@@ -134,6 +134,22 @@ function deleteClass(PDO $conn, $classID)
     deleteRecord($conn, $classID, "Class");
 }
 
+function setIsClosedForClass(PDO $conn, $classID, $isClosed){
+    //Close Class
+    $updateSql = "UPDATE Class 
+            SET isClosed = ?
+            WHERE ClassID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($isClosed, $classID));
+
+    //Lock Students in this Class
+    $updateSql = "UPDATE Student 
+            SET isLocked = ?
+            WHERE ClassID = ?";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute(array($isClosed, $classID));
+}
+
 function getClass(PDO $conn, $classID)
 {
     return getRecord($conn, $classID, "Class");
@@ -378,7 +394,7 @@ function getStudentsNumByClass(PDO $conn, $studentID)
 function getStudentsRank(PDO $conn)
 {
     $leaderBoardSql = "SELECT Username, Score, RANK() OVER (ORDER BY Score DESC) AS ranking
-					   FROM Student
+					   FROM Student WHERE isLocked = 0
 					   ORDER BY Score DESC, SubmissionTime 
 					   LIMIT 10;";
 
@@ -391,10 +407,13 @@ function getStudentsRank(PDO $conn)
 
 function getStudentRank(PDO $conn, $studentID)
 {
-    $rankSql = "SELECT COUNT(*) FROM (SELECT StudentID, Username, Score, @curRank := @curRank + 1 AS Rank
-                FROM Student, (SELECT @curRank := 0) R
-                ORDER BY Score DESC, SubmissionTime) Class_Rank
-                WHERE StudentID = ?";
+    $rankSql = "SELECT COUNT(*) 
+                  FROM (
+                    SELECT ClassID, StudentID , Score, RANK() OVER (ORDER BY Score DESC) AS ranking
+                    FROM Student 
+                    WHERE isLocked = 0
+                  ) total_rank 
+                  WHERE StudentID = ?";
 
     $rankQuery = $conn->prepare($rankSql);
     $rankQuery->execute(array($studentID));
@@ -405,8 +424,9 @@ function getStudentRank(PDO $conn, $studentID)
 
     $rankSql = "SELECT ranking 
                   FROM (
-                      SELECT StudentID , Score, RANK() OVER (ORDER BY Score DESC) AS ranking
+                    SELECT StudentID , Score, RANK() OVER (ORDER BY Score DESC) AS ranking
                     FROM Student
+                    WHERE isLocked = 0
                   ) total_rank 
                   WHERE StudentID = ?";
     $rankQuery = $conn->prepare($rankSql);
@@ -420,6 +440,7 @@ function getStudentRankByGame(PDO $conn, $studentID)
     $rankSql = "SELECT COUNT(*) FROM (
                   SELECT game_total_record.StudentID , game_total_record.Score, RANK() OVER (ORDER BY game_total_record.Score DESC) AS ranking
                     FROM Student LEFT JOIN game_total_record ON student.StudentID = game_total_record.StudentID
+                    WHERE isLocked = 0
                   ) total_rank 
                   WHERE StudentID = ?";
 
@@ -434,6 +455,7 @@ function getStudentRankByGame(PDO $conn, $studentID)
                   FROM (
                     SELECT game_total_record.StudentID , game_total_record.Score, RANK() OVER (ORDER BY game_total_record.Score DESC) AS ranking
                     FROM Student LEFT JOIN game_total_record ON student.StudentID = game_total_record.StudentID
+                    WHERE isLocked = 0
                   ) total_rank 
                   WHERE StudentID = ?";
 
@@ -449,7 +471,7 @@ function getStudentRankByClass(PDO $conn, $studentID)
                   FROM (
                     SELECT ClassID, StudentID , Score, RANK() OVER (ORDER BY Score DESC) AS ranking
                     FROM Student 
-                    WHERE ClassID = (SELECT ClassID FROM Student WHERE StudentID = ?)
+                    WHERE ClassID = (SELECT ClassID FROM Student WHERE StudentID = ?) AND isLocked = 0
                   ) total_rank 
                   WHERE StudentID = ?";
 
@@ -464,7 +486,7 @@ function getStudentRankByClass(PDO $conn, $studentID)
                   FROM (
                     SELECT ClassID, StudentID , Score, RANK() OVER (ORDER BY Score DESC) AS ranking
                     FROM Student 
-                    WHERE ClassID = (SELECT ClassID FROM Student WHERE StudentID = ?)
+                    WHERE ClassID = (SELECT ClassID FROM Student WHERE StudentID = ?) AND isLocked = 0
                   ) total_rank 
                   WHERE StudentID = ?";
 
@@ -477,11 +499,11 @@ function getStudentRankByClass(PDO $conn, $studentID)
 
 function getStudentGameRankByClass(PDO $conn, $studentID)
 {
-    $rankSql = "SELECT ranking 
+    $rankSql = "SELECT COUNT(*)  
                   FROM (
                     SELECT ClassID, game_total_record.StudentID , game_total_record.Score, RANK() OVER (ORDER BY game_total_record.Score DESC) AS ranking
                     FROM Student LEFT JOIN game_total_record ON student.StudentID = game_total_record.StudentID 
-                    WHERE ClassID = (SELECT ClassID FROM Student WHERE StudentID = ?)
+                    WHERE ClassID = (SELECT ClassID FROM Student WHERE StudentID = ?) AND isLocked = 0
                   ) total_rank 
                   WHERE StudentID = ?";
 
@@ -489,14 +511,14 @@ function getStudentGameRankByClass(PDO $conn, $studentID)
     $rankQuery->execute(array($studentID, $studentID));
 
     if ($rankQuery->fetchColumn() != 1) {
-        throw new Exception("Fail to get student rank in a class.");
+        throw new Exception("Fail to get student game rank in a class.");
     }
 
     $rankSql = "SELECT ranking 
                   FROM (
                     SELECT ClassID, game_total_record.StudentID , game_total_record.Score, RANK() OVER (ORDER BY game_total_record.Score DESC) AS ranking
                     FROM Student LEFT JOIN game_total_record ON student.StudentID = game_total_record.StudentID 
-                    WHERE ClassID = (SELECT ClassID FROM Student WHERE StudentID = ?)
+                    WHERE ClassID = (SELECT ClassID FROM Student WHERE StudentID = ?) AND isLocked = 0
                   ) total_rank 
                   WHERE StudentID = ?";
 
@@ -521,13 +543,17 @@ function validStudent(PDO $conn, $username, $password)
     $username = strtolower($username);
     $password = md5($password);
     // do query
-    $validStudentSql = "SELECT StudentID, Username FROM Student WHERE lower(username) = ? AND password = ?";
+    $validStudentSql = "SELECT StudentID, Username, isLocked FROM Student WHERE lower(username) = ? AND password = ?";
     $validStudentQuery = $conn->prepare($validStudentSql);
     $validStudentQuery->execute(array($username, $password));
     $ret = $validStudentQuery->fetchAll();
     
     if (count($ret) == 1) {
-        return $ret[0];
+        if($ret[0]['isLocked']==0){
+            return $ret[0];
+        }else{
+            return 'expired';
+        }
     } else if (count($ret) == 0) {
         return null;
     } else {
@@ -2467,6 +2493,7 @@ function calculateStudentGameTotalScore(PDO $conn, $studentID, $historyHighScore
 function getStudentGameRank(PDO $conn){
     $leaderBoardSql = "SELECT Username, game_total_record.Score, RANK() OVER (ORDER BY game_total_record.Score DESC) AS ranking
 					   FROM student JOIN game_total_record ON student.StudentID = game_total_record.StudentID
+					   WHERE isLocked = 0
 					   ORDER BY game_total_record.Score DESC
 					   LIMIT 10;";
 
