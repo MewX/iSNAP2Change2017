@@ -1817,6 +1817,18 @@ function getWeekOverallScore(PDO $conn, $weekNum){
     return $score;
 }
 
+function getOverallMCQScore(PDO $conn){
+    $score = 0;
+    $quizSql = "SELECT Points FROM MCQ_Section;";
+    $quizQuery = $conn->prepare($quizSql);
+    $quizQuery->execute();
+    $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);
+    for ($j = 0; $j < count($quizResult); $j++) {
+        $score += $quizResult[$j]->Points;
+    }
+    return $score;
+}
+
 function getStudentWeekTotalScore(PDO $conn, $weekNum, $studentId) {
     $quizSql = "SELECT * FROM `quiz_record` c WHERE c.StudentID = ? and c.QuizID IN (SELECT s.QuizID FROM `quiz` s WHERE Week = ?);";
     $quizQuery = $conn->prepare($quizSql);
@@ -1828,6 +1840,49 @@ function getStudentWeekTotalScore(PDO $conn, $weekNum, $studentId) {
         $total += $quizResult[$i]->Grade;
     }
     return $total;
+}
+
+function getStudentTotalMCQScore(PDO $conn, $studentId) {
+    $quizSql = "SELECT * FROM `quiz_record` c WHERE c.StudentID = ? and c.QuizID IN (SELECT s.QuizID FROM `quiz` s WHERE QuizType = 'MCQ');";
+    $quizQuery = $conn->prepare($quizSql);
+    $quizQuery->execute(array($studentId));
+    $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);
+
+    $total = 0;
+    for ($i = 0; $i < count($quizResult); $i ++) {
+        $total += $quizResult[$i]->Grade;
+    }
+    return $total;
+}
+
+function doesStudentHaveFullMarkInWeek(PDO $conn, $weekNum, $studentId) {
+    $tableName = array("Matching_Section", "Misc_Section", "Poster_Section", "SAQ_Question", "MCQ_Section");
+    for($i = 0; $i < count($tableName); $i++){
+        // query total
+        $quizSql = "SELECT * FROM quiz_record NATURAL join quiz natural join $tableName[$i] where quiz_record.StudentID = $studentId and quiz.Week = $weekNum";
+        $quizQuery = $conn->prepare($quizSql);
+        $quizQuery->execute();
+        $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);
+        for ($j = 0; $j < count($quizResult); $j++) {
+            if ($quizResult[$j]->Points <= $quizResult[$j]->Grade) return true;
+        }
+    }
+    return false;
+}
+
+function doesStudentHaveFullMark(PDO $conn, $studentId) {
+    $tableName = array("Matching_Section", "Misc_Section", "Poster_Section", "SAQ_Question", "MCQ_Section");
+    for($i = 0; $i < count($tableName); $i++){
+        // query total
+        $quizSql = "SELECT * FROM quiz_record NATURAL join quiz natural join $tableName[$i] where quiz_record.StudentID = $studentId";
+        $quizQuery = $conn->prepare($quizSql);
+        $quizQuery->execute();
+        $quizResult = $quizQuery->fetchAll(PDO::FETCH_OBJ);
+        for ($j = 0; $j < count($quizResult); $j++) {
+            if ($quizResult[$j]->Points <= $quizResult[$j]->Grade) return true;
+        }
+    }
+    return false;
 }
 
 function calculateStudentScore(PDO $conn, $studentID)
@@ -1900,10 +1955,9 @@ function updateStudentScore(PDO $conn, $studentID, $fastRun = false)
     // check ranking
     if (!$fastRun) {
         achSetQuizLeaderBoardTopTenOnce($conn, $studentID, $newTotalScore);
+        achCheckAndSetAced($conn, $studentID);
         achCheckAndSetWeeklyGenius($conn, $studentID);
         achCheckAndSetHeadOfClass($conn, $studentID);
-        achCheckAndSetGotItRight($conn, $studentID);
-        achCheckAndSetAced($conn, $studentID);
         achCheckAndSetHatTrick($conn, $studentID);
         achCheckAndSetMasterExtraContent($conn, $studentID);
         // master achievement

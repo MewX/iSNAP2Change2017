@@ -160,6 +160,58 @@ function achCheckAndSetWeeklyGenius(PDO $c, $studentId) {
 
     // check current week
     $weekNum = getStudentWeek($c, $studentId);
+    while ($weekNum >= 1) {
+        $weekTotal = getWeekOverallScore($c, $weekNum);
+        $weekStudentScore = getStudentWeekTotalScore($c, $weekNum, $studentId);
+        if ($weekTotal <= $weekStudentScore) {
+            // update database
+            $sql = "UPDATE achievements SET WeeklyGenius = 1 WHERE StudentID = ?";
+            $sql = $c->prepare($sql);
+            $sql->execute(array($studentId));
+            break;
+        }
+        $weekNum --;
+    }
+}
+
+// achieve "GotItRight"
+function achCheckAndSetGotItRight(PDO $c, $studentId) {
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->GotItRight != 0 || $obj->Aced == 0) return;
+
+    // get scores
+    $totalMCQMarks = getOverallMCQScore($c);
+    $totalStudentMCQMarks =  getStudentTotalMCQScore($c, $studentId);
+
+    // update database
+    if ($totalMCQMarks <= $totalStudentMCQMarks) {
+        $sql = "UPDATE achievements SET GotItRight = 1 WHERE StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
+}
+
+// achieve "Aced"
+function achCheckAndSetAced(PDO $c, $studentId) {
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->Aced != 0) return;
+
+    // TODO:
+}
+
+// achieve "HatTrick"
+function achCheckAndSetHatTrick(PDO $c, $studentId) {
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->HatTrick != 0 || $obj->Aced == 0) return;
+
+    // TODO:
+    // TODO: check status
+
+    // check current week
+    $weekNum = getStudentWeek($c, $studentId);
     $weekTotal = getWeekOverallScore($c, $weekNum);
     $weekStudentScore = getStudentWeekTotalScore($c, $weekNum, $studentId);
 
@@ -181,25 +233,11 @@ function achCheckAndSetWeeklyGenius(PDO $c, $studentId) {
         $cnt = 0;
     }
 
+    // TODO: hat trick
     // update database
     $sql = "UPDATE achievements SET HeadOfClass = ?, WGContWeekStart = ?, WGContWeekCount = ? WHERE StudentID = ?";
     $sql = $c->prepare($sql);
     $sql->execute(array($achieved, $beg, $cnt, $studentId));
-}
-
-// achieve "GotItRight"
-function achCheckAndSetGotItRight(PDO $c, $studentId) {
-    // TODO:
-}
-
-// achieve "Aced"
-function achCheckAndSetAced(PDO $c, $studentId) {
-    // TODO:
-}
-
-// achieve "HatTrick"
-function achCheckAndSetHatTrick(PDO $c, $studentId) {
-    // TODO:
 }
 
 // TODO: add combo counter in database
