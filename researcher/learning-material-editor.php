@@ -28,7 +28,6 @@ try {
         $quizID = $_GET['competitionID'];
         $materialRes = getCompetition($conn, $quizID);
         $phpSelf = $pageName . '.php?competitionID=' . $quizID;
-
     }
 } catch (Exception $e) {
     debug_err($e);
@@ -81,7 +80,7 @@ try {
     <label for="QuizID" style="display:none">QuizID</label>
     <input type="text" class="form-control" id="QuizID" name="quizID" style="display:none"
            value="<?php echo $quizID; ?>" required>
-    <textarea name="richContentTextArea">
+    <textarea id="materialContent" name="richContentTextArea">
         <?php echo $materialRes->Content; ?>
     </textarea>
     <input type="submit" name='submitbutton' value="Save" class='submit'/> <span
@@ -99,6 +98,15 @@ if ($quizType == "Video" || $quizType == "Image") { ?>
 <?php }
 db_close($conn);
 ?>
+<?php require_once('sb-admin-lib.php'); ?>
+
+<script>
+//    $(document).ready(function () {
+//        $("#learningMaterial :input").change(function () {
+//            $("#learningMaterial").data("changed", true);
+//        });
+//    });
+</script>
 
 </body>
 </html>

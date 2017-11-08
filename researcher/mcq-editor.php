@@ -91,8 +91,7 @@ db_close($conn);
             <div class="col-lg-12">
                 <h1 class="page-header">Multiple Choice Quiz Editor
                     <button type="button" class="btn btn-lg btn-info pull-right"
-                            onclick="goBack()">GO BACK
-                    </button>
+                            onclick="goBack()">GO BACK</button>
                 </h1>
             </div>
             <!-- /.col-lg-12 -->
@@ -257,7 +256,23 @@ db_close($conn);
 <!-- Page-Level Scripts -->
 <script>
     //DO NOT put them in $(document).ready() since the table has multi pages
+    //TODO:
+    //Check how to detect changes on materials
+    $.fn.extend({
+        trackChanges: function() {
+            $(":input",this).change(function() {
+                $(this.form).data("changed", true);
+            });
+        }
+        ,
+        isChanged: function() {
+            return this.data("changed");
+        }
+    });
+
     var dialogInputArr = $('.dialoginput');
+    var material = $("#learning-material-editor").contents().find("#learningMaterial");
+
     $('.glyphicon-plus').on('click', function () {
         $("label").remove(".error");
         $('#dialogTitleMCQ').text("Add Question");
@@ -287,7 +302,9 @@ db_close($conn);
         $('#submission').submit();
     });
 
+
     $(document).ready(function () {
+        material.trackChanges();
         var table = $('#datatables').DataTable({
             responsive: true,
             //rows group for Question and edit box
@@ -314,7 +331,7 @@ db_close($conn);
                     }
                 }
             });
-            $('#metadata-submission').submit();
+            //$('#metadata-submission').submit();
             //console.log($('#learningMaterial'));
             //$('#learningMaterial').submit();
 
@@ -329,13 +346,7 @@ db_close($conn);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.send(postData.join("&"));
             $("#learning-material-editor").contents().find("#learningMaterial").submit();
-
-            //solution 2:
-//            $.post('mcq-editor.php?quizID=<?php //echo $quizID ?>//', $('#metadata-submission').serialize(), function() {
-//                $.post('learning-material-editor.php?quizID=<?php //echo $quizID ?>//', $('#learningMaterial').serialize(), function() {
-//                    console.log('finished');
-//                });
-//            });
+            location.reload();
         });
     });
 
@@ -343,16 +354,23 @@ db_close($conn);
         var week = document.getElementById("Week");
         var quizName = document.getElementById("QuizName");
         var extraQuiz = document.getElementById("ExtraQuiz");
+        var materialContent = document.getElementById('learning-material-editor').contentWindow.document.getElementById('materialContent')
         var weekIsChanged = week.value != week.defaultValue;
         var quizNameIsChanged = quizName.value != quizName.defaultValue;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
-        if(weekIsChanged||extraQuizIsChanged || quizNameIsChanged){
-            if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
-                location.href='<?php echo "mcq.php" ?>'
-            }
-        }else{
-            location.href='<?php echo "mcq.php" ?>'
-        }
+        //var materialContentIsChanged = materialContent.value != materialContent.defaultValue;
+        console.log("materialContent.value");
+        console.log(materialContent.value);
+        //var default = <?php echo json_encode(str_replace(array("\n\r", "\n", "\r"), '', strip_tags($materialRes->Content))); ?>;
+        var default = <?php echo json_encode($materialRes->Content); ?>;
+
+//        if(weekIsChanged||extraQuizIsChanged || quizNameIsChanged || materialContentIsChanged){
+//            if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
+//                location.href='<?php //echo "mcq.php" ?>//'
+//            }
+//        }else{
+//            //location.href='<?php //echo "mcq.php" ?>//'
+//        }
     }
 </script>
 <script src="researcher-tts.js"></script>
