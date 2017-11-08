@@ -362,7 +362,10 @@ db_close($conn);
         console.log("materialContent.value");
         console.log(materialContent.value);
         //var default = <?php echo json_encode(str_replace(array("\n\r", "\n", "\r"), '', strip_tags($materialRes->Content))); ?>;
-        var default = <?php echo json_encode($materialRes->Content); ?>;
+//        var default = <?php //echo json_encode($materialRes->Content); ?>//;
+        var original = atob("<?echo base64_encode($materialRes->Content)?>");
+        console.log(original);
+        return;
 
 //        if(weekIsChanged||extraQuizIsChanged || quizNameIsChanged || materialContentIsChanged){
 //            if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
