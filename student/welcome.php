@@ -434,26 +434,14 @@
                         </div>
                     </div>
                 </div>
-
-                <nav class="navbar navbar-inverse navbar-fixed-bottom">
-                    <div class="container">
-                        <div class="navbar-collapse collapse">
-                            <ul class="nav navbar-nav">
-                                <li class="active">
-                                    <a class="navbar-brand" href="#">
-                                        <img alt="Brand" src="./img/footer-logo.png" style="height: 100%;">
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li><span class="navbar-text navbar-right">Legal stuff - All rights reserved</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
             </div>
         </div>
+        <div class="pg6" id="6" style="height: auto; min-height: 0;">
+            <? require("./footer-bar.php") ?>
+        </div>
 
-        <div id="fb-root"></div>
+        <div id="fb-root">
+        </div>
 
         <script>
             wow = new WOW(

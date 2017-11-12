@@ -256,22 +256,8 @@ db_close($conn);
 <!-- Page-Level Scripts -->
 <script>
     //DO NOT put them in $(document).ready() since the table has multi pages
-    //TODO:
-    //Check how to detect changes on materials
-    $.fn.extend({
-        trackChanges: function() {
-            $(":input",this).change(function() {
-                $(this.form).data("changed", true);
-            });
-        }
-        ,
-        isChanged: function() {
-            return this.data("changed");
-        }
-    });
 
     var dialogInputArr = $('.dialoginput');
-    var material = $("#learning-material-editor").contents().find("#learningMaterial");
 
     $('.glyphicon-plus').on('click', function () {
         $("label").remove(".error");
@@ -304,7 +290,6 @@ db_close($conn);
 
 
     $(document).ready(function () {
-        material.trackChanges();
         var table = $('#datatables').DataTable({
             responsive: true,
             //rows group for Question and edit box
@@ -354,26 +339,21 @@ db_close($conn);
         var week = document.getElementById("Week");
         var quizName = document.getElementById("QuizName");
         var extraQuiz = document.getElementById("ExtraQuiz");
-        var materialContent = document.getElementById('learning-material-editor').contentWindow.document.getElementById('materialContent')
+        var materialContent = document.getElementById('learning-material-editor').contentWindow.document.getElementById('materialContent_ifr')
+            .contentWindow.document.getElementById('tinymce');
+
         var weekIsChanged = week.value != week.defaultValue;
         var quizNameIsChanged = quizName.value != quizName.defaultValue;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
-        //var materialContentIsChanged = materialContent.value != materialContent.defaultValue;
-        console.log("materialContent.value");
-        console.log(materialContent.value);
-        //var default = <?php echo json_encode(str_replace(array("\n\r", "\n", "\r"), '', strip_tags($materialRes->Content))); ?>;
-//        var default = <?php //echo json_encode($materialRes->Content); ?>//;
-        var original = atob("<?echo base64_encode($materialRes->Content)?>");
-        console.log(original);
-        return;
-
-//        if(weekIsChanged||extraQuizIsChanged || quizNameIsChanged || materialContentIsChanged){
-//            if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
-//                location.href='<?php //echo "mcq.php" ?>//'
-//            }
-//        }else{
-//            //location.href='<?php //echo "mcq.php" ?>//'
-//        }
+        var original = atob("<?echo base64_encode(str_replace(array("\n\r", "\n", "\r"), '',$materialRes->Content))?>");
+        var materialContentIsChanged = materialContent.innerHTML != original;
+        if(weekIsChanged||extraQuizIsChanged || quizNameIsChanged || materialContentIsChanged){
+            if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
+                location.href='<?php echo "mcq.php" ?>'
+            }
+        }else{
+            location.href='<?php echo "mcq.php" ?>'
+        }
     }
 </script>
 <script src="researcher-tts.js"></script>

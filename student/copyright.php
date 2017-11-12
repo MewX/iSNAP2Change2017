@@ -91,8 +91,8 @@ db_close($conn);
 <div class="content-wrapper" style="padding-top: 60px; min-height: calc(100vh - 127px);">
     <div class="snap-facts-container">
         <div class="snap-facts-header">
-            <div class="snap-facts-desc h1" style="color: white; margin-top: 100px; margin-bottom: 24px">Resources</div>
-            <div class="extra-activities-intro">© 2017 THE UNIVERSITY OF ADELAIDE AND HARSHANI JAYASINGHE
+            <div class="snap-facts-desc h1" style="color: white; margin-top: 100px; margin-bottom: 24px">Copyright</div>
+            <div class="extra-activities-intro">© 2017 HARSHANI JAYASINGHE AND THE UNIVERSITY OF ADELAIDE
                 ALL RIGHTS RESERVED [01/11/2017]
             </div>
             <br>
