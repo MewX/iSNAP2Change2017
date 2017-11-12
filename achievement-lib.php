@@ -29,7 +29,6 @@ function achGetAllAchievements(PDO $c) {
     $sql = "select StudentID,QuizMaster,AllSnapFacts,ResourcePage,QuizLeaderBoardTopTenOnce,LearningFromMistakes,HeadOfClass,WeeklyGenius,GotItRight,Aced,HatTrick,MasterExtraContent,LoginMaster,LoginWeek1,LoginWeek2,LoginWeek3,LoginWeek4,LoginWeek5,LoginWeek6,LoginWeek7,LoginWeek8,LoginWeek9,LoginWeek10,MasterGaming,LaunchSportsNinja,PlayEveryGameModeSn,BeatScoreSnA,BeatScoreSnB,BeatScoreSnC,LaunchMealCrusher,PlayEveryGameModeMc,BeatScoreMcA,BeatScoreMcB,BeatScoreMcC from achievements;";
     $sql = $c->prepare($sql);
     $sql->execute();
-    // TODO: check invokes
     return $sql->fetch(PDO::FETCH_OBJ);
 }
 
@@ -135,40 +134,107 @@ function achSetLearningFromMistakes(PDO $c, $studentId) {
 
 // achieve "HeadOfClass"
 function achCheckAndSetHeadOfClass(PDO $c, $studentId) {
-    // TODO: check
-//    $sql = "update achievements set HeadOfClass = 1 where StudentID = ?";
-//    $sql = $c->prepare($sql);
-//    $sql->execute(array($studentId));
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->HeadOfClass != 0 || $obj->WeeklyGenius == 0) return;
+
+    // get total score of the system
+    $maxScore = getOverallScore($c);
+    // get total score of the student
+    $studentScore = getRecord($c, $studentId, "Student")->Score;
+
+    // update achievement
+    if ($maxScore <= $studentScore) {
+        $sql = "UPDATE achievements SET HeadOfClass = 1 WHERE StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
 // achieve "WeeklyGenius"
 function achCheckAndSetWeeklyGenius(PDO $c, $studentId) {
-    // TODO: not achieved, and then check weekly marks
-//    $sql = "update achievements set HeadOfClass = 1 where StudentID = ?";
-//    $sql = $c->prepare($sql);
-//    $sql->execute(array($studentId));
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->WeeklyGenius != 0) return;
+
+    // check current week
+    $weekNum = getStudentWeek($c, $studentId);
+    while ($weekNum >= 1) {
+        $weekTotal = getWeekOverallScore($c, $weekNum);
+        $weekStudentScore = getStudentWeekTotalScore($c, $weekNum, $studentId);
+        if ($weekTotal <= $weekStudentScore) {
+            // update database
+            $sql = "UPDATE achievements SET WeeklyGenius = 1 WHERE StudentID = ?";
+            $sql = $c->prepare($sql);
+            $sql->execute(array($studentId));
+            break;
+        }
+        $weekNum --;
+    }
 }
 
 // achieve "GotItRight"
 function achCheckAndSetGotItRight(PDO $c, $studentId) {
-    // TODO:
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->GotItRight != 0 || $obj->Aced == 0) return;
+
+    // get scores
+    $totalMCQMarks = getOverallMCQScore($c);
+    $totalStudentMCQMarks =  getStudentTotalMCQScore($c, $studentId);
+
+    // update database
+    if ($totalMCQMarks <= $totalStudentMCQMarks) {
+        $sql = "UPDATE achievements SET GotItRight = 1 WHERE StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
 // achieve "Aced"
 function achCheckAndSetAced(PDO $c, $studentId) {
-    // TODO:
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->Aced != 0) return;
+
+    // update database
+    if (doesStudentHaveFullMark($c, $studentId)) {
+        $sql = "UPDATE achievements SET Aced = 1 WHERE StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
 // achieve "HatTrick"
 function achCheckAndSetHatTrick(PDO $c, $studentId) {
-    // TODO:
-}
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->HatTrick != 0 || $obj->Aced == 0) return;
 
-// TODO: add combo counter in database
+    // check current week
+    $weekNum = getStudentWeek($c, $studentId);
+    if ($weekNum >= 3
+        && doesStudentHaveFullMarkInWeek($c, $weekNum, $studentId)
+        && doesStudentHaveFullMarkInWeek($c, $weekNum - 1, $studentId)
+        && doesStudentHaveFullMarkInWeek($c, $weekNum - 2, $studentId)
+    ) {
+        $sql = "UPDATE achievements SET HatTrick = 1 WHERE StudentID = $studentId";
+        $sql = $c->prepare($sql);
+        $sql->execute();
+    }
+}
 
 // achieve "MasterExtraContent"
 function achCheckAndSetMasterExtraContent(PDO $c, $studentId) {
-    // TODO:
+    // check set
+    $obj = achGetAllAchievementsByStudentId($c, $studentId);
+    if ($obj->MasterExtraContent != 0) return;
+
+    if (doesStudentFinishAllExtraActivity($c, $studentId)) {
+        $sql = "UPDATE achievements SET MasterExtraContent = 1 WHERE StudentID = ?";
+        $sql = $c->prepare($sql);
+        $sql->execute(array($studentId));
+    }
 }
 
 

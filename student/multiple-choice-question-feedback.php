@@ -66,8 +66,11 @@
             $attempt += 1;
             updateQuizRecord($conn, $quizID, $studentID, "GRADED",$score);
             updateMCQAttemptRecord($conn, $quizID, $studentID, $attempt, $score);
+
             //update student score
             updateStudentScore($conn, $studentID);
+            achCheckAndSetGotItRight($conn, $studentID);
+
             $feedback["attempt"] = $attempt;
             $conn->commit();
         } else {
