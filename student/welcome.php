@@ -385,7 +385,7 @@
         <!-- Page 5 -->
         <div class="pg5" id="5" style="height: auto; min-height: 0;">
             <div class="contact" style="width:100%; height:100%; text-align: center;">
-                <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-1 contact1" style="margin-top:2%; height: 50%; ">
+                <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-1 contact1" style="margin-top:2%; height: 50%; ">
                     <span class="p1">Any questions or comments?
                         <br> Please contact us and we will reach out to you shortly.
                         <br>
@@ -402,6 +402,7 @@
                         </div>
                         <textarea id="commentContent" class="form-control" rows="4" style="margin-top: 3%"></textarea>
                     </form>
+                    <br>
                     <div class="sendbutton" style="display:flex;justify-content:center;align-items:center;width:100%;height:20%; margin-top:1%;">
                         <div style="width:50%;color:#FCEE2D; text-align:center;">
                             <span>
@@ -412,7 +413,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1 contact2" style="margin-top:3%; height:50%; margin-bottom: 1%;">
+                <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-1 contact2" style="margin-top:3%; height:50%; margin-bottom: 1%;">
                     <div class="logo">
                         <img src="./img/Snap_Logo_Inverted.png" style="width:60%; height: 60%;">
                     </div>
