@@ -101,7 +101,8 @@
             color: #fcee2f;
         }
         .task-operation {
-            right: 350px;
+            right: 50px;
+            top: 50px;
         }
         .noselect {
             cursor: default;

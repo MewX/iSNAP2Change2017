@@ -150,8 +150,8 @@
             clear: both;
         }
         .task-operation {
-            top: 70px; !important;
-            right: 350px;
+            right: 50px;
+            top: 50px;
         }
     </style>
 </head>

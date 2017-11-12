@@ -107,7 +107,7 @@
             margin-bottom: 10px;
         }
         .task-operation {
-            right: 350px;
+            right: 50px;
         }
     </style>
 </head>
