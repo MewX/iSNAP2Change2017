@@ -96,7 +96,7 @@ var snap = {
 '    <div class="snap-alert-container">' +
 '        <a href="#" class="snap-alert-logo"></a>' +
 '        <div class="snap-alert-content">' +
-'            Send researches a message:' +
+'            Send researchers a message:' +
 '            <textarea cols="20" rows="5" class="message-content"></textarea>' +
 '        </div>' +
 '        <div class="snap-alert-operation">' +

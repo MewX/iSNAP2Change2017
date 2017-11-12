@@ -189,10 +189,10 @@
             <div class="snap-facts-header">
                 <a href="#" class="snap-facts-logo"></a>
                 <div class="snap-facts-desc p1">
-                    SNAP² is all about providing information. <br/> Pick your category to start finding out more.
+                    SNAP² is all about providing information.
                 </div>
             </div>
-
+            <br>
             <div class="snap-facts-all">
                 <ul class="snap-facts-list">
                     <li class="snap-facts-item snap-facts-item-smoking">

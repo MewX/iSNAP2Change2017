@@ -460,7 +460,7 @@
                                     <span class="class-rank-number-label"><?php echo $classRanIndicator ?></span>
                                 </div>
                                 <div class="p1 class-rank-summary">
-                                    In your class out of <?php echo $stuNumInClass ?> students.
+                                    In your class out of <?php echo $stuNumInClass ?> students
                                 </div>
                             </div>
                             <div class="class-rank">
@@ -471,7 +471,7 @@
                                     <span class="class-rank-number-label"><?php echo $totalRankIndicator ?></span>
                                 </div>
                                 <div class="p1 class-rank-summary">
-                                    overall out of <?php echo $totalStuNum ?> students.
+                                    overall out of <?php echo $totalStuNum ?> students
                                 </div>
                             </div>
 
@@ -526,7 +526,7 @@
                                     <span class="class-rank-number-label"><?php echo $classGameIndicator ?></span>
                                 </div>
                                 <div class="p1 class-rank-summary">
-                                    In your class out of <?php echo $stuNumInClass ?> students.
+                                    In your class out of <?php echo $stuNumInClass ?> students
                                 </div>
                             </div>
                             <div class="class-rank">
@@ -537,7 +537,7 @@
                                     <span class="class-rank-number-label"><?php echo $gameRankIndicator ?></span>
                                 </div>
                                 <div class="p1 class-rank-summary">
-                                    overall out of <?php echo $totalStuNum ?> students.
+                                    overall out of <?php echo $totalStuNum ?> students
                                 </div>
                             </div>
 
@@ -585,7 +585,7 @@
                     </div>
                     <div class="activities-tab">
                         <h2 class="activities-tab-title">Select Your week</h2>
-                        <h3 class="activities-tab-title">(Note: it's a good practice to start a new activity from <a target="_self" href="game-home.php" style="text-decoration: underline;">home</a>,
+                        <h3 class="activities-tab-title">(Note: it's a good practice to start a new activity from <a target="_self" href="game-home.php" style="text-decoration: underline;">home page</a>,
                             some timing issues might triggered if you click on an time-limited activity here.)</h3>
                         <div class="activities-tab-list">
                         <?php

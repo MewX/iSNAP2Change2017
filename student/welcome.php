@@ -74,7 +74,7 @@
                 <img class="wow flipInY" wow-data-delay="0.0s" wow-data-duration="0.9s" src="./img/Snap_Logo_Inverted.png" alt="SNAP" style="width:50%;height:68%;">
             </div>
             <div class="tagline" style="color: white; font-size: 5vh; display:flex;justify-content:center;align-items:center; margin-top:1%;">
-                <span class="wow fadeInLeftBig" wow-data-delay="0.15s" wow-data-duration="0.3s">To inspire a healthier future.</span>
+                <span class="wow fadeInLeftBig" wow-data-delay="0.15s" wow-data-duration="0.3s">To inspire a healthier future</span>
                 <!-- <input type="image" src="./img/Refresh.png" name="saveForm" class="btTxt" id="scrollDown" style="border: none;" /> -->
             </div>
         </header>
