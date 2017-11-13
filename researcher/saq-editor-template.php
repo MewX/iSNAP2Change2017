@@ -362,8 +362,11 @@ db_close($conn);
         var weekIsChanged = week.value != week.defaultValue;
         var quizNameIsChanged = quizName.value != quizName.defaultValue;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
-        var original = atob("<?echo base64_encode(str_replace(array("\n\r", "\n", "\r"), '',$materialRes->Content))?>");
-        //TODO:
+        //var original = atob("<?echo base64_encode(str_replace(array("\r\n", "\n", "\r"), '',$materialRes->Content))?>");
+        var original = $.trim(atob("<?echo base64_encode(str_replace(array("\r\n"), "\n",$materialRes->Content))?>"));
+//        var original = $.trim(atob("<?//echo base64_encode($materialRes->Content)?>//"));
+
+        // TODO: delete unused codes and comments
         //检测tinymce编辑器里的内容是否有变化
         //可能的case：
         //1. 通过 isDirty() 这个方法检测内容是否被改动 （http://archive.tinymce.com/wiki.php/API3:method.tinymce.Editor.isDirty），问题在于在这个页面拿不到editor
@@ -381,36 +384,38 @@ db_close($conn);
 
         //case 3 的代码
         //拿到tinymce编辑器里的内容
-        var materialContent = document.getElementById('learning-material-editor').contentWindow.document.getElementById('materialContent_ifr')
-            .contentWindow.document.getElementById('tinymce');
-        // TODO: fix contentWindow null error:
-//        Uncaught TypeError: Cannot read property 'contentWindow' of null
-//        at goBack (saq-editor.php?quizID=18:842)
-//        at HTMLButtonElement.onclick (saq-editor.php?quizID=18:534)
-//        goBack @ saq-editor.php?quizID=18:842
-//        onclick @ saq-editor.php?quizID=18:534
-
-        //通过正则处理多余的tag，可以处理链接，但是处理不了视频， 因为视频的tag改动好复杂，而且用正则也不是太稳定，总会有一些我们没考虑到的情况
-        tempMaterial = materialContent.innerHTML;
-        console.log("InnerHTML:");
-        console.log(tempMaterial);
-        tempMaterial = tempMaterial.replace(/.data-mce-href=\".*\"/,"");
-        var materialContentIsChanged = tempMaterial != original;
-
-        // try using the value
-        console.log("Value:");
-        console.log($("#learning-material-editor").contents().find("#materialContent").value);
-        console.log(document.getElementById('learning-material-editor').contentWindow.tinymce.activeEditor.getContent({format : 'raw'}));//activeEditor.getContent({format : 'raw'}));
+        // DO NOT USE THE FOLLOWING CODES: contentWindow can be null
+        // Uncaught TypeError: Cannot read property 'contentWindow' of null
+        //        at goBack (saq-editor.php?quizID=18:842)
+        //        at HTMLButtonElement.onclick (saq-editor.php?quizID=18:534)
+        //        goBack @ saq-editor.php?quizID=18:842
+        //        onclick @ saq-editor.php?quizID=18:534
+//        var materialContent = document.getElementById('learning-material-editor').contentWindow.document.getElementById('materialContent_ifr')
+//            .contentWindow.document.getElementById('tinymce');
 
 
-        console.log("Original:");
-        console.log(original);
+        // case 4: using provided API (https://www.tinymce.com/docs-3x/api/class_tinymce.Editor.html/#getcontent)
+        var materialContentIsChanged = false;
+        if (document.getElementById('learning-material-editor').contentWindow.tinymce !== undefined) {
+            console.log("Get from TinyMCE:");
+            var tempMaterial = $.trim(document.getElementById('learning-material-editor').contentWindow.tinymce.activeEditor.getContent()).replace("\r\n", "\n");
+            console.log(JSON.stringify(tempMaterial));
 
-        return;
+            console.log("Original:");
+            console.log(JSON.stringify(original));
 
-        if(mediaTitle!=null && mediaSource!=null){
-            var mediaTitleIsChanged = mediaTitle.value != mediaTitle.defaultValue;
-            var mediaSourceIsChanged = mediaSource.value != mediaSource.defaultValue;
+            // two ways to determine the equivalence
+//            console.log(tempMaterial !== original);
+//            console.log(tempMaterial.localeCompare(original));
+            materialContentIsChanged = tempMaterial !== original;
+            if (!materialContentIsChanged) console.log("No changes.");
+        } else {
+            console.log("Page is not loaded fully, so no change.");
+        }
+
+        if (mediaTitle !== null && mediaSource !== null) {
+            var mediaTitleIsChanged = mediaTitle.value !== mediaTitle.defaultValue;
+            var mediaSourceIsChanged = mediaSource.value !== mediaSource.defaultValue;
             if(weekIsChanged||extraQuizIsChanged||mediaTitleIsChanged || mediaSourceIsChanged || quizNameIsChanged || materialContentIsChanged){
                 if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                     location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
