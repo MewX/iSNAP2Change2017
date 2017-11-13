@@ -383,12 +383,30 @@ db_close($conn);
         //拿到tinymce编辑器里的内容
         var materialContent = document.getElementById('learning-material-editor').contentWindow.document.getElementById('materialContent_ifr')
             .contentWindow.document.getElementById('tinymce');
+        // TODO: fix contentWindow null error:
+//        Uncaught TypeError: Cannot read property 'contentWindow' of null
+//        at goBack (saq-editor.php?quizID=18:842)
+//        at HTMLButtonElement.onclick (saq-editor.php?quizID=18:534)
+//        goBack @ saq-editor.php?quizID=18:842
+//        onclick @ saq-editor.php?quizID=18:534
+
         //通过正则处理多余的tag，可以处理链接，但是处理不了视频， 因为视频的tag改动好复杂，而且用正则也不是太稳定，总会有一些我们没考虑到的情况
         tempMaterial = materialContent.innerHTML;
+        console.log("InnerHTML:");
+        console.log(tempMaterial);
         tempMaterial = tempMaterial.replace(/.data-mce-href=\".*\"/,"");
         var materialContentIsChanged = tempMaterial != original;
 
+        // try using the value
+        console.log("Value:");
+        console.log($("#learning-material-editor").contents().find("#materialContent").value);
+        console.log(document.getElementById('learning-material-editor').contentWindow.tinymce.activeEditor.getContent({format : 'raw'}));//activeEditor.getContent({format : 'raw'}));
+
+
+        console.log("Original:");
         console.log(original);
+
+        return;
 
         if(mediaTitle!=null && mediaSource!=null){
             var mediaTitleIsChanged = mediaTitle.value != mediaTitle.defaultValue;
