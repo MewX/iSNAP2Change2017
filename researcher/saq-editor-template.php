@@ -112,7 +112,7 @@ db_close($conn);
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <form id="metadata-submission" method="post" action="<?php echo $phpSelf; ?>">
+                        <form id="metadata-submission" method="post" action="<?php echo $phpSelf; ?>" name="quizEditor">
                             <!--if 0 update; else if -1 delete;-->
                             <input type=hidden name="metadataUpdate" id="metadataUpdate" value="1" required>
                             <label for="QuizID" style="display:none">QuizID</label>
@@ -274,6 +274,8 @@ db_close($conn);
 <!-- SB Admin Library -->
 <?php require_once('sb-admin-lib.php'); ?>
 <!-- Page-Level Scripts -->
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
 <script>
     //DO NOT put them in $(document).ready() since the table has multi pages
     var dialogInputArr = $('.dialoginput');
@@ -337,7 +339,17 @@ db_close($conn);
                     }
                 }
             });
-            $('#metadata-submission').submit();
+            var form = document.forms.quizEditor;
+            var postData = [];
+            for(var i=0; i<form.elements.length; i++){
+                postData.push(form.elements[i].name + "=" + form.elements[i].value);
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "mcq-editor.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send(postData.join("&"));
+            $("#learning-material-editor").contents().find("#learningMaterial").submit();
+            location.reload();
         });
     });
 
@@ -350,10 +362,38 @@ db_close($conn);
         var weekIsChanged = week.value != week.defaultValue;
         var quizNameIsChanged = quizName.value != quizName.defaultValue;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
+        var original = atob("<?echo base64_encode(str_replace(array("\n\r", "\n", "\r"), '',$materialRes->Content))?>");
+        //TODO:
+        //检测tinymce编辑器里的内容是否有变化
+        //可能的case：
+        //1. 通过 isDirty() 这个方法检测内容是否被改动 （http://archive.tinymce.com/wiki.php/API3:method.tinymce.Editor.isDirty），问题在于在这个页面拿不到editor
+        //2. 通过拿到form里的value来和初始数据做比较，问题在于form里的value没有根据编辑器里的内容变化而变化
+        //3. 通过拿到编辑器里的内容来和初始数据做比较，问题在于编辑器里的内容会给视频或者链接加tag。链接tag可以用正则解决，视频的有点麻烦。。
+
+        //case 1 的代码
+        //tinymce是在learning-material-editor声明的，我从这里拿不到
+//        if (tinymce.activeEditor.isDirty())//is null
+//            alert("You must save your contents.");
+
+        //case 2 的代码
+        //var case2 = document.getElementById('learning-material-editor').contentWindow.document.getElementsByName('richContentTextArea')[0].value;
+        //console.log(case2);
+
+        //case 3 的代码
+        //拿到tinymce编辑器里的内容
+        var materialContent = document.getElementById('learning-material-editor').contentWindow.document.getElementById('materialContent_ifr')
+            .contentWindow.document.getElementById('tinymce');
+        //通过正则处理多余的tag，可以处理链接，但是处理不了视频， 因为视频的tag改动好复杂，而且用正则也不是太稳定，总会有一些我们没考虑到的情况
+        tempMaterial = materialContent.innerHTML;
+        tempMaterial = tempMaterial.replace(/.data-mce-href=\".*\"/,"");
+        var materialContentIsChanged = tempMaterial != original;
+
+        console.log(original);
+
         if(mediaTitle!=null && mediaSource!=null){
             var mediaTitleIsChanged = mediaTitle.value != mediaTitle.defaultValue;
             var mediaSourceIsChanged = mediaSource.value != mediaSource.defaultValue;
-            if(weekIsChanged||extraQuizIsChanged||mediaTitleIsChanged || mediaSourceIsChanged || quizNameIsChanged){
+            if(weekIsChanged||extraQuizIsChanged||mediaTitleIsChanged || mediaSourceIsChanged || quizNameIsChanged || materialContentIsChanged){
                 if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                     location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
                 }
@@ -361,7 +401,7 @@ db_close($conn);
                 location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
             }
         }else{
-            if(weekIsChanged||extraQuizIsChanged ||quizNameIsChanged){
+            if(weekIsChanged||extraQuizIsChanged ||quizNameIsChanged || materialContentIsChanged){
                 if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                     location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
                 }

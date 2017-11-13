@@ -43,6 +43,7 @@ try {
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>
         tinymce.EditorManager.editors = []; //remove the old instances
+
         tinymce.init({
             selector: 'textarea',
             height: 500,
@@ -71,8 +72,10 @@ try {
             content_css: [
                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                 '//www.tinymce.com/css/codepen.min.css'
-            ]
+            ],
         });
+
+
     </script>
 </head>
 <body>

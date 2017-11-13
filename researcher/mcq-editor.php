@@ -316,11 +316,7 @@ db_close($conn);
                     }
                 }
             });
-            //$('#metadata-submission').submit();
-            //console.log($('#learningMaterial'));
-            //$('#learningMaterial').submit();
 
-            //solution 1:
             var form = document.forms.quizEditor;
             var postData = [];
             for(var i=0; i<form.elements.length; i++){
