@@ -102,6 +102,7 @@ db_close($conn);
 
                         <div>
                             <br>
+                            <span class="fa pull-left" aria-hidden="true" style="font-size: 16px" > Filter: </span>
                             <a class="fa fa-bars pull-left" aria-hidden="true" style="font-size: 16px" onclick="studentFilter('All')">
                                 All Student
                             </a>
@@ -111,6 +112,12 @@ db_close($conn);
                             <a class="fa fa-star-o pull-left" aria-hidden="true" style="font-size: 16px" onclick="studentFilter('UNSUBMITTED')">
                                 Not Submitted
                             </a>
+                            <br>
+                            <br>
+                        </div>
+
+                        <div>
+                            <span class="fa pull-left" aria-hidden="true" style="font-size: 16px" > Legend example: </span>
                             <span class="fa fa-check-circle pull-left" aria-hidden="true" style="font-size: 16px" > Extra Quiz </span>
                             <span class="fa fa-clock-o pull-left" aria-hidden="true" style="font-size: 16px"> Reset Timer </span>
                             <br>

@@ -125,7 +125,8 @@
             overflow: hidden;
         }
         .task-operation {
-            right: 350px;
+            right: 50px;
+            top: 50px;
         }
     </style>
 </head>

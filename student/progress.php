@@ -31,9 +31,9 @@
 
         //get student rank in total
         $totalRank = getStudentRank($conn, $studentID);
-        $gameRank = getStudentRankByGame($conn, $studentID);
         $totalStuNum = getStudentsNum($conn);
         $totalRankIndicator = convertIndicator($totalRank);
+        $gameRank = getStudentRankByGame($conn, $studentID);
         $gameRankIndicator = convertIndicator($gameRank);
 
         //get students' rank
@@ -159,7 +159,40 @@
             position: relative;
             top: -6px;
         }
-        tbody tr:nth-child(-n + 4) .leaderboard-number {
+        /*tbody tr:nth-child(-n + 4) .leaderboard-number {*/
+            /*display: inline-block;*/
+            /*width: 60px;*/
+            /*height: 60px;*/
+            /*background-size: 100% 100%;*/
+            /*text-indent: -999em;*/
+        /*}*/
+
+        tbody .leaderboard-number-label-1 {
+            background-image: url("./img/first_place_icon.png");
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background-size: 100% 100%;
+            text-indent: -999em;
+        }
+        tbody .leaderboard-number-label-2 {
+            background-image: url("./img/second_place_icon.png");
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background-size: 100% 100%;
+            text-indent: -999em;
+        }
+        tbody .leaderboard-number-label-3 {
+            background-image: url("./img/third_place_icon.png");
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background-size: 100% 100%;
+            text-indent: -999em;
+        }
+        tbody .leaderboard-number-label-4 {
+            background-image: url("./img/fourth_place_icon.png");
             display: inline-block;
             width: 60px;
             height: 60px;
@@ -167,17 +200,10 @@
             text-indent: -999em;
         }
 
-        tbody tr:nth-child(1) .leaderboard-number {
-            background-image: url("./img/first_place_icon.png");
-        }
-        tbody tr:nth-child(2) .leaderboard-number {
-            background-image: url("./img/second_place_icon.png");
-        }
-        tbody tr:nth-child(3) .leaderboard-number {
-            background-image: url("./img/third_place_icon.png");
-        }
-        tbody tr:nth-child(4) .leaderboard-number {
-            background-image: url("./img/fourth_place_icon.png");
+        tbody .leaderboard-number-label {
+            font-size: 12px;
+            position: relative;
+            top: -6px;
         }
         .progress-title {
             text-align: center;
@@ -434,7 +460,7 @@
                                     <span class="class-rank-number-label"><?php echo $classRanIndicator ?></span>
                                 </div>
                                 <div class="p1 class-rank-summary">
-                                    In your class out of <?php echo $stuNumInClass ?> students.
+                                    In your class out of <?php echo $stuNumInClass ?> students
                                 </div>
                             </div>
                             <div class="class-rank">
@@ -445,7 +471,7 @@
                                     <span class="class-rank-number-label"><?php echo $totalRankIndicator ?></span>
                                 </div>
                                 <div class="p1 class-rank-summary">
-                                    overall out of <?php echo $totalStuNum ?> students.
+                                    overall out of <?php echo $totalStuNum ?> students
                                 </div>
                             </div>
 
@@ -465,10 +491,13 @@
                             <?php  for($i = 0; $i < count($leaderboardRes); $i++) { ?>
                                     <tr>
                                         <td>
-                                            <span class="leaderboard-number">
-                                                <?php echo $i+1 ?>
-                                                <span class="leaderboard-number-label">th</span>
-                                            </span>
+                                            <?php
+                                            if(($leaderboardRes[$i]->ranking)>4) {echo $leaderboardRes[$i]->ranking;}
+                                            ?>
+                                            <span class="leaderboard-number-label<?php
+                                            if(($leaderboardRes[$i]->ranking)<=4) {echo '-'.$leaderboardRes[$i]->ranking;}
+                                            ?>"
+                                            >th</span>
                                         </td>
                                         <td><?php echo $leaderboardRes[$i]->Username ?></td>
                                         <td><?php echo $leaderboardRes[$i]->Score ?></td>
@@ -497,7 +526,7 @@
                                     <span class="class-rank-number-label"><?php echo $classGameIndicator ?></span>
                                 </div>
                                 <div class="p1 class-rank-summary">
-                                    In your class out of <?php echo $stuNumInClass ?> students.
+                                    In your class out of <?php echo $stuNumInClass ?> students
                                 </div>
                             </div>
                             <div class="class-rank">
@@ -508,7 +537,7 @@
                                     <span class="class-rank-number-label"><?php echo $gameRankIndicator ?></span>
                                 </div>
                                 <div class="p1 class-rank-summary">
-                                    overall out of <?php echo $totalStuNum ?> students.
+                                    overall out of <?php echo $totalStuNum ?> students
                                 </div>
                             </div>
 
@@ -529,8 +558,13 @@
                                         <tr>
                                             <td>
                                             <span class="leaderboard-number">
-                                                <?php echo $i+1 ?>
-                                                <span class="leaderboard-number-label">th</span>
+                                                <?php
+                                                    if(($gameLeaderboardRes[$i]->ranking)>4) {echo $gameLeaderboardRes[$i]->ranking;}
+                                                ?>
+                                                <span class="leaderboard-number-label<?php
+                                                        if(($gameLeaderboardRes[$i]->ranking)<=4) {echo '-'.$gameLeaderboardRes[$i]->ranking;}
+                                                    ?>"
+                                                >th</span>
                                             </span>
                                             </td>
                                             <td><?php echo $gameLeaderboardRes[$i]->Username ?></td>
@@ -551,7 +585,7 @@
                     </div>
                     <div class="activities-tab">
                         <h2 class="activities-tab-title">Select Your week</h2>
-                        <h3 class="activities-tab-title">(Note: it's a good practice to start a new activity from <a target="_self" href="game-home.php" style="text-decoration: underline;">home</a>,
+                        <h3 class="activities-tab-title">(Note: it's a good practice to start a new activity from <a target="_self" href="game-home.php" style="text-decoration: underline;">home page</a>,
                             some timing issues might triggered if you click on an time-limited activity here.)</h3>
                         <div class="activities-tab-list">
                         <?php

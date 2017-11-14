@@ -28,7 +28,6 @@ try {
         $quizID = $_GET['competitionID'];
         $materialRes = getCompetition($conn, $quizID);
         $phpSelf = $pageName . '.php?competitionID=' . $quizID;
-
     }
 } catch (Exception $e) {
     debug_err($e);
@@ -41,9 +40,10 @@ try {
 <head>
     <!-- Bootstrap Core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>
         tinymce.EditorManager.editors = []; //remove the old instances
+
         tinymce.init({
             selector: 'textarea',
             height: 500,
@@ -72,16 +72,18 @@ try {
             content_css: [
                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                 '//www.tinymce.com/css/codepen.min.css'
-            ]
+            ],
         });
+
+
     </script>
 </head>
 <body>
-<form method="post" action="<?php echo $phpSelf ?>">
+<form id="learningMaterial" method="post" action="<?php echo $phpSelf ?>" name="materialEditor">
     <label for="QuizID" style="display:none">QuizID</label>
     <input type="text" class="form-control" id="QuizID" name="quizID" style="display:none"
            value="<?php echo $quizID; ?>" required>
-    <textarea name="richContentTextArea">
+    <textarea id="materialContent" name="richContentTextArea">
         <?php echo $materialRes->Content; ?>
     </textarea>
     <input type="submit" name='submitbutton' value="Save" class='submit'/> <span
@@ -99,6 +101,15 @@ if ($quizType == "Video" || $quizType == "Image") { ?>
 <?php }
 db_close($conn);
 ?>
+<?php require_once('sb-admin-lib.php'); ?>
+
+<script>
+//    $(document).ready(function () {
+//        $("#learningMaterial :input").change(function () {
+//            $("#learningMaterial").data("changed", true);
+//        });
+//    });
+</script>
 
 </body>
 </html>

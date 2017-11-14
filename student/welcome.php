@@ -74,7 +74,7 @@
                 <img class="wow flipInY" wow-data-delay="0.0s" wow-data-duration="0.9s" src="./img/Snap_Logo_Inverted.png" alt="SNAP" style="width:50%;height:68%;">
             </div>
             <div class="tagline" style="color: white; font-size: 5vh; display:flex;justify-content:center;align-items:center; margin-top:1%;">
-                <span class="wow fadeInLeftBig" wow-data-delay="0.15s" wow-data-duration="0.3s">To inspire a healthier future.</span>
+                <span class="wow fadeInLeftBig" wow-data-delay="0.15s" wow-data-duration="0.3s">To inspire a healthier future</span>
                 <!-- <input type="image" src="./img/Refresh.png" name="saveForm" class="btTxt" id="scrollDown" style="border: none;" /> -->
             </div>
         </header>
@@ -169,7 +169,7 @@
                                 </td>
                                 </thead>
                                 <?php  for($i = 0; $i < count($quizLeaderboardRes); $i++) {
-                switch ($i) {
+                switch ($quizLeaderboardRes[$i]->ranking-1) {
                     case 0: ?>
                         <tr style="font-size: 2.9vh;">
                             <td style="width: 35%;">
@@ -177,55 +177,55 @@
                             </td> <?php ;
                         break;
                     case 1: ?>
-                        <tr style="font-size: 2.7vh;">
-                            <td style="width: 30%;">
+                        <tr style="font-size: 2.9vh;">
+                            <td style="width: 35%;">
                                 <img src="./img/second_place_icon.png" alt="..." style="width: 30%;">
                             </td> <?php ;
                         break;
                     case 2: ?>
-                        <tr style="font-size: 2.5vh;">
-                            <td style="width: 40%;">
+                        <tr style="font-size: 2.9vh;">
+                            <td style="width: 50%;">
                                 <img src="./img/third_place_icon.png" alt="..."  style="width: 28%;">
                             </td> <?php ;
                         break;
                     case 3: ?>
-                        <tr style="font-size: 2.3vh;">
-                            <td style="width: 40%;">
+                        <tr style="font-size: 2.9vh;">
+                            <td style="width: 50%;">
                                 <img src="./img/fourth_place_icon.png" alt="..."  style="width: 25%;">
                             </td> <?php ;
                         break;
                     case 4: ?>
-                        <tr style="font-size: 2.2vh;">
+                        <tr style="font-size: 2.9vh;">
                             <td>
                                 5th
                             </td> <?php ;
                         break;
                     case 5: ?>
-                        <tr style="font-size: 2.2vh;">
+                        <tr style="font-size: 2.9vh;">
                             <td>
                                 6th
                             </td> <?php ;
                         break;
                     case 6: ?>
-                        <tr style="font-size: 2.2vh;">
+                        <tr style="font-size: 2.9vh;">
                             <td>
                                 7th
                             </td> <?php ;
                         break;
                     case 7: ?>
-                        <tr style="font-size: 2.2vh;">
+                        <tr style="font-size: 2.9vh;">
                             <td>
                                 8th
                             </td> <?php ;
                         break;
                     case 8: ?>
-                        <tr style="font-size: 2.2vh;">
+                        <tr style="font-size: 2.9vh;">
                             <td>
                                 9th
                             </td> <?php ;
                         break;
                     case 9: ?>
-                        <tr style="font-size: 2.2vh;">
+                        <tr style="font-size: 2.9vh;">
                             <td>
                                 10th
                             </td> <?php ;
@@ -261,7 +261,7 @@
                                 </td>
                                 </thead>
                                 <?php  for($i = 0; $i < count($gameLeaderboardRes); $i++) {
-                                    switch ($i) {
+                                    switch ($gameLeaderboardRes[$i]->ranking-1) {
                                         case 0: ?>
                                             <tr style="font-size: 2.9vh;">
                                             <td style="width: 35%;">
@@ -269,55 +269,55 @@
                                             </td> <?php ;
                                             break;
                                         case 1: ?>
-                                            <tr style="font-size: 2.7vh;">
-                                            <td style="width: 30%;">
+                                            <tr style="font-size: 2.9vh;">
+                                            <td style="width: 35%;">
                                                 <img src="./img/second_place_icon.png" alt="..." style="width: 30%;">
                                             </td> <?php ;
                                             break;
                                         case 2: ?>
-                                            <tr style="font-size: 2.5vh;">
-                                            <td style="width: 40%;">
+                                            <tr style="font-size: 2.9vh;">
+                                            <td style="width: 50%;">
                                                 <img src="./img/third_place_icon.png" alt="..."  style="width: 28%;">
                                             </td> <?php ;
                                             break;
                                         case 3: ?>
-                                            <tr style="font-size: 2.3vh;">
-                                            <td style="width: 40%;">
+                                            <tr style="font-size: 2.9vh;">
+                                            <td style="width: 50%;">
                                                 <img src="./img/fourth_place_icon.png" alt="..."  style="width: 25%;">
                                             </td> <?php ;
                                             break;
                                         case 4: ?>
-                                            <tr style="font-size: 2.2vh;">
+                                            <tr style="font-size: 2.9vh;">
                                             <td>
                                                 5th
                                             </td> <?php ;
                                             break;
                                         case 5: ?>
-                                            <tr style="font-size: 2.2vh;">
+                                            <tr style="font-size: 2.9vh;">
                                             <td>
                                                 6th
                                             </td> <?php ;
                                             break;
                                         case 6: ?>
-                                            <tr style="font-size: 2.2vh;">
+                                            <tr style="font-size: 2.9vh;">
                                             <td>
                                                 7th
                                             </td> <?php ;
                                             break;
                                         case 7: ?>
-                                            <tr style="font-size: 2.2vh;">
+                                            <tr style="font-size: 2.9vh;">
                                             <td>
                                                 8th
                                             </td> <?php ;
                                             break;
                                         case 8: ?>
-                                            <tr style="font-size: 2.2vh;">
+                                            <tr style="font-size: 2.9vh;">
                                             <td>
                                                 9th
                                             </td> <?php ;
                                             break;
                                         case 9: ?>
-                                            <tr style="font-size: 2.2vh;">
+                                            <tr style="font-size: 2.9vh;">
                                             <td>
                                                 10th
                                             </td> <?php ;
@@ -385,7 +385,7 @@
         <!-- Page 5 -->
         <div class="pg5" id="5" style="height: auto; min-height: 0;">
             <div class="contact" style="width:100%; height:100%; text-align: center;">
-                <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-1 contact1" style="margin-top:2%; height: 50%; ">
+                <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-1 contact1" style="margin-top:2%; height: 50%; ">
                     <span class="p1">Any questions or comments?
                         <br> Please contact us and we will reach out to you shortly.
                         <br>
@@ -402,6 +402,7 @@
                         </div>
                         <textarea id="commentContent" class="form-control" rows="4" style="margin-top: 3%"></textarea>
                     </form>
+                    <br>
                     <div class="sendbutton" style="display:flex;justify-content:center;align-items:center;width:100%;height:20%; margin-top:1%;">
                         <div style="width:50%;color:#FCEE2D; text-align:center;">
                             <span>
@@ -412,7 +413,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-1 contact2" style="margin-top:3%; height:50%; margin-bottom: 1%;">
+                <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-1 contact2" style="margin-top:3%; height:50%; margin-bottom: 1%;">
                     <div class="logo">
                         <img src="./img/Snap_Logo_Inverted.png" style="width:60%; height: 60%;">
                     </div>
@@ -442,26 +443,14 @@
                         </div>
                     </div>
                 </div>
-
-                <nav class="navbar navbar-inverse navbar-fixed-bottom">
-                    <div class="container">
-                        <div class="navbar-collapse collapse">
-                            <ul class="nav navbar-nav">
-                                <li class="active">
-                                    <a class="navbar-brand" href="#">
-                                        <img alt="Brand" src="./img/footer-logo.png" style="height: 100%;">
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li><span class="navbar-text navbar-right">Legal stuff - All rights reserved</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
             </div>
         </div>
+        <div class="pg6" id="6" style="height: auto; min-height: 0;">
+            <? require("./footer-bar.php") ?>
+        </div>
 
-        <div id="fb-root"></div>
+        <div id="fb-root">
+        </div>
 
         <script>
             wow = new WOW(

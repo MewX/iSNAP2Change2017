@@ -132,7 +132,7 @@ db_close($conn);
                      title="Unlock this achievement by unlocking all other quiz achievements."/>
                 <div class="reading-title">Achievements</div>
                 <div class="reading-intro">Unlock achievements by completing the requirements while you're playing SNAP².</div>
-                <div class="reading-intro"><i>(Hint: Move your mouse upon the achievement icons to view how to achieve them!)</i></div>
+                <div class="reading-intro"><i>(Hint: Move your mouse along the achievement icons to view how to achieve them!)</i></div>
             </div>
         </div>
 

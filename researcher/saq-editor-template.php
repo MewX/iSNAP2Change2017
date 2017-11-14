@@ -112,7 +112,7 @@ db_close($conn);
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <form id="metadata-submission" method="post" action="<?php echo $phpSelf; ?>">
+                        <form id="metadata-submission" method="post" action="<?php echo $phpSelf; ?>" name="quizEditor">
                             <!--if 0 update; else if -1 delete;-->
                             <input type=hidden name="metadataUpdate" id="metadataUpdate" value="1" required>
                             <label for="QuizID" style="display:none">QuizID</label>
@@ -242,7 +242,7 @@ db_close($conn);
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="dialogTitle">Edit Question</h4>
+                <h4 class="modal-title" id="dialogTitleSAQ"></h4>
             </div>
             <div class="modal-body">
                 <form id="submission" method="post" action="<?php echo $phpSelf; ?>">
@@ -274,12 +274,14 @@ db_close($conn);
 <!-- SB Admin Library -->
 <?php require_once('sb-admin-lib.php'); ?>
 <!-- Page-Level Scripts -->
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
 <script>
     //DO NOT put them in $(document).ready() since the table has multi pages
     var dialogInputArr = $('.dialoginput');
     $('.glyphicon-plus').on('click', function () {
         $("label").remove(".error");
-        $('#dialogTitle').text("Add Question");
+        $('#dialogTitleSAQ').text("Add Question");
         $('#update').val(1);
         for (i = 0; i < dialogInputArr.length; i++) {
             dialogInputArr.eq(i).val('');
@@ -292,7 +294,7 @@ db_close($conn);
         }
     });
     $('td > .glyphicon-edit').on('click', function () {
-        $('#dialogTitle').text("Edit Question");
+        $('#dialogTitleSAQ').text("Edit Question");
         $('#update').val(0);
         for (i = 0; i < dialogInputArr.length; i++) {
             dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());
@@ -337,7 +339,17 @@ db_close($conn);
                     }
                 }
             });
-            $('#metadata-submission').submit();
+            var form = document.forms.quizEditor;
+            var postData = [];
+            for(var i=0; i<form.elements.length; i++){
+                postData.push(form.elements[i].name + "=" + form.elements[i].value);
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "saq-editor-template.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send(postData.join("&"));
+            $("#learning-material-editor").contents().find("#learningMaterial").submit();
+            location.reload();
         });
     });
 
@@ -350,10 +362,20 @@ db_close($conn);
         var weekIsChanged = week.value != week.defaultValue;
         var quizNameIsChanged = quizName.value != quizName.defaultValue;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
-        if(mediaTitle!=null && mediaSource!=null){
-            var mediaTitleIsChanged = mediaTitle.value != mediaTitle.defaultValue;
-            var mediaSourceIsChanged = mediaSource.value != mediaSource.defaultValue;
-            if(weekIsChanged||extraQuizIsChanged||mediaTitleIsChanged || mediaSourceIsChanged || quizNameIsChanged){
+        var original = $.trim(atob("<?echo base64_encode(str_replace(array("\r\n"), "\n",$materialRes->Content))?>"));
+        var materialContentIsChanged = false;
+        if (document.getElementById('learning-material-editor').contentWindow.tinymce !== undefined) {
+            console.log("Get from TinyMCE:");
+            var tempMaterial = $.trim(document.getElementById('learning-material-editor').contentWindow.tinymce.activeEditor.getContent()).replace("\r\n", "\n");
+            materialContentIsChanged = tempMaterial !== original;
+        } else {
+            //do nothing here
+        }
+
+        if (mediaTitle !== null && mediaSource !== null) {
+            var mediaTitleIsChanged = mediaTitle.value !== mediaTitle.defaultValue;
+            var mediaSourceIsChanged = mediaSource.value !== mediaSource.defaultValue;
+            if(weekIsChanged||extraQuizIsChanged||mediaTitleIsChanged || mediaSourceIsChanged || quizNameIsChanged || materialContentIsChanged){
                 if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                     location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
                 }
@@ -361,7 +383,7 @@ db_close($conn);
                 location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
             }
         }else{
-            if(weekIsChanged||extraQuizIsChanged ||quizNameIsChanged){
+            if(weekIsChanged||extraQuizIsChanged ||quizNameIsChanged || materialContentIsChanged){
                 if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                     location.href='<?php echo SAQ_LIKE_QUIZ_TYPE . ".php" ?>'
                 }

@@ -125,7 +125,8 @@ $currentTime = new DateTime();
 
     </style>
 <div class="time-remain">
-    <h2 class="time-remain-title">Please complete this week's quiz ASAP. Time remaining:</h2>
+    <h2 class="time-remain-title">Please complete this week's quiz ASAP.</h2>
+    <h2 class="time-remain-title">Time remaining:</h2>
     <div class="countdown countdown-container ">
         <div class="clock clock-row">
 

@@ -5,7 +5,7 @@ require_once("../debug.php");
 require_once("researcher-lib.php");
 require_once('researcher-validation.php');
 
-$columnName = array('ClassID', 'ClassName', 'SchoolName', 'TokenString', 'EnrolledStudents', 'UnlockedProgress');
+$columnName = array('ClassID', 'ClassName', 'SchoolName', 'TokenString', 'EnrolledStudents', 'UnlockedProgress', 'isClosed');
 
 //if insert/update/remove class
 try {
@@ -26,12 +26,21 @@ try {
                 $schoolName = $_POST['schoolName'];
                 $tokenString = $_POST['tokenString'];
                 $unlockedProgress = $_POST['unlockedProgress'];
-
                 $schoolID = getSchoolByName($conn, $schoolName)->SchoolID;
                 updateClass($conn, $classID, $schoolID, $className, $tokenString, $unlockedProgress);
             } else if ($update == -1) {
                 $classID = $_POST['classID'];
                 deleteClass($conn, $classID);
+            } else if ($update == 2) {
+                //close or open class
+                $classID = $_POST['classID'];
+                $isClosed = $_POST['isClosed'];
+                setIsClosedForClass($conn, $classID, $isClosed);
+                $response = array();
+                $response['status'] = 'success';
+                $response['message'] = 'This was successful';
+                echo json_encode($response);
+                exit();
             }
         }
     }
@@ -100,11 +109,26 @@ db_close($conn);
                                                 if ($studentNumResult[$j]->ClassID == $classResult[$i]->ClassID) $count = $studentNumResult[$j]->Count;
                                             }
                                             echo $count; ?></td>
-                                        <td><?php echo min($classResult[$i]->UnlockedProgress, $weekResult->WeekNum) . "/" . $weekResult->WeekNum ?>
+                                        <td>
+                                            <?php echo min($classResult[$i]->UnlockedProgress, $weekResult->WeekNum) . "/" . $weekResult->WeekNum ?>
                                             <span class="glyphicon glyphicon-remove pull-right"
-                                                  aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;</span><span
-                                                class="glyphicon glyphicon-edit pull-right" data-toggle="modal"
-                                                data-target="#dialog" aria-hidden="true"></span></td>
+                                                  aria-hidden="true"></span><span class="pull-right" aria-hidden="true">&nbsp;
+                                            </span>
+                                            <span class="glyphicon glyphicon-edit pull-right" data-toggle="modal"
+                                                  data-target="#dialog" aria-hidden="true">
+                                            </span>
+                                        </td>
+                                        <td><?php
+                                                if($classResult[$i]->isClosed == 0) {
+                                            ?>
+                                                <button type="button" class="btn btn-danger" onclick="setClass(<?php echo $classResult[$i]->ClassID?>, this)">Close this class</button>
+                                            <?php
+                                                } else{
+                                            ?>
+                                                <button type="button" class="btn btn-primary" onclick="setClass(<?php echo $classResult[$i]->ClassID?>, this)">Open this class</button>
+                                            <?php
+                                                } ?>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                                 </tbody>
@@ -154,9 +178,9 @@ db_close($conn);
                     <label for="ClassID" style="display:none">ClassID</label>
                     <input type="text" class="form-control dialogInput" id="ClassID" name="classID"
                            style="display:none">
-                    <br><label for="ClassName">ClassName</label>
+                    <br><label for="ClassName">Class Name</label>
                     <input type="text" class="form-control dialogInput" id="ClassName" name="className" required>
-                    <br><label for="SchoolName">SchoolName</label>
+                    <br><label for="SchoolName">School Name</label>
                     <select class="form-control dialogInput" id="SchoolName" form="submission" name="schoolName"
                             required>
                         <?php for ($i = 0; $i < count($schoolResult); $i++) { ?>
@@ -164,11 +188,11 @@ db_close($conn);
                                 value="<?php echo $schoolResult[$i]->SchoolName ?>"><?php echo $schoolResult[$i]->SchoolName ?></option>
                         <?php } ?>
                     </select>
-                    <br><label for="tokenString">TokenString (Unique)</label><span
+                    <br><label for="tokenString">Token String (Unique)</label><span
                         class="glyphicon glyphicon-random pull-right"> Random</span>
                     <input type="text" class="form-control dialogInput" id="tokenString" name="tokenString" required>
                     <br>
-                    <label for="EnrolledStudents">EnrolledStudents</label>
+                    <label for="EnrolledStudents">Enrolled Students</label>
                     <input type="text" class="form-control dialogInput" id="EnrolledStudents" name="enrolledStudents">
                     <br>
                     <label for="textInput" style="display:none"></label>
@@ -177,6 +201,7 @@ db_close($conn);
                     <input type="range" class="dialogInput" min="0"
                            max="<?php echo $weekResult->WeekNum ?>"
                            id="UnlockedProgress" name="unlockedProgress" onchange="updateTextInput(this.value);">
+                    <br><label for="SchoolName">Close this class</label>
                 </form>
             </div>
             <div class="modal-footer">
@@ -217,6 +242,48 @@ if (isset($_GET['schoolID'])) {
         document.getElementById('textInput').value = val;
     }
 
+    function setClass(classId, el){
+        var classList = $(el).attr('class').split(/\s+/);
+        if(classList[1] == 'btn-danger'){
+            if(confirm('Are you sure that you want to close this class? Students in this class will not be able to log in' +
+                    ' this website after you close this class. You can open this class after you close it.')){
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "class.php",
+                    data: {
+                        classID: classId,
+                        update: 2,
+                        isClosed: 1
+                    }
+                })
+                    .done(function (feedback) {
+                        $(el).addClass('btn-primary').removeClass('btn-danger');
+                        $(el).text('Open this class');
+                })
+            }
+        }else{
+            if(confirm('Are you sure that you want to open this class? Students in this class be able to log in' +
+                    ' this website after you open this class. You can close this class after you open it.')) {
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "class.php",
+                    data: {
+                        classID: classId,
+                        update: 2,
+                        isClosed: 0
+                    }
+                })
+                    .done(function (feedback) {
+                        $(el).addClass('btn-danger').removeClass('btn-primary');
+                        $(el).text('Close this class');
+                    })
+            }
+        }
+    }
 
     //DO NOT put them in $(document).ready() since the table has multi pages
 

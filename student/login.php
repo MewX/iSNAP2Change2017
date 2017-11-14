@@ -21,18 +21,22 @@
 		//valid student
 		$validRes = validStudent($conn, $username, $password);
 		if($validRes != null) {
-			$feedback["result"] = "valid";
-			$_SESSION["studentID"] = $validRes['StudentID'];
-			$_SESSION["studentUsername"] = $validRes['Username'];
-            $feedback["message"] = "success";
+		    if($validRes != 'expired') {
+                $feedback["result"] = "valid";
+                $_SESSION["studentID"] = $validRes['StudentID'];
+                $_SESSION["studentUsername"] = $validRes['Username'];
+                $feedback["message"] = "success";
 
-            // ensure that the student has a record in achievement table
-            if (!achCheckRecordExistence($conn, $_SESSION["studentID"]))
-                achCreateNewRecord($conn, $_SESSION["studentID"]);
+                // ensure that the student has a record in achievement table
+                if (!achCheckRecordExistence($conn, $_SESSION["studentID"])) {
+                    achCreateNewRecord($conn, $_SESSION["studentID"]);
+                }
+            }else{
+                $feedback["result"] = "expired";
+            }
 
 		} else {
 			$feedback["result"] = "invalid";
-            $feedback["message"] = "Failed";
 		}
 	} catch(Exception $e) {
 		if($conn != null) {

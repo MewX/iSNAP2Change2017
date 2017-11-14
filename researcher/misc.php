@@ -11,18 +11,15 @@ try {
     $conn = db_connect();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (isset($_POST['update'])) {
-            $update = $_POST['update'];
+            //$update = $_POST['update'];
             if ($update == 0) {
                 // if edit misc quiz
-                $week = $_POST['week'];
+                $week = $_POST['Week'];
                 $quizID = $_POST['quizID'];
-                $topicName = $_POST['topicName'];
-                $topicID = getTopicByName($conn, $topicName)->TopicID;
-
-                $conn->beginTransaction();
-                $points = isset($_POST['points']) ? $_POST['points'] : 0;
-
-                updateQuiz($conn, $quizID, $topicID, $week);
+                $quizName = $_POST['QuizName'];
+                $points = $_POST['Points'];
+                $extraQuiz = $_POST['ExtraQuiz'];
+                updateQuiz($conn, $quizID, $quizName, 1, $week, $extraQuiz);
                 updateMiscSection($conn, $quizID, $points);
 
             } else if ($update == -1) {
@@ -104,16 +101,11 @@ db_close($conn);
                                             <span class="glyphicon glyphicon-remove pull-right"
                                                   aria-hidden="true"></span>
                                             <span class="pull-right" aria-hidden="true">&nbsp;</span>
-                                            <?php if (in_array($quizType, $editableQuizTypeArr)) { ?>
-                                                <a href="<?php echo strtolower($quizType); ?>-editor.php?quizID=<?php echo $quizID ?>">
-                                                    <span class="glyphicon glyphicon-edit pull-right"
-                                                          aria-hidden="true"></span>
-                                                </a>
-                                            <?php } else if (in_array($quizType, $miscQuizTypeArr)) { ?>
-                                                <span class="glyphicon glyphicon-edit pull-right"
-                                                      data-toggle="modal"
-                                                      data-target="#dialog" aria-hidden="true"></span>
-                                            <?php } ?>
+                                            <a href="misc-editor.php?quizID=<?php echo $quizResult[$i]->QuizID ?>">
+                                                <span class="glyphicon glyphicon-edit pull-right" aria-hidden="true">
+
+                                                </span>
+                                            </a>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -133,7 +125,8 @@ db_close($conn);
     </div>
     <!-- /#page-wrapper -->
 </div>
-<!-- /#wrapper -->
+
+
 <input type=hidden name="keyword" id="keyword" value="<?php if (isset($_GET['week'])) {
     echo $_GET['week'];
 } ?>">
@@ -154,14 +147,24 @@ db_close($conn);
         for (i = 0; i < dialogInputArr.length; i++) {
             dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());
         }
-        //if edit, disable quiz type
-        dialogInputArr.eq(quizTypeIndex).attr('disabled', 'disabled');
+        //render the selector for extra quiz
+        if($(this).parent().parent().children('td').eq(4).text().trim()=="No"){
+            dialogInputArr.eq(4).html(
+                "<option value='0' selected>No</option> <option value='1'>Yes</option>"
+            );
+        }else{
+            dialogInputArr.eq(4).html(
+                "<option value='0'>No</option> <option value='1' selected>Yes</option>"
+            );
+        }
     });
+
     $('.glyphicon-plus').on('click', function () {
         if (confirm("You can only create a new quiz in Quiz Overview, click OK to go that page") == true) {
             window.location.href='quiz.php';
         }
     });
+
     $('.glyphicon-remove').on('click', function () {
         if (confirm('[WARNING] Are you sure to remove this quiz? If you remove one quiz. All the questions and submission of this quiz will also get deleted (not recoverable). It includes learning material, questions and options, their submissions and your grading/feedback, not only the quiz itself.')) {
             $('#update').val(-1);
@@ -170,6 +173,28 @@ db_close($conn);
             }
             $('#submission').submit();
         }
+    });
+
+    $('#btnSave').on('click', function(){
+        console.log("save is clicked");
+        $('#submission').validate({
+            rules: {
+                Week: {
+                    required: true,
+                    digits: true
+                },
+                QuizName: {
+                    required: true
+                },
+                Points: {
+                    required: true,
+                    digits: true
+                }
+            }
+        });
+        console.log("valid");
+
+        $('#submission').submit();
     });
 
     $(document).ready(function () {
