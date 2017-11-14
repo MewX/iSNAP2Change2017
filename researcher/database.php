@@ -162,7 +162,7 @@ db_close($conn);
                             <h4>Survey Result</h4>
                             <div class="alert alert-info">
                                 <p>
-                                    You can download a .csv file for survey in survet system.
+                                    You can download a .csv file for survey in survey system.
                                 </p>
                                 <br>
                                 <a href="jump-to-survey.php">Go to Survey System</a>
