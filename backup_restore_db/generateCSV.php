@@ -1,9 +1,9 @@
 <?php
 function generateStudentDemography($conn, &$header, &$data){
-    $sql = "SELECT StudentID, Gender, DOB, Identity as Country, QuizScore, ClassName, 
+    $sql = "SELECT StudentID, FirstName, LastName, Gender, DOB, Identity as Country, QuizScore, ClassName, 
             MAX(IF(gameID=1,gameScore,null)) as FruitNinja, 
             MAX(IF(gameID=2,gameScore,null)) as CandyCrush from 
-            (SELECT student.StudentID, Gender, DOB, Identity, student.Score as QuizScore, ClassName, sum(game_record.score) as gameScore, gameID 
+            (SELECT FirstName, LastName, student.StudentID, Gender, DOB, Identity, student.Score as QuizScore, ClassName, sum(game_record.score) as gameScore, gameID 
               FROM student NATURAL JOIN Class LEFT JOIN game_record on student.StudentID = game_record.StudentID 
               group BY gameID, student.StudentID order BY student.StudentID
             ) as temp GROUP BY StudentID;";
@@ -32,7 +32,7 @@ function generateQuizProcess($conn, &$header, &$data){
     $getQuizWithWeek = getQuizWithWeek($conn);
     $getQuizInfo = getQuizInfo($conn);
     $studentStatistic = getStudentsStatistic($conn);
-    $startColumn = 3;
+    $startColumn = 1;
     for ($i = 0; $i < count($getQuizWithWeek); $i++){
         $j = $i+1;
         array_push($colspanName, "Week$j");
@@ -44,22 +44,22 @@ function generateQuizProcess($conn, &$header, &$data){
         $j = $getQuizInfo[$i]->QuizID;
         array_push($quizList,"Quiz$j");
     }
-    $header .= ", ,";
+    $header .= ", , , ,";
     for ($i = 1; $i< count($colspanName); $i++){
         for($j = 0; $j<$getQuizWithWeek[$i-1]->QuizNum; $j++){
             $header .= '"Week-' . $getQuizWithWeek[$i-1]->Week . '",';
         }
     }
     $header .= "\n";
-    $header .= "StudentID,Class Name,";
-    for ($i = 3; $i < count($columnName); $i++){
+    $header .= "StudentID,Class Name,FirstName, LastName,";
+    for ($i = $startColumn+2; $i < count($columnName); $i++){
         $header .= '"' . $getQuizInfo[$i-3]->QuizName . '-' . $getQuizInfo[$i-3]->QuizType . '",';
     }
     $header .= "\n";
     for ($i = 0; $i < count($studentStatistic); $i++) {
         $data .= '"' . $studentStatistic[$i]->StudentID . '",';
         $data .= '"' . $studentStatistic[$i]->ClassName . '",';
-        for ($j = 3; $j < count($quizList); $j++) {
+        for ($j = $startColumn; $j < count($quizList); $j++) {
             if($studentStatistic[$i]->$quizList[$j] == "GRADED"){
                 $grading = str_replace("Quiz","Grading", $quizList[$j]);
                 $data .= '"' . $studentStatistic[$i]->$grading . '",';
@@ -76,7 +76,8 @@ function generateQuizProcess($conn, &$header, &$data){
 }
 
 function generateAchievements($conn, &$header, &$data){
-    $sql = "select StudentID,QuizMaster,AllSnapFacts,ResourcePage,QuizLeaderBoardTopTenOnce,LearningFromMistakes,HeadOfClass,WeeklyGenius,GotItRight,Aced,HatTrick,MasterExtraContent,LoginMaster,LoginWeek1,LoginWeek2,LoginWeek3,LoginWeek4,LoginWeek5,LoginWeek6,LoginWeek7,LoginWeek8,LoginWeek9,LoginWeek10,MasterGaming,LaunchSportsNinja,PlayEveryGameModeSn,BeatScoreSnA,BeatScoreSnB,BeatScoreSnC,LaunchMealCrusher,PlayEveryGameModeMc,BeatScoreMcA,BeatScoreMcB,BeatScoreMcC from achievements;";
+    $sql = "select StudentID,FirstName, LastName,Classname,QuizMaster,AllSnapFacts,ResourcePage,QuizLeaderBoardTopTenOnce,LearningFromMistakes,HeadOfClass,WeeklyGenius,GotItRight,Aced,HatTrick,MasterExtraContent,LoginMaster,LoginWeek1,LoginWeek2,LoginWeek3,LoginWeek4,LoginWeek5,LoginWeek6,LoginWeek7,LoginWeek8,LoginWeek9,LoginWeek10,MasterGaming,LaunchSportsNinja,PlayEveryGameModeSn,BeatScoreSnA,BeatScoreSnB,BeatScoreSnC,LaunchMealCrusher,PlayEveryGameModeMc,BeatScoreMcA,BeatScoreMcB,BeatScoreMcC 
+            from achievements NATURAL JOIN Student NATURAL JOIN Class;";
     $sql = $conn->prepare($sql);
     $sql->execute();
     $result = $sql->fetchAll();

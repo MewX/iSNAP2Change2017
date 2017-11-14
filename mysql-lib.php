@@ -1026,7 +1026,7 @@ function createSnapFact(PDO $conn, $topicID, $content, $recource)
     $updateSql = "INSERT INTO Snap_Fact(Content, TopicID, Recource)
              VALUES (?,?,?)";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($content, $topicID, $recource));
+    $updateSql->execute(array($content, $topicID, htmlspecialchars($recource)));
     return $conn->lastInsertId();
 }
 
@@ -1036,7 +1036,7 @@ function updateSnapFact(PDO $conn, $snapFactID, $topicID, $content, $recource)
                 SET Content = ?, TopicID = ?, Recource = ?
                 WHERE SnapFactID = ?";
     $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute(array($content, $topicID, $recource, $snapFactID));
+    $updateSql->execute(array($content, $topicID, htmlspecialchars($recource), $snapFactID));
 }
 
 function deleteSnapFact(PDO $conn, $snapFactID)
