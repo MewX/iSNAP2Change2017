@@ -129,7 +129,7 @@ db_close($conn);
                             <h4>Student Demography</h4>
                             <div class="alert alert-info">
                                 <p>
-                                    You can download a .csv file for database by clicking the <b>Generate</b> link below.
+                                    You can download a .csv file for student demography by clicking the <b>Generate</b> link below.
                                 </p>
                                 <br>
                                 <a href="../backup_restore_db/generateCSV.php?fileName=student demography">Generate</a>
@@ -140,7 +140,7 @@ db_close($conn);
                             <h4>Quiz Process</h4>
                             <div class="alert alert-info">
                                 <p>
-                                    You can download a .csv file for database by clicking the <b>Generate</b> link below.
+                                    You can download a .csv file for quiz process by clicking the <b>Generate</b> link below.
                                 </p>
                                 <br>
                                 <a href="../backup_restore_db/generateCSV.php?fileName=quiz process">Generate</a>
@@ -148,24 +148,24 @@ db_close($conn);
                         </div>
                         <hr noshade>
                         <div>
-                            <h4>Survey Result</h4>
+                            <h4>Achievements Result</h4>
                             <div class="alert alert-info">
                                 <p>
-                                    You can download a .csv file for database by clicking the <b>Generate</b> link below.
+                                    You can download a .csv file for achievements result by clicking the <b>Generate</b> link below.
                                 </p>
                                 <br>
-                                <a href="../backup_restore_db/generateCSV.php?fileName=survey result">Generate</a>
+                                <a href="../backup_restore_db/generateCSV.php?fileName=achievements">Generate</a>
                             </div>
                         </div>
                         <hr noshade>
                         <div>
-                            <h4>Achievements Result</h4>
+                            <h4>Survey Result</h4>
                             <div class="alert alert-info">
                                 <p>
-                                    You can download a .csv file for database by clicking the <b>Generate</b> link below.
+                                    You can download a .csv file for survey in survet system.
                                 </p>
                                 <br>
-                                <a href="../backup_restore_db/generateCSV.php?fileName=achievements">Generate</a>
+                                <a href="jump-to-survey.php">Go to Survey System</a>
                             </div>
                         </div>
                     </div>
