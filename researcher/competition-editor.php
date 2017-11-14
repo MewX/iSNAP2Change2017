@@ -84,7 +84,7 @@ db_close($conn);
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <form id="metadata-submission" method="post" action="<?php echo $phpSelf; ?>">
+                        <form id="metadata-submission" method="post" action="<?php echo $phpSelf; ?>" name="quizEditor">
                             <!--if 0 update; else if -1 delete;-->
                             <input type=hidden name="metadataUpdate" id="metadataUpdate" value="1" required>
                             <label for="CompetitionID" style="display:none">CompetitionID</label>
@@ -164,7 +164,17 @@ db_close($conn);
                     }
                 }
             });
-            $('#metadata-submission').submit();
+            var form = document.forms.quizEditor;
+            var postData = [];
+            for(var i=0; i<form.elements.length; i++){
+                postData.push(form.elements[i].name + "=" + form.elements[i].value);
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "mcq-editor.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send(postData.join("&"));
+            $("#learning-material-editor").contents().find("#learningMaterial").submit();
+            location.reload();
         });
     });
 
@@ -173,7 +183,15 @@ db_close($conn);
         var title = document.getElementById("Title");
         var weekIsChanged = week.value != week.defaultValue;
         var titleIsChanged = title.value != title.defaultValue;
-        if(weekIsChanged||titleIsChanged){
+        var original = $.trim(atob("<?echo base64_encode(str_replace(array("\r\n"), "\n",$competitionResult->Content))?>"));
+        var materialContentIsChanged = false;
+        if (document.getElementById('learning-material-editor').contentWindow.tinymce !== undefined) {
+            var tempMaterial = $.trim(document.getElementById('learning-material-editor').contentWindow.tinymce.activeEditor.getContent()).replace("\r\n", "\n");
+            materialContentIsChanged = tempMaterial !== original;
+        } else {
+            //do nothing here
+        }
+        if(weekIsChanged || titleIsChanged || materialContentIsChanged){
             if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                 location.href='<?php echo "competition.php" ?>'            }
         }else{

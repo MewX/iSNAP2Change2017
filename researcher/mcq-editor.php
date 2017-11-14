@@ -341,8 +341,14 @@ db_close($conn);
         var weekIsChanged = week.value != week.defaultValue;
         var quizNameIsChanged = quizName.value != quizName.defaultValue;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
-        var original = atob("<?echo base64_encode(str_replace(array("\n\r", "\n", "\r"), '',$materialRes->Content))?>");
-        var materialContentIsChanged = materialContent.innerHTML != original;
+        var original = $.trim(atob("<?echo base64_encode(str_replace(array("\r\n"), "\n",$materialRes->Content))?>"));
+        var materialContentIsChanged = false;
+        if (document.getElementById('learning-material-editor').contentWindow.tinymce !== undefined) {
+            var tempMaterial = $.trim(document.getElementById('learning-material-editor').contentWindow.tinymce.activeEditor.getContent()).replace("\r\n", "\n");
+            materialContentIsChanged = tempMaterial !== original;
+        } else {
+            //do nothing here
+        }
         if(weekIsChanged||extraQuizIsChanged || quizNameIsChanged || materialContentIsChanged){
             if(confirm("[Warning] You haven't save your changes, do you want to leave this page?")){
                 location.href='<?php echo "mcq.php" ?>'

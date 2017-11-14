@@ -345,7 +345,7 @@ db_close($conn);
                 postData.push(form.elements[i].name + "=" + form.elements[i].value);
             }
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "mcq-editor.php", true);
+            xhr.open("POST", "saq-editor-template.php", true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.send(postData.join("&"));
             $("#learning-material-editor").contents().find("#learningMaterial").submit();
@@ -362,55 +362,14 @@ db_close($conn);
         var weekIsChanged = week.value != week.defaultValue;
         var quizNameIsChanged = quizName.value != quizName.defaultValue;
         var extraQuizIsChanged = !extraQuiz.options[extraQuiz.selectedIndex].defaultSelected;
-        //var original = atob("<?echo base64_encode(str_replace(array("\r\n", "\n", "\r"), '',$materialRes->Content))?>");
         var original = $.trim(atob("<?echo base64_encode(str_replace(array("\r\n"), "\n",$materialRes->Content))?>"));
-//        var original = $.trim(atob("<?//echo base64_encode($materialRes->Content)?>//"));
-
-        // TODO: delete unused codes and comments
-        //检测tinymce编辑器里的内容是否有变化
-        //可能的case：
-        //1. 通过 isDirty() 这个方法检测内容是否被改动 （http://archive.tinymce.com/wiki.php/API3:method.tinymce.Editor.isDirty），问题在于在这个页面拿不到editor
-        //2. 通过拿到form里的value来和初始数据做比较，问题在于form里的value没有根据编辑器里的内容变化而变化
-        //3. 通过拿到编辑器里的内容来和初始数据做比较，问题在于编辑器里的内容会给视频或者链接加tag。链接tag可以用正则解决，视频的有点麻烦。。
-
-        //case 1 的代码
-        //tinymce是在learning-material-editor声明的，我从这里拿不到
-//        if (tinymce.activeEditor.isDirty())//is null
-//            alert("You must save your contents.");
-
-        //case 2 的代码
-        //var case2 = document.getElementById('learning-material-editor').contentWindow.document.getElementsByName('richContentTextArea')[0].value;
-        //console.log(case2);
-
-        //case 3 的代码
-        //拿到tinymce编辑器里的内容
-        // DO NOT USE THE FOLLOWING CODES: contentWindow can be null
-        // Uncaught TypeError: Cannot read property 'contentWindow' of null
-        //        at goBack (saq-editor.php?quizID=18:842)
-        //        at HTMLButtonElement.onclick (saq-editor.php?quizID=18:534)
-        //        goBack @ saq-editor.php?quizID=18:842
-        //        onclick @ saq-editor.php?quizID=18:534
-//        var materialContent = document.getElementById('learning-material-editor').contentWindow.document.getElementById('materialContent_ifr')
-//            .contentWindow.document.getElementById('tinymce');
-
-
-        // case 4: using provided API (https://www.tinymce.com/docs-3x/api/class_tinymce.Editor.html/#getcontent)
         var materialContentIsChanged = false;
         if (document.getElementById('learning-material-editor').contentWindow.tinymce !== undefined) {
             console.log("Get from TinyMCE:");
             var tempMaterial = $.trim(document.getElementById('learning-material-editor').contentWindow.tinymce.activeEditor.getContent()).replace("\r\n", "\n");
-            console.log(JSON.stringify(tempMaterial));
-
-            console.log("Original:");
-            console.log(JSON.stringify(original));
-
-            // two ways to determine the equivalence
-//            console.log(tempMaterial !== original);
-//            console.log(tempMaterial.localeCompare(original));
             materialContentIsChanged = tempMaterial !== original;
-            if (!materialContentIsChanged) console.log("No changes.");
         } else {
-            console.log("Page is not loaded fully, so no change.");
+            //do nothing here
         }
 
         if (mediaTitle !== null && mediaSource !== null) {

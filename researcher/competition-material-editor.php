@@ -73,7 +73,7 @@ if(isset($_GET['competitionID'])){
     </script>
 </head>
 <body>
-<form method="post" action="<?php echo $phpSelf ?>">
+<form id="learningMaterial" method="post" action="<?php echo $phpSelf ?>">
     <label for="QuizID" style="display:none">QuizID</label>
     <input type="text" class="form-control" id="CompetitionID" name="CompetitionID" style="display:none"
            value="<?php echo $competitionID; ?>" required>
