@@ -86,7 +86,7 @@ try {
     <textarea id="materialContent" name="richContentTextArea">
         <?php echo $materialRes->Content; ?>
     </textarea>
-    <input type="submit" name='submitbutton' value="Save" class='submit'/> <span
+    <input type="submit" name='submitbutton' value="Save" class='submit' hidden/> <span
         class="glyphicon glyphicon-info-sign"></span><b> Ctrl + S</b><br>
 </form>
 
