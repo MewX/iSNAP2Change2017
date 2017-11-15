@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.2.7-MariaDB, for osx10.12 (x86_64)
+-- MySQL dump 10.16  Distrib 10.2.10-MariaDB, for Win32 (AMD64)
 --
 -- Host: localhost    Database: isnap2changedb
 -- ------------------------------------------------------
--- Server version	10.2.7-MariaDB
+-- Server version	10.2.10-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,118 +14,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `Recipe`
---
-
-DROP TABLE IF EXISTS `Recipe`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Recipe` (
-  `RecipeID` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `RecipeName` text NOT NULL,
-  `Source` text DEFAULT NULL,
-  `MealType` text NOT NULL,
-  `PreparationTime` mediumint(9) NOT NULL,
-  `CookingTime` mediumint(9) NOT NULL,
-  `Serves` mediumint(9) NOT NULL,
-  `Image` text DEFAULT NULL,
-  PRIMARY KEY (`RecipeID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Recipe`
---
-
-LOCK TABLES `Recipe` WRITE;
-/*!40000 ALTER TABLE `Recipe` DISABLE KEYS */;
-INSERT INTO `Recipe` VALUES (1,'Eggplant Parmesan Pizza','http://www.eatingwell.com/recipes_menus/recipe_slideshows/vegetarian_pizza_recipes?slide=1#leaderboardad','Main Meal',15,20,4,NULL);
-/*!40000 ALTER TABLE `Recipe` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Recipe_Ingredient`
---
-
-DROP TABLE IF EXISTS `Recipe_Ingredient`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Recipe_Ingredient` (
-  `IngredientID` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `Content` text DEFAULT NULL,
-  `RecipeID` mediumint(9) NOT NULL,
-  PRIMARY KEY (`IngredientID`),
-  KEY `Recipe_Ingredient_RecipeID_FK` (`RecipeID`),
-  CONSTRAINT `Recipe_Ingredient_RecipeID_FK` FOREIGN KEY (`RecipeID`) REFERENCES `Recipe` (`RecipeID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Recipe_Ingredient`
---
-
-LOCK TABLES `Recipe_Ingredient` WRITE;
-/*!40000 ALTER TABLE `Recipe_Ingredient` DISABLE KEYS */;
-INSERT INTO `Recipe_Ingredient` VALUES (1,'1 small eggplant, (about 12 ounces)',1),(2,'Yellow cornmeal, for dusting',1),(3,'1 pound Easy Whole-Wheat Pizza Dough, or other prepared dough (recipe follows)',1),(4,'3/4 cup prepared marinara sauce',1),(5,'2 tablespoons chopped fresh basil',1),(6,'1 medium clove garlic, minced medium clove garlic, minced',1),(7,'3/4 cup thinly shaved Parmigiano-Reggiano cheese, (see Tip)',1);
-/*!40000 ALTER TABLE `Recipe_Ingredient` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Recipe_Nutrition`
---
-
-DROP TABLE IF EXISTS `Recipe_Nutrition`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Recipe_Nutrition` (
-  `NutritionID` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `NutritionName` text DEFAULT NULL,
-  `MeasurementUnit` text DEFAULT NULL,
-  `RecipeID` mediumint(9) NOT NULL,
-  PRIMARY KEY (`NutritionID`),
-  KEY `Recipe_Nutrition_RecipeID_FK` (`RecipeID`),
-  CONSTRAINT `Recipe_Nutrition_RecipeID_FK` FOREIGN KEY (`RecipeID`) REFERENCES `Recipe` (`RecipeID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Recipe_Nutrition`
---
-
-LOCK TABLES `Recipe_Nutrition` WRITE;
-/*!40000 ALTER TABLE `Recipe_Nutrition` DISABLE KEYS */;
-INSERT INTO `Recipe_Nutrition` VALUES (1,'calories','359',1),(2,'fat','7 g',1),(3,'cholesterol','12 mg',1),(4,'carbohydrates','59 g',1),(5,'protein','16 g',1),(6,'fiber','9 g',1),(7,'sodium','713 mg',1),(8,'potassium','416 mg',1);
-/*!40000 ALTER TABLE `Recipe_Nutrition` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Recipe_Step`
---
-
-DROP TABLE IF EXISTS `Recipe_Step`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Recipe_Step` (
-  `StepID` mediumint(9) NOT NULL AUTO_INCREMENT,
-  `Description` text DEFAULT NULL,
-  `RecipeID` mediumint(9) NOT NULL,
-  PRIMARY KEY (`StepID`),
-  KEY `Recipe_Step_RecipeID_FK` (`RecipeID`),
-  CONSTRAINT `Recipe_Step_RecipeID_FK` FOREIGN KEY (`RecipeID`) REFERENCES `Recipe` (`RecipeID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Recipe_Step`
---
-
-LOCK TABLES `Recipe_Step` WRITE;
-/*!40000 ALTER TABLE `Recipe_Step` DISABLE KEYS */;
-INSERT INTO `Recipe_Step` VALUES (1,'Preheat grill to medium-high. (For charcoal grilling or an oven variation, see below.)',1),(2,'Cut eggplant into 1/2-inch thick rounds. Grill, turning once, until marked and softened, 4 to 6 minutes. Let cool slightly, then thinly slice into strips. Reduce heat to low.',1),(3,'Sprinkle cornmeal onto a pizza peel or large baking sheet. Roll out the dough (see Tip) and transfer it to the prepared peel or baking sheet, making sure the underside of the dough is completely coated with cornmeal.',1),(4,'Slide the crust onto the grill rack; close the lid. Cook until lightly browned, 3 to 4 minutes.',1),(5,'Using a large spatula, flip the crust. Spread marinara sauce on the crust, leaving a 1-inch border. Quickly top with the eggplant, basil and garlic. Lay the Parmigiano-Reggiano shavings on top.',1),(6,'Close the lid again and grill until the cheese has melted and the bottom of the crust has browned, about 8 minutes.',1);
-/*!40000 ALTER TABLE `Recipe_Step` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `achievements`
@@ -213,7 +101,7 @@ CREATE TABLE `achievements` (
 
 LOCK TABLES `achievements` WRITE;
 /*!40000 ALTER TABLE `achievements` DISABLE KEYS */;
-INSERT INTO `achievements` VALUES (1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0),(22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+INSERT INTO `achievements` VALUES (1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(2,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(12,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(17,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(21,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0),(22,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),(23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `achievements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -407,7 +295,7 @@ CREATE TABLE `learning_material` (
 
 LOCK TABLES `learning_material` WRITE;
 /*!40000 ALTER TABLE `learning_material` DISABLE KEYS */;
-INSERT INTO `learning_material` VALUES (5,'\n<p>Learning material for this quiz has not been added.</p>',1),(12,'<p><iframe src=\"//www.youtube.com/embed/u4srWvLXZRw\" width=\"560\" height=\"314\" allowfullscreen=\"allowfullscreen\"></iframe></p>',-1),(13,'<ul>\r\n<li>Cigarette smoking is one of the leading causes of preventable death in the world and addiction to nicotine usually begins during adolescence.</li>\r\n<li>90% of chronic smokers begin smoking before the age of 18. It only takes 10 seconds for the nicotine from one puff of smoke to reach the brain.</li>\r\n<li>This rapid delivery of nicotine from the lungs to the brain is one of the reasons that cigarettes are so addictive. Nicotine causes cells in the brain to release dopamine, a feel good hormone that makes you feel alert and content.</li>\r\n<li>Over time, the brain cells of smokers are changed to expect the regular bursts of extra dopamine that result from smoking.</li>\r\n<li>The younger smokers are when they begin to experiment with smoking, the more likely they are to become heavily addicted and have greater problems in quitting later on in life.</li>\r\n</ul>',0),(15,'<p>When you click on each of the body areas, facts pop up about the damages that smoking is doing to different parts of the body.</p>\r\n<p>Source: <a href=\"http://www.quit.org.au/reasons-to-quit/health-risks-of-smoking\">http://www.quit.org.au/reasons-to-quit/health-risks-of-smoking</a></p>',0),(16,'<p><iframe src=\"//www.youtube.com/embed/110MI90LZQA\" width=\"560\" height=\"314\" allowfullscreen=\"allowfullscreen\"></iframe></p>\r\n<p><iframe src=\"//www.youtube.com/embed/haqi4xvjvKo\" width=\"560\" height=\"314\" allowfullscreen=\"allowfullscreen\"></iframe></p>',-1),(17,'<p>Learning material for this quiz has not been added.</p>',1),(18,'<p><strong>Do you know how many young people smoke in Australia?</strong></p>\r\n<p>According to Quitline, rates of smoking amongst young people have never been lower. The most recent data (2014) finds that 5.1 per cent of 12 to 17 year olds in Australia are current smokers (have smoked in the past seven days).</p>\r\n<p>Source: <a href=\"http://www.quit.org.au/resource-centre/communities/youth-and-smoking\"><strong>http://www.quit.org.au/resource-centre/communities/youth-and-smoking</strong></a></p>',0),(19,'<p><em>What&rsquo;s going on in Australia?</em></p>\r\n<p>Cigarette smoking is the leading cause of preventable death in the world and approximately 30 million children take up the harmful habit each year (1, 2). In Australia, 70, 000 young people start smoking annually and there are an additional 15,000 Australians who die as a result of cigarette smoking yearly (7). Smoking is estimated to cost the Australian economy $31.5 billion dollars every year in health care and social costs (8). Recent estimates of the economic impact from an 8% reduction in the prevalence of tobacco smoking in Australia found that it would result in: 158,000 fewer incident cases of disease, 5000 fewer deaths, 2.2 million fewer lost working days, 3000 fewer early retirements and would reduce health sector costs by AU$491 million (36).</p>',0),(20,'<p>Read the summary below and list three reasons why e-cigarettes are potentially harmful:</p>\r\n<p>Electronic cigarettes or e-cigarettes are rapidly growing in popularity. They have been marketed as &lsquo;safer&rsquo; alternatives to smoking. This is because many of the chemical products contained within traditional cigarettes and the bi&ndash;products that are released from tobacco burning which cause respiratory and other illnesses are not present in E-cigs.&nbsp;&nbsp; However, although there is no tar and no smoke, there are still some E-cigs that contain nicotine which is the addictive main addictive substance of smoking. The 3 biggest tobacco companies: Phillip Morris, Reynolds America and Lorillard all have shares invested in e-cigs in fact Lorillard&rsquo;s owns Blu which is the industry&rsquo;s leading brand. In a hope to get younger E-cigarette users on board brands such as cream, lemon, banana, cinnamon and many more have been released. You should be aware of the marketing strategies that Big Tobacco can use to get you on board. They are getting better and better at selling death!</p>\r\n<p>Worryingly, the industry is not yet properly regulated, and there is no standard for manufacturing or production which means we do not properly know what&rsquo;s in them! There has been very little research surrounding the use of these devices to facilitate smoking cessation, with some studies reporting that they can cause symptoms such as nausea, headaches, coughing and throat and lung irritations. Both the World Health Organisation and the Food and Drug Authority have not approved the use of e&ndash;cigarettes in many countries, including Australia and have warned that they should be approached with caution.</p>',0),(21,'<p>Since 1 December 2012, <strong>all</strong> tobacco products sold, offered for sale, or otherwise supplied in Australia must be in plain packaging. Plain packaging is a key part of Australia&rsquo;s comprehensive package of tobacco control measures, which include:</p>\r\n<ul>\r\n<li><a href=\"http://www.health.gov.au/internet/main/publishing.nsf/Content/tobacco-warn\">Updated and expanded health warnings</a>:&nbsp; requires health warnings to cover at least 75 per cent of the front of most tobacco packaging, 90 per cent of the back of cigarette packaging and 75 per cent of the back of most other tobacco product packaging</li>\r\n<li>Legislation to restrict <a href=\"http://www.health.gov.au/internet/main/publishing.nsf/Content/checklist\">internet advertising</a> of tobacco products in Australia</li>\r\n<li>Record investments in anti-smoking social marketing campaigns</li>\r\n<li>The 25 per cent tobacco excise increase in April 2010;</li>\r\n<li>Four staged increases in excise and excise-equivalent customs duty on tobacco and tobacco-related products: the first 12.5 per cent increase commenced on 1 December 2013 and further 12.5 per cent increases will occur on 1 September 2014, 1 September 2015 and 1 September 2016;</li>\r\n<li>A reduction in duty free concessions for tobacco products</li>\r\n<li>Stronger penalties for tobacco smuggling offences.</li>\r\n</ul>\r\n<p>Source: <a href=\"http://www.health.gov.au/internet/main/publishing.nsf/Content/tobacco-plain\">http://www.health.gov.au/internet/main/publishing.nsf/Content/tobacco-plain</a></p>',0),(22,'<p>&nbsp; Create a slogan and poster for an advertising campaign aimed at youth to convince them to not take up smoking. (There will be a winner and prize for the best poster).</p>',0),(23,'<p>Imagine you are a smoker trying to give up smoking. What are your motivations? What are the benefits for yourself and what are the draw backs? Use the below tool to visually represent your thoughts.</p>',0);
+INSERT INTO `learning_material` VALUES (5,'\n<p>Learning material for this quiz has not been added.</p>',1),(12,'<p><iframe src=\"//www.youtube.com/embed/u4srWvLXZRw\" width=\"560\" height=\"314\" allowfullscreen=\"allowfullscreen\"></iframe></p>',-1),(13,'<ul>\r\n<li>Cigarette smoking is one of the leading causes of preventable death in the world and addiction to nicotine usually begins during adolescence.</li>\r\n<li>90% of chronic smokers begin smoking before the age of 18. It only takes 10 seconds for the nicotine from one puff of smoke to reach the brain.</li>\r\n<li>This rapid delivery of nicotine from the lungs to the brain is one of the reasons that cigarettes are so addictive. Nicotine causes cells in the brain to release dopamine, a feel good hormone that makes you feel alert and content.</li>\r\n<li>Over time, the brain cells of smokers are changed to expect the regular bursts of extra dopamine that result from smoking.</li>\r\n<li>The younger smokers are when they begin to experiment with smoking, the more likely they are to become heavily addicted and have greater problems in quitting later on in life.d</li>\r\n</ul>',0),(15,'<p>When you click on each of the body areas, facts pop up about the damages that smoking is doing to different parts of the body.</p>\r\n<p>Source: <a href=\"http://www.quit.org.au/reasons-to-quit/health-risks-of-smoking\">http://www.quit.org.au/reasons-to-quit/health-risks-of-smoking</a></p>',0),(16,'<p><iframe src=\"//www.youtube.com/embed/110MI90LZQA\" width=\"560\" height=\"314\" allowfullscreen=\"allowfullscreen\"></iframe></p>\r\n<p><iframe src=\"//www.youtube.com/embed/haqi4xvjvKo\" width=\"560\" height=\"314\" allowfullscreen=\"allowfullscreen\"></iframe></p>',-1),(17,'<p>Learning material for this quiz has not been added.</p>',1),(18,'<p><strong>Do you know how many young people smoke in Australia?</strong></p>\r\n<p>According to Quitline, rates of smoking amongst young people have never been lower. The most recent data (2014) finds that 5.1 per cent of 12 to 17 year olds in Australia are current smokers (have smoked in the past seven days).</p>\r\n<p>Source: <a href=\"http://www.quit.org.au/resource-centre/communities/youth-and-smoking\"><strong>http://www.quit.org.au/resource-centre/communities/youth-and-smoking</strong></a></p>',0),(19,'<p><em>What&rsquo;s going on in Australia?</em></p>\r\n<p>Cigarette smoking is the leading cause of preventable death in the world and approximately 30 million children take up the harmful habit each year (1, 2). In Australia, 70, 000 young people start smoking annually and there are an additional 15,000 Australians who die as a result of cigarette smoking yearly (7). Smoking is estimated to cost the Australian economy $31.5 billion dollars every year in health care and social costs (8). Recent estimates of the economic impact from an 8% reduction in the prevalence of tobacco smoking in Australia found that it would result in: 158,000 fewer incident cases of disease, 5000 fewer deaths, 2.2 million fewer lost working days, 3000 fewer early retirements and would reduce health sector costs by AU$491 million (36).</p>',0),(20,'<p>Read the summary below and list three reasons why e-cigarettes are potentially harmful:</p>\r\n<p>Electronic cigarettes or e-cigarettes are rapidly growing in popularity. They have been marketed as &lsquo;safer&rsquo; alternatives to smoking. This is because many of the chemical products contained within traditional cigarettes and the bi&ndash;products that are released from tobacco burning which cause respiratory and other illnesses are not present in E-cigs.&nbsp;&nbsp; However, although there is no tar and no smoke, there are still some E-cigs that contain nicotine which is the addictive main addictive substance of smoking. The 3 biggest tobacco companies: Phillip Morris, Reynolds America and Lorillard all have shares invested in e-cigs in fact Lorillard&rsquo;s owns Blu which is the industry&rsquo;s leading brand. In a hope to get younger E-cigarette users on board brands such as cream, lemon, banana, cinnamon and many more have been released. You should be aware of the marketing strategies that Big Tobacco can use to get you on board. They are getting better and better at selling death!</p>\r\n<p>Worryingly, the industry is not yet properly regulated, and there is no standard for manufacturing or production which means we do not properly know what&rsquo;s in them! There has been very little research surrounding the use of these devices to facilitate smoking cessation, with some studies reporting that they can cause symptoms such as nausea, headaches, coughing and throat and lung irritations. Both the World Health Organisation and the Food and Drug Authority have not approved the use of e&ndash;cigarettes in many countries, including Australia and have warned that they should be approached with caution.</p>',0),(21,'<p>Since 1 December 2012, <strong>all</strong> tobacco products sold, offered for sale, or otherwise supplied in Australia must be in plain packaging. Plain packaging is a key part of Australia&rsquo;s comprehensive package of tobacco control measures, which include:</p>\r\n<ul>\r\n<li><a href=\"http://www.health.gov.au/internet/main/publishing.nsf/Content/tobacco-warn\">Updated and expanded health warnings</a>:&nbsp; requires health warnings to cover at least 75 per cent of the front of most tobacco packaging, 90 per cent of the back of cigarette packaging and 75 per cent of the back of most other tobacco product packaging</li>\r\n<li>Legislation to restrict <a href=\"http://www.health.gov.au/internet/main/publishing.nsf/Content/checklist\">internet advertising</a> of tobacco products in Australia</li>\r\n<li>Record investments in anti-smoking social marketing campaigns</li>\r\n<li>The 25 per cent tobacco excise increase in April 2010;</li>\r\n<li>Four staged increases in excise and excise-equivalent customs duty on tobacco and tobacco-related products: the first 12.5 per cent increase commenced on 1 December 2013 and further 12.5 per cent increases will occur on 1 September 2014, 1 September 2015 and 1 September 2016;</li>\r\n<li>A reduction in duty free concessions for tobacco products</li>\r\n<li>Stronger penalties for tobacco smuggling offences.</li>\r\n</ul>\r\n<p>Source: <a href=\"http://www.health.gov.au/internet/main/publishing.nsf/Content/tobacco-plain\">http://www.health.gov.au/internet/main/publishing.nsf/Content/tobacco-plain</a></p>',0),(22,'<p>&nbsp; Create a slogan and poster for an advertising campaign aimed at youth to convince them to not take up smoking. (There will be a winner and prize for the best poster).</p>',0),(23,'<p>Imagine you are a smoker trying to give up smoking. What are your motivations? What are the benefits for yourself and what are the draw backs? Use the below tool to visually represent your thoughts.</p>',0),(24,'<p>#using \'infographics.html\';</p>\r\n<p><strong><u>Smoking</u></strong></p>\r\n<p><strong>Liver:</strong> The toxins found in cigarette smoke can damage the liver and cause diseases like cancers, Hep B and C and liver fibrosis.</p>\r\n<p>Jewell, C. The Effects of Smoking on the Liver.URL:&lt; <a href=\"http://www.ehow.com/how-does_4572401_effects-smoking-liver.html\">http://www.ehow.com/how-does_4572401_effects-smoking-liver.html</a>&gt;&nbsp; &nbsp;[Accessed 07/07/2016].</p>\r\n<p><strong>Brain:</strong> You are more likely to have difficulty sleeping if you are a teen who smokes.</p>\r\n<p>&nbsp;Kwok-Kei, M. Smoking and sleep disorders in Chinese adolescents Sleep Medicine , Volume 11 , Issue 3 , 268 &ndash; 273. 2010</p>\r\n<p><strong>Nose:</strong> Smoking can dull your sense of smell and taste.</p>\r\n<p>Icanquit. Health. URL: &lt; <a href=\"https://www.icanquit.com.au/further-resources/quitline\">https://www.icanquit.com.au/further-resources/quitline</a> &gt;[Accessed 07/07/2016].&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;<strong>Skin:</strong> Smoking causes wrinkles!</p>\r\n<p>Okada, H, Alleyne, Brendan B.S,&nbsp; Kaveh V;, Kimberly K, Guyuron B. Facial Changes Caused by Smoking: A Comparison between Smoking and Nonsmoking Identical Twins. Plastic &amp; Reconstructive Surgery. 2013.</p>\r\n<p>&nbsp;</p>\r\n<p><strong>Hair:</strong> There is a link between smoking and baldness.</p>\r\n<p>Su L, Chen T. Association of Androgenetic Alopecia With Smoking and Its Prevalence Among Asian Men: A Community-Based Survey.&nbsp;Arch Dermatol.&nbsp;2007.</p>\r\n<p>&nbsp;</p>\r\n<p><strong>Mouth:</strong> Smoking stains your teeth and causes gum disease.</p>\r\n<p>Quitline. Quit Victoria, Australia 2016.</p>\r\n<p>&nbsp;</p>\r\n<p><strong>Tongue: </strong>Smoking can cause black hairy tongue due to a build-up of bacteria and yeast.</p>\r\n<p>Black hairy tongue. URL: &lt;http://www.webmd.com/oral-health/guide/black-hairy-tongue&gt;.</p>\r\n<p>&nbsp;</p>\r\n<p><strong>Ears:</strong> Smoking is a risk factor for hearing loss.</p>\r\n<p>Zayed AA, Shahait AD, Ayoub MN, Yousef A-M. Smokers&rsquo; hair: Does smoking cause premature hair graying? Indian Dermatology Online Journal. 2013;4(2):90-92. doi:10.4103/2229-5178.110586.</p>\r\n<p>&nbsp;</p>\r\n<p><strong>Eyes:</strong>Smoking can lead to many eye problems including blindness.</p>\r\n<p>Bedinghaus, T. How does smoking affect your eyes? About Health, 2014.</p>\r\n<p>&nbsp;</p>\r\n<p><strong>Lungs</strong></p>\r\n<p>Starting smoking during your teens can impair the growth of your lungs and can cause irreversible damage.</p>\r\n<p>United States. Department of Health and Human Services. The health consequences of smoking: a report of the Surgeon General. Atlanta, GA: U.S.&nbsp;Department of Health and Human Services, Centers for Disease Control and Prevention, National Center for Chronic Disease Prevention and Health&nbsp;Promotion, Office on Smoking and Health; 2004.</p>\r\n<p><strong>Heart:</strong> Smokers have resting heart rates two to three beats per minute faster than non-smokers and an increased risk of having a heart attack later on in life.</p>\r\n<p>World Health Organisation, Health effects of smoking among young people, 2016.</p>\r\n<p><strong>Legs:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong></p>\r\n<p>Smoking can cause Gangrene leading to amputation of your limbs.</p>\r\n<p>Victoria State Government. Smoking, Youth Central, 2016.</p>\r\n<p>http://www.youthcentral.vic.gov.au/health-relationships/smoking</p>\r\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>\r\n<p><strong>Breasts</strong></p>\r\n<p>Smoking causes breasts to sag girls.</p>\r\n<p>Melanie Haiken, 5 Most surprising reasons to give up smoking, Caring. URL:&lt;https://www.caring.com/articles/5-surprising-reasons-to-quit-smoking &gt; 2014</p>\r\n<p>&nbsp;</p>\r\n<p><strong>Bones:</strong></p>\r\n<p>People who smoke are more likely to develop Rheumatoid Arthritis.</p>\r\n<p>Hutchinson D&nbsp;and Moots R. Cigarette smoking and severity of rheumatoid arthritis. Rheumatology, 40 (12), 2011.</p>\r\n<p><strong>&nbsp;</strong></p>\r\n<p><strong>Brain:</strong></p>\r\n<p>Smoking is a risk factor for dementia.</p>\r\n<p>Anstey K, Sanden C, Salim A, and O\'Kearney R. Smoking as a risk factor for dementia and cognitive decline: a meta-analysis of prospective studies. American Journal of Epidemiology, 166:367-378, 2007.</p>\r\n<p>Peters R, et al. Smoking, dementia and cognitive decline in the elderly, a systematic review. BMC Geriatrics, 2008, 8:36.</p>\r\n<p>&nbsp;</p>\r\n<p><strong>Sexual organs:</strong> Smoking can cause erectile dysfunction.</p>\r\n<p>Roland, J. Can Smoking Cigarettes Cause Impotence? http://www.healthline.com/health/erectile-dysfunction/impotence-and-smoking&gt;2015 [Accessed 07/07/2016].</p>\r\n<p>Women who smoke can get menopause earlier.&nbsp;</p>\r\n<p>Pietrangelo, A. The Effects of smoking on the Body. <a href=\"URL:http://www.healthline.com/health/smoking/effects-on-body\">URL:http://www.healthline.com/health/smoking/effects-on-body</a> 2014 [Accessed 07/07/2016].</p>',0);
 /*!40000 ALTER TABLE `learning_material` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -532,7 +420,7 @@ CREATE TABLE `mcq_option` (
   PRIMARY KEY (`OptionID`),
   KEY `MCQ_Option_MCQID_FK` (`MCQID`),
   CONSTRAINT `MCQ_Option_MCQID_FK` FOREIGN KEY (`MCQID`) REFERENCES `mcq_question` (`MCQID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -541,7 +429,7 @@ CREATE TABLE `mcq_option` (
 
 LOCK TABLES `mcq_option` WRITE;
 /*!40000 ALTER TABLE `mcq_option` DISABLE KEYS */;
-INSERT INTO `mcq_option` VALUES (63,'A Nicotine receptor-> Nicotine-> Cell->Dopamine release ',' ',20),(64,'B Nicotine->Nicotine receptor-> Cell->Dopamine release ',' ',20),(65,'C Cell->Nicotine->Nicotine receptor-> Dopamine release ',' ',20),(66,'D Nicotine->Nicotine receptor-> Dopamine release-> Cell',' ',20),(67,'A  Addiction to nicotine',' ',21),(68,'B  Associated risk of other drug use',' ',21),(69,'C  Difficulty in breathing',' ',21),(70,'D All of the above',' ',21),(71,'A Increased risk of lung cancer','',22),(72,'B Stroke','',22),(73,'C Difficulty in sleeping','',22),(74,'D Heart Disease','',22),(75,'A Dancing','',23),(76,'B Reading','',23),(77,'C Fighting','',23),(78,'D Driving','',23),(79,'A Longer than someone who has never smoked','',24),(80,'B Shorter than someone who has never smoked','',24),(81,'C 7 years less than someone who has never smoked','',24),(82,'D 10 years less than someone who has never smoked','',24),(83,'A To use drugs','',25),(84,'B To use Alcohol','',25),(85,'C Engage in less physical activity (need to add that in)','',25),(86,'D All of the above ','',25),(87,'A Causing a build-up of plaque in the coronary arteries','',26),(88,'B Increasing the risk of heart attack','',26),(89,'C Damaging heart and blood vessels ','',26),(90,'D All of the above','',26),(91,'A Slowing blood flow to kidneys','',27),(92,'B Increasing blood flow to kidneys ','',27),(93,'C Disrupting the alveolar sacs in the kidneys ','',27),(94,'D Damaging the coronary vessels ','',27),(95,'A Increasing the risk of lung cancer','',28),(96,'B Increasing blood flow to the lungs','',28),(97,'C Decreasing lung tissue damage','',28),(98,'D Both A and B are correct ','',28),(99,'A Smoking parents are more likely to struggle with getting pregnant ','',29),(100,'B Erectile Dysfunction ','',29),(101,'C Both A and B are correct ','',29),(102,'D Having heavier babies','',29),(103,'A Smoothing out uneven skin tone','',30),(104,'B Causing dermatitis ','',30),(105,'C Causing wrinkles','',30),(106,'D Causing emphysema ','',30),(107,'A Increasing the risk of blindness','',31),(108,'B Increasing the risk of macular degeneration which causes blindness ','',31),(109,'C Increasing the amount of light absorbed by the pupil','',31),(110,'D Decreasing the amount of light absorbed by the eyes','',31),(111,'A Increasing the risk of getting gangrene','',32),(112,'B Can cause leg bones to get smaller','',32),(113,'C Affecting the retina','',32),(114,'D Both A and B are right ','',32),(115,'A Stopping the liver from filtering all toxins in the body','',33),(116,'B Increasing the filtrating capacity of the liver','',33),(117,'C Causing the liver to take on kidney like functions','',33),(118,'D Increasing the risk of Fibrosis in the liver ','',33),(119,'A Causing you to get infections more easily ','',34),(120,'B Compromising your immune system','',34),(121,'C Increasing the capacity of the system to identify pathogens and viruses','',34),(122,'D A + B are correct ','',34),(123,'A Are more likely to have low birth weight babies','',35),(124,'B More likely to have babies which might develop asthma ','',35),(125,'C More likely to have babies who might develop Sudden Infant Death Syndrome','',35),(126,'D All of the above','',35);
+INSERT INTO `mcq_option` VALUES (63,'A Nicotine receptor-> Nicotine-> Cell->Dopamine release ',' ',20),(64,'B Nicotine->Nicotine receptor-> Cell->Dopamine release ',' ',20),(65,'C Cell->Nicotine->Nicotine receptor-> Dopamine release ',' ',20),(66,'D Nicotine->Nicotine receptor-> Dopamine release-> Cell',' ',20),(67,'A  Addiction to nicotine',' ',21),(68,'B  Associated risk of other drug use',' ',21),(69,'C  Difficulty in breathing',' ',21),(70,'D All of the above',' ',21),(71,'A Increased risk of lung cancer','',22),(72,'B Stroke','',22),(73,'C Difficulty in sleeping','',22),(74,'D Heart Disease','',22),(75,'A Dancing','',23),(76,'B Reading','',23),(77,'C Fighting','',23),(78,'D Driving','',23),(79,'A Longer than someone who has never smoked','',24),(80,'B Shorter than someone who has never smoked','',24),(81,'C 7 years less than someone who has never smoked','',24),(82,'D 10 years less than someone who has never smoked','',24),(83,'A To use drugs','',25),(84,'B To use Alcohol','',25),(85,'C Engage in less physical activity (need to add that in)','',25),(86,'D All of the above ','',25),(87,'A Causing a build-up of plaque in the coronary arteries','',26),(88,'B Increasing the risk of heart attack','',26),(89,'C Damaging heart and blood vessels ','',26),(90,'D All of the above','',26),(91,'A Slowing blood flow to kidneys','',27),(92,'B Increasing blood flow to kidneys ','',27),(93,'C Disrupting the alveolar sacs in the kidneys ','',27),(94,'D Damaging the coronary vessels ','',27),(95,'A Increasing the risk of lung cancer','',28),(96,'B Increasing blood flow to the lungs','',28),(97,'C Decreasing lung tissue damage','',28),(98,'D Both A and B are correct ','',28),(99,'A Smoking parents are more likely to struggle with getting pregnant ','',29),(100,'B Erectile Dysfunction ','',29),(101,'C Both A and B are correct ','',29),(102,'D Having heavier babies','',29),(103,'A Smoothing out uneven skin tone','',30),(104,'B Causing dermatitis ','',30),(105,'C Causing wrinkles','',30),(106,'D Causing emphysema ','',30),(107,'A Increasing the risk of blindness','',31),(108,'B Increasing the risk of macular degeneration which causes blindness ','',31),(109,'C Increasing the amount of light absorbed by the pupil','',31),(110,'D Decreasing the amount of light absorbed by the eyes','',31),(111,'A Increasing the risk of getting gangrene','',32),(112,'B Can cause leg bones to get smaller','',32),(113,'C Affecting the retina','',32),(114,'D Both A and B are right ','',32),(115,'A Stopping the liver from filtering all toxins in the body','',33),(116,'B Increasing the filtrating capacity of the liver','',33),(117,'C Causing the liver to take on kidney like functions','',33),(118,'D Increasing the risk of Fibrosis in the liver ','',33),(119,'A Causing you to get infections more easily ','',34),(120,'B Compromising your immune system','',34),(121,'C Increasing the capacity of the system to identify pathogens and viruses','',34),(122,'D A + B are correct ','',34),(123,'A Are more likely to have low birth weight babies','',35),(124,'B More likely to have babies which might develop asthma ','',35),(125,'C More likely to have babies who might develop Sudden Infant Death Syndrome','',35),(126,'D All of the above','',35),(127,'A)	Heart','',36),(128,'B)	Brain','',36),(129,'C)	Skin','',36),(130,'D)	All of the above ','',36),(131,'A)	Increased sex drive','',37),(132,'B)	Decreased sex drive ','',37),(133,'C)	Erectile dysfunction ','',37),(134,'D)	All of the above ','',37),(135,'A)	Down Syndrome ','',38),(136,'B)	Cerebral palsy','',38),(137,'C)	Fragile X Syndrome','',38),(138,'D)	Dementia ','',38),(139,'A)	An increased risk of having heart attacks ','',39),(140,'B)	A decreased risk of having heart attacks ','',39),(141,'C)	Smoking neither increases nor decreases risk of heart attack ','',39),(142,'D)	Smokers have resting heart rates that beat 6 times faster per minute than non-smokers','',39),(143,'A)	Baldness ','',40),(144,'B)	Rheumatoid Arthritis ','',40),(145,'C)	Sagging Breasts ','',40),(146,'D)	All of the above','',40);
 /*!40000 ALTER TABLE `mcq_option` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -560,7 +448,7 @@ CREATE TABLE `mcq_question` (
   PRIMARY KEY (`MCQID`),
   KEY `MCQ_Question_QuizID_FK` (`QuizID`),
   CONSTRAINT `MCQ_Question_QuizID_FK` FOREIGN KEY (`QuizID`) REFERENCES `mcq_section` (`QuizID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -569,7 +457,7 @@ CREATE TABLE `mcq_question` (
 
 LOCK TABLES `mcq_question` WRITE;
 /*!40000 ALTER TABLE `mcq_question` DISABLE KEYS */;
-INSERT INTO `mcq_question` VALUES (20,'What is the correct order of nicotine release into the body?',64,13),(21,'What are the short term effects of smoking?',70,15),(22,'What are the long term effects of smoking? Choose the incorrect answer',73,15),(23,'Smoking is associated with risky behaviour such as ',77,15),(24,'On Average someone who smokes a pack or more of cigarettes a day lives',81,15),(25,'Teens who smoke are more likely to',86,15),(26,'Smoking affects the heart by:',90,17),(27,'Smoking affects the kidneys by:',91,17),(28,'Smoking affects the lungs by:',95,17),(29,'Smoking can cause fertility problems such as:',101,17),(30,'Smoking can affect the skin by:',105,17),(31,'Smoking affects the eyes by:',108,17),(32,'Smoking can affect the legs by:',111,17),(33,'Smoking can affect the liver by:',118,17),(34,'Smoking can affect your immune system by:',122,17),(35,'Mothers who smoke during pregnancy:',126,17);
+INSERT INTO `mcq_question` VALUES (20,'What is the correct order of nicotine release into the body?',64,13),(21,'What are the short term effects of smoking?',70,15),(22,'What are the long term effects of smoking? Choose the incorrect answer',73,15),(23,'Smoking is associated with risky behaviour such as ',77,15),(24,'On Average someone who smokes a pack or more of cigarettes a day lives',81,15),(25,'Teens who smoke are more likely to',86,15),(26,'Smoking affects the heart by:',90,17),(27,'Smoking affects the kidneys by:',91,17),(28,'Smoking affects the lungs by:',95,17),(29,'Smoking can cause fertility problems such as:',101,17),(30,'Smoking can affect the skin by:',105,17),(31,'Smoking affects the eyes by:',108,17),(32,'Smoking can affect the legs by:',111,17),(33,'Smoking can affect the liver by:',118,17),(34,'Smoking can affect your immune system by:',122,17),(35,'Mothers who smoke during pregnancy:',126,17),(36,'What organs can smoking damage?',130,24),(37,'Smoking can cause:',133,24),(38,'Smoking is a risk factor for:',138,24),(39,'Smokers have:',139,24),(40,'Smoking can cause:',146,24);
 /*!40000 ALTER TABLE `mcq_question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -624,7 +512,7 @@ CREATE TABLE `mcq_section` (
 
 LOCK TABLES `mcq_section` WRITE;
 /*!40000 ALTER TABLE `mcq_section` DISABLE KEYS */;
-INSERT INTO `mcq_section` VALUES (13,1),(15,5),(17,10);
+INSERT INTO `mcq_section` VALUES (13,1),(15,5),(17,10),(24,5);
 /*!40000 ALTER TABLE `mcq_section` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -757,7 +645,7 @@ CREATE TABLE `quiz` (
   PRIMARY KEY (`QuizID`),
   KEY `Quiz_TopicID_FK` (`TopicID`),
   CONSTRAINT `Quiz_TopicID_FK` FOREIGN KEY (`TopicID`) REFERENCES `topic` (`TopicID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -766,7 +654,7 @@ CREATE TABLE `quiz` (
 
 LOCK TABLES `quiz` WRITE;
 /*!40000 ALTER TABLE `quiz` DISABLE KEYS */;
-INSERT INTO `quiz` VALUES (5,6,'Misc',0,1,'Not on word'),(12,1,'SAQ',0,1,'Quiz 1'),(13,2,'MCQ',0,1,'Quiz 2'),(15,3,'MCQ',0,1,'Quiz 4'),(16,5,'SAQ',0,1,NULL),(17,6,'MCQ',0,1,'Quiz 7'),(18,7,'SAQ',0,1,'Quiz 8'),(19,8,'SAQ',0,1,'Quiz 9'),(20,8,'SAQ',0,1,'Quiz 10'),(21,9,'SAQ',0,1,'Quiz 11'),(22,9,'Poster',0,1,'Quiz 12'),(23,2,'Poster',0,1,'Quiz 3');
+INSERT INTO `quiz` VALUES (5,6,'Misc',0,1,'Not on word'),(12,1,'SAQ',0,1,'Quiz 1'),(13,2,'MCQ',0,1,'Quiz 2'),(15,3,'MCQ',0,1,'Quiz 4'),(16,5,'SAQ',0,1,NULL),(17,6,'MCQ',0,1,'Quiz 7'),(18,7,'SAQ',0,1,'Quiz 8'),(19,8,'SAQ',0,1,'Quiz 9'),(20,8,'SAQ',0,1,'Quiz 10'),(21,9,'SAQ',0,1,'Quiz 11'),(22,9,'Poster',0,1,'Quiz 12'),(23,2,'Poster',0,1,'Quiz 3'),(24,3,'MCQ',0,1,'Smoking Infographics');
 /*!40000 ALTER TABLE `quiz` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -796,8 +684,120 @@ CREATE TABLE `quiz_record` (
 
 LOCK TABLES `quiz_record` WRITE;
 /*!40000 ALTER TABLE `quiz_record` DISABLE KEYS */;
-INSERT INTO `quiz_record` VALUES (12,2,'GRADED',0,8),(13,2,'GRADED',0,1),(18,21,'GRADED',0,16);
+INSERT INTO `quiz_record` VALUES (12,2,'GRADED',1,8),(13,2,'GRADED',0,1),(18,21,'GRADED',0,16);
 /*!40000 ALTER TABLE `quiz_record` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recipe`
+--
+
+DROP TABLE IF EXISTS `recipe`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recipe` (
+  `RecipeID` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `RecipeName` text NOT NULL,
+  `Source` text DEFAULT NULL,
+  `MealType` text NOT NULL,
+  `PreparationTime` mediumint(9) NOT NULL,
+  `CookingTime` mediumint(9) NOT NULL,
+  `Serves` mediumint(9) NOT NULL,
+  `Image` text DEFAULT NULL,
+  PRIMARY KEY (`RecipeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recipe`
+--
+
+LOCK TABLES `recipe` WRITE;
+/*!40000 ALTER TABLE `recipe` DISABLE KEYS */;
+INSERT INTO `recipe` VALUES (1,'Eggplant Parmesan Pizza','http://www.eatingwell.com/recipes_menus/recipe_slideshows/vegetarian_pizza_recipes?slide=1#leaderboardad','Main Meal',15,20,4,NULL);
+/*!40000 ALTER TABLE `recipe` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recipe_ingredient`
+--
+
+DROP TABLE IF EXISTS `recipe_ingredient`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recipe_ingredient` (
+  `IngredientID` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `Content` text DEFAULT NULL,
+  `RecipeID` mediumint(9) NOT NULL,
+  PRIMARY KEY (`IngredientID`),
+  KEY `Recipe_Ingredient_RecipeID_FK` (`RecipeID`),
+  CONSTRAINT `Recipe_Ingredient_RecipeID_FK` FOREIGN KEY (`RecipeID`) REFERENCES `recipe` (`RecipeID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recipe_ingredient`
+--
+
+LOCK TABLES `recipe_ingredient` WRITE;
+/*!40000 ALTER TABLE `recipe_ingredient` DISABLE KEYS */;
+INSERT INTO `recipe_ingredient` VALUES (1,'1 small eggplant, (about 12 ounces)',1),(2,'Yellow cornmeal, for dusting',1),(3,'1 pound Easy Whole-Wheat Pizza Dough, or other prepared dough (recipe follows)',1),(4,'3/4 cup prepared marinara sauce',1),(5,'2 tablespoons chopped fresh basil',1),(6,'1 medium clove garlic, minced medium clove garlic, minced',1),(7,'3/4 cup thinly shaved Parmigiano-Reggiano cheese, (see Tip)',1);
+/*!40000 ALTER TABLE `recipe_ingredient` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recipe_nutrition`
+--
+
+DROP TABLE IF EXISTS `recipe_nutrition`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recipe_nutrition` (
+  `NutritionID` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `NutritionName` text DEFAULT NULL,
+  `MeasurementUnit` text DEFAULT NULL,
+  `RecipeID` mediumint(9) NOT NULL,
+  PRIMARY KEY (`NutritionID`),
+  KEY `Recipe_Nutrition_RecipeID_FK` (`RecipeID`),
+  CONSTRAINT `Recipe_Nutrition_RecipeID_FK` FOREIGN KEY (`RecipeID`) REFERENCES `recipe` (`RecipeID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recipe_nutrition`
+--
+
+LOCK TABLES `recipe_nutrition` WRITE;
+/*!40000 ALTER TABLE `recipe_nutrition` DISABLE KEYS */;
+INSERT INTO `recipe_nutrition` VALUES (1,'calories','359',1),(2,'fat','7 g',1),(3,'cholesterol','12 mg',1),(4,'carbohydrates','59 g',1),(5,'protein','16 g',1),(6,'fiber','9 g',1),(7,'sodium','713 mg',1),(8,'potassium','416 mg',1);
+/*!40000 ALTER TABLE `recipe_nutrition` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recipe_step`
+--
+
+DROP TABLE IF EXISTS `recipe_step`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recipe_step` (
+  `StepID` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `Description` text DEFAULT NULL,
+  `RecipeID` mediumint(9) NOT NULL,
+  PRIMARY KEY (`StepID`),
+  KEY `Recipe_Step_RecipeID_FK` (`RecipeID`),
+  CONSTRAINT `Recipe_Step_RecipeID_FK` FOREIGN KEY (`RecipeID`) REFERENCES `recipe` (`RecipeID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recipe_step`
+--
+
+LOCK TABLES `recipe_step` WRITE;
+/*!40000 ALTER TABLE `recipe_step` DISABLE KEYS */;
+INSERT INTO `recipe_step` VALUES (1,'Preheat grill to medium-high. (For charcoal grilling or an oven variation, see below.)',1),(2,'Cut eggplant into 1/2-inch thick rounds. Grill, turning once, until marked and softened, 4 to 6 minutes. Let cool slightly, then thinly slice into strips. Reduce heat to low.',1),(3,'Sprinkle cornmeal onto a pizza peel or large baking sheet. Roll out the dough (see Tip) and transfer it to the prepared peel or baking sheet, making sure the underside of the dough is completely coated with cornmeal.',1),(4,'Slide the crust onto the grill rack; close the lid. Cook until lightly browned, 3 to 4 minutes.',1),(5,'Using a large spatula, flip the crust. Spread marinara sauce on the crust, leaving a 1-inch border. Quickly top with the eggplant, basil and garlic. Lay the Parmigiano-Reggiano shavings on top.',1),(6,'Close the lid again and grill until the cheese has melted and the bottom of the crust has browned, about 8 minutes.',1);
+/*!40000 ALTER TABLE `recipe_step` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1113,4 +1113,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-14 22:42:36
+-- Dump completed on 2017-11-15 14:58:49
