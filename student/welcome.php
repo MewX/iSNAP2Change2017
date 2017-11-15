@@ -385,8 +385,12 @@
         <!-- Page 5 -->
         <div class="pg5" id="5" style="height: auto; min-height: 0;">
             <div class="contact" style="width:100%; height:100%; text-align: center;">
-                <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-1 contact1" style="margin-top:2%; height: 50%; ">
-                    <span class="p1">Any questions or comments?
+<!--                <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-1 contact1" style="margin-top:2%; height: 50%; ">-->
+                <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-0 contact1" style="margin-top:2%; height: 50%; ">
+                    <div class="col-md-9 col-md-offset-2">
+                    <span class="p1">
+                        <br>
+                        Any questions or comments?
                         <br> Please contact us and we will reach out to you shortly.
                         <br>
                         <br>
@@ -412,8 +416,10 @@
                             </span>
                         </div>
                     </div>
+                    </div>
                 </div>
-                <div class="col-xs-10 col-xs-offset-1 col-md-5 col-md-offset-1 contact2" style="margin-top:3%; height:50%; margin-bottom: 1%;">
+                <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-0 contact2" style="margin-top:3%; height:50%; margin-bottom: 1%;">
+                    <div class="col-md-9 col-md-offset-1">
                     <div class="logo">
                         <img src="./img/Snap_Logo_Inverted.png" style="width:60%; height: 60%;">
                     </div>
@@ -428,6 +434,7 @@
                         <p>An evaluation of the website will occur after the course is completed through a series of focus groups with youth, parents/guardians and teachers.</p>
 
                         <p>This website has been created for the purpose of Harshani Jayasinghe’s Doctorate of Philosophy with The University of Adelaide.</p>
+                    </div>
                     </div>
                 </div>
                 <div class="col-xs-4 col-xs-offset-4 col-md-2 col-md-offset-5" style="padding-bottom: 72px; height: 10%; margin-top:1%; margin-bottom: 1%;">
