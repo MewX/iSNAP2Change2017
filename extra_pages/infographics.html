@@ -3,11 +3,72 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<link rel="stylesheet" href="../extra_pages/css/infographic.css" type="text/css">
+<style>
+    /*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 27/07/2016, 10:26:03 PM
+    Author     : Shivangi
+*/
+
+a
+{
+    color: white !important;
+}
+
+body
+{
+    background-color: black;
+    font-family: 'Maitree', serif;
+    height: 100vh;
+}
+
+.info_pic
+{
+    height: 500px;
+    margin-top: 1%;
+    vertical-align: middle;
+}
+
+.info_text
+{
+    max-height: 500px;
+    margin-top: 1%;
+}
+
+.row
+{
+    margin: 0px !important;
+}
+
+p
+{
+    margin: 0 !important;
+}
+
+h4.capitalize {
+    text-transform: capitalize;
+}
+
+.body_desc
+{
+    font-size: 16px;
+}
+
+a:hover
+{
+  color: yellow !important;
+  text-decoration: none !important;
+}
+</style>
 <script>
     $(document).ready(function ()
     {
-        $('.info_heading a').click(function () {
+        $('.info_heading a').click(function (e) {
+            e.preventDefault();
             var anchor_id = $(this).attr("id");
             var disp = '../extra_pages/img/smoking/' + anchor_id + '/smoking_' + anchor_id + '_selected.png';
             $('#pic').attr('src', disp);
@@ -53,7 +114,6 @@ and open the template in the editor.
 
             else if (anchor_id == 'sexual_organs')
                 $('#body_desc').text('Smoking can cause erectile dysfunction. ');
-
         });
         $('.info_heading a').on('mouseenter', function () {
             var current = $('#pic').attr('src');
@@ -83,8 +143,9 @@ and open the template in the editor.
 </div>
 
 
+<div class='row'>
 <div class='col-md-4 col-md-offset-2 col-xs-4 col-xs-offset-2 col-sm-4 col-sm-offset-2 info_pic'>
-    <img id='pic' src="../extra_pages/img/smoking/default/smoking_default.png" style='height:85%;'>
+    <img id='pic' src="../extra_pages/img/smoking/default/smoking_default.png" style='height:400px;'>
 </div>
 
 <div class='col-md-4 col-md-offset-0 col-xs-6 col-xs-offset-0 col-sm-4 col-sm-offset-0 info_text'>
@@ -116,4 +177,5 @@ and open the template in the editor.
         <h4 id='body_head' class="capitalize" style='text-align: left;'>The Body</h4>
         <span id='body_desc'> Select a section to begin exploring the effects of smoking on human body</span>
     </div>
+</div>
 </div>
