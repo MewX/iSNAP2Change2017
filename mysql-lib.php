@@ -1904,6 +1904,31 @@ function doesStudentHaveFullMarkInWeek(PDO $conn, $weekNum, $studentId) {
     return false;
 }
 
+// TODO: use this function to finish the rest task
+function checkNonExtraQuizCompletingStatus(PDO $conn, $weekNum, $studentId) {
+    // find the number of non-extra quiz
+    $quizSql = "SELECT count(*) as c FROM `quiz` where week = $weekNum and ExtraQuiz = 0;";
+    $quizQuery = $conn->prepare($quizSql);
+    $quizQuery->execute();
+    $totalNonExQuizNum = $quizQuery->fetch()['c'];
+//    echo "total: " . $totalNonExQuizNum;
+
+    // check every status
+    $quizSql = "SELECT * FROM `quiz_record` where StudentID = $studentId and QuizID in (select QuizID from quiz where week = $weekNum and ExtraQuiz = 0);";
+    $quizQuery = $conn->prepare($quizSql);
+    $quizQuery->execute();
+    $allRecords = $quizQuery->fetchAll();
+
+//    var_dump($allRecords);
+    if ($totalNonExQuizNum == count($allRecords)) {
+        foreach ($allRecords as $record)
+            if ($record['Status'] == 'UNSUBMITTED')
+                return false;
+        return true;
+    }
+    return false;
+}
+
 function doesStudentHaveFullMark(PDO $conn, $studentId) {
     $tableName = array("Matching_Section", "Misc_Section", "Poster_Section", "SAQ_Question", "MCQ_Section");
     for($i = 0; $i < count($tableName); $i++){
