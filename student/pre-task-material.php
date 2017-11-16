@@ -59,10 +59,10 @@
     <title>Pre Task Material | SNAP²</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/common.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="./js/snap.js"></script>
+    <link rel="stylesheet" href="./css/common.css">
     <style>
         .material {
             max-width: 1000px;
