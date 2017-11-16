@@ -55,7 +55,7 @@ function processStuAns($answerArr, $correctAns, $fullMarkCount) {
             updateQuizRecord($conn, $GLOBALS['quizID'], $GLOBALS['studentID'], "GRADED", $score);
 
             //update student score
-            updateStudentScore($conn, $GLOBALS['studentID']);
+            updateStudentScore($conn, $GLOBALS['studentID'], $GLOBALS['quizID']);
 
             $conn->commit();
         } catch(Exception $e) {

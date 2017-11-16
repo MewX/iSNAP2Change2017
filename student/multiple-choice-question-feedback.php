@@ -68,7 +68,7 @@
             updateMCQAttemptRecord($conn, $quizID, $studentID, $attempt, $score);
 
             //update student score
-            updateStudentScore($conn, $studentID);
+            updateStudentScore($conn, $studentID, $quizID);
             achCheckAndSetGotItRight($conn, $studentID);
 
             $feedback["attempt"] = $attempt;

@@ -2002,14 +2002,30 @@ function getStudentScoreForQuiz(PDO $conn, $studentID, $quizID)
     return $score;
 }
 
-function updateStudentScore(PDO $conn, $studentID, $fastRun = false)
+function updateStudentScore(PDO $conn, $studentID, $quizID, $fastRun = false)
 {
-    $updateSql = "UPDATE Student 
-                  SET Score = ?
-                  WHERE StudentID = ?";
+    $updateSql = "UPDATE Student SET Score = ? WHERE StudentID = ?";
     $updateSql = $conn->prepare($updateSql);
     $newTotalScore = calculateStudentScore($conn, $studentID);
     $updateSql->execute(array($newTotalScore, $studentID));
+
+    // use quizID to query week number
+    $updateSql = "select Week from quiz where QuizID = $quizID";
+    $updateSql = $conn->prepare($updateSql);
+    $updateSql->execute();
+    $week = $updateSql->fetch();
+
+    if ($week != null && notSet && checkNonExtraQuizCompletingStatus($conn, $week, $studentID)) {
+        // check week time
+        $updateSql = "SELECT * FROM `quiz` NATURAL JOIN week where quiz.Week = week.WeekID and quiz.QuizID = $quizID";
+        $updateSql = $conn->prepare($updateSql);
+        $updateSql->execute();
+        $weekRecord = $updateSql->fetch();
+        if ($weekRecord != null) {
+            // TODO: update submission time
+
+        }
+    }
 
     // check ranking
     if (!$fastRun) {
@@ -2148,7 +2164,7 @@ function updatePosterGrading(PDO $conn, $quizID, $studentID, $grading)
     $conn->beginTransaction();
     updateQuizRecord($conn, $quizID, $studentID, "GRADED", $grading);
     updatePostGrading($conn, $quizID, $studentID, $grading);
-    updateStudentScore($conn,$studentID);
+    updateStudentScore($conn,$studentID, $quizID);
     $conn->commit();
 }
 
@@ -2283,7 +2299,7 @@ function updateSAQSubmissionGrading(PDO $conn, $quizID, array $saqID, $studentID
                 $grade += $grading[$i];
             }
             updateQuizRecord($conn, $quizID, $studentID, "GRADED", $grade);
-            updateStudentScore($conn,$studentID);
+            updateStudentScore($conn,$studentID, $quizID);
             $conn->commit();
         } catch (Exception $e) {
             debug_err($e);

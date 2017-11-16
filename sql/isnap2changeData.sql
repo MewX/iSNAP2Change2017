@@ -1011,6 +1011,7 @@ CREATE TABLE `student_week_record` (
   `StudentID` mediumint(9) NOT NULL DEFAULT 0,
   `Week` mediumint(9) NOT NULL DEFAULT 0,
   `DueTime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `TimeSpent` mediumint(9) NOT NULL DEFAULT 0,
   PRIMARY KEY (`StudentID`,`Week`),
   CONSTRAINT `Student_Week_Record_StudentID_FK` FOREIGN KEY (`StudentID`) REFERENCES `student` (`StudentID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1022,7 +1023,7 @@ CREATE TABLE `student_week_record` (
 
 LOCK TABLES `student_week_record` WRITE;
 /*!40000 ALTER TABLE `student_week_record` DISABLE KEYS */;
-INSERT INTO `student_week_record` VALUES (2,1,'2017-10-04 10:59:01'),(2,2,'2017-10-04 13:59:49'),(2,3,'2017-10-04 13:57:43'),(21,5,'2017-10-04 12:08:55'),(21,6,'2017-10-04 12:08:37'),(21,7,'2017-10-31 14:23:49'),(22,1,'2017-10-24 10:01:53'),(22,2,'2017-10-24 10:03:01');
+INSERT INTO `student_week_record` VALUES (2,1,'2017-10-04 10:59:01',0),(2,2,'2017-10-04 13:59:49',0),(2,3,'2017-10-04 13:57:43',0),(21,5,'2017-10-04 12:08:55',0),(21,6,'2017-10-04 12:08:37',0),(21,7,'2017-10-31 14:23:49',0),(22,1,'2017-10-24 10:01:53',0),(22,2,'2017-10-24 10:03:01',0);
 /*!40000 ALTER TABLE `student_week_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
