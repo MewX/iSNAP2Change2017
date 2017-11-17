@@ -1010,7 +1010,7 @@ DROP TABLE IF EXISTS `student_week_record`;
 CREATE TABLE `student_week_record` (
   `StudentID` mediumint(9) NOT NULL DEFAULT 0,
   `Week` mediumint(9) NOT NULL DEFAULT 0,
-  `DueTime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `DueTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `TimeSpent` mediumint(9) NOT NULL DEFAULT 0,
   PRIMARY KEY (`StudentID`,`Week`),
   CONSTRAINT `Student_Week_Record_StudentID_FK` FOREIGN KEY (`StudentID`) REFERENCES `student` (`StudentID`) ON DELETE CASCADE ON UPDATE CASCADE

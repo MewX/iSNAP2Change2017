@@ -2015,35 +2015,6 @@ function updateStudentScore(PDO $conn, $studentID, $quizID, $fastRun = false)
     $newTotalScore = calculateStudentScore($conn, $studentID);
     $updateSql->execute(array($newTotalScore, $studentID));
 
-    // use quizID to query week number
-    $updateSql = "select Week from quiz where QuizID = $quizID";
-    $updateSql = $conn->prepare($updateSql);
-    $updateSql->execute();
-    $week = $updateSql->fetch();
-
-    // update student time-spent
-    if ($week != null) {
-        // check week time
-        $updateSql = "SELECT * FROM `quiz` NATURAL JOIN `week` NATURAL JOIN  `student_week_record` where quiz.Week = $week and quiz.Week = week.WeekID and student_week_record.Week = quiz.Week and quiz.QuizID = $quizID and student_week_record.StudentID = $studentID;";
-        $updateSql = $conn->prepare($updateSql);
-        $updateSql->execute();
-        $weekRecord = $updateSql->fetch(PDO::FETCH_OBJ);
-        if ($weekRecord != null && checkNonExtraQuizCompletingStatus($conn, $week, $studentID)) {
-            // update submission time
-            $totalTime = $weekRecord->Timer;
-            $originalDueTime = strtotime($weekRecord->DueTime); // time stamp
-
-            // calculate duration
-            $duration = $totalTime - ($originalDueTime - time());
-            if ($duration < 0)
-                $duration = $totalTime - $duration;
-            $duration = round($duration / 60);
-
-            // write into database
-            updateWeekRecordDuration($conn, $week, $studentID, $duration);
-        }
-    }
-
     // check ranking
     if (!$fastRun) {
         achSetQuizLeaderBoardTopTenOnce($conn, $studentID, $newTotalScore);
@@ -2064,6 +2035,46 @@ function updateQuizRecord(PDO $conn, $quizID, $studentID, $status, $grade=0)
 							    VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE Status = ?, Grade = ?";
     $updateQuizRecordQuery = $conn->prepare($updateQuizRecordSql);
     $updateQuizRecordQuery->execute(array($quizID, $studentID, $status, $grade, $status, $grade));
+
+    // TODO: add information here
+    if ($status != 'UNSUBMITTED') {
+        // use quizID to query week number
+        $updateSql = "select Week from quiz where QuizID = $quizID";
+        $updateSql = $conn->prepare($updateSql);
+        $updateSql->execute();
+        $week = $updateSql->fetch();
+//        var_dump($week);
+
+        // TODO: handle submission not graded case
+        // update student time-spent
+        if ($week != null) {
+            // check week time
+            $week = $week[0];
+            $updateSql = "SELECT * FROM `quiz` NATURAL JOIN week NATURAL JOIN  `student_week_record` where quiz.Week = $week and quiz.Week = week.WeekID and student_week_record.Week = quiz.Week and quiz.QuizID = $quizID and student_week_record.StudentID = $studentID;";
+            $updateSql = $conn->prepare($updateSql);
+            $updateSql->execute();
+            $weekRecord = $updateSql->fetch(PDO::FETCH_OBJ);
+//            var_dump($weekRecord);
+//            var_dump($weekRecord != null);
+//            var_dump(intval($weekRecord->TimeSpent) != 0);
+//            var_dump(checkNonExtraQuizCompletingStatus($conn, $week, $studentID));
+            if ($weekRecord != null && intval($weekRecord->TimeSpent) == 0 && checkNonExtraQuizCompletingStatus($conn, $week, $studentID)) {
+                // update submission time
+                $totalTime = intval($weekRecord->Timer);
+                $originalDueTime = strtotime($weekRecord->DueTime); // time stamp
+
+                // calculate duration
+                $duration = $totalTime - ($originalDueTime - time());
+                if ($duration < 0)
+                    $duration = $totalTime - $duration;
+                $duration = round($duration / 60);
+//                echo "duration: ". $duration;
+
+                // write into database
+                updateWeekRecordDuration($conn, $week, $studentID, $duration);
+            }
+        }
+    }
 }
 
 function deleteQuizRecord(PDO $conn, $quizID, $studentID)
