@@ -1911,7 +1911,6 @@ function checkNonExtraQuizCompletingStatus(PDO $conn, $weekNum, $studentId) {
     $quizQuery = $conn->prepare($quizSql);
     $quizQuery->execute();
     $totalNonExQuizNum = $quizQuery->fetch()['c'];
-//    echo "total: " . $totalNonExQuizNum;
 
     // check every status
     $quizSql = "SELECT * FROM `quiz_record` where StudentID = $studentId and QuizID in (select QuizID from quiz where week = $weekNum and ExtraQuiz = 0);";
@@ -1919,7 +1918,6 @@ function checkNonExtraQuizCompletingStatus(PDO $conn, $weekNum, $studentId) {
     $quizQuery->execute();
     $allRecords = $quizQuery->fetchAll();
 
-//    var_dump($allRecords);
     if ($totalNonExQuizNum == count($allRecords)) {
         foreach ($allRecords as $record)
             if ($record['Status'] == 'UNSUBMITTED')
@@ -2036,17 +2034,16 @@ function updateQuizRecord(PDO $conn, $quizID, $studentID, $status, $grade=0)
     $updateQuizRecordQuery = $conn->prepare($updateQuizRecordSql);
     $updateQuizRecordQuery->execute(array($quizID, $studentID, $status, $grade, $status, $grade));
 
-    // TODO: add information here
+    // update duration information
     if ($status != 'UNSUBMITTED') {
         // use quizID to query week number
         $updateSql = "select Week from quiz where QuizID = $quizID";
         $updateSql = $conn->prepare($updateSql);
         $updateSql->execute();
         $week = $updateSql->fetch();
-//        var_dump($week);
 
-        // TODO: handle submission not graded case
         // update student time-spent
+        // adding here can handle submission not graded case
         if ($week != null) {
             // check week time
             $week = $week[0];
@@ -2054,11 +2051,7 @@ function updateQuizRecord(PDO $conn, $quizID, $studentID, $status, $grade=0)
             $updateSql = $conn->prepare($updateSql);
             $updateSql->execute();
             $weekRecord = $updateSql->fetch(PDO::FETCH_OBJ);
-//            var_dump($weekRecord);
-//            var_dump($weekRecord != null);
-//            var_dump(intval($weekRecord->TimeSpent) != 0);
-//            var_dump(checkNonExtraQuizCompletingStatus($conn, $week, $studentID));
-            if ($weekRecord != null && intval($weekRecord->TimeSpent) == 0 && checkNonExtraQuizCompletingStatus($conn, $week, $studentID)) {
+            if ($weekRecord != null && intval($weekRecord->TimeSpent) == -1 && checkNonExtraQuizCompletingStatus($conn, $week, $studentID)) {
                 // update submission time
                 $totalTime = intval($weekRecord->Timer);
                 $originalDueTime = strtotime($weekRecord->DueTime); // time stamp
@@ -2068,7 +2061,6 @@ function updateQuizRecord(PDO $conn, $quizID, $studentID, $status, $grade=0)
                 if ($duration < 0)
                     $duration = $totalTime - $duration;
                 $duration = round($duration / 60);
-//                echo "duration: ". $duration;
 
                 // write into database
                 updateWeekRecordDuration($conn, $week, $studentID, $duration);

@@ -1011,7 +1011,7 @@ CREATE TABLE `student_week_record` (
   `StudentID` mediumint(9) NOT NULL DEFAULT 0,
   `Week` mediumint(9) NOT NULL DEFAULT 0,
   `DueTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `TimeSpent` mediumint(9) NOT NULL DEFAULT 0,
+  `TimeSpent` mediumint(9) NOT NULL DEFAULT -1,
   PRIMARY KEY (`StudentID`,`Week`),
   CONSTRAINT `Student_Week_Record_StudentID_FK` FOREIGN KEY (`StudentID`) REFERENCES `student` (`StudentID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
