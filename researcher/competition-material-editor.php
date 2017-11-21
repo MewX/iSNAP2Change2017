@@ -37,7 +37,7 @@ if(isset($_GET['competitionID'])){
 <head>
     <!-- Bootstrap Core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>
         tinymce.EditorManager.editors = []; //remove the old instances
         tinymce.init({
@@ -80,7 +80,7 @@ if(isset($_GET['competitionID'])){
     <textarea name="richContentTextArea">
         <?php echo $materialRes->Content; ?>
     </textarea>
-    <input type="submit" name='submitbutton' value="Save" class='submit'/> <span
+    <input type="submit" name='submitbutton' value="Save" class='submit' hidden/> <span
         class="glyphicon glyphicon-info-sign"></span><b> Ctrl + S</b><br>
 </form>
 

@@ -1,0 +1,181 @@
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<style>
+    /*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 27/07/2016, 10:26:03 PM
+    Author     : Shivangi
+*/
+
+a
+{
+    color: white !important;
+}
+
+body
+{
+    background-color: black;
+    font-family: 'Maitree', serif;
+    height: 100vh;
+}
+
+.info_pic
+{
+    height: 500px;
+    margin-top: 1%;
+    vertical-align: middle;
+}
+
+.info_text
+{
+    max-height: 500px;
+    margin-top: 1%;
+}
+
+.row
+{
+    margin: 0px !important;
+}
+
+p
+{
+    margin: 0 !important;
+}
+
+h4.capitalize {
+    text-transform: capitalize;
+}
+
+.body_desc
+{
+    font-size: 16px;
+}
+
+a:hover
+{
+  color: yellow !important;
+  text-decoration: none !important;
+}
+</style>
+<script>
+    $(document).ready(function ()
+    {
+        $('.info_heading a').click(function (e) {
+            e.preventDefault();
+            var anchor_id = $(this).attr("id");
+            var disp = '../extra_pages/img/smoking/' + anchor_id + '/smoking_' + anchor_id + '_selected.png';
+            $('#pic').attr('src', disp);
+
+            var an = $(this).attr('id').replace("_", " ");
+            $('#body_head').text(an);
+
+            if (anchor_id == 'brain')
+                $('#body_desc').text('You are more likely to have difficulty sleeping if you are a teen who smokes');
+
+            else if (anchor_id == 'bone')
+                $('#body_desc').text('People who smoke are more likely to develop Rheumatoid Arthritis.');
+
+            else if (anchor_id == 'nose')
+                $('#body_desc').text('Smoking can dull your sense of smell and taste.');
+
+            else if (anchor_id == 'skin')
+                $('#body_desc').text('Smoking causes wrinkles!');
+
+            else if (anchor_id == 'hair')
+                $('#body_desc').text('There is a link between smoking and baldness.');
+
+            else if (anchor_id == 'eye')
+                $('#body_desc').text('Smoking can lead to many eye problems including blindness.');
+
+            else if (anchor_id == 'heart')
+                $('#body_desc').text('Smokers have resting heart rates two to three beats per minute faster than non-smokers and an increased risk of having a heart attack later on in life.');
+
+            else if (anchor_id == 'leg')
+                $('#body_desc').text('Smoking can cause Gangrene leading to amputation of your limbs.');
+
+            else if (anchor_id == 'liver')
+                $('#body_desc').text('The toxins found in cigarette smoke can damage the liver and cause diseases like cancers, Hep B and C and liver fibrosis.');
+
+             else if (anchor_id == 'lungs')
+                $('#body_desc').text('Starting smoking during your teens can impair the growth of your lungs and can cause irreversible damage..');
+
+            else if (anchor_id == 'mouth')
+                $('#body_desc').text('Smoking stains your teeth and causes gum disease.');
+
+            else if (anchor_id == 'ear')
+                $('#body_desc').text('Smoking is a risk factor for hearing loss.');
+
+            else if (anchor_id == 'sexual_organs')
+                $('#body_desc').text('Smoking can cause erectile dysfunction. ');
+        });
+        $('.info_heading a').on('mouseenter', function () {
+            var current = $('#pic').attr('src');
+            var anchor_id = $(this).attr("id");
+            var disp = current.replace(".png", "_") + anchor_id + '_hover.png';
+            $('#pic').attr('src', disp);
+        });
+
+        $('.info_heading a').on('mouseleave', function () {
+            var current = $('#pic').attr('src');
+            var anchor_id = $(this).attr("id");
+            var disp = current.replace('_' + anchor_id + '_hover.png', ".png");
+            $('#pic').attr('src', disp);
+        });
+
+    });
+
+</script>
+
+<div class='row'>
+    <div class='heading col-md-offset-4 col-md-4' style='color: white; text-align: center;'>
+        <h4>Effects of Smoking on the Body</h4>
+        <p style='text-align: center; font-size: 13px; width: 80%; padding-left:19%;'>
+            Use the infographic below to explore the various ways smoking damages your body
+        </p>
+    </div>
+</div>
+
+
+<div class='row'>
+<div class='col-md-4 col-md-offset-2 col-xs-4 col-xs-offset-2 col-sm-4 col-sm-offset-2 info_pic'>
+    <img id='pic' src="../extra_pages/img/smoking/default/smoking_default.png" style='height:400px;'>
+</div>
+
+<div class='col-md-4 col-md-offset-0 col-xs-6 col-xs-offset-0 col-sm-4 col-sm-offset-0 info_text'>
+    <div class='info_heading' style='height: 35%;'>
+        <div class='col-md-6 col-xs-12 col-sm-6'>
+            <ul style='color: white; text-align: center; list-style-type:none;'>
+                <li><a id='bone' href='#'>Bone</a></li>
+                <li><a id='brain' href='#'>Brain</a></li>
+                <li><a id='ear' href='#'>Ear</a></li>
+                <li><a id='eye' href='#'>Eye</a></li>
+                <li><a id='hair' href='#'>Hair</a></li>
+                <li><a id='heart' href='#'>Heart</a></li>
+                <li><a id='leg' href='#'>Legs</a></li>
+            </ul>
+        </div>
+        <div class='col-md-6 col-xs-12 col-sm-6'>
+            <ul style='color: white;  text-align: center; list-style-type:none;'>
+                <li><a id='liver' href='#'>Liver</a></li>
+                <li><a id='lungs' href='#'>Lungs</a></li>
+                <li><a id='mouth' href='#'>Mouth</a></li>
+                <li><a id='nose' href='#'>Nose</a></li>
+                <li><a id='sexual_organs' href='#'>Sexual Organs</a></li>
+                <li><a id='skin' href='#'>Skin</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class='info_body col-md-9 col-md-offset-1 col-xs-12 col-xs-offset-0 col-sm-9 col-sm-offset-1' style='height: 50%; top:9%; color: white;'>
+        <h4 id='body_head' class="capitalize" style='text-align: left;'>The Body</h4>
+        <span id='body_desc'> Select a section to begin exploring the effects of smoking on human body</span>
+    </div>
+</div>
+</div>

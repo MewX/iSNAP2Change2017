@@ -24,14 +24,13 @@ db_close($conn);
     <title>Resources | SNAP²</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="./css/home.css"/>
-    <link rel="stylesheet" href="./css/common.css">
-    <link rel="stylesheet" type="text/css" href="./css/vendor/animate.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
     <script src="./js/vendor/wow.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="./css/home.css"/>
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" type="text/css" href="./css/vendor/animate.css"/>
     <style>
         .snap-facts-desc {
             width: 400px;
@@ -90,39 +89,49 @@ db_close($conn);
 
 <div class="content-wrapper" style="padding-top: 60px; min-height: calc(100vh - 127px);">
     <div class="snap-facts-container">
-        <div class="snap-facts-header">
-            <div class="snap-facts-desc h1" style="color: white; margin-top: 100px; margin-bottom: 24px">Copyright</div>
-            <div class="extra-activities-intro">© 2017 HARSHANI JAYASINGHE AND THE UNIVERSITY OF ADELAIDE
+        <p class="snap-facts-header">
+            <p class="snap-facts-desc h1" style="color: white; margin-top: 100px; margin-bottom: 24px">Copyright</p>
+            <p class="extra-activities-intro">© 2017 HARSHANI JAYASINGHE AND THE UNIVERSITY OF ADELAIDE
                 ALL RIGHTS RESERVED [01/11/2017]
-            </div>
+            </p>
             <br>
-            <div class="extra-activities-intro">
+            <p class="extra-activities-intro">
                 The contents of this website is protected by copyright law. Copyright in this material resides with the
                 Commonwealth of Australia or various other rights holders, as indicated. Except as permitted by the copyright
                 law applicable to you, you may not reproduce or communicate any of the content on the Smoking, Nicotine Adolescent
                 Prevention Program (SNAP2 ) website, including files downloadable from this website, without the permission
                 of the copyright owners.
-            </div>
+            </p>
             <br>
-            <div class="extra-activities-intro">
+            <p class="extra-activities-intro">
                 This includes games, designs, images, interactive activities and content from the SNAP2  website.
-            </div>
+            </p>
             <br>
-            <div class="extra-activities-intro">
+            <p class="extra-activities-intro">
                 The Australian Copyright Act allows certain uses of content from the internet without the copyright owner’s
                 permission. This includes uses by educational institutions and by Commonwealth and State governments,
                 provided fair compensation is paid. For more information,
                 see <a href="www.copyright.com.au">www.copyright.com.au</a> and <a href="www.copyright.org.au">www.copyright.org.au</a>.
-            </div>
+            </p>
             <br>
-            <div class="extra-activities-intro">
+            <p class="extra-activities-intro">
                 The owners of copyright in the content on this website may receive compensation for the use of their content
                 by educational institutions and governments, including from licensing schemes managed by Copyright Agency.
-            </div>
+            </p>
             <br>
-            <div class="extra-activities-intro">
+            <p class="extra-activities-intro">
                 We may change these terms of use from time to time. Check before re-using any content from this website.
-            </div>
+            </p>
+        <br>
+        <hr>
+        <br>
+        <p class="extra-activities-intro">
+            The 3rd-party open source packages (Bootstrap, jQuery, LimeSurvey, etc.) that we are using have their original copyrights. We did not modify any of them.
+        </p>
+        <br>
+        <p class="extra-activities-intro">
+            Besides, we obey their open source licenses.
+        </p>
         </div>
     </div>
 </div>

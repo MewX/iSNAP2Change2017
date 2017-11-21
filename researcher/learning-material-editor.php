@@ -54,7 +54,7 @@ try {
                 'insertdatetime media nonbreaking save table contextmenu directionality',
                 'emoticons template paste textcolor colorpicker textpattern imagetools'
             ],
-            toolbar1: 'insertfile undo redo | styleselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | emoticons link image media | preview',
+            toolbar1: 'insertfile undo redo | styleselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | emoticons link image media | preview | code',
             imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
             image_advtab: true,
             browser_spellcheck: true,
@@ -86,7 +86,7 @@ try {
     <textarea id="materialContent" name="richContentTextArea">
         <?php echo $materialRes->Content; ?>
     </textarea>
-    <input type="submit" name='submitbutton' value="Save" class='submit'/> <span
+    <input type="submit" name='submitbutton' value="Save" class='submit' hidden/> <span
         class="glyphicon glyphicon-info-sign"></span><b> Ctrl + S</b><br>
 </form>
 

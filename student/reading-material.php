@@ -40,6 +40,7 @@
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
     <title>Reading Material | SNAP²</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/common.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <script src="./js/snap.js"></script>
@@ -332,7 +333,18 @@
                             <h2 class="material-title"><?php echo $materialTopics[$i][$j]->TopicName ?></h2>
                         </div>
                         <div class="material-content">
-                            <?php echo $materialTopics[$i][$j]->Content ?>
+                            <?
+                            preg_match_all("/#using\s*?'(.+?)'\s*?;/", $materialTopics[$i][$j]->Content, $matchedArr, PREG_OFFSET_CAPTURE);
+                            // for matchedArr; [0] whole string; [1] group 1.
+                            // [0][0] whole string match 1
+                            // [0][0][1] whole string match 1 original string; [][][1] starting position
+                            $startPos = 0;
+                            for ($matchId = 0; $matchId < count($matchedArr[1]); $matchId++) {
+                                echo substr($materialRes->Content, $startPos, $matchedArr[0][$matchId][1] - $startPos);
+                                $startPos = $matchedArr[0][$matchId][1] + strlen($matchedArr[0][$matchId][0]);
+                                include '../extra_pages/' . $matchedArr[1][$matchId][0];
+                            }
+                            echo substr($materialTopics[$i][$j]->Content, $startPos); ?>
                         </div>
                     </div>
 <?php           }

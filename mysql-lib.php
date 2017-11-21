@@ -1904,6 +1904,35 @@ function doesStudentHaveFullMarkInWeek(PDO $conn, $weekNum, $studentId) {
     return false;
 }
 
+function checkNonExtraQuizCompletingStatus(PDO $conn, $weekNum, $studentId) {
+    // use this function to finish the rest task
+    // find the number of non-extra quiz
+    $quizSql = "SELECT count(*) as c FROM `quiz` where week = $weekNum and ExtraQuiz = 0;";
+    $quizQuery = $conn->prepare($quizSql);
+    $quizQuery->execute();
+    $totalNonExQuizNum = $quizQuery->fetch()['c'];
+
+    // check every status
+    $quizSql = "SELECT * FROM `quiz_record` where StudentID = $studentId and QuizID in (select QuizID from quiz where week = $weekNum and ExtraQuiz = 0);";
+    $quizQuery = $conn->prepare($quizSql);
+    $quizQuery->execute();
+    $allRecords = $quizQuery->fetchAll();
+
+    if ($totalNonExQuizNum == count($allRecords)) {
+        foreach ($allRecords as $record)
+            if ($record['Status'] == 'UNSUBMITTED')
+                return false;
+        return true;
+    }
+    return false;
+}
+
+function updateWeekRecordDuration(PDO $conn, $weekNum, $studentId, $duration) {
+    $quizSql = "Update student_week_record set TimeSpent = $duration where StudentID = $studentId and Week = $weekNum";
+    $quizQuery = $conn->prepare($quizSql);
+    return $quizQuery->execute();
+}
+
 function doesStudentHaveFullMark(PDO $conn, $studentId) {
     $tableName = array("Matching_Section", "Misc_Section", "Poster_Section", "SAQ_Question", "MCQ_Section");
     for($i = 0; $i < count($tableName); $i++){
@@ -1977,11 +2006,9 @@ function getStudentScoreForQuiz(PDO $conn, $studentID, $quizID)
     return $score;
 }
 
-function updateStudentScore(PDO $conn, $studentID, $fastRun = false)
+function updateStudentScore(PDO $conn, $studentID, $quizID, $fastRun = false)
 {
-    $updateSql = "UPDATE Student 
-                  SET Score = ?
-                  WHERE StudentID = ?";
+    $updateSql = "UPDATE Student SET Score = ? WHERE StudentID = ?";
     $updateSql = $conn->prepare($updateSql);
     $newTotalScore = calculateStudentScore($conn, $studentID);
     $updateSql->execute(array($newTotalScore, $studentID));
@@ -2006,6 +2033,40 @@ function updateQuizRecord(PDO $conn, $quizID, $studentID, $status, $grade=0)
 							    VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE Status = ?, Grade = ?";
     $updateQuizRecordQuery = $conn->prepare($updateQuizRecordSql);
     $updateQuizRecordQuery->execute(array($quizID, $studentID, $status, $grade, $status, $grade));
+
+    // update duration information
+    if ($status != 'UNSUBMITTED') {
+        // use quizID to query week number
+        $updateSql = "select Week from quiz where QuizID = $quizID";
+        $updateSql = $conn->prepare($updateSql);
+        $updateSql->execute();
+        $week = $updateSql->fetch();
+
+        // update student time-spent
+        // adding here can handle submission not graded case
+        if ($week != null) {
+            // check week time
+            $week = $week[0];
+            $updateSql = "SELECT * FROM `quiz` NATURAL JOIN week NATURAL JOIN  `student_week_record` where quiz.Week = $week and quiz.Week = week.WeekID and student_week_record.Week = quiz.Week and quiz.QuizID = $quizID and student_week_record.StudentID = $studentID;";
+            $updateSql = $conn->prepare($updateSql);
+            $updateSql->execute();
+            $weekRecord = $updateSql->fetch(PDO::FETCH_OBJ);
+            if ($weekRecord != null && intval($weekRecord->TimeSpent) == -1 && checkNonExtraQuizCompletingStatus($conn, $week, $studentID)) {
+                // update submission time
+                $totalTime = intval($weekRecord->Timer);
+                $originalDueTime = strtotime($weekRecord->DueTime); // time stamp
+
+                // calculate duration
+                $duration = $totalTime - ($originalDueTime - time());
+                if ($duration < 0)
+                    $duration = $totalTime - $duration;
+                $duration = round($duration / 60);
+
+                // write into database
+                updateWeekRecordDuration($conn, $week, $studentID, $duration);
+            }
+        }
+    }
 }
 
 function deleteQuizRecord(PDO $conn, $quizID, $studentID)
@@ -2123,7 +2184,7 @@ function updatePosterGrading(PDO $conn, $quizID, $studentID, $grading)
     $conn->beginTransaction();
     updateQuizRecord($conn, $quizID, $studentID, "GRADED", $grading);
     updatePostGrading($conn, $quizID, $studentID, $grading);
-    updateStudentScore($conn,$studentID);
+    updateStudentScore($conn,$studentID, $quizID);
     $conn->commit();
 }
 
@@ -2258,7 +2319,7 @@ function updateSAQSubmissionGrading(PDO $conn, $quizID, array $saqID, $studentID
                 $grade += $grading[$i];
             }
             updateQuizRecord($conn, $quizID, $studentID, "GRADED", $grade);
-            updateStudentScore($conn,$studentID);
+            updateStudentScore($conn,$studentID, $quizID);
             $conn->commit();
         } catch (Exception $e) {
             debug_err($e);

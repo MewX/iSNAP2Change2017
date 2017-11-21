@@ -45,7 +45,7 @@
             updateQuizRecord($conn, $quizID, $studentID, "GRADED");
 
             //update student score
-            updateStudentScore($conn, $studentID);
+            updateStudentScore($conn, $studentID, $quizID);
         } else {
             $feedback["result"] = "fail";
         }

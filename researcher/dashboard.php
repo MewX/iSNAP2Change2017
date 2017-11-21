@@ -71,7 +71,7 @@
                                                 <i class="fa fa-database fa-5x"></i>
                                             </div>
                                             <div class="col-xs-9 text-right">
-                                                <div style="font-size: 3ch">Extract csv files</div>
+                                                <div style="font-size: x-large">Extract csv files</div>
                                             </div>
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@
                                                 <i class="fa fa-trophy fa-5x"></i>
                                             </div>
                                             <div class="col-xs-9 text-right">
-                                                <div style="font-size: 3ch">Manage competitions</div>
+                                                <div style="font-size: x-large">Manage competitions</div>
                                             </div>
                                         </div>
                                     </div>

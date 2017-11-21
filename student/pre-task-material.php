@@ -58,10 +58,11 @@
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
     <title>Pre Task Material | SNAP²</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
-    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="./js/snap.js"></script>
+    <link rel="stylesheet" href="./css/common.css">
     <style>
         .material {
             max-width: 1000px;
@@ -124,7 +125,18 @@
             <h2 class="material-title">Read the follow information about <?php echo strtolower($materialRes->TopicName) ?> then finish the task provided.</h2>
 <?php   if ($materialRes->Excluded == 0) { ?>
             <div class="material-content-included p1">
-                <?php echo $materialRes->Content; ?>
+                <?
+                preg_match_all("/#using\s*?'(.+?)'\s*?;/", $materialRes->Content, $matchedArr, PREG_OFFSET_CAPTURE);
+                // for matchedArr; [0] whole string; [1] group 1.
+                // [0][0] whole string match 1
+                // [0][0][1] whole string match 1 original string; [][][1] starting position
+                $startPos = 0;
+                for ($matchId = 0; $matchId < count($matchedArr[1]); $matchId++) {
+                    echo substr($materialRes->Content, $startPos, $matchedArr[0][$matchId][1] - $startPos);
+                    $startPos = $matchedArr[0][$matchId][1] + strlen($matchedArr[0][$matchId][0]);
+                    include '../extra_pages/' . $matchedArr[1][$matchId][0];
+                }
+                echo substr($materialRes->Content, $startPos); ?>
             </div>
 <?php   } else { ?>
             <div class="material-content-excluded h1">
