@@ -105,6 +105,27 @@
                                     </a>
                                 </div>
                             </div>
+                            <div class="col-lg-5 col-md-5">
+                                <div class="panel panel-orange">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <i class="fa fa-newspaper-o fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div style="font-size: x-large">Make Survey</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="jump-to-survey.php">
+                                        <div class="panel-footer">
+                                            <span class="pull-left">View Details</span>
+                                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- /.panel-body -->

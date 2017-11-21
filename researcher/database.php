@@ -137,6 +137,17 @@ db_close($conn);
                         </div>
                         <hr noshade>
                         <div>
+                            <h4>Study Time</h4>
+                            <div class="alert alert-info">
+                                <p>
+                                    You can download a .csv file for student's study time by clicking the <b>Generate</b> link below.
+                                </p>
+                                <br>
+                                <a href="../backup_restore_db/generateCSV.php?fileName=studyTime">Generate</a>
+                            </div>
+                        </div>
+                        <hr noshade>
+                        <div>
                             <h4>Quiz Process</h4>
                             <div class="alert alert-info">
                                 <p>
