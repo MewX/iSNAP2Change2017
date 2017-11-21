@@ -33,10 +33,10 @@ db_close($conn);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="./js/vendor/validate.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <style>
@@ -387,8 +387,22 @@ db_close($conn);
                         </div>
                     </div>
                 </div>
-                <div id="terms-and-conditions" class="dialog" title="Dialog">
-                    <p>I am terms and conditions</p>
+                <div id="terms-and-conditions" class="dialog" title="Terms and conditions" style="width: 80%">
+                    <p>By accepting these terms and conditions you agree that:</p>
+                    <ul>
+                        <li>Your information will only be used for the purpose of this research project and will only be disclosed with your permission, except as required by law.</li>
+                        <li>By agreeing to participate, you are consenting to the research team collecting and using personal information about you for this research project.</li>
+                        <li>Personal information collected about you will be de-identified – this means any information that can identify you will be removed and replaced with a unique, non-identifiable code.</li>
+                        <li>Any information obtained in connection with this research project that can identify you will remain confidential.</li>
+                        <li>All information obtained will be in password-protected database on a computer located at The School of Public Health, The University of Adelaide.</li>
+                        <li>If the results of this research project are published and/or presented, information will be presented in such a way that you cannot be identified.</li>
+                        <li>Your information will remain confidential except in the case of a legal requirement to pass on personal information to authorised third parties. This requirement is standard and applies to information collected both in research and non-research situations. Such requests to access information are rare; however, we have an obligation to inform you of this possibility.</li>
+                        <li>You agree to not disclose your personal information including login and passwords to any other third party.</li>
+                        <li>The research team accept no responsibility for the loss of personal information that may arise as a result of any individual providing access to their account to any other third party.</li>
+                        <li>The research team also accepts no responsibility for any leak of information that may arise due to hacking software.</li>
+                        <li>If you become upset or distressed as a result of your participation in the research project, the research team will be able to arrange for counselling or other appropriate support.</li>
+                        <li>Any counselling or support will be provided by qualified staff who are not members of the research team. This counselling will be provided free of charge.</li>
+                    </ul>
                 </div>
                 <div class="submitinfo" style="text-align: center;">
                     <button type="button" onclick="checkValidation()" class="header4 btn btn-primary btn-lg btn-block" style="margin-left: 35%; width:30%; margin-top:4%; border-radius: 10px; white-space: normal; border: #FCEE2D solid 2px; border-color: #FCEE2D !important; color:#FCEE2D; background-color: black; opacity: 0.7;">Register</button>
@@ -436,6 +450,7 @@ db_close($conn);
         $(function() {
             $("#terms-and-conditions").dialog({
                 autoOpen: false,
+                width:'80%',
                 modal: true
             });
 
