@@ -86,7 +86,7 @@ db_close($conn);
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Account Table <span class="glyphicon glyphicon-plus pull-right" data-toggle="modal"
-                                                       data-target="#dialog"></span>
+                                                       data-target="#accountManagement"></span>
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -117,7 +117,7 @@ db_close($conn);
                                             </span>
                                             <span
                                                     class="glyphicon glyphicon-edit pull-right" data-toggle="modal"
-                                                    data-target="#updateProfile" aria-hidden="true">
+                                                    data-target="#accountManagement" aria-hidden="true">
                                             </span>
                                         </td>
                                         <td style="display:none">Password</td>
@@ -151,6 +151,43 @@ db_close($conn);
 </div>
 <!-- /#wrapper -->
 
+<!-- Modal -->
+<div class="modal fade" id="accountManagement" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="dialogAccount">Edit Account</h4>
+            </div>
+            <div class="modal-body">
+                <form id="accountSubmission" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                    <!--if 1, insert; else if 0 update; else if -1 delete;-->
+                    <input type=hidden name="update" id="update" value="1">
+                    <label for="ResearcherID" style="display:none">ResearcherID</label>
+                    <input type="text" class="form-control dialoginput" id="ResearcherID" name="ResearcherID"
+                           style="display:none">
+                    <label for="Username">Username</label>
+                    <input type="text" class="form-control dialoginput" id="Username" name="Username">
+                    <br>
+                    <label for="Password">Password</label>
+                    <input type="text" class="form-control dialoginput" id="Password" name="Password">
+                    <br>
+                    <div class="alert alert-danger">
+                        <p><strong>Reminder</strong> : Username of researcher should be unique and no duplicate names are allowed.
+                        </p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" class="btn btn-default" name="save">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!-- SB Admin Library -->
 <?php require_once('sb-admin-lib.php'); ?>
 
@@ -165,20 +202,19 @@ db_close($conn);
         });
     });
     //DO NOT put them in $(document).ready() since the table has multi pages
-    var dialogInputArr = $('.newInfo');
+    var dialogInputArr = $('.dialoginput');
     $('.glyphicon-edit').on('click', function () {
 		$("label").remove(".error");
-        $('#dialogTitle').text("Edit <?php echo $pageNameForView ?>");
+        $('#dialogAccount').text("Edit <?php echo $pageNameForView ?>");
         $('#update').val(0);
-
-        for (i = 0; i < dialogInputArr.length-2; i++) {
+        for (i = 0; i < dialogInputArr.length-1; i++) {
             dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());
         }
     });
 
     $('.glyphicon-plus').on('click', function () {
 		$("label").remove(".error");
-        $('#dialogTitle').text("Add <?php echo $pageNameForView ?>");
+        $('#dialogAccount').text("Add <?php echo $pageNameForView ?>");
         $('#update').val(1);
         for (i = 0; i < dialogInputArr.length; i++) {
             dialogInputArr.eq(i).val('');
@@ -193,14 +229,15 @@ db_close($conn);
             for (i = 0; i < dialogInputArr.length; i++) {
                 dialogInputArr.eq(i).val($(this).parent().parent().children('td').eq(i).text().trim());
             }
-            $('#submission').submit();
+            $('#accountSubmission').submit();
         }
     });
 
-    $('#btnSaveChange').on('click', function () {
-        $('#submission').validate();
+    $('#btnSave').on('click', function () {
+        $('#accountSubmission').validate();
+        console.log("click account");
         dialogInputArr.eq(0).prop('disabled', false);
-        $('#submission').submit();
+        $('#accountSubmission').submit();
     });
 
     $('#Username').on('keyup', function () {
