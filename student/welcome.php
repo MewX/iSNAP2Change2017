@@ -71,7 +71,7 @@
 
         <header class="start" id="1">
             <div class="logo" style="display:flex;justify-content:center;align-items:center;width:100%;height:70%; margin-top: 5%;">
-                <img class="wow flipInY" wow-data-delay="0.0s" wow-data-duration="0.9s" src="./img/Snap_Logo_Inverted.png" alt="SNAP" style="width:50%;height:68%;">
+                <img class="wow flipInY" wow-data-delay="0.0s" wow-data-duration="0.9s" src="./img/Snap_Logo_Inverted.png" alt="SNAP" style="width:auto; max-width: 90%; height:68%;">
             </div>
             <div class="tagline" style="color: white; font-size: 5vh; display:flex;justify-content:center;align-items:center; margin-top:1%;">
                 <span class="wow fadeInLeftBig" wow-data-delay="0.15s" wow-data-duration="0.3s">To inspire a healthier future</span>
@@ -426,7 +426,7 @@
                     <div style="margin-top:3%;text-align: justify; color: white;font-family: Maitree, serif;">
 <!--                        <span class="p1">Tobacco smoking is one of the largest causes of preventable illness and death in Australia. Research estimates that two in three lifetime smokers will die from a disease caused by their smoking. The most recent estimate of deaths caused by tobacco in Australia is for the financial year 2004–05.-->
 <!--                        </span>-->
-                        <p>Welcome to the SNAP² website. </p>
+                        <p>Welcome to the SNAP² (Smoking, Nicotine Adolescent Prevention Program) website. </p>
 
                         <p>The purpose of this website is to inspire a healthier future and reduce the uptake of youth smoking.
                             This website features an interactive 10-week course designed to be run out in schools educate youth about the harms of smoking, whilst also endeavouring to upskill youth in resistance and refusal skills to not give in to the pressure of smoking. Featured activities on the website include quizzes, videos, games, creative exercises and competitions.</p>
