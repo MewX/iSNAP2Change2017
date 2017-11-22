@@ -360,9 +360,9 @@
                         </div>
                         <div class="col-xs-12" style="height: 75%;">
                             <div style="color:rgb(252,238,045); border: 0px solid rgb(252,238,045); border-bottom-color: rgb(252,238,045); border-bottom-width: 2px; font-size:3vh; width: 100%;margin-bottom: 20pt;padding-bottom:10pt; ">
-                        <?php echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID; ?>
+                        <?php echo strtoupper($factRes[$i]->TopicName)." FACT #".($i + 1); ?>
                             </div>
-                            <p class="fact" onclick="showSource(this)"><?php echo $factRes[$i]->Content; ?></p>
+                            <p class="fact" style="cursor: pointer" onclick="showSource(this)"><?php echo $factRes[$i]->Content; ?></p>
                             <p class="recource" style="display: none">
                                 <strong>Source: </strong><? echo $factRes[$i]->Recource; ?>
                             </p>

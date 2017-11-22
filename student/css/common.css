@@ -1314,3 +1314,6 @@ body {
     font-family: Maitree, serif;
 }
 
+a:focus, a:hover {
+    color: white;
+}
