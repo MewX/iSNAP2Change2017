@@ -50,8 +50,9 @@ if(isset($_GET['competitionID'])){
                 'insertdatetime media nonbreaking save table contextmenu directionality',
                 'emoticons template paste textcolor colorpicker textpattern imagetools'
             ],
-            toolbar1: 'insertfile undo redo | styleselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | emoticons link image media | preview',
+            toolbar1: 'insertfile undo redo | styleselect | fontselect |  fontsizeselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | emoticons link image media | preview ',
             imagetools_toolbar: "rotateleft rotateright | flipv fliph | editimage imageoptions",
+            fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
             image_advtab: true,
             browser_spellcheck: true,
             templates: [

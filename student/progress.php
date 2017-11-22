@@ -170,32 +170,32 @@
         tbody .leaderboard-number-label-1 {
             background-image: url("./img/first_place_icon.png");
             display: inline-block;
-            width: 60px;
-            height: 60px;
+            width: 45px;
+            height: 45px;
             background-size: 100% 100%;
             text-indent: -999em;
         }
         tbody .leaderboard-number-label-2 {
             background-image: url("./img/second_place_icon.png");
             display: inline-block;
-            width: 60px;
-            height: 60px;
+            width: 45px;
+            height: 45px;
             background-size: 100% 100%;
             text-indent: -999em;
         }
         tbody .leaderboard-number-label-3 {
             background-image: url("./img/third_place_icon.png");
             display: inline-block;
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             background-size: 100% 100%;
             text-indent: -999em;
         }
         tbody .leaderboard-number-label-4 {
             background-image: url("./img/fourth_place_icon.png");
             display: inline-block;
-            width: 60px;
-            height: 60px;
+            width: 35px;
+            height: 35px;
             background-size: 100% 100%;
             text-indent: -999em;
         }
@@ -447,13 +447,13 @@
             <div class="section">
                 <div class="progress-container">
                     <div class="activities-header">
-                        <div class="activities-title">Quiz</div>
+                        <div class="activities-title">Learning Content</div>
                         <br>
                     </div>
                     <div class="mini-row">
                         <div class="col-6">
                             <div class="class-rank">
-                                <div class="h3 class-rank-title">Class Quiz Rank</div>
+                                <div class="h3 class-rank-title">Class Learning Content Rank</div>
                                 <div class="p1 class-rank-sub-title">Your are ranked</div>
                                 <div class="h1 class-rank-number">
                                     <?php echo $classRank ?>
@@ -464,7 +464,7 @@
                                 </div>
                             </div>
                             <div class="class-rank">
-                                <div class="h3 class-rank-title">Overall Quiz Rank</div>
+                                <div class="h3 class-rank-title">Overall Learning Content Rank</div>
                                 <div class="p1 class-rank-sub-title">Your are ranked</div>
                                 <div class="h1 class-rank-number">
                                     <?php echo $totalRank ?>
@@ -478,7 +478,7 @@
                         </div>
                         <div class="col-6">
                             <div class="leaderboard">
-                                <div class="h3 leaderboard-title">Quiz Leaderboard</div>
+                                <div class="h3 leaderboard-title">Learning Content Leaderboard</div>
                                 <table class="p1">
                                     <thead>
                                     <tr>

@@ -120,7 +120,6 @@ function generateStudyTime($conn, &$header, &$data){
         }
         $data .= "\t\n";
     }
-    $data .= "1 stands for achieve and 0 stands for not achieve";
 }
 
 require_once ("../mysql-lib.php");
