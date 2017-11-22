@@ -216,27 +216,12 @@
         <? require("./quiz-timer.php") ?>
     </div>
 
-    <ul class="task-operation">
-        <li class="cancel-task">
-            <a href="weekly-task.php?week=<?php echo $week?>" title="Cancel Task"></a>
-        </li>
-    </ul>
-
-    <div class="attachment">
-        <ul class="attachment-nav">
-            <li class="attachment-nav-item">SNAP² <br>FACTS</li>
-        </ul>
-    </div>
-
+    <? require("./quiz-button-sets.php") ?>
     <? require("./footer-bar.php") ?>
 </div>
 
-<script src="./js/snap.js"></script>
 <script>
-    snap.initAttachmentCtrl();
-
     var quizNav = new snap.QuizNav();
-
     var QuizCtrl = {
         cls: {
             answerSelected: 'quiz-answer-item-selected'
