@@ -33,34 +33,11 @@ db_close($conn);
     <link rel="stylesheet" type="text/css" href="./css/vendor/animate.css"/>
     <style>
         .snap-facts-desc {
-            width: 400px;
+            width: 60%;
             margin: 0 auto 20px;
             text-align: center;
         }
 
-        .break-line {
-            word-wrap: break-word;      /* IE 5.5-7 */
-            white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
-            white-space: pre-wrap;      /* current browsers */
-        }
-
-        .post .content
-        {
-            padding: 15px;
-        }
-
-        .post .post-img-content
-        {
-            position: relative;
-            margin-bottom: 8px;
-        }
-        .post .post-title
-        {
-            display: table-cell;
-            vertical-align: bottom;
-            z-index: 2;
-            position: absolute;
-        }
         .post .post-title b
         {
             background-color: rgba(51, 51, 51, 0.58);
@@ -72,7 +49,7 @@ db_close($conn);
         }
 
         .extra-activities-intro {
-            width: 600px;
+            width: 60%;
             font-family: "Maitree", serif;
             font-size: 18px;
             margin: 0 auto;
@@ -80,7 +57,6 @@ db_close($conn);
             text-align: justify;
         }
 
-        .top-buffer { margin-top:24px; }
     </style>
 </head>
 <body>
@@ -111,7 +87,7 @@ db_close($conn);
                 The Australian Copyright Act allows certain uses of content from the internet without the copyright owner’s
                 permission. This includes uses by educational institutions and by Commonwealth and State governments,
                 provided fair compensation is paid. For more information,
-                see <a href="www.copyright.com.au">www.copyright.com.au</a> and <a href="www.copyright.org.au">www.copyright.org.au</a>.
+                see <a href="www.copyright.com.au"><u>www.copyright.com.au</u></a> and <a href="www.copyright.org.au"><u>www.copyright.org.au</u></a>.
             </p>
             <br>
             <p class="extra-activities-intro">
@@ -126,7 +102,8 @@ db_close($conn);
         <hr>
         <br>
         <p class="extra-activities-intro">
-            The 3rd-party open source packages (Bootstrap, jQuery, LimeSurvey, etc.) that we are using have their original copyrights. We did not modify any of them.
+            We have complied with the open source licenses for the 3rd-party open source packages that we use on this website
+            and hence comply with their original copyrights and have not made any modifications to them.
         </p>
         <br>
         <p class="extra-activities-intro">
