@@ -208,12 +208,7 @@
         <? require("./quiz-timer.php") ?>
     </div>
 
-    <ul class="task-operation">
-        <li class="cancel-task">
-            <a href="weekly-task.php?week=<?php echo $week?>" title="Cancel Task"></a>
-        </li>
-    </ul>
-
+    <? require("./quiz-button-sets.php") ?>
     <? require("./footer-bar.php") ?>
 </div>
 

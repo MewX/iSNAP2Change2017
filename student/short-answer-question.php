@@ -214,7 +214,7 @@
 
     <ul class="task-operation">
         <li class="save-task">
-            <a href="javascript:;" title="Save"></a>
+            <a href="javascript:" title="Save"></a>
         </li>
         <li class="cancel-task">
             <a href="weekly-task.php?week=<?php echo $week?>" title="Cancel Task"></a>
@@ -223,8 +223,8 @@
 
     <div class="attachment">
         <ul class="attachment-nav">
-            <li class="attachment-nav-item">SNAP² <br>FACTS</li>
-            <li class="attachment-nav-item">READING <br> MATERIAL</li>
+            <li id="facts-attach" class="attachment-nav-item">SNAP² <br>FACTS</li>
+            <li id="pretask-attach" class="attachment-nav-item">PRE-TASK <br> MATERIALS</li>
         </ul>
     </div>
 
@@ -233,12 +233,9 @@
 
 <script src="./js/snap.js"></script>
 <script>
-
     snap.initAttachmentCtrl();
 
     var quizNav = new snap.QuizNav();
-
-
     var QuizCtrl = {
         init: function (opt) {
             this.opt = $.extend({

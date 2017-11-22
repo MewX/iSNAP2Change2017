@@ -144,17 +144,10 @@
         <? require("./quiz-timer.php") ?>
     </div>
 
-    <ul class="task-operation">
-        <li class="cancel-task">
-            <a href="<?php echo $backPage?>" title="Cancel Task"></a>
-        </li>
-    </ul>
-
+    <? require("./quiz-button-sets.php") ?>
     <? require("./footer-bar.php") ?>
 </div>
 
-
-<script src="./js/snap.js"></script>
 <script src="./js/vendor/dragula.min.js"></script>
 <script>
 <?php

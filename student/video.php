@@ -186,18 +186,27 @@
 
     <ul class="task-operation">
         <li class="save-task">
-            <a href="javascript:;" title="Save"></a>
+            <a href="javascript:" title="Save"></a>
         </li>
         <li class="cancel-task">
             <a href="<?php echo $backPage?>" title="Cancel Task"></a>
         </li>
     </ul>
 
+    <div class="attachment">
+        <ul class="attachment-nav">
+            <li id="facts-attach" class="attachment-nav-item">SNAP² <br>FACTS</li>
+            <li id="pretask-attach" class="attachment-nav-item">PRE-TASK <br> MATERIALS</li>
+        </ul>
+    </div>
+
     <? require("./footer-bar.php") ?>
 </div>
 
 <script src="./js/snap.js"></script>
 <script>
+    snap.initAttachmentCtrl();
+
     var form = new snap.Form({
         form: '.question-form',
         onSubmit: function (data) {

@@ -244,10 +244,8 @@ var snap = {
     },
     initAttachmentCtrl: function () {
       AttachmentCtrl.init();
-      PretaskMaterialCtrl .init();
     }
 };
-
 
 var AttachmentCtrl = {
     init: function () {
@@ -255,44 +253,27 @@ var AttachmentCtrl = {
         this.addListeners();
     },
     cacheElements: function () {
-      var $main = $('#facts-attachment');
+      var $main = $('.attachment');
       this.$main = $main;
-      this.$navItems = $main.find('#facts-attachment-item')
+      this.$navItems = $main.find('.attachment-nav-item')
     },
     addListeners: function () {
-      this.$main.on('click', '#facts-attachment-item', function (e) {
-          var win = window.open('./snap-facts.php', '_blank');
-          if (win) {
-              //Browser has allowed it to be opened
-              win.focus();
-          } else {
-              //Browser has blocked it
-              alert('Please allow popups for this website');
-          }
-      })
-    }
-};
-var PretaskMaterialCtrl = {
-    init: function () {
-        this.cacheElements();
-        this.addListeners();
-    },
-    cacheElements: function () {
-        var $main = $('#pretask-attachment');
-        this.$main = $main;
-        this.$navItems = $main.find('#pretask-attachment-item')
-    },
-    addListeners: function () {
-        this.$main.on('click', '#pretask-attachment-item', function (e) {
-            var win = window.open('./reading-material.php', '_blank');
+        this.$main.on('click', '#facts-attach', function (e) {
+            var win = window.open('./snap-facts.php', '_blank');
             if (win) {
-                //Browser has allowed it to be opened
                 win.focus();
             } else {
-                //Browser has blocked it
                 alert('Please allow popups for this website');
             }
-        })
+        });
+        this.$main.on('click', '#pretask-attach', function (e) {
+            var win = window.open('./reading-material.php', '_blank');
+            if (win) {
+                win.focus();
+            } else {
+                alert('Please allow popups for this website');
+            }
+        });
     }
 };
 

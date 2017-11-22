@@ -176,8 +176,6 @@
             </div>
 <?php    } ?>
 
-
-
             <div class="form-container">
                 <form class="question-form">
                         <button type="submit" class="question-submit" <?php echo $btnDisabled?>>
@@ -189,16 +187,10 @@
         <? require("./quiz-timer.php") ?>
     </div>
 
-    <ul class="task-operation">
-        <li class="cancel-task">
-            <a href="<?php echo $backPage?>" title="Cancel Task"></a>
-        </li>
-    </ul>
-
+    <? require("./quiz-button-sets.php") ?>
     <? require("./footer-bar.php") ?>
 </div>
 
-<script src="./js/snap.js"></script>
 <script>
 
     var DragCtrl = {

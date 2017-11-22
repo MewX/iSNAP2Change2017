@@ -4,9 +4,10 @@
  * User: MewX
  * Date: 2017/11/22
  * Time: 16:45
+ *
+ * The basic button set for quizzes.
+ * This set does not contain the save buttons.
  */
-
-
 ?>
 
 <ul class="task-operation">
@@ -15,14 +16,10 @@
     </li>
 </ul>
 
-<div id="facts-attachment" class="attachment">
+<div class="attachment">
     <ul class="attachment-nav">
-        <li id="facts-attachment-item" class="attachment-nav-item">SNAP² <br>FACTS</li>
-    </ul>
-</div>
-<div id="pretask-attachment" class="attachment" style="top: 180px">
-    <ul class="attachment-nav">
-        <li id="pretask-attachment-item" class="attachment-nav-item">Pre-task<br>Materials</li>
+        <li id="facts-attach" class="attachment-nav-item">SNAP² <br>FACTS</li>
+        <li id="pretask-attach" class="attachment-nav-item">PRE-TASK <br> MATERIALS</li>
     </ul>
 </div>
 
