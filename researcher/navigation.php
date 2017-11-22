@@ -394,8 +394,6 @@ db_close($conn);
             })
             .fail(function (xhr, status, errorThrown) {
                 alert("Please try again later");
-                console.log("Error: " + errorThrown);
-                console.log("Status: " + status);
                 console.dir(xhr);
             });
     }
@@ -420,8 +418,6 @@ db_close($conn);
             })
             .fail(function (xhr, status, errorThrown) {
                 alert("Please try again later");
-                console.log("Error: " + errorThrown);
-                console.log("Status: " + status);
                 console.dir(xhr);
             });
     }
@@ -451,8 +447,6 @@ db_close($conn);
     $('#btnSaveChange').on('click', function () {
         $('#profileSubmission').validate();
         newInfoArr.eq(0).prop('disabled', false);
-        console.log("click navigation");
-
         $('#profileSubmission').submit();
     });
 
