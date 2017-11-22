@@ -12,8 +12,8 @@
         <div class="footer-content">
             <a class="footer-logo"></a>
             <ul class="footer-nav">
-                <li class="footer-nav-item"><a style="color: white">Any Legal Stuff</a></li>
-                <li class="footer-nav-item"><a href="copyright.php" style="color: white">Copyright© All rights reserved</a></li>
+                <li class="footer-nav-item"><a href="copyright.php" style="color: white">Copyright & Acknowledgements</a></li>
+                <li class="footer-nav-item"><a style="color: white">All rights reserved by Harshani Jayasinghe and The University of Adelaide</a></li>
             </ul>
         </div>
     </div>

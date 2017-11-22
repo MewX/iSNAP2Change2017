@@ -94,6 +94,33 @@ function generateAchievements($conn, &$header, &$data){
         }
         $data .= "\t\n";
     }
+    $data .= "1 stands for achieve and 0 stands for not achieve";
+}
+
+function generateStudyTime($conn, &$header, &$data){
+    $sql = "select Student.StudentID,FirstName, LastName, Classname";
+    for($i=1;$i<=10;$i++){
+        $sql .= ", MAX(IF(Week=".$i.",TimeSpent,null)) as Week".$i;
+    }
+    $sql .= " from Student Left JOIN Student_week_record ON Student.StudentID = Student_week_record.StudentID NATURAL JOIN class GROUP BY Student.StudentID;";
+    $sql = $conn->prepare($sql);
+    $sql->execute();
+
+    $result = $sql->fetchAll();
+    $total_column = $sql->columnCount();
+
+    for ($counter = 0; $counter < $total_column; $counter ++) {
+        $meta = $sql->getColumnMeta($counter);
+        $header .= '"' . $meta['name'] . '",';
+    }
+    $header .= "\n";
+    for($i = 0; $i < count($result); $i++){
+        for($j = 0; $j<count($result[$i])/2; $j++){
+            $data .= '"' . $result[$i][$j] . '",';
+        }
+        $data .= "\t\n";
+    }
+    $data .= "1 stands for achieve and 0 stands for not achieve";
 }
 
 require_once ("../mysql-lib.php");
@@ -110,6 +137,8 @@ if($csvFileName == "student demography.csv"){
 
 }else if($csvFileName == "achievements.csv") {
     generateAchievements($conn, $header, $data);
+}else if($csvFileName == "studyTime.csv") {
+    generateStudyTime($conn, $header, $data);
 }
 
 header('Content-type: application/csv');
