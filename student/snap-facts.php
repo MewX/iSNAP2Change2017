@@ -44,13 +44,12 @@
     <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="./css/home.css"/>
-    <link rel="stylesheet" href="./css/common.css">
-    <link rel="stylesheet" type="text/css" href="./css/vendor/animate.css"/>
-
-    <script src="./js/vendor/wow.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="./css/vendor/animate.css"/>
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" type="text/css" href="./css/home.css"/>
+
     <style>
         .snap-facts-logo {
             display: block;
@@ -68,7 +67,7 @@
         .snap-facts-all {
             width: 800px;
             margin: 0 auto;
-            padding-bottom: 0px;
+            padding-bottom: 0;
             text-align: center;
         }
         .snap-facts-list {
@@ -98,25 +97,6 @@
         .snap-facts-item-smoking {
             color: #fcee2d;
         }
-        .snap-facts-item-nutrition {
-            color: #f7751e;
-        }
-        .snap-facts-item-alcohol {
-            color: #93c;
-        }
-        .snap-facts-item-physical {
-            color: #db1b1b;
-        }
-        .snap-facts-item-health {
-            color: #db1b1b;
-        }
-        .snap-facts-item-sexual {
-            color: #af24d1;
-        }
-        .snap-facts-item-drugs {
-            color: #2fedc9;
-        }
-
 
         .week-facts {
             max-width: 1000px;
@@ -132,6 +112,11 @@
             padding: 0 10px;
             float: left;
             margin-bottom: 20px;
+        }
+
+        .week-facts-item a:focus, a:hover{
+            color: white;
+            cursor: pointer;
         }
 
         .week-facts-item-smoking .week-facts-name{
@@ -156,13 +141,6 @@
             color: #2fedc9;
         }
 
-        .week-facts-icon {
-            display: block;
-            width: 128px;
-            height: 128px;
-            background-size: 100% 100%;
-            margin: 0 auto;
-        }
         .week-facts-name {
             border-bottom: 2px solid;
             margin-bottom: 20px;
@@ -187,7 +165,7 @@
     <div class="content-wrapper" style="padding-top: 60px; min-height: calc(100vh - 127px);">
         <div class="snap-facts-container">
             <div class="snap-facts-header">
-                <a href="#" class="snap-facts-logo"></a>
+                <a class="snap-facts-logo" style="cursor: default;"></a>
                 <div class="snap-facts-desc p1">
                     SNAP² is all about providing information.
                 </div>
@@ -212,10 +190,10 @@
                     <div class="clearfix">
                         <? for ($i = 0; $i < count($factRes); $i ++) { ?>
                         <div class="week-facts-item week-facts-item-smoking">
+                            <br>
+                            <br>
+                            <span class="week-facts-name"><? echo strtoupper($factRes[$i]->TopicName) . " FACT #" . ($i + 1) ?></span>
                             <a class="week-facts-divnk">
-                                <br>
-                                <br>
-                                <span class="week-facts-name"><? echo strtoupper($factRes[$i]->TopicName)." FACT #".$factRes[$i]->SnapFactID ?></span>
                                 <p class="week-facts-intro" onclick="showSource(this)">
                                     <? echo $factRes[$i]->Content; ?>
                                 </p>
@@ -234,10 +212,12 @@
 <? require("./footer-bar.php") ?>
 <script>
     function showSource(e){
-        if(e.parentElement.childNodes[9].style.display == 'none'){
-            e.parentElement.childNodes[9].style.display = 'block';
+        var toggleid = 3;
+//        console.log(e.parentElement.childNodes);
+        if(e.parentElement.childNodes[toggleid].style.display == 'none'){
+            e.parentElement.childNodes[toggleid].style.display = 'block';
         }else{
-            e.parentElement.childNodes[9].style.display = 'none';
+            e.parentElement.childNodes[toggleid].style.display = 'none';
         }
     }
 

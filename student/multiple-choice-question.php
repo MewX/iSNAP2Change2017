@@ -172,13 +172,18 @@
                                 <div class="quiz-feedback">
                                     <div class="quiz-feedback-title">
 <?php
-                                if ($feedback[$i][$j]["correctAns"] == $mcqOptions[$i][$j]->OptionID) { ?>
-                                    This is correct:
-<?php                           } else { ?>
-                                    This is incorrect:
-<?php                           }?>
+                                if ($feedback[$i][$j]["correctAns"] == $mcqOptions[$i][$j]->OptionID) {
+                                    echo "This is correct";
+                                } else {
+                                    echo "This is incorrect";
+                                }
+
+                                $explanation = trim($feedback[$i][$j]["Explanation"]);
+                                if (strlen($explanation) == 0) echo '.';
+                                else echo ': ';
+?>
                                     </div>
-                                    <div class="quiz-feedback-content"><?php echo $feedback[$i][$j]["Explanation"] ?></div>
+                                    <div class="quiz-feedback-content"><?php echo $explanation ?></div>
                                 </div>
 <?php                       } ?>
                         </div>
@@ -211,27 +216,12 @@
         <? require("./quiz-timer.php") ?>
     </div>
 
-    <ul class="task-operation">
-        <li class="cancel-task">
-            <a href="weekly-task.php?week=<?php echo $week?>" title="Cancel Task"></a>
-        </li>
-    </ul>
-
-    <div class="attachment">
-        <ul class="attachment-nav">
-            <li class="attachment-nav-item">SNAP² <br>FACTS</li>
-        </ul>
-    </div>
-
+    <? require("./quiz-button-sets.php") ?>
     <? require("./footer-bar.php") ?>
 </div>
 
-<script src="./js/snap.js"></script>
 <script>
-    snap.initAttachmentCtrl();
-
     var quizNav = new snap.QuizNav();
-
     var QuizCtrl = {
         cls: {
             answerSelected: 'quiz-answer-item-selected'
@@ -298,7 +288,7 @@
                 '         <div class="quiz-feedback">' +
                 '             <div class="quiz-feedback-title">This is correct:</div>' +
                 '             <div class="quiz-feedback-content">aaa</div>' +
-                '         </div>'
+                '         </div>';
                 detail.forEach(function (quizState) {
                 var $quizItem = $quizItems.filter('[data-id="' + quizState.MCQID +'"]');
                 var $quizAnswers = $quizItem.find('.quiz-answer-item');
@@ -307,13 +297,12 @@
                 for (var key in quizState.explanation) {
                     var $answerItem = $quizAnswers.filter('[data-answer="' + key + '"]');
                     var answerId = $answerItem.data('answer');
-                    var $feedback = $(feedbackTpl)
+                    var $feedback = $(feedbackTpl);
 
                     $feedback.find('.quiz-feedback-title')
-                        .text(answerId == quizState.correctAns ? 'This is correct:' : 'This is incorrect')
-                    $feedback.find('.quiz-feedback-content').text(quizState.explanation[key])
-                    $answerItem.find('.quiz-answer-content')
-                        .append($feedback)
+                        .text(answerId == quizState.correctAns ? 'This is correct. ' : 'This is incorrect. ');
+                    $feedback.find('.quiz-feedback-content').text(quizState.explanation[key]);
+                    $answerItem.find('.quiz-answer-content').append($feedback);
 
                     if (answerId == quizState.correctAns) {
                         $answerItem.addClass('quiz-answer-item-correct')

@@ -221,7 +221,7 @@ db_close($conn);
                     <input type="text" class="form-control dialoginput" id="Content" name="content"
                            placeholder="Input Content" required>
                     <br>
-                    <label for="Explanation">Explanation <?php echo $mcqQuesResult->MCQID; ?></label>
+                    <label for="Explanation">Explanation</label>
                     <input type="text" class="form-control dialoginput" id="Explanation" name="explanation"
                            placeholder="Input Explanation" >
                     <br>

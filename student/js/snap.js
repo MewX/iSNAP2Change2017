@@ -243,32 +243,37 @@ var snap = {
         };
     },
     initAttachmentCtrl: function () {
-      AttachmentCtrl.init()
+      AttachmentCtrl.init();
     }
-}
-
+};
 
 var AttachmentCtrl = {
     init: function () {
-        this.cacheElements()
-        this.addListeners()
+        this.cacheElements();
+        this.addListeners();
     },
     cacheElements: function () {
-      var $main = $('.attachment')
-      this.$main = $main
+      var $main = $('.attachment');
+      this.$main = $main;
       this.$navItems = $main.find('.attachment-nav-item')
     },
     addListeners: function () {
-      this.$main.on('click', '.attachment-nav-item', function (e) {
-          var win = window.open('./snap-facts.php', '_blank');
-          if (win) {
-              //Browser has allowed it to be opened
-              win.focus();
-          } else {
-              //Browser has blocked it
-              alert('Please allow popups for this website');
-          }
-      })
+        this.$main.on('click', '#facts-attach', function (e) {
+            var win = window.open('./snap-facts.php', '_blank');
+            if (win) {
+                win.focus();
+            } else {
+                alert('Please allow popups for this website');
+            }
+        });
+        this.$main.on('click', '#pretask-attach', function (e) {
+            var win = window.open('./reading-material.php', '_blank');
+            if (win) {
+                win.focus();
+            } else {
+                alert('Please allow popups for this website');
+            }
+        });
     }
 };
 

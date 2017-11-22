@@ -10,10 +10,10 @@
 <div class="footer-wrapper">
     <div class="footer">
         <div class="footer-content">
-            <a href="welcome.php" class="footer-logo"></a>
+            <a class="footer-logo"></a>
             <ul class="footer-nav">
-                <li class="footer-nav-item"><a href="copyright.php" style="color: white">Acknowledgements</a></li>
-                <li class="footer-nav-item"><a href="#" style="color: white">All rights reserved by Harshani Jayasinghe and The University of Adelaide</a></li>
+                <li class="footer-nav-item"><a href="copyright.php" style="color: white">Copyright & Acknowledgements</a></li>
+                <li class="footer-nav-item" style="color: white; margin-top: 10px; line-height: 1;">All rights reserved by Harshani Jayasinghe and The University of Adelaide</li>
             </ul>
         </div>
     </div>
