@@ -13,7 +13,7 @@
             <a class="footer-logo"></a>
             <ul class="footer-nav">
                 <li class="footer-nav-item"><a href="copyright.php" style="color: white">Copyright & Acknowledgements</a></li>
-                <li class="footer-nav-item"><a style="color: white">All rights reserved by Harshani Jayasinghe and The University of Adelaide</a></li>
+                <li class="footer-nav-item" style="color: white; margin-top: 10px; line-height: 1;">All rights reserved by Harshani Jayasinghe and The University of Adelaide</li>
             </ul>
         </div>
     </div>
