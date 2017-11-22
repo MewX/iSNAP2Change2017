@@ -14,11 +14,6 @@ and open the template in the editor.
     Author     : Shivangi
 */
 
-a
-{
-    color: white !important;
-}
-
 body
 {
     background-color: black;
@@ -53,11 +48,6 @@ h4.capitalize {
     text-transform: capitalize;
 }
 
-.body_desc
-{
-    font-size: 16px;
-}
-
 a:hover
 {
   color: yellow !important;
@@ -67,7 +57,7 @@ a:hover
 <script>
     $(document).ready(function ()
     {
-        $('.info_heading a').click(function (e) {
+        $('.info_heading a').hover(function (e) {
             e.preventDefault();
             var anchor_id = $(this).attr("id");
             var disp = '../extra_pages/img/smoking/' + anchor_id + '/smoking_' + anchor_id + '_selected.png';
@@ -134,7 +124,7 @@ a:hover
 </script>
 
 <div class='row'>
-    <div class='heading col-md-offset-4 col-md-4' style='color: white; text-align: center;'>
+    <div class='heading col-md-offset-2 col-md-8' style='color: black; text-align: center;'>
         <h4>Effects of Smoking on the Body</h4>
         <p style='text-align: center; font-size: 13px; width: 80%; padding-left:19%;'>
             Use the infographic below to explore the various ways smoking damages your body
@@ -151,31 +141,31 @@ a:hover
 <div class='col-md-4 col-md-offset-0 col-xs-6 col-xs-offset-0 col-sm-4 col-sm-offset-0 info_text'>
     <div class='info_heading' style='height: 35%;'>
         <div class='col-md-6 col-xs-12 col-sm-6'>
-            <ul style='color: white; text-align: center; list-style-type:none;'>
-                <li><a id='bone' href='#'>Bone</a></li>
-                <li><a id='brain' href='#'>Brain</a></li>
-                <li><a id='ear' href='#'>Ear</a></li>
-                <li><a id='eye' href='#'>Eye</a></li>
-                <li><a id='hair' href='#'>Hair</a></li>
-                <li><a id='heart' href='#'>Heart</a></li>
-                <li><a id='leg' href='#'>Legs</a></li>
+            <ul style='color: black; text-align: center; list-style-type:none; font-size: 18px'>
+                <li><a id='bone' style="color: black;" href='#'>Bone</a></li>
+                <li><a id='brain' style="color: black;" href='#'>Brain</a></li>
+                <li><a id='ear' style="color: black;" href='#'>Ear</a></li>
+                <li><a id='eye' style="color: black;" href='#'>Eye</a></li>
+                <li><a id='hair' style="color: black;" href='#'>Hair</a></li>
+                <li><a id='heart' style="color: black;" href='#'>Heart</a></li>
+                <li><a id='leg' style="color: black;" href='#'>Legs</a></li>
             </ul>
         </div>
         <div class='col-md-6 col-xs-12 col-sm-6'>
-            <ul style='color: white;  text-align: center; list-style-type:none;'>
-                <li><a id='liver' href='#'>Liver</a></li>
-                <li><a id='lungs' href='#'>Lungs</a></li>
-                <li><a id='mouth' href='#'>Mouth</a></li>
-                <li><a id='nose' href='#'>Nose</a></li>
-                <li><a id='sexual_organs' href='#'>Sexual Organs</a></li>
-                <li><a id='skin' href='#'>Skin</a></li>
+            <ul style='color: black; text-align: center; list-style-type:none; font-size: 18px'>
+                <li><a id='liver' style="color: black;" href='#'>Liver</a></li>
+                <li><a id='lungs' style="color: black;" href='#'>Lungs</a></li>
+                <li><a id='mouth' style="color: black;" href='#'>Mouth</a></li>
+                <li><a id='nose' style="color: black;" href='#'>Nose</a></li>
+                <li><a id='sexual_organs' style="color: black;" href='#'>Sexual Organs</a></li>
+                <li><a id='skin' style="color: black;" href='#'>Skin</a></li>
             </ul>
         </div>
     </div>
 
-    <div class='info_body col-md-9 col-md-offset-1 col-xs-12 col-xs-offset-0 col-sm-9 col-sm-offset-1' style='height: 50%; top:9%; color: white;'>
-        <h4 id='body_head' class="capitalize" style='text-align: left;'>The Body</h4>
-        <span id='body_desc'> Select a section to begin exploring the effects of smoking on human body</span>
+    <div class='info_body col-md-9 col-md-offset-1 col-xs-12 col-xs-offset-0 col-sm-9 col-sm-offset-1' style='height: 50%; top:9%; color: white; margin-top: 50px'>
+        <h4 id='body_head' class="capitalize" style='color: black; text-align: left;'>The Body</h4>
+        <span id='body_desc' style="color: black;"> Select a section to begin exploring the effects of smoking on human body</span>
     </div>
 </div>
 </div>
