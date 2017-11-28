@@ -57,9 +57,9 @@
     <meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no">
     <title>Extra Activities | SNAP²</title>
     <link rel="shortcut icon" type="image/x-icon" href="img/snap.ico" />
-    <link rel="stylesheet" href="./css/common.css">
     <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/common.css">
     <script src="./js/snap.js"></script>
     <style>
 
@@ -477,96 +477,94 @@
         init: function (opt) {
             opt = opt || {
                     onTabChange: $.noop
-                }
-            this.onTabChange = opt.onTabChange
-            this.cacheElements()
-            this.addListeners()
+                };
+            this.onTabChange = opt.onTabChange;
+            this.cacheElements();
+            this.addListeners();
         },
         cacheElements: function () {
-            var $main = $('.extra-activities-tab')
-            this.$main = $main
-            this.$tabItems = $main.find('.extra-activities-tab-item')
-            this.$tabContent = $('.extra-activities-tab-content')
+            var $main = $('.extra-activities-tab');
+            this.$main = $main;
+            this.$tabItems = $main.find('.extra-activities-tab-item');
+            this.$tabContent = $('.extra-activities-tab-content');
             this.$tabContentItems = this.$tabContent.find('.extra-activities-week-detail')
         },
         addListeners: function () {
-            var that = this
-
+            var that = this;
             this.$main.on('click', '.extra-activities-tab-item', function (e) {
-                var $target = $(e.currentTarget)
-                var cls = that.cls
+                var $target = $(e.currentTarget);
+                var cls = that.cls;
 
                 if (!$target.hasClass(cls.tabActive) && !$target.hasClass(cls.tabDisabled)) {
-                    var index = that.$tabItems.index(e.currentTarget)
-                    that.activeItem(index)
-                    that.onTabChange(index)
+                    var index = that.$tabItems.index(e.currentTarget);
+                    that.activeItem(index);
+                    that.onTabChange(index);
                 }
             })
         },
         activeItem: function (index) {
+            console.log(this);
             this.$tabItems.removeClass(this.cls.tabActive)
                 .eq(index)
-                .addClass(this.cls.tabActive)
+                .addClass(this.cls.tabActive);
             this.$tabContentItems.removeClass(this.cls.tabContentActive)
                 .eq(index)
                 .addClass(this.cls.tabContentActive)
         }
-    }
+    };
     TabCtrl.init({
         onTabChange: function (index) {
             MaterialCtrl.showNavPanel(index)
         }
-    })
-
+    });
     TabCtrl.activeItem(<?php echo $activeWeek-1 ?>);
-
 
     var MaterialCtrl = {
         init: function () {
-            this.cacheElements()
-            this.addListeners()
+            this.cacheElements();
+            this.addListeners();
         },
         cacheElements: function () {
-            var $navMain = $('.extra-activities-tab-content')
-            this.$navMain = $navMain
-            this.$navPanels = $navMain.find('.extra-activities-week-detail')
-            var $materialList = $('.material-list')
-            this.$materialList = $materialList
-            this.$materialItems = $materialList.find('.material-item')
+            this.navMain = $('.extra-activities-tab-content');
+            this.navPanels = this.navMain.find('.extra-activities-week-detail');
+            this.materialList = $('.material-list');
+            this.materialItems = this.materialList.find('.material-item');
         },
         addListeners: function () {
-            var that = this
-            that.$navMain.on('click', '.extra-activities-item', function (e) {
-                var $target = $(e.currentTarget)
-                var targetMaterialCls = $target.data('target')
+            var that = this;
+            that.navMain.on('click', '.extra-activities-item', function (e) {
+                var target = $(e.currentTarget);
+                var targetMaterialCls = target.data('target');
+                console.log(target);
+                console.log(targetMaterialCls);
                 that.showMaterialDetail(targetMaterialCls)
-            })
-            that.$materialList.on('click', '.material-close', function (e) {
+            });
+            that.materialList.on('click', '.material-close', function (e) {
                 that.hideMaterialDetail()
-            })
+            });
         },
         showNavPanel: function (index) {
-            this.$navMain.show()
-            this.$navPanels.hide()
+            this.navMain.show();
+            this.navPanels.hide()
                 .eq(index)
-                .show()
-            this.$materialItems.removeClass('material-item-active')
-            this.$materialList.hide()
+                .show();
+            this.materialItems.removeClass('material-item-active');
+            this.materialList.hide();
         },
         showMaterialDetail: function (targetMaterialCls) {
-            this.$navMain.hide()
-            this.$materialList.show()
-            this.$materialItems.removeClass('material-item-active')
+            this.navMain.hide();
+            this.materialList.show();
+            this.materialItems.removeClass('material-item-active')
                 .filter(targetMaterialCls)
-                .addClass('material-item-active')
+                .addClass('material-item-active');
         },
-
         hideMaterialDetail: function () {
-            this.$navMain.show()
-            this.$materialList.hide()
-            this.$materialItems.removeClass('material-item-active')
+            this.navMain.show();
+            this.materialList.hide();
+            this.materialItems.removeClass('material-item-active')
         }
-    }
+    };
+    MaterialCtrl.init();
 
 </script>
 </body>
