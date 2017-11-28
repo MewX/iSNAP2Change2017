@@ -109,7 +109,7 @@
                         </div>
                         <div class="content">
                             <div>
-                                Control and eliminate candies to win.
+                                Match 3 healthy items in a row to win.
                             </div>
                             <div>
                                 <a href="#" class="btn btn-warning btn-sm">Download</a>
@@ -126,7 +126,7 @@
                         </div>
                         <div class="content">
                             <div>
-                                Eat fruits and refuse smoking.
+                                Slice away the healthy items to win.
                             </div>
                             <div>
                                 <a href="#" class="btn btn-warning btn-sm">Download</a>
