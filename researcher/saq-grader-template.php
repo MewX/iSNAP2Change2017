@@ -99,7 +99,7 @@ db_close($conn);
                                     <label for="grading[]">Grading</label>
                                     <p></p>
                                     <input type="text" class="form-control dialoginput" id="grading<?php echo $i ?>" name="grading[]"
-                                           value="<?php echo $saqSubmissionResult[$i]->Grading > 0 ? $saqSubmissionResult[$i]->Grading : $saqSubmissionResult[$i]->Points; ?>"
+                                           value="<?php echo $saqSubmissionResult[$i]->Grading > 0 ? $saqSubmissionResult[$i]->Grading : 0; ?>"
                                            total="<?php echo $saqSubmissionResult[$i]->Points ?>"> out of <?php echo $saqSubmissionResult[$i]->Points ?>
 
                                 </div>
