@@ -4,27 +4,25 @@ SNAP² program is an internet-based intervention website to help children resist
 ## Supervisor
 Harshani Jayasinghe, The Clinical Practice Unit (Respiratory Medicine)
 
-
 ## New staff (since Jul, 2017)
 
-### Yuanzhong Xia, Core Developer
-
-### Tao Zhang, Core Developer
-
-### Chris Stavrakis, Game Developer
+- Yuanzhong Xia, Core Developer
+- Tao Zhang, Core Developer
+- Chris Stavrakis, Game Developer
 
 ## Previous Collaborators and Responsibilities in the Production Version of Website
 
 ### Weijun (Mike) Wu, Core Developer
 
-Major work: Project Management; Front-end development for student system;  Integration between front-end and back-end for student system
+Major worked on: Project Management; Front-end development for student system;  Integration between front-end and back-end for student system
 
-Also contribute to: Database design & PDO Library
+Also contributed to: Database design & PDO Library
+
 ### Haokang (Marshall) An, Core Developer
 
-Major work: Development for researcher system; Unit test; Integration between Unity3D games and database; Text-To-Speech(TTS); Server deployment and backup
+Major worked on: Development for researcher system; Unit test; Integration between Unity3D games and database; Text-To-Speech(TTS); Server deployment and backup
 
-Also contribute to: Database design & PDO Library
+Also contributed to: Database design & PDO Library
 
 ### Timothy Casiero, Designer
 

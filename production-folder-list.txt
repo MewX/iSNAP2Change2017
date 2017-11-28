@@ -1,6 +1,0 @@
-/student
-/researcher
-/sb-admin
-/bower_components
-/mysql-lib.php
-/debug.php
