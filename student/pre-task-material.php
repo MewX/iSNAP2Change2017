@@ -110,6 +110,9 @@
         .task-operation {
             right: 50px;
         }
+        .p1 a {
+            color: #0e90d2;
+        }
     </style>
 </head>
 <body>
