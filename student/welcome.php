@@ -119,13 +119,13 @@
                                         <div class="item">
                                             <img src="./img/sportNinja.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
-                                                <a href="games.php" style="font-size: 3vh; color:rgb(255,255,255); border: 0px solid rgb(255,255,255); border-bottom-color: rgb(255,255,255); border-bottom-width: 2px; ">SPORT NINJA</a>
+                                                <a href="games.php" style="font-size: 2.5vh; color:rgb(255,255,255); border: 0px solid rgb(255,255,255); border-bottom-color: rgb(255,255,255); border-bottom-width: 2px; ">SPORT NINJA</a>
                                             </div>
                                         </div>
                                         <div class="item active">
                                             <img src="./img/foodCrush.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
-                                                <a href="games.php" style="font-size: 3vh; color:rgb(255,255,255); border: 0px solid rgb(255,255,255); border-bottom-color: rgb(255,255,255); border-bottom-width: 2px; ">MEAL CRUSH</a>
+                                                <a href="games.php" style="font-size: 2.5vh; color:rgb(255,255,255); border: 0px solid rgb(255,255,255); border-bottom-color: rgb(255,255,255); border-bottom-width: 2px; ">MEAL CRUSH</a>
                                             </div>
                                         </div>
                                     </div>
