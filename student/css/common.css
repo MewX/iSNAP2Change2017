@@ -365,7 +365,7 @@ body {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-pack: distribute;
+    -ms-flex-pack: justify;
     -webkit-justify-content: space-around;
     -moz-justify-content: space-around;
     justify-content: space-around;

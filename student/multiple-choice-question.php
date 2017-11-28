@@ -349,15 +349,14 @@
     });
 
 
-
     function parseFeedback(feedback) {
         console.log(feedback.detail);
-        if (feedback.message != "success") {
+        if (feedback.message !== "success") {
             alert(feedback.message + ". Please try again!");
             return;
         }
 
-        if (feedback.result == "pass") {
+        if (feedback.result === "pass") {
             if(feedback.attempt>=3){
                 snap.alert({
                     content: 'You have finished this quiz. Your final score is: ' + <?php echo $attemptInfo->HighestGrade?> + '/' + feedback.quesNum + '. '
@@ -367,17 +366,16 @@
                 location.reload();
             }else{
                 snap.alert({
-                    content: 'This is your ' + feedback.attempt + ' attempt. The result for this attempt is: ' +
+                    content: 'This is your attempt - ' + feedback.attempt + '. The result for this attempt is: ' +
                     feedback.score + '/' + feedback.quesNum + '. '
                 });
                 snap.$alert.on('click', '.snap-alert-confirm', function () {
                     snap.confirm({
                         title: 'Finish this quiz?',
-                        content:'You still have ' + (3-feedback.attempt) + ' chances for this quiz. Do you want to give up these ' +
-                        'chances and finish this quiz? ',
+                        content:'You still have ' + (3-feedback.attempt) + ' chance(s) for this quiz. Do you want to give up and finish this quiz? ',
                         confirm: "Finish Quiz",
                         cancel: "Try Again"
-                    })
+                    });
                     snap.$confirm.on('click', '.snap-alert-confirm', function () {
                         //give up the rest of chance, set attempt = 3;
                         var StudentID = <?php echo $studentID ?>;
@@ -386,32 +384,29 @@
                             attempt: 3,
                             student_id: StudentID,
                             quiz_id: QuizID
-                        }
+                        };
                         $.ajax({
                             url:'multiple-choice-question.php',
                             type:'post',
                             datatype:'json',
                             data: data
-                        })
+                        });
                         $(".question-submit").attr("disabled",true);
                         //QuizCtrl.setFeedback(feedback.detail);
                         location.reload();
-                    })
+                    });
                     snap.$confirm.on('click', '.snap-alert-cancel', function () {
                         //redirect to week page if still have chance
                         document.location.href="weekly-task.php?week=<?php echo $week?>";
-                    })
-
+                    });
                 })
             }
-        } else if (feedback.result == "fail") {
+        } else if (feedback.result === "fail") {
             snap.alert({
                 content: 'Sorry! You have failed this quiz. The result is: ' + feedback.score + '/' + feedback.quesNum + '.'
             })
         }
     }
-
-
 </script>
 </body>
 </html>
