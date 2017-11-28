@@ -288,19 +288,19 @@ db_close($conn);
                     <!-- TODO: update the score here -->
                     <img class="achievement-logo" src="<? echo $aBeatScoreSnA ? IMG_ACHIEVED : IMG_LOCKED ?>"
                          title="Unlock this achievement by beating 175 score in Sports Ninja."/>
-                    <div class="achievement-name">xxx Score Ninja</div>
+                    <div class="achievement-name">175 Score Ninja</div>
                 </div>
                 <div class="col-2 mybox">
                     <!-- TODO: update the score here -->
                     <img class="achievement-logo" src="<? echo $aBeatScoreSnB ? IMG_ACHIEVED : IMG_LOCKED ?>"
                          title="Unlock this achievement by beating 400 score in Sports Ninja."/>
-                    <div class="achievement-name">xxx Score Ninja</div>
+                    <div class="achievement-name">400 Score Ninja</div>
                 </div>
                 <div class="col-2 mybox">
                     <!-- TODO: update the score here -->
                     <img class="achievement-logo" src="<? echo $aBeatScoreSnC ? IMG_ACHIEVED : IMG_LOCKED ?>"
                          title="Unlock this achievement by beating 850 score in Sports Ninja."/>
-                    <div class="achievement-name">xxx Score Ninja</div>
+                    <div class="achievement-name">850 Score Ninja</div>
                 </div>
             </div>
             <div class="col-8 col-xs-offset-2 myrow">
@@ -318,19 +318,19 @@ db_close($conn);
                     <!-- TODO: update the score here -->
                     <img class="achievement-logo" src="<? echo $aBeatScoreMcA ? IMG_ACHIEVED : IMG_LOCKED ?>"
                          title="Unlock this achievement by beating 25,000 score in Meal Crusher."/>
-                    <div class="achievement-name">xxx Score Crusher</div>
+                    <div class="achievement-name">25,000 Score Crusher</div>
                 </div>
                 <div class="col-2 mybox">
                     <!-- TODO: update the score here -->
                     <img class="achievement-logo" src="<? echo $aBeatScoreMcB ? IMG_ACHIEVED : IMG_LOCKED ?>"
                          title="Unlock this achievement by beating 75,000 score in Meal Crusher."/>
-                    <div class="achievement-name">xxx Score Crusher</div>
+                    <div class="achievement-name">75,000 Score Crusher</div>
                 </div>
                 <div class="col-2 mybox">
                     <!-- TODO: update the score here -->
                     <img class="achievement-logo" src="<? echo $aBeatScoreMcC ? IMG_ACHIEVED : IMG_LOCKED ?>"
                          title="Unlock this achievement by beating 150,000 score in Meal Crusher."/>
-                    <div class="achievement-name">xxx Score Crusher</div>
+                    <div class="achievement-name">150,000 Score Crusher</div>
                 </div>
         </div>
         </div>
