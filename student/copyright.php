@@ -56,6 +56,16 @@ db_close($conn);
             color: white;
             text-align: justify;
         }
+        .horizon {
+            display: block;
+            height: 1px;
+            border: 0;
+            border-top: 1px solid #ccc;
+            margin-left: 25%;
+            margin-right: 25%;
+            padding: 0;
+            width: 50%
+        }
 
     </style>
 </head>
@@ -99,7 +109,7 @@ db_close($conn);
                 We may change these terms of use from time to time. Check before re-using any content from this website.
             </p>
         <br>
-        <hr>
+        <hr class="horizon">
         <br>
         <p class="extra-activities-intro">
             We have complied with the open source licenses for the 3rd-party open source packages that we use on this website
@@ -109,7 +119,6 @@ db_close($conn);
         <p class="extra-activities-intro">
             Besides, we obey their open source licenses.
         </p>
-        </div>
     </div>
 </div>
 
