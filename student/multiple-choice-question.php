@@ -374,7 +374,9 @@
                     snap.confirm({
                         title: 'Finish this quiz?',
                         content:'You still have ' + (3-feedback.attempt) + ' chances for this quiz. Do you want to give up these ' +
-                        'chances and finish this quiz? '
+                        'chances and finish this quiz? ',
+                        confirm: "Finish Quiz",
+                        cancel: "Try Again"
                     })
                     snap.$confirm.on('click', '.snap-alert-confirm', function () {
                         //give up the rest of chance, set attempt = 3;

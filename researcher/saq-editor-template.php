@@ -393,7 +393,6 @@ db_close($conn);
         }
     }
 </script>
-<script src="researcher-tts.js"></script>
 </body>
 
 </html>

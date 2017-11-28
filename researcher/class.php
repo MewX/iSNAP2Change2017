@@ -201,8 +201,12 @@ db_close($conn);
                     <input type="range" class="dialogInput" min="0"
                            max="<?php echo $weekResult->WeekNum ?>"
                            id="UnlockedProgress" name="unlockedProgress" onchange="updateTextInput(this.value);">
-                    <br><label for="SchoolName">Close this class</label>
+                    <br>
                 </form>
+            </div>
+            <div class="alert alert-danger">
+                <p><strong>Reminder</strong> : Class Name should be unique and no duplicate names are allowed.
+                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" id="btnSave" class="btn btn-default">Save</button>

@@ -12,8 +12,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Dashboard <span class="glyphicon glyphicon-plus pull-right" data-toggle="modal"
-                                        data-target="#dialog"></span>
+                        Dashboard
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -117,7 +116,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="jump-to-survey.php">
+                                    <a href="jump-to-survey.php" target="_blank">
                                         <div class="panel-footer">
                                             <span class="pull-left">View Details</span>
                                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
