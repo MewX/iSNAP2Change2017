@@ -261,7 +261,7 @@ db_close($conn);
                 </div>
                 <div class="col-2 mybox">
                     <img class="achievement-logo" src="<? echo $aHatTrick ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                         title="Unlock this achievement by getting full marks on at least ONE task for three weeks in a row.."/>
+                         title="Unlock this achievement by getting full marks on at least ONE task for three weeks in a row."/>
                     <div class="achievement-name">Hat Trick</div>
                 </div>
                 <div class="col-2 mybox">
@@ -285,22 +285,19 @@ db_close($conn);
                     <div class="achievement-name">Ninja Clearance</div>
                 </div>
                 <div class="col-2 mybox">
-                    <!-- TODO: update the score here -->
                     <img class="achievement-logo" src="<? echo $aBeatScoreSnA ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                         title="Unlock this achievement by beating 175 score in Sports Ninja."/>
-                    <div class="achievement-name">175 Score Ninja</div>
+                         title="Unlock this achievement by beating <? echo number_format(SMOKING_NINJA_SCORE_A) ?> score in Sports Ninja."/>
+                    <div class="achievement-name"><? echo number_format(SMOKING_NINJA_SCORE_A) ?> Score Ninja</div>
                 </div>
                 <div class="col-2 mybox">
-                    <!-- TODO: update the score here -->
                     <img class="achievement-logo" src="<? echo $aBeatScoreSnB ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                         title="Unlock this achievement by beating 400 score in Sports Ninja."/>
-                    <div class="achievement-name">400 Score Ninja</div>
+                         title="Unlock this achievement by beating <? echo number_format(SMOKING_NINJA_SCORE_B) ?> score in Sports Ninja."/>
+                    <div class="achievement-name"><? echo number_format(SMOKING_NINJA_SCORE_B) ?> Score Ninja</div>
                 </div>
                 <div class="col-2 mybox">
-                    <!-- TODO: update the score here -->
                     <img class="achievement-logo" src="<? echo $aBeatScoreSnC ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                         title="Unlock this achievement by beating 850 score in Sports Ninja."/>
-                    <div class="achievement-name">850 Score Ninja</div>
+                         title="Unlock this achievement by beating <? echo number_format(SMOKING_NINJA_SCORE_C) ?> score in Sports Ninja."/>
+                    <div class="achievement-name"><? echo number_format(SMOKING_NINJA_SCORE_C) ?> Score Ninja</div>
                 </div>
             </div>
             <div class="col-8 col-xs-offset-2 myrow">
@@ -315,22 +312,19 @@ db_close($conn);
                     <div class="achievement-name">Crusher Clearance</div>
                 </div>
                 <div class="col-2 mybox">
-                    <!-- TODO: update the score here -->
                     <img class="achievement-logo" src="<? echo $aBeatScoreMcA ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                         title="Unlock this achievement by beating 25,000 score in Meal Crusher."/>
-                    <div class="achievement-name">25,000 Score Crusher</div>
+                         title="Unlock this achievement by beating <? echo number_format(MEAL_CRUSHER_SCORE_A) ?> score in Meal Crusher."/>
+                    <div class="achievement-name"><? echo number_format(MEAL_CRUSHER_SCORE_A) ?> Score Crusher</div>
                 </div>
                 <div class="col-2 mybox">
-                    <!-- TODO: update the score here -->
                     <img class="achievement-logo" src="<? echo $aBeatScoreMcB ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                         title="Unlock this achievement by beating 75,000 score in Meal Crusher."/>
-                    <div class="achievement-name">75,000 Score Crusher</div>
+                         title="Unlock this achievement by beating <? echo number_format(MEAL_CRUSHER_SCORE_B) ?> score in Meal Crusher."/>
+                    <div class="achievement-name"><? echo number_format(MEAL_CRUSHER_SCORE_B) ?> Score Crusher</div>
                 </div>
                 <div class="col-2 mybox">
-                    <!-- TODO: update the score here -->
                     <img class="achievement-logo" src="<? echo $aBeatScoreMcC ? IMG_ACHIEVED : IMG_LOCKED ?>"
-                         title="Unlock this achievement by beating 150,000 score in Meal Crusher."/>
-                    <div class="achievement-name">150,000 Score Crusher</div>
+                         title="Unlock this achievement by beating <? echo number_format(MEAL_CRUSHER_SCORE_C) ?> score in Meal Crusher."/>
+                    <div class="achievement-name"><? echo number_format(MEAL_CRUSHER_SCORE_C) ?> Score Crusher</div>
                 </div>
         </div>
         </div>

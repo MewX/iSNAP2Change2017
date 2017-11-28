@@ -330,17 +330,21 @@ function achCheckAndSetPlayEveryGameModeSn(PDO $c, $gameId, $studentId, $levelCo
     }
 }
 
+// achieve certain scores
+define("SMOKING_NINJA_SCORE_A", 175);
+define("SMOKING_NINJA_SCORE_B", 400);
+define("SMOKING_NINJA_SCORE_C", 850);
 function achCheckAndSetBeatScoreSn(PDO $c, $gameId, $studentId) {
     $obj = achGetAllAchievementsByStudentId($c, $studentId);
     if ($obj->BeatScoreSnC != 0) return;
 
     // have unset variables
     $totalScore = getStudentGameTotalScores($c, $gameId, $studentId);
-    if ($totalScore >= 850) {
+    if ($totalScore >= SMOKING_NINJA_SCORE_C) {
         $sql = "update achievements set BeatScoreSnA = 1, BeatScoreSnB = 1, BeatScoreSnC = 1 where StudentID = ?";
-    } else if ($totalScore >= 400) {
+    } else if ($totalScore >= SMOKING_NINJA_SCORE_B) {
         $sql = "update achievements set BeatScoreSnA = 1, BeatScoreSnB = 1 where StudentID = ?";
-    } else if ($totalScore >= 175) {
+    } else if ($totalScore >= SMOKING_NINJA_SCORE_A) {
         $sql = "update achievements set BeatScoreSnA = 1 where StudentID = ?";
     } else {
         return;
@@ -370,17 +374,21 @@ function achCheckAndSetPlayEveryGameModeMc(PDO $c, $gameId, $studentId, $levelCo
     }
 }
 
+// achieve certain scores
+define("MEAL_CRUSHER_SCORE_A", 25000);
+define("MEAL_CRUSHER_SCORE_B", 75000);
+define("MEAL_CRUSHER_SCORE_C", 150000);
 function achCheckAndSetBeatScoreMc(PDO $c, $gameId, $studentId) {
     $obj = achGetAllAchievementsByStudentId($c, $studentId);
     if ($obj->BeatScoreMcC != 0) return;
 
     // have unset variables
     $totalScore = getStudentGameTotalScores($c, $gameId, $studentId);
-    if ($totalScore >= 150000) {
+    if ($totalScore >= MEAL_CRUSHER_SCORE_C) {
         $sql = "update achievements set BeatScoreMcA = 1, BeatScoreMcB = 1, BeatScoreMcC = 1 where StudentID = ?";
-    } else if ($totalScore >= 75000) {
+    } else if ($totalScore >= MEAL_CRUSHER_SCORE_B) {
         $sql = "update achievements set BeatScoreMcA = 1, BeatScoreMcB = 1 where StudentID = ?";
-    } else if ($totalScore >= 25000) {
+    } else if ($totalScore >= MEAL_CRUSHER_SCORE_A) {
         $sql = "update achievements set BeatScoreMcA = 1 where StudentID = ?";
     } else {
         return;
