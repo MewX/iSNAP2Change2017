@@ -46,13 +46,14 @@ require_once('./student-validation.php');
             width: 88%;
             display: flex;
             flex-direction: column;
+            color: black;
         }
 
         /* for date time */
         .text > p:last-of-type {
             width: 100%;
             text-align: right;
-            color: silver;
+            color: black;
             margin-bottom: -7px;
             margin-top: auto;
         }
