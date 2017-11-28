@@ -1,0 +1,4 @@
+[submodule "survey"]
+	path = survey
+	url = https://github.com/LimeSurvey/LimeSurvey
+	branch = master
