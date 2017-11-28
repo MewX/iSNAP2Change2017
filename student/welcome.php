@@ -60,8 +60,8 @@
         <link href='https://fonts.googleapis.com/css?family=Maitree|Lato:400,900' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="./css/home.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <link rel="stylesheet" href="./css/common.css">
         <link rel="stylesheet" type="text/css" href="./css/vendor/animate.css"/>
+        <link rel="stylesheet" href="./css/common.css">
 
         <script src="./js/vendor/wow.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -409,11 +409,9 @@
                     <br>
                     <div class="sendbutton" style="display:flex;justify-content:center;align-items:center;width:100%;height:20%; margin-top:1%;">
                         <div style="width:50%;color:#FCEE2D; text-align:center;">
-                            <span>
                             <a onclick="leaveComment();">
-                                <img src="./img/send_icon.png" style="height: 75px; width: 75px;">
+                                <img src="./img/send_icon.png" style="cursor: pointer; height: 75px; width: 75px;">
                             </a>
-                            </span>
                         </div>
                     </div>
                     </div>
@@ -507,12 +505,12 @@
                 })
                 .done(function (feedback) {
                     if(feedback.message !== "success") {
-                        alert(feedback.message + ". Please try again!");
+                        alert(feedback.message + " Please try again!");
                     } else {
                         $('#myName').val("");
                         $('#emailID').val("");
                         $('#commentContent').val("");
-                        alert("Successfuly submission! Thank you!");
+                        alert("Successful submission! Thank you!");
                     }
                 })
                 .fail(function (xhr, status, errorThrown) {

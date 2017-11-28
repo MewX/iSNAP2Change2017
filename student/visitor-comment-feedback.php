@@ -9,7 +9,7 @@ $conn = db_connect();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["content"])) {
     if (strlen($_POST["name"]) == 0 || strlen($_POST["name"]) > 200) {
-        $feedback["message"] = "Name was too long or empty!";
+        $feedback["message"] = "Name was empty or too long!";
     } else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
         $feedback["message"] = "Email was not valid!";
     } else if (strlen($_POST["content"]) < 10) {
