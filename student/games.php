@@ -104,12 +104,12 @@
                 <div class="col-sm-6">
                     <div class="post">
                         <div class="post-img-content">
-                            <span class="post-title"><b>Candy Crush</b><br /></span>
+                            <span class="post-title"><b>Food Crush</b><br /></span>
                             <img src="img/foodCrush.jpg" class="img-responsive"/>
                         </div>
                         <div class="content">
                             <div>
-                                Control and eliminate candies to win.
+                                Match 3 healthy items in a row to win.
                             </div>
                             <div>
                                 <a href="#" class="btn btn-warning btn-sm">Download</a>
@@ -121,12 +121,12 @@
                 <div class="col-sm-6">
                     <div class="post">
                         <div class="post-img-content">
-                            <span class="post-title"><b>Fruit Ninja</b><br /></span>
+                            <span class="post-title"><b>Sport Ninja</b><br /></span>
                             <img src="img/sportNinja.jpg" class="img-responsive"/>
                         </div>
                         <div class="content">
                             <div>
-                                Eat fruits and refuse smoking.
+                                Slice away the healthy items to win.
                             </div>
                             <div>
                                 <a href="#" class="btn btn-warning btn-sm">Download</a>
