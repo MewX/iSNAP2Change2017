@@ -123,6 +123,10 @@
             margin-bottom: 20px;
         }
 
+        .activities-tab-item-active{
+            color: ghostwhite !important;
+        }
+
         .class-rank {
             text-align: center;
             margin-bottom: 40px;

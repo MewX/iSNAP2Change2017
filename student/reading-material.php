@@ -90,9 +90,7 @@
             cursor: pointer;
         }
         .reading-tab-item-active {
-            color: #fff;
-            background-color: #fcee2d;
-            border-color: #fcee2d;
+            color: ghostwhite !important;
         }
         .reading-tab-item-disabled {
             text-indent: -999em;
