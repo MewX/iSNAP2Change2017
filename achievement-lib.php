@@ -336,12 +336,11 @@ function achCheckAndSetBeatScoreSn(PDO $c, $gameId, $studentId) {
 
     // have unset variables
     $totalScore = getStudentGameTotalScores($c, $gameId, $studentId);
-    // TODO: update the game scores here
-    if ($totalScore >= 10000) {
+    if ($totalScore >= 850) {
         $sql = "update achievements set BeatScoreSnA = 1, BeatScoreSnB = 1, BeatScoreSnC = 1 where StudentID = ?";
-    } else if ($totalScore >= 5000) {
+    } else if ($totalScore >= 400) {
         $sql = "update achievements set BeatScoreSnA = 1, BeatScoreSnB = 1 where StudentID = ?";
-    } else if ($totalScore >= 100) {
+    } else if ($totalScore >= 175) {
         $sql = "update achievements set BeatScoreSnA = 1 where StudentID = ?";
     } else {
         return;
@@ -377,12 +376,11 @@ function achCheckAndSetBeatScoreMc(PDO $c, $gameId, $studentId) {
 
     // have unset variables
     $totalScore = getStudentGameTotalScores($c, $gameId, $studentId);
-    // TODO: update the game scores here
-    if ($totalScore >= 10000) {
+    if ($totalScore >= 150000) {
         $sql = "update achievements set BeatScoreMcA = 1, BeatScoreMcB = 1, BeatScoreMcC = 1 where StudentID = ?";
-    } else if ($totalScore >= 5000) {
+    } else if ($totalScore >= 75000) {
         $sql = "update achievements set BeatScoreMcA = 1, BeatScoreMcB = 1 where StudentID = ?";
-    } else if ($totalScore >= 100) {
+    } else if ($totalScore >= 25000) {
         $sql = "update achievements set BeatScoreMcA = 1 where StudentID = ?";
     } else {
         return;
