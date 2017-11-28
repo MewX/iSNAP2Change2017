@@ -108,6 +108,10 @@
             cursor: pointer;
         }
 
+        .extra-activities-tab-item-active {
+            color: ghostwhite !important;
+        }
+
         .extra-activities-tab-item-disabled {
             text-indent: -999em;
             border: 0;
