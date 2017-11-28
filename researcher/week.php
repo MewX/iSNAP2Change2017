@@ -216,7 +216,14 @@ db_close($conn);
     });
     $('#btnConfirm-timer').on('click', function () {
         console.log("clicked");
-        $('#submission-timer').validate();
+        $('#submission-timer').validate({
+            rules: {
+                Timer: {
+                    required: true,
+                    digits: true
+                }
+            }
+        });
         $('#submission-timer').submit();
     });
 </script>
