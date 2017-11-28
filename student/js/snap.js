@@ -194,14 +194,14 @@ var snap = {
                 '<div class="back-top">' +
                 '    <div class="icon-top"></div>' +
                 '    <div class="back-top-label">Back to Top</div>' +
-                '</div>'
-            this.$backTop = $(tpl)
-            var $body = $(document.body)
-            $body.append(this.$backTop)
+                '</div>';
+            this.$backTop = $(tpl);
+            var $body = $("html, body");
+            $body.append(this.$backTop);
             $body.on('click', '.back-top', function () {
                 $body.animate({ scrollTop: 0 }, 'fast');
-            })
-            $win.on('scroll', this.throttle(normalizeShow, 50))
+            });
+            $win.on('scroll', this.throttle(normalizeShow, 50));
             normalizeShow()
         }
     },
