@@ -116,14 +116,14 @@
                             <div class="col-xs-8 col-xs-offset-2" style="text-align: center; height: 65%;">
                                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner" role="listbox">
-                                        <div class="item active">
+                                        <div class="item">
                                             <img src="./img/sportNinja.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
                                                 <a href="games.php" style="font-size: 3vh; color:rgb(255,255,255); border: 0px solid rgb(255,255,255); border-bottom-color: rgb(255,255,255); border-bottom-width: 2px; ">SPORT NINJA</a>
                                             </div>
                                         </div>
-                                        <div class="item">
-                                            <img src="./img/Candy.jpg" alt="..." style="border-radius:30px;">
+                                        <div class="item active">
+                                            <img src="./img/foodCrush.jpg" alt="..." style="border-radius:30px;">
                                             <div class="carousel-caption">
                                                 <a href="games.php" style="font-size: 3vh; color:rgb(255,255,255); border: 0px solid rgb(255,255,255); border-bottom-color: rgb(255,255,255); border-bottom-width: 2px; ">MEAL CRUSH</a>
                                             </div>

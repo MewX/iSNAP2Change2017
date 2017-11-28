@@ -105,7 +105,7 @@
                     <div class="post">
                         <div class="post-img-content">
                             <span class="post-title"><b>Candy Crush</b><br /></span>
-                            <img src="img/Candy.jpg" class="img-responsive"/>
+                            <img src="img/foodCrush.jpg" class="img-responsive"/>
                         </div>
                         <div class="content">
                             <div>
@@ -122,7 +122,7 @@
                     <div class="post">
                         <div class="post-img-content">
                             <span class="post-title"><b>Fruit Ninja</b><br /></span>
-                            <img src="img/Fruit.jpg" class="img-responsive"/>
+                            <img src="img/sportNinja.jpg" class="img-responsive"/>
                         </div>
                         <div class="content">
                             <div>
