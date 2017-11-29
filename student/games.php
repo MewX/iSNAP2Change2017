@@ -104,7 +104,7 @@
                 <div class="col-sm-6">
                     <div class="post">
                         <div class="post-img-content">
-                            <span class="post-title"><b>Food Crush</b><br /></span>
+                            <span class="post-title"><b>Meal Crusher</b><br /></span>
                             <img src="img/foodCrush.jpg" class="img-responsive"/>
                         </div>
                         <div class="content">
