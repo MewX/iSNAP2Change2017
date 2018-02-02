@@ -112,7 +112,7 @@
                                 Match 3 healthy items in a row to win.
                             </div>
                             <div>
-                                <a href="#" class="btn btn-warning btn-sm">Download</a>
+                                <a href="https://drive.google.com/drive/folders/1Z7u9RB--34osK7TfdMkajNaT4SPEft1q?usp=sharing" target="_blank" class="btn btn-warning btn-sm">Download</a>
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                                 Slice away the healthy items to win.
                             </div>
                             <div>
-                                <a href="#" class="btn btn-warning btn-sm">Download</a>
+                                <a href="https://drive.google.com/drive/folders/1Z7u9RB--34osK7TfdMkajNaT4SPEft1q?usp=sharing" target="_blank" class="btn btn-warning btn-sm">Download</a>
                             </div>
                         </div>
                     </div>
